@@ -125,4 +125,8 @@
 
   <!-- Default value for FOD animation package resources -->
   <java-symbol type="string" name="config_fodAnimationPackage" />
+
+  <!-- Button backlight -->
+  <java-symbol type="dimen" name="config_buttonBrightnessSettingDefaultFloat" />
+  <java-symbol type="bool" name="config_deviceHasVariableButtonBrightness" />
 </resources>
