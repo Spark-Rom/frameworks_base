@@ -171,5 +171,6 @@ public class SecureSettings {
         Settings.Secure.ASSIST_HANDLES_LEARNING_TIME_ELAPSED_MILLIS,
         Settings.Secure.ASSIST_HANDLES_LEARNING_EVENT_COUNT,
         // Spark Customization
+        Settings.Secure.VOLUME_LINK_NOTIFICATION,
     };
 }
