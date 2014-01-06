@@ -6904,6 +6904,12 @@ public final class Settings {
         public static final String DISPLAY_SETTINGS_WALLPAPER_ZOOM = "display_settings_wallpaper_zoom";
 
         /**
+         * Force expanded notifications on all apps that support it.
+         * @hide
+         */
+        public static final String FORCE_EXPANDED_NOTIFICATIONS = "force_expanded_notifications";
+
+        /**
          * Heads up notifications threshold
          * Default 0
          * @hide
