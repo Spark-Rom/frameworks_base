@@ -6404,6 +6404,13 @@ public final class Settings {
         public static final String ADAPTIVE_PLAYBACK_ENABLED = "adaptive_playback_enabled";
 
         /**
+        * Toast animations
+        *
+        * @hide
+        */
+        public static final String TOAST_ANIMATION = "toast_animation";
+
+        /**
          * Adaptive playback's timeout in ms
          * @hide
          */
