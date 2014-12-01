@@ -5920,6 +5920,13 @@ public final class Settings {
          */
         public static final String UDFPS_HAPTIC_FEEDBACK = "udfps_haptic_feedback";
 
+       /**
+         * Whether to wake the display when plugging or unplugging the charger
+         *
+         * @hide
+         */
+        public static final String WAKE_WHEN_PLUGGED_OR_UNPLUGGED = "wake_when_plugged_or_unplugged";
+
         /**
          * Bring back old style mobile data indicators.
          * @hide
