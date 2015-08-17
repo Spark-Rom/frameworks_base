@@ -64,6 +64,7 @@ import com.android.systemui.qs.tiles.SyncTile;
 import com.android.systemui.qs.tiles.UiModeNightTile;
 import com.android.systemui.qs.tiles.UsbTetherTile;
 import com.android.systemui.qs.tiles.UserTile;
+import com.android.systemui.qs.tiles.VolumeTile;
 import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.qs.tiles.WorkModeTile;
 import com.android.systemui.util.leak.GarbageMonitor;
@@ -120,6 +121,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<GamingModeTile> mGamingModeTileProvider;
     private final Provider<RebootTile> mRebootTileProvider;
     private final Provider<OnTheGoTile> mOnTheGoTileProvider;
+    private final Provider<VolumeTile> mVolumeTileProvider;
 
     private final Lazy<QSHost> mQsHostLazy;
     private final Provider<CustomTile.Builder> mCustomTileBuilderProvider;
@@ -169,7 +171,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<HeadsUpTile> headsUpTileProvider,
             Provider<GamingModeTile> gamingModeTileProvider,
             Provider<RebootTile> rebootTileProvider,
-            Provider<OnTheGoTile> onTheGoTileProvider) {
+            Provider<OnTheGoTile> onTheGoTileProvider,
+            Provider<VolumeTile> volumeTileProvider) {
         mQsHostLazy = qsHostLazy;
         mCustomTileBuilderProvider = customTileBuilderProvider;
 
@@ -215,6 +218,7 @@ public class QSFactoryImpl implements QSFactory {
         mGamingModeTileProvider = gamingModeTileProvider;
         mRebootTileProvider = rebootTileProvider;
         mOnTheGoTileProvider = onTheGoTileProvider;
+        mVolumeTileProvider = volumeTileProvider;
     }
 
     public QSTile createTile(String tileSpec) {
@@ -311,6 +315,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mRebootTileProvider.get();
             case "onthego":
                 return mOnTheGoTileProvider.get();
+            case "volume_panel":
+                return mVolumeTileProvider.get();
         }
         // Custom tiles
         if (tileSpec.startsWith(CustomTile.PREFIX)) {
