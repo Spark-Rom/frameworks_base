@@ -728,6 +728,8 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                     addIfShouldShowAction(tempActions, getScreenrecordAction());
                 } else if (flashlightUserEnabled(mContext)) {
                     addIfShouldShowAction(tempActions, getFlashlightToggleAction());
+                } else if (OnTheGoUserEnabled(mContext)) {
+                     addIfShouldShowAction(tempActions, getOnTheGoAction());
                 }
             } else if (GLOBAL_ACTION_KEY_LOGOUT.equals(actionKey)) {
                 if (mDevicePolicyManager.isLogoutEnabled()
@@ -876,6 +878,12 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         boolean flashlightUserEnabled = Settings.System.getIntForUser(context.getContentResolver(),
                 Settings.System.GLOBAL_ACTIONS_USERS_CHOICE, 0, UserHandle.USER_CURRENT) == 3;
         return flashlightUserEnabled;
+    }
+
+    private boolean OnTheGoUserEnabled(Context context) {
+        boolean OnTheGoUserEnabled = Settings.System.getIntForUser(context.getContentResolver(),
+                Settings.System.GLOBAL_ACTIONS_USERS_CHOICE, 0, UserHandle.USER_CURRENT) == 4;
+        return OnTheGoUserEnabled;
     }
 
     @VisibleForTesting
@@ -1258,6 +1266,32 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                 return true;
             }
         };
+    }
+
+    private Action getOnTheGoAction() {
+        return new SinglePressAction(com.android.systemui.R.drawable.ic_lock_onthego,
+                    com.android.systemui.R.string.global_action_onthego) {
+
+        @Override
+        public void onPress() {
+            ComponentName cn = new ComponentName("com.android.systemui",
+                    "com.android.systemui.benzo.onthego.OnTheGoService");
+            Intent onTheGoIntent = new Intent();
+            onTheGoIntent.setComponent(cn);
+            onTheGoIntent.setAction("start");
+            mContext.startService(onTheGoIntent);
+        }
+
+        @Override
+        public boolean showDuringKeyguard() {
+            return true;
+        }
+
+        @Override
+        public boolean showBeforeProvisioning() {
+            return true;
+        }
+       };
     }
 
     private Action getAssistAction() {

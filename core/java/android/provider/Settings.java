@@ -5838,6 +5838,7 @@ public final class Settings {
          * 1: Screenshot
          * 2: Screenrecord
          * 3: Flashlight
+         * 4: On the Go
          *
          * @hide
          */
@@ -6449,6 +6450,29 @@ public final class Settings {
          * @hide
          */
         public static final String DATA_USAGE_PERIOD = "data_usage_period";
+
+        /**
+         * The alpha value of the On-The-Go overlay.
+         *
+         * @hide
+         */
+        public static final String ON_THE_GO_ALPHA = "on_the_go_alpha";
+
+        /**
+         * Whether the service should restart itself or not.
+         *
+         * @hide
+         */
+        public static final String ON_THE_GO_SERVICE_RESTART = "on_the_go_service_restart";
+
+        /**
+         * The camera instance to use.
+         * 0 = Rear Camera
+         * 1 = Front Camera
+         *
+         * @hide
+         */
+        public static final String ON_THE_GO_CAMERA = "on_the_go_camera";
 
         /**
          * Wallpaper based accents
