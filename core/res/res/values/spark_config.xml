@@ -77,6 +77,7 @@
         <item>settings</item>
         <item>lockdown</item>
         <item>torch</item>
+        <item>onthego</item>
     </string-array>
 
     <!-- Whether devices suports in-display fingerprint when screen is off -->
