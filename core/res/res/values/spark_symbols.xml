@@ -162,4 +162,8 @@
 
    <!-- Whether to use old mobile type icons as default -->
    <java-symbol type="bool" name="config_useOldMobileIcons" />
+
+   <!-- Vendor mismatch fingerprint warning -->
+   <java-symbol type="string" name="system_error_vendorprint" />
+
 </resources>
