@@ -215,4 +215,7 @@
         <item>com.gaana</item>
         <item>com.facebook.katana.LoginActivity</item>
     </string-array>
+
+    <!-- Whether device has dash charging support -->
+    <bool name="config_hasDashCharger">false</bool>
 </resources>
