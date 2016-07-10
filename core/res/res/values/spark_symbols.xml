@@ -144,26 +144,29 @@
     <!-- Vendor mismatch fingerprint warning -->
     <java-symbol type="string" name="system_error_vendorprint" />
 
-   <!-- Whether or not we should show vendor mismatch message -->
-   <java-symbol type="bool" name="config_show_vendor_mismatch_message" />
+    <!-- Whether or not we should show vendor mismatch message -->
+    <java-symbol type="bool" name="config_show_vendor_mismatch_message" />
 
-   <!-- Settings Restart -->
-   <java-symbol type="string" name="settings_restart_title" />
-   <java-symbol type="string" name="settings_restart_message" />
+    <!-- Settings Restart -->
+    <java-symbol type="string" name="settings_restart_title" />
+    <java-symbol type="string" name="settings_restart_message" />
 
-   <!-- Aerr -->
-   <java-symbol type="id" name="aerr_disable" />
+    <!-- Aerr -->
+    <java-symbol type="id" name="aerr_disable" />
 
-   <!-- Smart charging -->
-   <java-symbol type="integer" name="config_smartChargingBatteryLevel" />
-   <java-symbol type="integer" name="config_smartChargingBatteryResumeLevel" />
-   <java-symbol type="string" name="config_SmartChargingSysfsNode" />
-   <java-symbol type="string" name="config_SmartChargingSuspendValue" />
-   <java-symbol type="string" name="config_SmartChargingResumeValue" />
+    <!-- Smart charging -->
+    <java-symbol type="integer" name="config_smartChargingBatteryLevel" />
+    <java-symbol type="integer" name="config_smartChargingBatteryResumeLevel" />
+    <java-symbol type="string" name="config_SmartChargingSysfsNode" />
+    <java-symbol type="string" name="config_SmartChargingSuspendValue" />
+    <java-symbol type="string" name="config_SmartChargingResumeValue" />
 
-   <!-- Whether the device supports Smart Pixels -->
-   <java-symbol type="bool" name="config_supportSmartPixels" />
+    <!-- Whether the device supports Smart Pixels -->
+    <java-symbol type="bool" name="config_supportSmartPixels" />
 
-   <!-- Sensor block -->
-   <java-symbol type="array" name="config_blockPackagesSensorDrain" />
+    <!-- Sensor block -->
+    <java-symbol type="array" name="config_blockPackagesSensorDrain" />
+
+    <!-- Whether device has dash charging support -->
+    <java-symbol type="bool" name="config_hasDashCharger" />
 </resources>
