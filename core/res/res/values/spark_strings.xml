@@ -36,4 +36,7 @@
     <string name="alert_slider_mode_silent" translatable="false">mode_silent</string>
     <string name="alert_slider_mode_dnd" translatable="false">mode_dnd</string>
 
+    <!-- SystemUI Restart -->
+    <string name="systemui_restart_title">SystemUI restart required</string>
+    <string name="systemui_restart_message">For all changes to take effect, a SystemUI restart is required. Restart SystemUI now?</string>
 </resources>

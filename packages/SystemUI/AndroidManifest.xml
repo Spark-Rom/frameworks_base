@@ -300,6 +300,8 @@
     <!-- LiveDisplay -->
     <uses-permission android:name="lineageos.permission.MANAGE_LIVEDISPLAY" />
 
+    <uses-permission android:name="android.permission.ACCESS_SURFACE_FLINGER" />
+
     <application
         android:name=".SystemUIApplication"
         android:persistent="true"
