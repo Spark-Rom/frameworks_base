@@ -15,6 +15,7 @@
  */
 package com.android.systemui.statusbar.policy;
 
+import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -115,6 +116,7 @@ public class MobileSignalController extends SignalController<
     private int mShow4GUserConfig;
 
     private boolean mDataDisabledIcon;
+    private boolean mRoamingIconAllowed;
 
     // TODO: Reduce number of vars passed in, if we have the NetworkController, probably don't
     // need listener lists anymore.
@@ -192,6 +194,9 @@ public class MobileSignalController extends SignalController<
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SHOW_FOURG),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.ROAMING_INDICATOR_ICON),
+                    false, this, UserHandle.USER_ALL);
             updateSettings();
         }
 
@@ -220,6 +225,9 @@ public class MobileSignalController extends SignalController<
         ContentResolver resolver = mContext.getContentResolver();
         mShow4GUserConfig = Settings.System.getIntForUser(resolver,
                 Settings.System.SHOW_FOURG, -1, UserHandle.USER_CURRENT);
+        mRoamingIconAllowed = Settings.System.getIntForUser(resolver,
+                Settings.System.ROAMING_INDICATOR_ICON, 1,
+                UserHandle.USER_CURRENT) == 1;
         mapIconSets();
         updateTelephony();
     }
@@ -734,7 +742,7 @@ public class MobileSignalController extends SignalController<
         mCurrentState.dataConnected = mCurrentState.connected
                 && mDataState == TelephonyManager.DATA_CONNECTED;
 
-        mCurrentState.roaming = isRoaming();
+        mCurrentState.roaming = isRoaming() && mRoamingIconAllowed;
         if (isCarrierNetworkChangeActive()) {
             mCurrentState.iconGroup = TelephonyIcons.CARRIER_NETWORK_CHANGE;
         } else if (isDataDisabled() && mDataDisabledIcon) {
