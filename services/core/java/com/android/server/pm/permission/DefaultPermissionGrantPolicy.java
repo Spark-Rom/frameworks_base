@@ -932,6 +932,9 @@ public final class DefaultPermissionGrantPolicy {
         grantSystemFixedPermissionsToSystemPackage(pm,
                 getDefaultProviderAuthorityPackage("com.google.android.apps.wellbeing", userId),
                 userId, SUSPEND_APP_PERMISSIONS);
+
+        // OmniJaws
+        grantSystemFixedPermissionsToSystemPackage(pm, "org.omnirom.omnijaws", userId, ALWAYS_LOCATION_PERMISSIONS);
     }
 
     private String getDefaultSystemHandlerActivityPackageForCategory(PackageManagerWrapper pm,
