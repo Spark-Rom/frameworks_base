@@ -6715,6 +6715,13 @@ public final class Settings {
         public static final String NAVBAR_STYLE = "navbar_style";
 
         /**
+         * Sensor block per-package
+         * @hide
+         */
+        @Readable
+        public static final String SENSOR_BLOCK = "sensor_block";
+
+        /**
          *  Toggle the wallpaper zoom effects
          *  0 = 0ff, 1 = on
          * @hide
@@ -6957,6 +6964,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUS_BAR_LOGO_POSITION);
             PRIVATE_SETTINGS.add(STATUS_BAR_LOGO_STYLE);
             PRIVATE_SETTINGS.add(BATTERY_LEVEL_COLORS);
+            PRIVATE_SETTINGS.add(SENSOR_BLOCK);
         }
 
         /**
