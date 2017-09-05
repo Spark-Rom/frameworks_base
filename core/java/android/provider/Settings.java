@@ -6397,6 +6397,12 @@ public final class Settings {
         public static final String LOCKSCREEN_WEATHER_STYLE = "lockscreen_weather_style";
 
         /**
+         * Whether to vibrate on call state change
+         * @hide
+         */
+        public static final String INCALL_FEEDBACK_VIBRATE = "incall_feeedback_vibrate";
+
+        /**
          * @hide
          */
         public static final String ON_THE_GO_CAMERA = "on_the_go_camera";
@@ -6587,6 +6593,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(BACK_GESTURE_HAPTIC);
             PRIVATE_SETTINGS.add(PROXIMITY_ON_WAKE);
             PRIVATE_SETTINGS.add(EDGE_MUSIC_CONTROL);
+            PRIVATE_SETTINGS.add(INCALL_FEEDBACK_VIBRATE);
         }
 
         /**

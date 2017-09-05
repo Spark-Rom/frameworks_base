@@ -102,5 +102,6 @@ public class SystemSettings {
         Settings.System.LOCK_FP_ICON,
         Settings.System.OMNI_CUSTOM_FP_ICON,
         Settings.System.PROXIMITY_ON_WAKE,
+        Settings.System.INCALL_FEEDBACK_VIBRATE,
     };
 }
