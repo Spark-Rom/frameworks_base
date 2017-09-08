@@ -477,6 +477,20 @@
                 android:permission="android.permission.BIND_WALLPAPER"
                 android:exported="true" />
 
+        <activity-alias
+            android:name=".tuner.LockscreenFragment"
+            android:targetActivity=".tuner.TunerActivity"
+            android:icon="@drawable/tuner"
+            android:theme="@style/Theme.SubSettingsBase"
+            android:label="@string/tuner_lock_screen"
+            android:process=":tuner"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.settings.action.LOCKSCREEN_TUNER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity-alias>
+
         <activity android:name=".tuner.TunerActivity"
                   android:enabled="false"
                   android:icon="@drawable/tuner"

@@ -68,11 +68,15 @@ public class TunerActivity extends CollapsingToolbarBaseActivity implements
 */
         if (getFragmentManager().findFragmentByTag(TAG_TUNER) == null) {
             final String action = getIntent().getAction();
-            boolean showDemoMode = action != null && action.equals(
-                    "com.android.settings.action.DEMO_MODE");
-            final PreferenceFragment fragment = showDemoMode
-                    ? new DemoModeFragment(mDemoModeController)
-                    : new TunerFragment(mTunerService);
+            final Fragment fragment;
+            if ("com.android.settings.action.DEMO_MODE".equals(action)) {
+                fragment = new DemoModeFragment(mDemoModeController);
+            } else if ("com.android.settings.action.LOCKSCREEN_TUNER".equals(action)) {
+                fragment = new LockscreenFragment();
+            } else {
+                fragment = new TunerFragment(mTunerService);
+            }
+
             getFragmentManager().beginTransaction().replace(R.id.content_frame,
                     fragment, TAG_TUNER).commit();
         }
