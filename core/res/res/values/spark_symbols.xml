@@ -26,4 +26,9 @@
     <!-- Light / Regular style fonts -->
     <java-symbol type="string" name="config_lightFontFamily" />
     <java-symbol type="string" name="config_regularFontFamily" />
+
+    <!-- LED stuff -->
+    <java-symbol type="bool" name="config_intrusiveBatteryLed" />
+    <java-symbol type="bool" name="config_multiColorBatteryLed" />
+    <java-symbol type="bool" name="config_ledCanPulse" />
 </resources>
