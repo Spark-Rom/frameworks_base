@@ -134,7 +134,7 @@ public class FPSInfoTile extends QSTileImpl<BooleanState> {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.SPARK_SETTINGS;
+        return MetricsEvent.SPARK_QS_TILES;
     }
 
     @Override
