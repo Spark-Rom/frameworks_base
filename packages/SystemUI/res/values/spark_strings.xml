@@ -272,4 +272,5 @@
     <!-- Ls Shortcuts -->
     <string name="lockscreen_default">Default</string>
     <string name="lockscreen_hidden">None</string>
+    <string name="custom_hint">Swipe from icon to launch</string>
 </resources>

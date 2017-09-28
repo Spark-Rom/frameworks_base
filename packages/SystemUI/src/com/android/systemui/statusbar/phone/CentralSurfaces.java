@@ -441,6 +441,8 @@ public interface CentralSurfaces extends Dumpable, ActivityStarter, LifecycleOwn
 
     void onPhoneHintStarted();
 
+    void onCustomHintStarted();
+
     void onTrackingStopped(boolean expand);
 
     // TODO: Figure out way to remove these.
