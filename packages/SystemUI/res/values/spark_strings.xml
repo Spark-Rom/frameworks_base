@@ -167,4 +167,8 @@
     <string name="dlg_ok">@android:string/ok</string>
     <string name="dlg_cancel">@android:string/cancel</string>
     <string name="guts_force_close_app">Close App</string>
+
+    <!-- Language toggle tile -->
+    <string name="quick_settings_locale_label">Language</string>
+    <string name="quick_settings_locale_more_locales_toast">Please configure multiple languages to enable toggle functionality</string>
 </resources>
