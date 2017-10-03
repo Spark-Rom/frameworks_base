@@ -158,6 +158,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private List<String> mBlockedIcons = new ArrayList<>();
     private Map<Startable, Startable.State> mStartableStates = new ArrayMap<>();
 
+    private View mBatteryBar;
+
     private SignalCallback mSignalCallback = new SignalCallback() {
         @Override
         public void setIsAirplaneMode(@NonNull IconState icon) {
@@ -290,6 +292,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mSystemIconArea = mStatusBar.findViewById(R.id.system_icon_area);
         mCustomIconArea = mStatusBar.findViewById(R.id.left_icon_area);
         mCenterClockLayout = mStatusBar.findViewById(R.id.centered_area);
+        mBatteryBar = mStatusBar.findViewById(R.id.battery_bar);
         mClockController = new ClockController(getContext(), mStatusBar);
         mSignalClusterEndPadding = getResources().getDimensionPixelSize(R.dimen.signal_cluster_battery_padding);
         mStatusIcons = mStatusBar.findViewById(R.id.statusIcons);
@@ -304,7 +307,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mClockView = mStatusBar.findViewById(R.id.clock);
         mCenterClockView = mStatusBar.findViewById(R.id.clock_center);
         mRightClockView = mStatusBar.findViewById(R.id.clock_right);
-        showSystemIconArea(false);
         showClock(false);
         initEmergencyCryptkeeperText();
         initOperatorName();
@@ -648,12 +650,14 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         animateHide(mNotificationIconAreaInner, animate);
         animateHide(mCustomIconArea, animate);
         animateHide(mCenterClockLayout, animate);
+        animateHide(mBatteryBar, animate);
     }
 
     public void showNotificationIconArea(boolean animate) {
         animateShow(mNotificationIconAreaInner, animate);
         animateShow(mCustomIconArea, animate);
         animateShow(mCenterClockLayout, animate);
+        animateShow(mBatteryBar, animate);
     }
 
     public void hideOperatorName(boolean animate) {
