@@ -117,5 +117,6 @@ public class SystemSettings {
         Settings.System.BRIGHTNESS_SLIDER_POSITION,
         Settings.System.SCREEN_OFF_FOD,
         Settings.System.BATTERY_LEVEL_COLORS,
+        Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL,
     };
 }

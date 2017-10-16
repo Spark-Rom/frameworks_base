@@ -6683,6 +6683,13 @@ public final class Settings {
         public static final String NOTIFICATION_MATERIAL_DISMISS_BGSTYLE = "notification_material_dismiss_bgstyle";
 
         /**
+         * Whether to enable statusbar brightness control
+         * @hide
+         */
+        @Readable
+        public static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
+
+        /**
          * Settings Dashboard Style
          * @hide
          */
