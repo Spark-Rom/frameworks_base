@@ -6859,6 +6859,13 @@ public final class Settings {
         public static final String DISPLAY_SETTINGS_WALLPAPER_ZOOM = "display_settings_wallpaper_zoom";
 
         /**
+         * Whether to enable statusbar brightness control
+         * @hide
+         */
+        @Readable
+        public static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
+
+        /**
          * Whether to show material Dismiss All Button for notifications
          * @hide
          */

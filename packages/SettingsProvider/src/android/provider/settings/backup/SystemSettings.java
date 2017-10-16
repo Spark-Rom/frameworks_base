@@ -115,5 +115,6 @@ public class SystemSettings {
         Settings.System.RINGTONE_VIBRATION_PATTERN,
         Settings.System.CUSTOM_RINGTONE_VIBRATION_PATTERN,
         Settings.System.QS_DATA_USAGE_PANEL,
+        Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL,
     };
 }
