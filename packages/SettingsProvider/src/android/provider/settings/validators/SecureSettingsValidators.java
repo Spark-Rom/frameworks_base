@@ -389,5 +389,6 @@ public class SecureSettingsValidators {
         VALIDATORS.put(Secure.MONET_ENGINE_WHITE_LUMINANCE, new InclusiveIntegerRangeValidator(0, 1000));
         VALIDATORS.put(Secure.FACE_UNLOCK_METHOD, BOOLEAN_VALIDATOR);
         VALIDATORS.put(Secure.IGNORE_AUTH_CONFIRMATION, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(Secure.ADVANCED_REBOOT, BOOLEAN_VALIDATOR);
     }
 }
