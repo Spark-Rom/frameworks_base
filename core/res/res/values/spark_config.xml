@@ -103,4 +103,7 @@
     </string-array>
 
     <bool name="config_has_Soli">false</bool>
+
+    <!-- Whether device has an alert slider. -->
+    <bool name="config_hasAlertSlider">false</bool>
 </resources>
