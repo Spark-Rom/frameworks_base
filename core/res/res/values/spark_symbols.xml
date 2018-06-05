@@ -232,4 +232,9 @@
 
   <!-- Whether doze feature is enabled by default in settings -->
   <java-symbol type="bool" name="config_dozeDefaultEnabled" />
+
+    <!-- App error dialog -->
+    <java-symbol type="id" name="aerr_copy" />
+    <java-symbol type="string" name="url_copy_success" />
+    <java-symbol type="string" name="url_copy_failed" />
 </resources>
