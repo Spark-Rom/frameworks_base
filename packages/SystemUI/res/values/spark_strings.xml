@@ -264,6 +264,13 @@
     <!-- Oneplus Analog clock -->
     <string name="clock_title_oneplus_roman" translatable="false">OnePlus Roman</string>
 
+    <!-- OnTheGo Tile -->
+    <string name="quick_settings_onthego_label">On-The-Go</string>
+    <string name="accessibility_quick_settings_onthego_off">On-The-Go off</string>
+    <string name="accessibility_quick_settings_onthego_on">On-The-Go on</string>
+    <string name="accessibility_quick_settings_onthego_changed_off">On-The-Go turned off</string>
+    <string name="accessibility_quick_settings_onthego_changed_on">On-The-Go turned on</string>
+
    <!-- Change clockface -->
     <string name="change_clock_face">Swipe to change the clock face</string>
 
