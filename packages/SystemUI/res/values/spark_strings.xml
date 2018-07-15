@@ -5,6 +5,9 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
+    <!-- Name of the clock in status bar [CHAR LIMIT=30] -->
+    <string name="clock">Clock</string>
+
     <!-- Screenshot delete action -->
     <!-- Label for UI element which allows deleting the screenshot [CHAR LIMIT=30] -->
     <string name="screenshot_delete_label">Delete</string>
@@ -83,4 +86,5 @@
     <string name="dlg_ok" translatable="false">@android:string/ok</string>
     <string name="dlg_cancel" translatable="false">@android:string/cancel</string>
     <string name="guts_force_close_app">Close App</string>
+
 </resources>
