@@ -1844,7 +1844,9 @@ public final class PowerManagerService extends SystemService
         Trace.traceBegin(Trace.TRACE_TAG_POWER, "userActivity");
         try {
             mEvent = event;
-            if (eventTime > mLastInteractivePowerHintTime) {
+            if (eventTime > mLastInteractivePowerHintTime &&
+                    event != PowerManager.USER_ACTIVITY_EVENT_OTHER &&
+                    event != PowerManager.USER_ACTIVITY_EVENT_TOUCH) {
                 setPowerBoostInternal(Boost.INTERACTION, 0);
                 mLastInteractivePowerHintTime = eventTime;
             }
