@@ -5785,8 +5785,6 @@ public class WindowManagerService extends IWindowManager.Stub
 
     @Override
     public void setRecentsVisibility(boolean visible) {
-        mAtmInternal.enforceCallerIsRecentsOrHasPermission(android.Manifest.permission.STATUS_BAR,
-                "setRecentsVisibility()");
         synchronized (mGlobalLock) {
             mPolicy.setRecentsVisibilityLw(visible);
         }
