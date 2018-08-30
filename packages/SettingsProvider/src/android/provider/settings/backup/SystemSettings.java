@@ -111,5 +111,8 @@ public class SystemSettings {
         Settings.System.NOTIFICATION_PULSE_DURATION,
         Settings.System.BATTERY_LEVEL_COLORS,
         Settings.System.SENSOR_BLOCK,
+        Settings.System.OMNIJAWS_WEATHER_ICON_PACK,
+        Settings.System.OMNI_LOCKSCREEN_WEATHER_ENABLED,
+        Settings.System.LOCKSCREEN_WEATHER_STYLE,
     };
 }
