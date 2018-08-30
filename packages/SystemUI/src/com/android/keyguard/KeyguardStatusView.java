@@ -48,6 +48,7 @@ import com.android.internal.util.spark.fod.FodUtils;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.systemui.Dependency;
 import com.android.systemui.R;
+import com.android.systemui.omni.CurrentWeatherView;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 
 import java.io.FileDescriptor;
@@ -78,6 +79,8 @@ public class KeyguardStatusView extends GridLayout implements
     private boolean mPulsing;
     private float mDarkAmount = 0;
     private int mTextColor;
+    private CurrentWeatherView mWeatherView;
+    private boolean mShowWeather;
 
     /**
      * Bottom margin that defines the margin between bottom of smart space and top of notification
@@ -108,6 +111,7 @@ public class KeyguardStatusView extends GridLayout implements
                 updateOwnerInfo();
                 updateLogoutView();
                 UpdateFPIcon();
+                updateSettings();
             }
         }
 
@@ -127,6 +131,7 @@ public class KeyguardStatusView extends GridLayout implements
             updateOwnerInfo();
             updateLogoutView();
             UpdateFPIcon();
+            updateSettings();
         }
 
         @Override
@@ -205,6 +210,9 @@ public class KeyguardStatusView extends GridLayout implements
         mClockView.setShowCurrentUserTime(true);
         mOwnerInfo = findViewById(R.id.owner_info);
         mKeyguardSlice = findViewById(R.id.keyguard_status_area);
+
+        mWeatherView = (CurrentWeatherView) findViewById(R.id.weather_container);
+
         mTextColor = mClockView.getCurrentTextColor();
 
         mKeyguardSlice.setContentChangeListener(this::onSliceContentChanged);
@@ -217,6 +225,7 @@ public class KeyguardStatusView extends GridLayout implements
         UpdateFPIcon();
         updateLogoutView();
         updateDark();
+        updateSettings();
 
     }
 
@@ -260,6 +269,9 @@ public class KeyguardStatusView extends GridLayout implements
         if (mOwnerInfo != null) {
             mOwnerInfo.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                     getResources().getDimensionPixelSize(R.dimen.widget_label_font_size));
+        }
+        if (mWeatherView != null) {
+            mWeatherView.onDensityOrFontScaleChanged();
         }
         loadBottomMargin();
     }
@@ -518,6 +530,25 @@ public class KeyguardStatusView extends GridLayout implements
 		} else {
 			Log.d("FluidLSManager", "FP icon: No fingerprint state matching! No changes will be done.");
 		}
+    }
+
+    private void updateSettings() {
+        final ContentResolver resolver = getContext().getContentResolver();
+        final Resources res = getContext().getResources();
+        mShowWeather = Settings.System.getIntForUser(resolver,
+                Settings.System.LOCKSCREEN_WEATHER_ENABLED, 0,
+                UserHandle.USER_CURRENT) == 1;
+
+        if (mWeatherView != null) {
+            if (mShowWeather) {
+                mWeatherView.setVisibility(View.VISIBLE);
+                mWeatherView.enableUpdates();
+            }
+            if (!mShowWeather) {
+                mWeatherView.setVisibility(View.GONE);
+                mWeatherView.disableUpdates();
+            }
+        }
     }
 }
 
