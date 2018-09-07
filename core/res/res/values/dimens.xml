@@ -861,6 +861,6 @@
     <dimen name="waterfall_display_bottom_edge_size">0px</dimen>
 
     <!-- For Material Toast -->
-    <dimen name="toast_elevation">2dp</dimen>
+    <dimen name="toast_elevation">4dp</dimen>
 
 </resources>
