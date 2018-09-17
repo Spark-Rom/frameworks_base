@@ -124,6 +124,7 @@ import com.android.internal.logging.UiEventLoggerImpl;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.statusbar.RegisterStatusBarResult;
+import com.android.internal.util.spark.SparkUtils;
 import com.android.internal.util.hwkeys.ActionConstants;
 import com.android.internal.util.hwkeys.ActionUtils;
 import com.android.internal.util.hwkeys.PackageMonitor;
@@ -252,7 +253,7 @@ import com.android.systemui.wmshell.BubblesManager;
 import com.android.wm.shell.bubbles.Bubbles;
 import com.android.wm.shell.startingsurface.SplashscreenContentDrawer;
 import com.android.wm.shell.startingsurface.StartingSurface;
-
+import com.android.systemui.tuner.TunerService;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
@@ -281,7 +282,12 @@ import dagger.Lazy;
 @SysUISingleton
 public class CentralSurfacesImpl extends CoreStartable implements
         CentralSurfaces,
-        PackageChangedListener {
+        PackageChangedListener,
+        TunerService.Tunable {
+
+
+    private static final String FORCE_SHOW_NAVBAR =
+            "system:" + Settings.System.FORCE_SHOW_NAVBAR;
 
     private static final String BANNER_ACTION_CANCEL =
             "com.android.systemui.statusbar.banner_action_cancel";
@@ -555,6 +561,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
     private final KeyguardUnlockAnimationController mKeyguardUnlockAnimationController;
     private final MessageRouter mMessageRouter;
     private final WallpaperManager mWallpaperManager;
+    private final TunerService mTunerService;
 
     private CentralSurfacesComponent mCentralSurfacesComponent;
 
@@ -797,6 +804,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
             @Main MessageRouter messageRouter,
             WallpaperManager wallpaperManager,
             Optional<StartingSurface> startingSurfaceOptional,
+            TunerService tunerService,
             ActivityLaunchAnimator activityLaunchAnimator,
             NotifPipelineFlags notifPipelineFlags,
             InteractionJankMonitor jankMonitor,
@@ -891,7 +899,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
         mWallpaperManager = wallpaperManager;
         mJankMonitor = jankMonitor;
         mDreamOverlayStateController = dreamOverlayStateController;
-
+        mTunerService = tunerService;
         mLockscreenShadeTransitionController = lockscreenShadeTransitionController;
         mStartingSurfaceOptional = startingSurfaceOptional;
         mNotifPipelineFlags = notifPipelineFlags;
@@ -948,6 +956,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
         mStatusBarStateController.addCallback(mStateListener,
                 SysuiStatusBarStateController.RANK_STATUS_BAR);
 
+        mTunerService.addTunable(this, FORCE_SHOW_NAVBAR);
         mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
 
         mDisplay = mContext.getDisplay();
@@ -4373,6 +4382,31 @@ public class CentralSurfacesImpl extends CoreStartable implements
     @Override
     public NotificationPanelViewController getPanelController() {
         return mNotificationPanelViewController;
+    }
+
+    @Override
+    public void onTuningChanged(String key, String newValue) {
+        switch (key) {
+            case FORCE_SHOW_NAVBAR:
+                if (mDisplayId != Display.DEFAULT_DISPLAY ||
+                        mWindowManagerService == null)
+                    return;
+                boolean mNavbarVisible =
+                        TunerService.parseIntegerSwitch(newValue, SparkUtils.hasNavbarByDefault(mContext));
+                boolean hasNavbar = getNavigationBarView() != null;
+                if (mNavbarVisible) {
+                    if (!hasNavbar) {
+                        mNavigationBarController.onDisplayReady(mDisplayId);
+                    }
+                } else {
+                    if (hasNavbar) {
+                        mNavigationBarController.onDisplayRemoved(mDisplayId);
+                    }
+                }
+                break;
+            default:
+                break;
+         }
     }
     // End Extra BaseStatusBarMethods.
 

@@ -51,6 +51,7 @@ import android.os.RemoteException;
 import android.graphics.Color;
 import android.os.ServiceManager;
 import android.os.SystemClock;
+import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
@@ -476,5 +477,17 @@ public class SparkUtils {
             }
             return null;
         }
+    }
+
+    public static boolean hasNavbarByDefault(Context context) {
+        boolean needsNav = context.getResources().getBoolean(
+                com.android.internal.R.bool.config_showNavigationBar);
+        String navBarOverride = SystemProperties.get("qemu.hw.mainkeys");
+        if ("1".equals(navBarOverride)) {
+            needsNav = false;
+        } else if ("0".equals(navBarOverride)) {
+            needsNav = true;
+        }
+        return needsNav;
     }
 }
