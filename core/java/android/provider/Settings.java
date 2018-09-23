@@ -5490,6 +5490,12 @@ public final class Settings {
         public static final String AMBIENT_LIGHT_REPEAT_COUNT = "ambient_light_repeat_count";
 
         /**
+         * What to show in network traffic indicator in statusbar
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_TYPE = "network_traffic_type";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
