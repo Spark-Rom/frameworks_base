@@ -144,7 +144,7 @@ import com.android.internal.protolog.common.ProtoLog;
 import com.android.internal.statusbar.LetterboxDetails;
 import com.android.internal.util.ScreenshotHelper;
 import com.android.internal.util.ScreenshotRequest;
-import com.android.internal.util.crdroid.Utils;
+import com.android.internal.util.spark.SparkUtils;
 import com.android.internal.util.function.TriConsumer;
 import com.android.internal.view.AppearanceRegion;
 import com.android.internal.widget.PointerLocationView;
@@ -666,7 +666,7 @@ public class DisplayPolicy {
 
         if (mDisplayContent.isDefaultDisplay) {
             mHasStatusBar = true;
-            mHasNavigationBar = Utils.hasNavbarByDefault(mContext);
+            mHasNavigationBar = SparkUtils.hasNavbarByDefault(mContext);
 
             // Register content observer only for main display
             mSettingsObserver = new SettingsObserver(mHandler);
