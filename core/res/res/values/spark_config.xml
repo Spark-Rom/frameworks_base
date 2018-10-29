@@ -269,4 +269,7 @@
         <item>com.shannon.imsservice</item>
         <item>org.pixelexperience.faceunlock</item>
     </string-array>
+
+    <!-- Whether device supports gestures on fingerprint sensor -->
+    <bool name="config_supportsGesturesOnFingerprintSensor">false</bool>
 </resources>
