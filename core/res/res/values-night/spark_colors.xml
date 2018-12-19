@@ -15,7 +15,6 @@
      limitations under the License.
 -->
 <resources>
-
     <!-- Color for the Assistant invocation lights -->
     <color name="edge_light_blue">#4185f4</color>
     <color name="edge_light_green">#3aa853</color>
