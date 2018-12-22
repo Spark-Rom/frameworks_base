@@ -6402,10 +6402,13 @@ public final class Settings {
         public static final String LOCKSCREEN_WEATHER_ENABLED = "lockscreen_weather_enabled";
 
         /**
-         * The camera instance to use.
-         * 0 = Rear Camera
-         * 1 = Front Camera
-         *
+         * 0: OmniJaws Style
+         * 1: KeyguardSlice Style
+         * @hide
+         */
+        public static final String LOCKSCREEN_WEATHER_STYLE = "lockscreen_weather_style";
+
+        /**
          * @hide
          */
         public static final String ON_THE_GO_CAMERA = "on_the_go_camera";
