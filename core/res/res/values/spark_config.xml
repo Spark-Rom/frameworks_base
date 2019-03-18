@@ -234,4 +234,7 @@
 
     <!-- Whether device has fingerprint on power button -->
     <bool name="config_powerButtonFingerprint">false</bool>
+
+    <!-- Whether or not we should show vendor mismatch message -->
+    <bool name="config_show_vendor_mismatch_message">true</bool>
 </resources>
