@@ -160,4 +160,6 @@
    <!-- Aerr -->
    <java-symbol type="id" name="aerr_disable" />
 
+   <!-- Smart charging battery percentage -->
+   <java-symbol type="integer" name="config_smartChargingBatteryLevel" />
 </resources>
