@@ -160,4 +160,8 @@
 
   <!-- DC Dimming -->
   <java-symbol type="string" name="config_deviceDcDimmingSysfsNode" />
+
+  <!-- Smart charging battery percentage -->
+  <java-symbol type="integer" name="config_smartChargingBatteryLevel" />
+	
 </resources>
