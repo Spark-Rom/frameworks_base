@@ -336,6 +336,7 @@ import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.util.MemInfoReader;
 import com.android.internal.util.Preconditions;
 import com.android.internal.util.spark.GamingModeController;
+import com.android.internal.util.spark.cutout.CutoutFullscreenController;
 import com.android.internal.util.function.HeptFunction;
 import com.android.internal.util.function.QuadFunction;
 import com.android.internal.util.function.TriFunction;
@@ -1679,6 +1680,8 @@ public class ActivityManagerService extends IActivityManager.Stub
 
     private ParcelFileDescriptor[] mLifeMonitorFds;
 
+    private CutoutFullscreenController mCutoutFullscreenController;
+    
     static final HostingRecord sNullHostingRecord = new HostingRecord(null);
 
     final SwipeToScreenshotObserver mSwipeToScreenshotObserver;
@@ -7937,6 +7940,9 @@ public class ActivityManagerService extends IActivityManager.Stub
 
         // Gaming mode provider
         mGamingModeController = new GamingModeController(mContext);
+
+        // Force full screen for devices with cutout
+        mCutoutFullscreenController = new CutoutFullscreenController(mContext);
     }
 
     void startPersistentApps(int matchFlags) {
@@ -20447,6 +20453,13 @@ public class ActivityManagerService extends IActivityManager.Stub
     public boolean isSwipeToScreenshotGestureActive() {
         synchronized (this) {
             return mIsSwipeToScreenshotEnabled && SystemProperties.getBoolean("sys.android.screenshot", false);
+        }
+    }
+
+    @Override
+    public boolean shouldForceCutoutFullscreen(String packageName) {
+        synchronized (this) {
+            return mCutoutFullscreenController.shouldForceCutoutFullscreen(packageName);
         }
     }
 }
