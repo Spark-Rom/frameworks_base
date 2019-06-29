@@ -43,6 +43,7 @@ import com.android.systemui.qs.tiles.DataSwitchTile;
 import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.qs.tiles.FlashlightTile;
 import com.android.systemui.qs.tiles.FPSInfoTile;
+import com.android.systemui.qs.tiles.GamingModeTile;
 import com.android.systemui.qs.tiles.HWKeysTile;
 import com.android.systemui.qs.tiles.HeadsUpTile;
 import com.android.systemui.qs.tiles.HotspotTile;
@@ -106,6 +107,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<CPUInfoTile> mCPUInfoTileProvider;
     private final Provider<DataSwitchTile> mDataSwitchTileProvider;
     private final Provider<FPSInfoTile> mFPSInfoTileProvider;
+    private final Provider<GamingModeTile> mGamingModeTileProvider;
     private final Provider<HWKeysTile> mHWKeysTileProvider;
     private final Provider<HeadsUpTile> mHeadsUpTileProvider;
     private final Provider<LocaleTile> mLocaleTileProvider;
@@ -151,6 +153,7 @@ public class QSFactoryImpl implements QSFactory {
             Provider<CPUInfoTile> cpuInfoTileProvider,
             Provider<DataSwitchTile> dataSwitchTileProvider,
             Provider<FPSInfoTile> fpsInfoTileProvider,
+            Provider<GamingModeTile> gamingModeTileProvider,
             Provider<HWKeysTile> hWKeysTileProvider,
             Provider<HeadsUpTile> headsUpTileProvider,
             Provider<LocaleTile> localeTileProvider,
@@ -192,6 +195,7 @@ public class QSFactoryImpl implements QSFactory {
         mCPUInfoTileProvider = cpuInfoTileProvider;
         mDataSwitchTileProvider = dataSwitchTileProvider;
         mFPSInfoTileProvider = fpsInfoTileProvider;
+        mGamingModeTileProvider = gamingModeTileProvider;
         mHWKeysTileProvider = hWKeysTileProvider;
         mHeadsUpTileProvider = headsUpTileProvider;
         mLocaleTileProvider = localeTileProvider;
@@ -271,6 +275,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mDataSwitchTileProvider.get();
             case "fpsinfo":
                 return mFPSInfoTileProvider.get();
+            case "gaming":
+                return mGamingModeTileProvider.get();
             case "heads_up":
                 return mHeadsUpTileProvider.get();
             case "hwkeys":
