@@ -317,6 +317,10 @@
     <permission android:name="com.breel.wallpapers.notifications"/>
     <uses-permission android:name="com.breel.wallpapers.notifications"/>
 
+    <!-- VPN Tile -->
+    <uses-permission android:name="android.permission.MAINLINE_NETWORK_STACK" />
+    <uses-permission android:name="android.permission.NETWORK_STACK" />
+
     <application
         android:name=".SystemUIApplication"
         android:persistent="true"
