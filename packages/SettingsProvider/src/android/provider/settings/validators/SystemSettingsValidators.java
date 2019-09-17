@@ -257,5 +257,16 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.GAMING_MODE_APP_LIST, GAMING_MODE_PACKAGE_LIST_VALIDATOR);
         VALIDATORS.put(System.GAMING_MODE_DISABLE_NOTIFICATION_ALERT, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.GAMING_MODE_DISABLE_ADB, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(
+                System.COLOR_BUCKET_OVERLAY,
+                new Validator() {
+                    @Override
+                    public boolean validate(String value) {
+                        if (value == null && value.isEmpty()) {
+                            return false;
+                        }
+                        return true;
+                    }
+                });
     }
 }
