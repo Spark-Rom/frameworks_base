@@ -104,6 +104,7 @@ public class NavigationBarInflaterView extends FrameLayout
 
     private int mHomeHandleWidthMode = 0;
     private int mHomeHandleRadiusMode = 0;
+    private boolean mNavBarLayoutInverse = false;
 
     public NavigationBarInflaterView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -113,6 +114,8 @@ public class NavigationBarInflaterView extends FrameLayout
         mNavBarMode = controller.addListener(this);
         mHomeHandleWidthMode = controller.getNavigationHandleWidthMode();
         mHomeHandleRadiusMode = controller.getNavigationHandleRadiusMode();
+        mNavBarLayoutInverse = controller.shouldInvertNavBarLayout();
+        updateLayoutInversion();
     }
 
     @VisibleForTesting
@@ -176,6 +179,25 @@ public class NavigationBarInflaterView extends FrameLayout
                 clearViews();
                 inflateLayout(getDefaultLayout());
             }
+         }
+    }
+
+    public void onNavBarLayoutInverseChanged(boolean inverse) {
+        if (mNavBarLayoutInverse == inverse) return;
+        mNavBarLayoutInverse = inverse;
+        if (mNavBarMode != NAV_BAR_MODE_3BUTTON) return;
+        updateLayoutInversion();
+    }
+
+    private void updateLayoutInversion() {
+        if (mNavBarLayoutInverse) {
+            final int layoutDirection = mContext.getResources()
+                .getConfiguration().getLayoutDirection();
+            setLayoutDirection(layoutDirection == LAYOUT_DIRECTION_RTL
+                ? LAYOUT_DIRECTION_LTR
+                : LAYOUT_DIRECTION_RTL);
+        } else {
+            setLayoutDirection(LAYOUT_DIRECTION_INHERIT);
         }
     }
 
@@ -183,6 +205,12 @@ public class NavigationBarInflaterView extends FrameLayout
     protected void onDetachedFromWindow() {
         Dependency.get(NavigationModeController.class).removeListener(this);
         super.onDetachedFromWindow();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        updateLayoutInversion();
     }
 
     public void onLikelyDefaultLayoutChange() {
