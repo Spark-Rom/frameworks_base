@@ -43,6 +43,7 @@ import com.android.systemui.qs.tiles.DataSwitchTile;
 import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.qs.tiles.FlashlightTile;
 import com.android.systemui.qs.tiles.FPSInfoTile;
+import com.android.systemui.qs.tiles.HWKeysTile;
 import com.android.systemui.qs.tiles.HeadsUpTile;
 import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.LocaleTile;
@@ -105,6 +106,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<CPUInfoTile> mCPUInfoTileProvider;
     private final Provider<DataSwitchTile> mDataSwitchTileProvider;
     private final Provider<FPSInfoTile> mFPSInfoTileProvider;
+    private final Provider<HWKeysTile> mHWKeysTileProvider;
     private final Provider<HeadsUpTile> mHeadsUpTileProvider;
     private final Provider<LocaleTile> mLocaleTileProvider;
     private final Provider<MonoToggleTile> mMonoToggleTileProvider;
@@ -149,6 +151,7 @@ public class QSFactoryImpl implements QSFactory {
             Provider<CPUInfoTile> cpuInfoTileProvider,
             Provider<DataSwitchTile> dataSwitchTileProvider,
             Provider<FPSInfoTile> fpsInfoTileProvider,
+            Provider<HWKeysTile> hWKeysTileProvider,
             Provider<HeadsUpTile> headsUpTileProvider,
             Provider<LocaleTile> localeTileProvider,
             Provider<MonoToggleTile> monoToggleTileProvider,
@@ -189,6 +192,7 @@ public class QSFactoryImpl implements QSFactory {
         mCPUInfoTileProvider = cpuInfoTileProvider;
         mDataSwitchTileProvider = dataSwitchTileProvider;
         mFPSInfoTileProvider = fpsInfoTileProvider;
+        mHWKeysTileProvider = hWKeysTileProvider;
         mHeadsUpTileProvider = headsUpTileProvider;
         mLocaleTileProvider = localeTileProvider;
         mMonoToggleTileProvider = monoToggleTileProvider;
@@ -269,6 +273,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mFPSInfoTileProvider.get();
             case "heads_up":
                 return mHeadsUpTileProvider.get();
+            case "hwkeys":
+                return mHWKeysTileProvider.get();
             case "locale":
                 return mLocaleTileProvider.get();
             case "mono":
