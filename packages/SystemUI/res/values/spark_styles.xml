@@ -21,4 +21,10 @@
         <item name="android:textSize">14dp</item>
         <item name="android:fontFamily">@*android:string/config_bodyFontFamily</item>
     </style>
+
+    <!-- Tri State Ui-->
+    <style name="TriStateUiText">
+        <item name="android:textSize">11.0sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
 </resources>
