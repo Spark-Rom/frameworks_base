@@ -235,4 +235,6 @@
     <string name="applock_unlock">Unlock</string>
 
     <string name="status_bar_ims">VoLTE/VoWiFi</string
+    <string name="status_bar_data_disabled">Data disabled</string>
+
 </resources>
