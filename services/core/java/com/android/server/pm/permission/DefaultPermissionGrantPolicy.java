@@ -705,6 +705,27 @@ final class DefaultPermissionGrantPolicy {
                         Intent.CATEGORY_APP_EMAIL, userId),
                 userId, CONTACTS_PERMISSIONS, CALENDAR_PERMISSIONS);
 
+        // Browser
+        String browserPackage = ArrayUtils.firstOrNull(getKnownPackages(
+                PackageManagerInternal.PACKAGE_BROWSER, userId));
+        if (browserPackage == null) {
+            browserPackage = getDefaultSystemHandlerActivityPackageForCategory(pm,
+                    Intent.CATEGORY_APP_BROWSER, userId);
+            if (!pm.isSystemPackage(browserPackage)) {
+                browserPackage = null;
+            }
+        }
+        grantPermissionsToPackage(pm, browserPackage, userId, false /* ignoreSystemPackage */,
+                true /*whitelistRestrictedPermissions*/, FOREGROUND_LOCATION_PERMISSIONS);
+
+        // Chrome
+        String chromePackage = "org.chromium.chrome";
+        PackageInfo pkg = pm.getPackageInfo(chromePackage);
+        if (pkg != null) {
+            grantPermissionsToPackage(pm, chromePackage, userId, false /* ignoreSystemPackage */,
+                    true /*whitelistRestrictedPermissions*/, CONTACTS_PERMISSIONS, STORAGE_PERMISSIONS);
+        }
+
         // Voice interaction
         if (voiceInteractPackageNames != null) {
             for (String voiceInteractPackageName : voiceInteractPackageNames) {
