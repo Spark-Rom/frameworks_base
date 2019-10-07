@@ -89,5 +89,6 @@ public class SystemSettings {
         Settings.System.NAVIGATION_BAR_INVERSE,
         Settings.System.GESTURE_NAVBAR_RADIUS,
         Settings.System.ENABLE_RIPPLE_EFFECT,
+        Settings.System.DOZE_ON_CHARGE,
     };
 }
