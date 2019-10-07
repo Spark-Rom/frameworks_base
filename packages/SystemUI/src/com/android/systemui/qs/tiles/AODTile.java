@@ -19,8 +19,11 @@ package com.android.systemui.qs.tiles;
 import android.annotation.Nullable;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.database.ContentObserver;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.service.quicksettings.Tile;
 import android.view.View;
@@ -42,6 +45,7 @@ import javax.inject.Inject;
 
 public class AODTile extends QSTileImpl<BooleanState> {
     private boolean mAodDisabled;
+    private boolean mListening;
     private final Icon mIcon = ResourceIcon.get(R.drawable.ic_qs_aod);
 
     @Inject
@@ -76,9 +80,9 @@ public class AODTile extends QSTileImpl<BooleanState> {
     @Override
     public void handleClick(@Nullable View view) {
         mAodDisabled = !mAodDisabled;
-        Settings.Secure.putInt(mContext.getContentResolver(),
+        Settings.Secure.putIntForUser(mContext.getContentResolver(),
                 Settings.Secure.DOZE_ALWAYS_ON,
-                mAodDisabled ? 0 : 1);
+                mAodDisabled ? 0 : 1, UserHandle.USER_CURRENT);
         refreshState();
     }
 
@@ -97,6 +101,8 @@ public class AODTile extends QSTileImpl<BooleanState> {
         if (state.slash == null) {
             state.slash = new SlashState();
         }
+        mAodDisabled = Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                Settings.Secure.DOZE_ALWAYS_ON, 1, UserHandle.USER_CURRENT) == 0;
         state.icon = mIcon;
         state.value = mAodDisabled;
         state.slash.isSlashed = state.value;
@@ -113,8 +119,26 @@ public class AODTile extends QSTileImpl<BooleanState> {
         return MetricsEvent.SPARK_QS_TILES;
     }
 
+    private ContentObserver mObserver = new ContentObserver(mHandler) {
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            refreshState();
+        }
+    };
+
     @Override
     public void handleSetListening(boolean listening) {
-        // Do nothing
+        if (mObserver == null) {
+            return;
+        }
+        if (mListening != listening) {
+            mListening = listening;
+            if (listening) {
+                mContext.getContentResolver().registerContentObserver(
+                        Settings.Secure.getUriFor(Settings.Secure.DOZE_ALWAYS_ON), false, mObserver);
+            } else {
+                mContext.getContentResolver().unregisterContentObserver(mObserver);
+            }
+        }
     }
 }

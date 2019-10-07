@@ -16,6 +16,7 @@
 
 package android.provider.settings.validators;
 
+import static android.provider.settings.validators.SettingsValidators.ANY_INTEGER_VALIDATOR;
 import static android.provider.settings.validators.SettingsValidators.ANY_STRING_VALIDATOR;
 import static android.provider.settings.validators.SettingsValidators.BOOLEAN_VALIDATOR;
 import static android.provider.settings.validators.SettingsValidators.COMPONENT_NAME_VALIDATOR;
@@ -205,5 +206,6 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.NETWORK_TRAFFIC_ENABLED, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.NETWORK_TRAFFIC_AUTO_HIDE_THRESHOLD_TX, NON_NEGATIVE_INTEGER_VALIDATOR);
         VALIDATORS.put(System.NETWORK_TRAFFIC_AUTO_HIDE_THRESHOLD_RX, NON_NEGATIVE_INTEGER_VALIDATOR);
+        VALIDATORS.put(System.DOZE_ON_CHARGE, BOOLEAN_VALIDATOR);
     }
 }
