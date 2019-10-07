@@ -92,5 +92,6 @@ public class SystemSettings {
         Settings.System.FULLSCREEN_GESTURES,
         Settings.System.NAVIGATION_BAR_INVERSE,
         Settings.System.ENABLE_RIPPLE_EFFECT,
+        Settings.System.DOZE_ON_CHARGE,
     };
 }

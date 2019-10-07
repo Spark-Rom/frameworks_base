@@ -682,6 +682,9 @@ public class UserRestrictionsUtils {
                         final AmbientDisplayConfiguration config =
                                 new AmbientDisplayConfiguration(context);
                         config.disableDozeSettings(userId);
+                        android.provider.Settings.System.putIntForUser(
+                                context.getContentResolver(),
+                                Settings.System.DOZE_ON_CHARGE, 0, userId);
                     }
                     break;
                 case UserManager.DISALLOW_APPS_CONTROL:
