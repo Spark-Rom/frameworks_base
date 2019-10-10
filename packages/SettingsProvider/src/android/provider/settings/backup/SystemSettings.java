@@ -101,5 +101,8 @@ public class SystemSettings {
         Settings.System.STATUS_BAR_LOGO,
         Settings.System.STATUS_BAR_LOGO_POSITION,
         Settings.System.STATUS_BAR_LOGO_STYLE,
+        Settings.System.PULSE_AMBIENT_LIGHT,
+        Settings.System.AMBIENT_NOTIFICATION_LIGHT_ENABLED,
+        Settings.System.AMBIENT_NOTIFICATION_LIGHT,
     };
 }
