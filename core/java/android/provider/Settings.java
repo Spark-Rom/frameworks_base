@@ -5957,6 +5957,12 @@ public final class Settings {
         public static final String HEADER_ICONS_STYLE = "headers_icons_style";
 
         /**
+         * Enable and disable Lockscreen visualizer
+         * @hide
+         */
+        public static final String LOCKSCREEN_VISUALIZER_ENABLED = "lockscreen_visualizer_enabled";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
