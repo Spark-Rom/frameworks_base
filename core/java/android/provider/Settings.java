@@ -5807,6 +5807,12 @@ public final class Settings {
         public static final String DOZE_ON_CHARGE = "doze_on_charge";
 
         /**
+         * Whether to show qs footer text
+         * @hide
+         */
+        public static final String QS_FOOTER_TEXT_SHOW = "qs_footer_text_show";
+
+        /**
          * The alpha value of the On-The-Go overlay.
          *
          * @hide
