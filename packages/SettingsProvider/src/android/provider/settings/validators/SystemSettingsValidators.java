@@ -255,5 +255,6 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.GESTURE_NAVBAR_RADIUS, new InclusiveIntegerRangeValidator(0, 3));
         VALIDATORS.put(System.ENABLE_RIPPLE_EFFECT, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.DOZE_ON_CHARGE, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.QS_FOOTER_TEXT_SHOW, BOOLEAN_VALIDATOR);
     }
 }
