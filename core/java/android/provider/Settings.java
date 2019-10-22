@@ -5881,6 +5881,12 @@ public final class Settings {
         public static final String QS_MEDIA_PLAYER = "qs_media_player";
 
         /**
+         * Whether to avoid launching the app on touching heads-up
+         * @hide
+         */
+        public static final String DONT_TOUCH_HEADSUP = "dont_touch_headsup";
+
+        /**
          * Enable and disable Artwork on background media notification
          * @hide
          */
@@ -6061,6 +6067,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(QS_PANEL_BG_COLOR);
             PRIVATE_SETTINGS.add(QS_PANEL_BG_USE_FW);
             PRIVATE_SETTINGS.add(CENTER_NOTIFICATION_HEADERS);
+            PRIVATE_SETTINGS.add(DONT_TOUCH_HEADSUP);
         }
 
         /**
