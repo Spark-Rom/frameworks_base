@@ -23,6 +23,7 @@ import static android.provider.settings.validators.SettingsValidators.LENIENT_IP
 import static android.provider.settings.validators.SettingsValidators.NON_NEGATIVE_INTEGER_VALIDATOR;
 import static android.provider.settings.validators.SettingsValidators.URI_VALIDATOR;
 import static android.provider.settings.validators.SettingsValidators.VIBRATION_INTENSITY_VALIDATOR;
+import static android.provider.settings.validators.SettingsValidators.ANY_INTEGER_VALIDATOR;
 
 import android.annotation.Nullable;
 import android.compat.annotation.UnsupportedAppUsage;
@@ -209,5 +210,6 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.NOTIFICATION_LIGHT_PULSE, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.ACCELEROMETER_ROTATION_ANGLES, NON_NEGATIVE_INTEGER_VALIDATOR);
         VALIDATORS.put(System.QS_DATA_USAGE_PANEL, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.QS_SYSTEM_INFO, ANY_INTEGER_VALIDATOR);
     }
 }

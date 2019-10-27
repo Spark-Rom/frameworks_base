@@ -88,5 +88,6 @@ public class SystemSettings {
         Settings.System.ALARM_ALERT,
         Settings.System.NOTIFICATION_LIGHT_PULSE,
         Settings.System.QS_DATA_USAGE_PANEL,
+        Settings.System.QS_SYSTEM_INFO,
     };
 }

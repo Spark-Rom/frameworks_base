@@ -129,6 +129,9 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
     private boolean mHeaderImageEnabled;
     private int mHeaderImageValue;
 
+    // Qs System Info
+    private View mSystemInfoLayout;
+
     @Nullable
     private TintedIconManager mTintedIconManager;
     @Nullable
@@ -197,7 +200,7 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         mQsHeaderLayout = findViewById(R.id.layout_header);
         mQsHeaderImageView = findViewById(R.id.qs_header_image_view);
         mQsHeaderImageView.setClipToOutline(true);
-
+        mSystemInfoLayout = findViewById(R.id.system_info_layout);
         mBatteryIcon = findViewById(R.id.batteryIcon);
 
         Configuration config = mContext.getResources().getConfiguration();
@@ -422,6 +425,7 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                 // These views appear on expanding down
                 .addFloat(mDateView, "alpha", 0, 0, 1)
                 .addFloat(mClockDateView, "alpha", 1, 0, 0)
+                .addFloat(mSystemInfoLayout, "alpha", 1, 1)
                 .addFloat(mQSCarriers, "alpha", 0, 1)
                 .setListener(new TouchAnimator.ListenerAdapter() {
                     @Override

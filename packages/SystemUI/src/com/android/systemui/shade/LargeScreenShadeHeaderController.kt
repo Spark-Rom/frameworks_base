@@ -35,6 +35,7 @@ import android.util.Pair
 import android.view.View
 import android.view.WindowInsets
 import android.widget.TextView
+import android.widget.LinearLayout
 import androidx.annotation.VisibleForTesting
 import androidx.constraintlayout.motion.widget.MotionLayout
 import com.android.settingslib.Utils
@@ -166,6 +167,7 @@ class LargeScreenShadeHeaderController @Inject constructor(
     private val batteryIcon: BatteryMeterView = header.findViewById(R.id.batteryRemainingIcon)
     private val clock: Clock = header.findViewById(R.id.clock)
     private val date: TextView = header.findViewById(R.id.date)
+    private val systeminfo: LinearLayout = header.findViewById(R.id.system_info_layout)
     private val iconContainer: StatusIconContainer = header.findViewById(R.id.statusIcons)
     private val qsCarrierGroup: QSCarrierGroup = header.findViewById(R.id.carrier_group)
 
@@ -177,6 +179,7 @@ class LargeScreenShadeHeaderController @Inject constructor(
     private var textColorPrimary = Color.TRANSPARENT
 
     private var qsDisabled = false
+    private var privacyChipVisible = false
     private var visible = false
         set(value) {
             if (field == value) {
@@ -277,6 +280,8 @@ class LargeScreenShadeHeaderController @Inject constructor(
                     .privacyChipVisibilityConstraints(visible)
                 header.updateAllConstraints(update)
             }
+            privacyChipVisible = visible
+            setSystemInfoVisible(qsExpandedFraction == 1f && !privacyChipVisible)
         }
     }
 
@@ -376,7 +381,7 @@ class LargeScreenShadeHeaderController @Inject constructor(
         if (combinedHeaders) {
             privacyIconsController.onParentVisible()
         }
-
+        setSystemInfoVisible(false)
         clock.setQsHeader()
 
         clock.setOnClickListener {
@@ -554,6 +559,7 @@ class LargeScreenShadeHeaderController @Inject constructor(
             logInstantEvent("updatePosition: $qsExpandedFraction")
             header.progress = qsExpandedFraction
         }
+        setSystemInfoVisible(qsExpandedFraction == 1f && !privacyChipVisible)
     }
 
     private fun logInstantEvent(message: String) {
@@ -625,6 +631,12 @@ class LargeScreenShadeHeaderController @Inject constructor(
             )
         }
     }
+
+    private fun setSystemInfoVisible(visible: Boolean) {
+        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        systeminfo.setAlpha(if (visible && !isLandscape) 1f else 0f)
+    }
+
 
     override fun dump(pw: PrintWriter, args: Array<out String>) {
         pw.println("visible: $visible")

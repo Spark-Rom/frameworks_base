@@ -103,6 +103,31 @@
             systemui:textAppearance="@style/TextAppearance.QS.Status"
             android:paddingEnd="2dp" />
 
+    <LinearLayout
+        android:id="@+id/system_info_layout"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:focusable="true" >
+        <com.android.systemui.spark.systeminfo.QsSystemInfoImage
+            android:id="@+id/system_info_icon"
+            android:layout_width="@dimen/qs_header_alarm_icon_size"
+            android:layout_height="@dimen/qs_header_alarm_icon_size"
+            android:paddingStart="@dimen/status_bar_left_clock_starting_padding"
+            android:visibility="gone" />
+        <com.android.systemui.spark.systeminfo.QsSystemInfoText
+            android:id="@+id/system_info_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:marqueeRepeatLimit="1"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.QS.Status"
+            android:gravity="center_vertical"
+            android:paddingEnd="@dimen/status_bar_left_clock_end_padding"
+            android:visibility="gone"/>
+    </LinearLayout>
+
     </LinearLayout>
     </FrameLayout>
 

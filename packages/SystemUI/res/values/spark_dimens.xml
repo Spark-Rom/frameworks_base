@@ -92,4 +92,8 @@
     <!-- QS Header height full -->
     <dimen name="qs_header_height_full">200dp</dimen>
 
+    <!-- QS System Info -->
+    <dimen name="qs_header_alarm_icon_size">@dimen/status_bar_icon_drawing_size</dimen>
+    <dimen name="qs_status_separator">8dp</dimen>
+    <dimen name="qs_temperatur_icon_size">16sp</dimen>
 </resources>

@@ -6283,6 +6283,18 @@ public final class Settings {
         public static final String HIDE_NOTIFICATION_ICONS = "hide_notification_icons";
 
         /**
+         * Shows system info in QS OFF:0, CPU temp:1, battery temp:2, gpu freq: 3, gpu load: 4
+         * @hide
+         */
+        public static final String QS_SYSTEM_INFO = "qs_system_info";
+
+        /**
+         * Shows system info icon
+         * @hide
+         */
+        public static final String QS_SYSTEM_INFO_ICON = "qs_system_info_icon";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -6405,6 +6417,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_MODE_VENDOR_HINT);
             PRIVATE_SETTINGS.add(DESKTOP_MODE);
             PRIVATE_SETTINGS.add(OMNIJAWS_WEATHER_ICON_PACK);
+            PRIVATE_SETTINGS.add(QS_SYSTEM_INFO);
         }
 
         /**
