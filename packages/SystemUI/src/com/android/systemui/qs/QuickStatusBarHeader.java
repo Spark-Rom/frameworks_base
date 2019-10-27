@@ -17,12 +17,19 @@ package com.android.systemui.qs;
 import static android.app.StatusBarManager.DISABLE2_QUICK_SETTINGS;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.database.ContentObserver;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.UserHandle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.provider.Settings;
 import android.provider.AlarmClock;
 import android.util.AttributeSet;
@@ -32,8 +39,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowInsets;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Space;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,7 +62,13 @@ import com.android.systemui.statusbar.policy.VariableDateView;
 import com.android.systemui.util.LargeScreenUtils;
 import com.android.systemui.tuner.TunerService;
 
-import lineageos.providers.LineageSettings;
+import com.android.systemui.Dependency;
+
+import android.provider.Settings;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.File;
 
 import java.util.List;
 
@@ -77,6 +92,9 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
             "system:" + Settings.System.QS_SHOW_BATTERY_PERCENT;
     private static final String QS_SHOW_BATTERY_ESTIMATE =
             "system:" + Settings.System.QS_SHOW_BATTERY_ESTIMATE;
+
+    private final Handler mHandler = new Handler();
+    public static final String QS_SHOW_INFO_HEADER = "qs_show_info_header";
 
     private boolean mExpanded;
     private boolean mQsDisabled;
@@ -120,6 +138,16 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
     private QSExpansionPathInterpolator mQSExpansionPathInterpolator;
     private StatusBarContentInsetsProvider mInsetsProvider;
 
+    private TextView mSystemInfoText;
+    private int mSystemInfoMode;
+    private ImageView mSystemInfoIcon;
+    private String mSysCPUTemp;
+    private String mSysBatTemp;
+    private String mSysGPUFreq;
+    private String mSysGPULoad;
+    private int mSysCPUTempMultiplier;
+    private int mSysBatTempMultiplier;
+
     private int mRoundedCornerPadding = 0;
     private int mStatusBarPaddingStart;
     private int mStatusBarPaddingEnd;
@@ -146,7 +174,13 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
     public QuickStatusBarHeader(Context context, AttributeSet attrs) {
         super(context, attrs);
         mActivityStarter = Dependency.get(ActivityStarter.class);
+<<<<<<< HEAD
     }
+=======
+        mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        mSystemInfoMode = getQsSystemInfoMode();
+     }
+>>>>>>> e0e90b398a73 ([SQUASH]: SystemUI: Add QS System Info [1/2])
 
     /**
      * How much the view containing the clock and QQS will translate down when QS is fully expanded.
@@ -174,6 +208,8 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         mRightLayout = findViewById(R.id.rightLayout);
         mDateContainer = findViewById(R.id.date_container);
         mPrivacyContainer = findViewById(R.id.privacy_container);
+        mSystemInfoIcon = findViewById(R.id.system_info_icon);
+        mSystemInfoText = findViewById(R.id.system_info_text);
 
         mClockContainer = findViewById(R.id.clock_container);
         mClockView = findViewById(R.id.clock);
@@ -190,6 +226,13 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         Configuration config = mContext.getResources().getConfiguration();
         setDatePrivacyContainersWidth(config.orientation == Configuration.ORIENTATION_LANDSCAPE);
 
+<<<<<<< HEAD
+=======
+        setBatteryClickable(true);
+	updateSysInfoResources();
+        updateSettings();
+
+>>>>>>> e0e90b398a73 ([SQUASH]: SystemUI: Add QS System Info [1/2])
         mIconsAlphaAnimatorFixed = new TouchAnimator.Builder()
                 .addFloat(mIconContainer, "alpha", 0, 1)
                 .addFloat(mBatteryRemainingIcon, "alpha", 0, 1)
@@ -224,6 +267,112 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
 
         mQSExpansionPathInterpolator = qsExpansionPathInterpolator;
         updateAnimators();
+    }
+
+    private int getQsSystemInfoMode() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_SYSTEM_INFO, 0);
+    }
+
+    private void updateSystemInfoText() {
+        mSystemInfoText.setVisibility(View.GONE);
+        mSystemInfoIcon.setVisibility(View.GONE);
+        if (mSystemInfoMode == 0) return;
+        int defaultMultiplier = 1;
+        String systemInfoText = " ";
+        switch (mSystemInfoMode) {
+            case 1:
+                mSystemInfoIcon.setImageDrawable(getContext().getDrawable(R.drawable.ic_cpu_thermometer));
+                systemInfoText = getSystemInfo(mSysCPUTemp, mSysCPUTempMultiplier, "\u2103", true);
+                break;
+            case 2:
+                mSystemInfoIcon.setImageDrawable(getContext().getDrawable(R.drawable.ic_batt_thermometer));
+                systemInfoText = getSystemInfo(mSysBatTemp, mSysBatTempMultiplier, "\u2103", true);
+                break;
+            case 3:
+                mSystemInfoIcon.setImageDrawable(getContext().getDrawable(R.drawable.ic_speed_gpu));
+                systemInfoText = getSystemInfo(mSysGPUFreq, defaultMultiplier, "Mhz", true);
+                break;
+            case 4:
+                mSystemInfoIcon.setImageDrawable(getContext().getDrawable(R.drawable.ic_memory_gpu));
+                systemInfoText = getGPUBusy();
+                break;
+        }
+        if (systemInfoText != " " && systemInfoText != null && !systemInfoText.isEmpty()) {
+            mSystemInfoText.setText(systemInfoText);
+            mSystemInfoIcon.setVisibility(View.VISIBLE);
+            mSystemInfoText.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public static boolean fileExists(String fileName) {
+        final File file = new File(fileName);
+        return file.exists();
+    }
+    
+    private static String readOneLine(String fname) {
+        BufferedReader br;
+        String line = null;
+        try {
+            br = new BufferedReader(new FileReader(fname), 512);
+            try {
+                line = br.readLine();
+            } finally {
+                br.close();
+            }
+        } catch (Exception e) {
+            return null;
+        }
+        return line;
+    }
+    
+    public static boolean isValueNumeric(String string) {
+    	int intValue;
+		
+        if(string == null || string.equals("")) {
+            return false;
+        }
+    
+        try {
+            intValue = Integer.parseInt(string);
+            return true;
+        } catch (NumberFormatException e) {
+        }
+        return false;
+    }
+
+
+    private String getGPUBusy() {
+    	String gpuBusyValue;
+        if (!mSysGPULoad.isEmpty() && fileExists(mSysGPULoad)) {
+            gpuBusyValue = readOneLine(mSysGPULoad);
+            if (gpuBusyValue == null) {
+              gpuBusyValue = " ";
+            }
+            return gpuBusyValue;
+        }
+        return " ";
+    }
+
+   private String getSystemInfo(String sysPath, int multiplier, String unit, boolean returnFormatted) {
+   	String formattedValue;
+   	String value;
+
+        if (!sysPath.isEmpty() && fileExists(sysPath)) {
+            value = readOneLine(sysPath);
+            if (value == null) {
+              value = " ";
+            }
+            if (isValueNumeric(value)) {
+              formattedValue = String.format("%s", Integer.parseInt(value) / multiplier) + unit;
+            } else {
+              formattedValue = " ";
+              value = " ";
+            }
+            return returnFormatted ? formattedValue : value;
+        }
+        return " ";
+
     }
 
     void setIsSingleCarrier(boolean isSingleCarrier) {
@@ -270,6 +419,28 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         lp.width = landscape ? WRAP_CONTENT : 0;
         lp.weight = landscape ? 0f : 1f;
         mPrivacyContainer.setLayoutParams(lp);
+    }
+
+    private void updateSysInfoResources(){
+        Resources resources = mContext.getResources();
+        mSysCPUTemp = resources.getString(
+                  com.android.internal.R.string.config_sysCPUTemp);
+        mSysBatTemp = resources.getString(
+                  com.android.internal.R.string.config_sysBatteryTemp);
+        mSysGPUFreq = resources.getString(
+                  com.android.internal.R.string.config_sysGPUFreq);
+        mSysGPULoad = resources.getString(
+                  com.android.internal.R.string.config_sysGPULoad);
+        mSysCPUTempMultiplier = resources.getInteger(
+                  com.android.internal.R.integer.config_sysCPUTempMultiplier);
+        mSysBatTempMultiplier = resources.getInteger(
+                  com.android.internal.R.integer.config_sysBatteryTempMultiplier);
+    }
+
+    public void updateSettings() {
+        mSystemInfoMode = getQsSystemInfoMode();
+        updateSystemInfoText();
+        updateResources();
     }
 
     void updateResources() {
@@ -448,6 +619,7 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         if (mExpanded == expanded) return;
         mExpanded = expanded;
         quickQSPanelController.setExpanded(expanded);
+        updateSystemInfoText();
         updateEverything();
     }
 
@@ -481,6 +653,7 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         }
 
         mKeyguardExpansionFraction = keyguardExpansionFraction;
+        updateSystemInfoText();
     }
 
     public void disable(int state1, int state2, boolean animate) {

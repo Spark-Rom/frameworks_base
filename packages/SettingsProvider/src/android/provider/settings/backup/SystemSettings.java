@@ -111,5 +111,6 @@ public class SystemSettings {
         Settings.System.MEDIA_ARTWORK_BLUR_ENABLED,
         Settings.System.MEDIA_ARTWORK_BLUR_RADIUS,
         Settings.System.VOLUME_BUTTON_MUSIC_CONTROL,
+        Settings.System.QS_SYSTEM_INFO,
     };
 }

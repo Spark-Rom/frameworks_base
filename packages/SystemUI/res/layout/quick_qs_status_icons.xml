@@ -71,6 +71,34 @@
         android:layout_gravity="end|center_vertical"
         android:focusable="false"/>
 
+    <LinearLayout
+        android:id="@+id/system_info_layout"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_marginStart="2dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:focusable="true" >
+
+        <ImageView
+            android:id="@+id/system_info_icon"
+            android:layout_width="@dimen/qs_header_alarm_icon_size"
+            android:layout_height="@dimen/qs_header_alarm_icon_size"
+            android:paddingStart="2dp"
+            android:gravity="center_vertical|start"
+            android:visibility="gone" />
+
+        <com.android.systemui.util.AutoMarqueeTextView
+            android:id="@+id/system_info_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:singleLine="true"
+            android:paddingStart="2dp"
+            android:textAppearance="@style/TextAppearance.QS.Status"
+            android:gravity="center_vertical|start"
+            android:visibility="gone"/>
+    </LinearLayout>
+
     <View
         android:id="@+id/separator"
         android:layout_width="0dp"

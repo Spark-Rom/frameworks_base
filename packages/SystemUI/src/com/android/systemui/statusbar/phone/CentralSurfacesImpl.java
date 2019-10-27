@@ -47,6 +47,8 @@ import android.app.ActivityManager;
 import android.app.ActivityOptions;
 import android.app.ActivityTaskManager;
 import android.app.IWallpaperManager;
+import android.content.res.Resources;
+import android.database.ContentObserver;
 import android.app.KeyguardManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -117,6 +119,8 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleRegistry;
+import com.android.systemui.dagger.qualifiers.Background;
+import com.android.systemui.util.settings.SystemSettings;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.colorextraction.ColorExtractor;
@@ -190,6 +194,7 @@ import com.android.systemui.pulse.PulseControllerImpl;
 import com.android.systemui.pulse.VisualizerView;
 import com.android.systemui.qs.QSFragment;
 import com.android.systemui.qs.QSPanelController;
+import com.android.systemui.qs.QuickStatusBarHeader;
 import com.android.systemui.recents.ScreenPinningRequest;
 import com.android.systemui.ripple.RippleShader.RippleShape;
 import com.android.systemui.scrim.ScrimView;
@@ -539,6 +544,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
 
     protected TaskHelper mTaskHelper;
     protected GameSpaceManager mGameSpaceManager;
+    private CustomSettingsObserver mCustomSettingsObserver;
 
     private final PulseControllerImpl mPulseController;
 
@@ -551,6 +557,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
 
     // settings
     private QSPanelController mQSPanelController;
+    private QuickStatusBarHeader mQuickStatusBarHeader;
 
     KeyguardIndicationController mKeyguardIndicationController;
 
@@ -728,6 +735,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
         onBackPressed();
     };
     private final SysUiState mSysUiState;
+    private final SystemSettings mSystemSettings;
     private final BurnInProtectionController mBurnInProtectionController;
 
     /**
@@ -829,7 +837,9 @@ public class CentralSurfacesImpl extends CoreStartable implements
             IDreamManager dreamManager,
             TaskHelper taskHelper,
             SysUiState sysUiState,
-            BurnInProtectionController burnInProtectionController) {
+            BurnInProtectionController burnInProtectionController,
+            SystemSettings systemSettings,
+            @Background Handler backgroundHandler) {
         super(context);
         mNotificationsController = notificationsController;
         mFragmentService = fragmentService;
@@ -930,7 +940,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
         mActivityIntentHelper = new ActivityIntentHelper(mContext);
         mActivityLaunchAnimator = activityLaunchAnimator;
         mGameSpaceManager = new GameSpaceManager(mContext, mKeyguardStateController);
-
+        mSystemSettings = systemSettings;
         // The status bar background may need updating when the ongoing call status changes.
         mOngoingCallController.addCallback((animate) -> maybeUpdateBarMode());
 
@@ -1024,6 +1034,9 @@ public class CentralSurfacesImpl extends CoreStartable implements
 
         // Set up the initial notification state. This needs to happen before CommandQueue.disable()
         setUpPresenter();
+
+        mCustomSettingsObserver.observe();
+        mCustomSettingsObserver.update();
 
         if (containsType(result.mTransientBarTypes, ITYPE_STATUS_BAR)) {
             showTransientUnchecked();
@@ -1367,6 +1380,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
                 if (qs instanceof QSFragment) {
                     mQSPanelController = ((QSFragment) qs).getQSPanelController();
                     ((QSFragment) qs).setBrightnessMirrorController(mBrightnessMirrorController);
+                    mQuickStatusBarHeader = ((QSFragment) qs).getQuickStatusBarHeader();
                 }
             });
         }
@@ -2114,6 +2128,42 @@ public class CentralSurfacesImpl extends CoreStartable implements
 
         AnimateExpandSettingsPanelMessage(String subpanel) {
             mSubpanel = subpanel;
+        }
+    }
+
+    private class CustomSettingsObserver extends ContentObserver {
+        private final Handler mBackgroundHandler;
+
+        CustomSettingsObserver(Handler backgroundHandler) {
+            super(backgroundHandler);
+            mBackgroundHandler = backgroundHandler;
+        }
+
+        void observe() {
+            mSystemSettings.registerContentObserverForUser(Settings.System.QS_SYSTEM_INFO, this, UserHandle.USER_ALL);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            switch (uri.getLastPathSegment()) {
+                case Settings.System.QS_SYSTEM_INFO:
+                    updateQSSystemInfo();
+                    break;
+            }
+        }
+
+        void update() {
+            mBackgroundHandler.post(() -> {
+                updateQSSystemInfo();
+        });
+    }
+
+        private void updateQSSystemInfo() {
+            final boolean qsSystemInfo = mSystemSettings.getIntForUser(
+                    Settings.System.QS_SYSTEM_INFO, 0, UserHandle.USER_CURRENT) == 1;
+            mMainHandler.post(() -> {
+                mQuickStatusBarHeader.updateSettings();
+            });
         }
     }
 
