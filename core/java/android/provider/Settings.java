@@ -5772,6 +5772,12 @@ public final class Settings {
         public static final String VOLTE_VOWIFI_OVERRIDE = "volte_vowifi_override";
 
         /**
+         * Shows system info in QS OFF:0, CPU temp:1, battery temp:2, gpu freq: 3, gpu load: 4
+         * @hide
+         */
+        public static final String QS_SYSTEM_INFO = "qs_system_info";
+
+        /**
          * Whether to display roaming indicator for roaming signal connection
          * @hide
          */
@@ -7200,6 +7206,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(OMNIJAWS_WEATHER_ICON_PACK);
             PRIVATE_SETTINGS.add(OMNI_LOCKSCREEN_WEATHER_ENABLED);
             PRIVATE_SETTINGS.add(LOCKSCREEN_WEATHER_STYLE);
+            PRIVATE_SETTINGS.add(QS_SYSTEM_INFO);
         }
 
         /**
