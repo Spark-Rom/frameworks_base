@@ -5900,6 +5900,12 @@ public final class Settings {
                 "notification_guts_kill_app_button";
 
         /**
+         * Bring back old style mobile data indicators.
+         * @hide
+         */
+        public static final String USE_OLD_MOBILETYPE = "use_old_mobiletype";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -5912,8 +5918,6 @@ public final class Settings {
         };
 
         /**
-         * These are all public system settings
-         *
          * @hide
          */
         @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
