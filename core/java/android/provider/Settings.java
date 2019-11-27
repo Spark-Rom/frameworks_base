@@ -6622,6 +6622,12 @@ public final class Settings {
         public static final String USE_WP_ZOOM = "use_wp_zoom";
 
         /**
+         * Bring back old style mobile data indicators.
+         * @hide
+         */
+        public static final String USE_OLD_MOBILETYPE = "use_old_mobiletype";
+
+        /**
          * These are all public system settings
          *
          * @hide
