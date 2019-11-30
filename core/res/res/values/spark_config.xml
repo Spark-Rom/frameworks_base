@@ -167,4 +167,6 @@
     <!-- Default FOD pressed color -->
     <integer name="config_udfps_pressed_color">0</integer>
 
+    <!-- Whether to use old mobile type icons as default -->
+    <bool name="config_useOldMobileIcons">false</bool>
 </resources>

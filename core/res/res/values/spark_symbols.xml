@@ -160,4 +160,6 @@
    <!-- Default UDFPS pressed icon -->
    <java-symbol type="integer" name="config_udfps_pressed_color" />
 
+   <!-- Whether to use old mobile type icons as default -->
+   <java-symbol type="bool" name="config_useOldMobileIcons" />
 </resources>
