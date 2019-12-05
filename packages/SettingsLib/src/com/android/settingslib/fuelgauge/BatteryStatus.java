@@ -29,6 +29,7 @@ import static android.os.BatteryManager.EXTRA_PLUGGED;
 import static android.os.BatteryManager.EXTRA_PRESENT;
 import static android.os.BatteryManager.EXTRA_STATUS;
 import static android.os.BatteryManager.EXTRA_DASH_CHARGER;
+import static android.os.BatteryManager.EXTRA_WARP_CHARGER;
 
 import android.content.Context;
 import android.content.Intent;
@@ -48,6 +49,7 @@ public class BatteryStatus {
     public static final int CHARGING_REGULAR = 1;
     public static final int CHARGING_FAST = 2;
     public static final int CHARGING_DASH = 3;
+    public static final int CHARGING_WARP = 4;
 
     public final int status;
     public final int level;
@@ -58,11 +60,13 @@ public class BatteryStatus {
     public final int maxChargingWattage;
     public final boolean present;
     public final boolean dashChargeStatus;
+    public final boolean warpChargeStatus;
 
     public final float temperature;
 
     public BatteryStatus(int status, int level, int plugged, int health,
-            int maxChargingWattage, boolean present, boolean dashChargeStatus,
+            int maxChargingWattage, boolean dashChargeStatus,
+            boolean warpChargeStatus, boolean present,
             int maxChargingCurrent, int maxChargingVoltage,
             float temperature) {
 
@@ -74,6 +78,7 @@ public class BatteryStatus {
         this.maxChargingVoltage = maxChargingVoltage;
         this.maxChargingWattage = maxChargingWattage;
         this.dashChargeStatus = dashChargeStatus;
+        this.warpChargeStatus = warpChargeStatus;
         this.present = present;
         this.temperature = temperature;
     }
@@ -84,6 +89,7 @@ public class BatteryStatus {
         level = batteryChangedIntent.getIntExtra(EXTRA_LEVEL, 0);
         health = batteryChangedIntent.getIntExtra(EXTRA_HEALTH, BATTERY_HEALTH_UNKNOWN);
         dashChargeStatus = batteryChangedIntent.getBooleanExtra(EXTRA_DASH_CHARGER, false);
+        warpChargeStatus = batteryChangedIntent.getBooleanExtra(EXTRA_WARP_CHARGER, false);
         present = batteryChangedIntent.getBooleanExtra(EXTRA_PRESENT, true);
         temperature = batteryChangedIntent.getIntExtra(EXTRA_TEMPERATURE, -1);
 
@@ -188,6 +194,7 @@ public class BatteryStatus {
         final int fastThreshold = context.getResources().getInteger(
                 R.integer.config_chargingFastThreshold);
         return dashChargeStatus ? CHARGING_DASH :
+                warpChargeStatus ? CHARGING_WARP :
                 maxChargingWattage <= 0 ? CHARGING_UNKNOWN :
                 maxChargingWattage < slowThreshold ? CHARGING_SLOWLY :
                         maxChargingWattage > fastThreshold ? CHARGING_FAST :
