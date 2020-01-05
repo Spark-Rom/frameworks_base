@@ -129,4 +129,8 @@
 
     <!-- Whether device has hardware alertslider -->
     <java-symbol type="bool" name="config_hasAlertSlider" />
+
+    <!-- Light / Regular style fonts -->
+    <java-symbol type="string" name="config_lightFontFamily" />
+    <java-symbol type="string" name="config_regularFontFamily" />
 </resources>
