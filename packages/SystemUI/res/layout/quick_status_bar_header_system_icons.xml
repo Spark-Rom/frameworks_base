@@ -75,5 +75,13 @@
         systemui:showDark="false"
         android:gravity="right|center_vertical"/>
 
+    <com.android.systemui.BatteryMeterView
+        android:id="@+id/batteryRemainingIcon"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_vertical|end"
+        systemui:textAppearance="@style/TextAppearance.QS.Status"
+        android:paddingEnd="2dp" />
+
     </LinearLayout>
 </LinearLayout>
