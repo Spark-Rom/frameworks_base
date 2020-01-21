@@ -6150,6 +6150,12 @@ public final class Settings {
         public static final String CUSTOM_STATUSBAR_PADDING_START = "custom_statusbar_padding_start";
 
         /**
+         * Show data usage in QS header
+         * @hide
+         */
+        public static final String QS_DATAUSAGE = "qs_datausage";
+
+        /**
          * Statusbar padding End
          *
          * @hide
