@@ -594,6 +594,7 @@ public class KeyguardIndicationController implements StateListener,
     }
 
     private void updateChargingIndication() {
+        if (mChargingIndicationView == null) return;
         if (mChargingIndication > 0 && !mPowerCharged  && mPowerPluggedIn) {
             if (hasActiveInDisplayFp()) {
                 if (mFODPositionY != 0) {
