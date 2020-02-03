@@ -90,5 +90,6 @@ public class SystemSettings {
         Settings.System.NOTIFICATION_HEADERS,
         Settings.System.SCREEN_OFF_FOD,
         Settings.System.VOLUME_BUTTON_MUSIC_CONTROL_DELAY,
+        Settings.System.RINGTONE_VIBRATION_PATTERN,
     };
 }
