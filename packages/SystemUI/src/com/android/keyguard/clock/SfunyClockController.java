@@ -178,6 +178,9 @@ public class SfunyClockController implements ClockPlugin {
 
     @Override
     public void onTimeTick() {
+        mView.onTimeChanged();
+        mHourClock.refreshTime();
+        mMinuteClock.refreshTime();
     }
 
     @Override
