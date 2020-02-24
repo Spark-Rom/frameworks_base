@@ -4021,7 +4021,6 @@ public class NotificationPanelViewController extends PanelViewController impleme
                     }
                     if (ambientLights) {
                         mPulseLightHandled = false;
-                        mAmbientPulseLightRunning = false;
                         // tell power manager that we want to enable aod
                         // must do that here already not on pulsing = false
                         Settings.System.putIntForUser(mView.getContext().getContentResolver(),
