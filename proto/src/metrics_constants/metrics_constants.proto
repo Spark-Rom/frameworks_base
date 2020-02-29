@@ -7441,6 +7441,9 @@ message MetricsEvent {
     // Spark Settings
     SPARK_SETTINGS = 4000;
     SPARK_QS_TILES = 4001;
+
+    // Panel for Bluetooth
+    PANEL_BLUETOOTH = 4002;
   }
 }
 
