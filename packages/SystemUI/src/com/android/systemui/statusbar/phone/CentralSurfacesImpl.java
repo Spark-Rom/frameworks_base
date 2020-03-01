@@ -242,6 +242,7 @@ import com.android.systemui.statusbar.policy.DeviceProvisionedController.DeviceP
 import com.android.systemui.statusbar.policy.ExtensionController;
 import com.android.systemui.statusbar.policy.FlashlightController;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
+import com.android.systemui.statusbar.policy.TaskHelper;
 import com.android.systemui.statusbar.policy.UserInfoControllerImpl;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
 import com.android.systemui.statusbar.window.StatusBarWindowController;
@@ -521,6 +522,8 @@ public class CentralSurfacesImpl extends CoreStartable implements
     private final StatusBarSignalPolicy mStatusBarSignalPolicy;
     private final StatusBarHideIconsForBouncerManager mStatusBarHideIconsForBouncerManager;
 
+    protected TaskHelper mTaskHelper;
+
     // expanded notifications
     // the sliding/resizing panel within the notification window
     protected NotificationPanelViewController mNotificationPanelViewController;
@@ -795,7 +798,8 @@ public class CentralSurfacesImpl extends CoreStartable implements
             InteractionJankMonitor jankMonitor,
             DeviceStateManager deviceStateManager,
             WiredChargingRippleController wiredChargingRippleController,
-            IDreamManager dreamManager) {
+            IDreamManager dreamManager,
+            TaskHelper taskHelper) {
         super(context);
         mNotificationsController = notificationsController;
         mFragmentService = fragmentService;
@@ -887,6 +891,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
 
         mBubbleExpandListener = (isExpanding, key) ->
                 mContext.getMainExecutor().execute(this::updateScrimController);
+        mTaskHelper = taskHelper;
 
         mActivityIntentHelper = new ActivityIntentHelper(mContext);
         mActivityLaunchAnimator = activityLaunchAnimator;

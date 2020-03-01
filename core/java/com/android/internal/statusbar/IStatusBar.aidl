@@ -325,4 +325,5 @@ oneway interface IStatusBar
 
     /** Spark additions. */
     void toggleCameraFlash();
+    void killForegroundApp();
 }
