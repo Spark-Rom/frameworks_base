@@ -295,6 +295,7 @@ oneway interface IStatusBar
     void toggleCameraFlash();
     void screenPinningStateChanged(boolean enabled);
     void leftInLandscapeChanged(boolean isLeft);
+    void killForegroundApp();
 
     /**
      * Used to block or unblock usage of gestural navigation
