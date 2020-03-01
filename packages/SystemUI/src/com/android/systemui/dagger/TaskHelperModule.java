@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The Android Open Source Project
+ * Copyright (C) 2022 Spark
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,24 +16,26 @@
 
 package com.android.systemui.dagger;
 
-import com.android.systemui.broadcast.BroadcastDispatcherModule;
-import com.android.systemui.theme.ThemeModule;
-import com.android.systemui.util.leak.LeakModule;
+import android.annotation.Nullable;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.os.Handler;
+import android.os.UserHandle;
+import java.util.concurrent.Executor;
+import com.android.systemui.statusbar.policy.TaskHelper;
+import com.android.systemui.dagger.qualifiers.Background;
 
 import dagger.Module;
+import dagger.Provides;
 
-/**
- * @deprecated This module is going away. Don't put anything in here.
- */
-@Deprecated
-@Module(includes = {
-        BroadcastDispatcherModule.class,
-        LeakModule.class,
-        NightDisplayListenerModule.class,
-        SharedLibraryModule.class,
-        SettingsLibraryModule.class,
-        TaskHelperModule.class,
-        ThemeModule.class
-})
-public class DependencyProvider {
+/** */
+@Module
+public class TaskHelperModule {
+
+    /** */
+    @Provides
+    @SysUISingleton
+    public TaskHelper provideTaskHelper(Context context) {
+        return new TaskHelper(context);
+    }
 }
