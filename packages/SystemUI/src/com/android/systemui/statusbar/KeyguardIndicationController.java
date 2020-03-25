@@ -55,6 +55,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.app.IBatteryStats;
 import com.android.internal.util.spark.fod.FodUtils;
+import com.android.internal.util.spark.SparkUtils;
 import com.android.internal.widget.ViewClippingUtil;
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
@@ -787,8 +788,9 @@ public class KeyguardIndicationController implements StateListener,
                         String.format("%.1f" , voltage) + "V";
             }
             if (mTemperature > 0) {
-                batteryInfo = (batteryInfo == "" ? "" : batteryInfo + " · ") +
-                        mTemperature / 10 + "°C";
+                String batteryTemp = SparkUtils.mccCheck(mContext) ?
+                          mTemperature * 9 / 50 + 32 + "°F" : mTemperature / 10 + "°C";
+                batteryInfo = (batteryInfo == "" ? "" : batteryInfo + " · ") + batteryTemp;
             }
             if (batteryInfo != "") {
                 batteryInfo = "\n" + batteryInfo;
