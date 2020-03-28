@@ -351,6 +351,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
             mCallbacks = Lists.newArrayList();
     private ContentObserver mDeviceProvisionedObserver;
     private ContentObserver mSfpsRequireScreenOnToAuthPrefObserver;
+    private ContentObserver mFaceUnlockPrefObserver;
     private final ContentObserver mTimeFormatChangeObserver;
 
     private boolean mSwitchingUser;
@@ -500,6 +501,11 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
     SparseArray<BiometricAuthenticated> mUserFaceAuthenticated = new SparseArray<>();
 
     private static int sCurrentUser;
+
+    private final boolean mFaceAuthOnlyOnSecurityView;
+    private static final int FACE_UNLOCK_BEHAVIOR_DEFAULT = 0;
+    private static final int FACE_UNLOCK_BEHAVIOR_SWIPE = 1;
+    private int mFaceUnlockBehavior = FACE_UNLOCK_BEHAVIOR_DEFAULT;
 
     public synchronized static void setCurrentUser(int currentUser) {
         sCurrentUser = currentUser;
@@ -2108,6 +2114,8 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
         mActiveUnlockConfig.setKeyguardUpdateMonitor(this);
         mWakeOnFingerprintAcquiredStart = context.getResources()
                         .getBoolean(com.android.internal.R.bool.kg_wake_on_acquire_start);
+        mFaceAuthOnlyOnSecurityView = mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_faceAuthOnlyOnSecurityView);
         mFaceAcquiredInfoIgnoreList = Arrays.stream(
                 mContext.getResources().getIntArray(
                         R.array.config_face_acquire_device_entry_ignorelist))
@@ -2359,6 +2367,21 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                 false,
                 mSfpsRequireScreenOnToAuthPrefObserver,
                 getCurrentUser());
+
+        updateFaceUnlockBehavior();
+        mFaceUnlockPrefObserver = new ContentObserver(mHandler) {
+            @Override
+            public void onChange(boolean selfChange) {
+                updateFaceUnlockBehavior();
+            }
+        };
+
+        mContext.getContentResolver().registerContentObserver(
+                mSecureSettings.getUriFor(Settings.Secure.FACE_UNLOCK_METHOD),
+                false,
+                mFaceUnlockPrefObserver,
+                getCurrentUser());
+
     }
 
     protected void updateSfpsRequireScreenOnToAuthPref() {
@@ -2369,6 +2392,16 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                 Settings.Secure.SFPS_REQUIRE_SCREEN_ON_TO_AUTH_ENABLED,
                 defaultSfpsRequireScreenOnToAuthValue,
                 getCurrentUser()) != 0;
+    }
+
+    private void updateFaceUnlockBehavior() {
+        if (mFaceAuthOnlyOnSecurityView) {
+            mFaceUnlockBehavior = FACE_UNLOCK_BEHAVIOR_SWIPE;
+        } else {
+            mFaceUnlockBehavior = Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                Settings.Secure.FACE_UNLOCK_METHOD, FACE_UNLOCK_BEHAVIOR_DEFAULT,
+                UserHandle.USER_CURRENT);
+        }
     }
 
     private void initializeSimState() {
@@ -2679,7 +2712,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
         // Don't trigger active unlock if primary auth is required
         final boolean primaryAuthRequired = !isUnlockingWithBiometricAllowed(true);
 
-        final boolean shouldTriggerActiveUnlock =
+        boolean shouldTriggerActiveUnlock =
                 (mAuthInterruptActive || triggerActiveUnlockForAssistant || awakeKeyguard)
                         && !mSwitchingUser
                         && !userCanDismissLockScreen
@@ -2687,6 +2720,10 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                         && !primaryAuthRequired
                         && !mKeyguardGoingAway
                         && !mSecureCameraLaunched;
+
+        if (shouldTriggerActiveUnlock && mFaceUnlockBehavior == FACE_UNLOCK_BEHAVIOR_SWIPE && !mPrimaryBouncerFullyShown) {
+            shouldTriggerActiveUnlock = false;
+        }
 
         // Aggregate relevant fields for debug logging.
         logListenerModelData(
@@ -3373,6 +3410,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
         mLogger.d("handleKeyguardReset");
         updateBiometricListeningState(BIOMETRIC_ACTION_UPDATE,
                 FACE_AUTH_UPDATED_KEYGUARD_RESET);
+        mPrimaryBouncerFullyShown = false;
         mNeedsSlowUnlockTransition = resolveNeedsSlowUnlockTransition();
     }
 
@@ -3445,6 +3483,15 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
         }
     }
 
+    public void updateFaceListeningStateForBehavior(boolean fullyShow) {
+        if (mPrimaryBouncerFullyShown != fullyShow){
+            mPrimaryBouncerFullyShown = fullyShow;
+            if (mFaceUnlockBehavior == FACE_UNLOCK_BEHAVIOR_SWIPE){
+                updateFaceListeningState(BIOMETRIC_ACTION_UPDATE, FACE_AUTH_UPDATED_ON_FACE_AUTHENTICATED);
+            }
+        }
+    }
+
     /**
      * Handle {@link #MSG_REQUIRE_NFC_UNLOCK}
      */
@@ -3475,6 +3522,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
      * Handle {@link #MSG_REPORT_EMERGENCY_CALL_ACTION}
      */
     private void handleReportEmergencyCallAction() {
+        mPrimaryBouncerFullyShown = false;
         Assert.isMainThread();
         for (int i = 0; i < mCallbacks.size(); i++) {
             KeyguardUpdateMonitorCallback cb = mCallbacks.get(i).get();
@@ -3913,6 +3961,11 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
         if (mSfpsRequireScreenOnToAuthPrefObserver != null) {
             mContext.getContentResolver().unregisterContentObserver(
                     mSfpsRequireScreenOnToAuthPrefObserver);
+        }
+
+        if (mFaceUnlockPrefObserver != null) {
+            mContext.getContentResolver().unregisterContentObserver(
+                    mFaceUnlockPrefObserver);
         }
 
         try {
