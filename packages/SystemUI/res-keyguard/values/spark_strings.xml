@@ -27,4 +27,6 @@
     <string name="salute_night">Good night</string>
     <string name="date_long_title_today">Today is %s</string>
     <string name="salute_sleep">Go to Sleep</string>
+    <string name="clock_title_mnml_box" translatable="false">MNML Box</string>
+    <string name="clock_title_mnml_minimal" translatable="false">MNML Minimal</string>
 </resources>
