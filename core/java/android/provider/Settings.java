@@ -5833,6 +5833,11 @@ public final class Settings {
         public static final String SCREEN_STATE_TWOG = "screen_state_twog";
 
         /**
+         * @hide
+         */
+        public static final String SCREEN_STATE_THREEG = "screen_state_threeg";
+
+        /**
          * Settings switch button style
          * @hide
          */
