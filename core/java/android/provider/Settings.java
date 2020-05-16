@@ -5952,6 +5952,14 @@ public final class Settings {
         public static final String NOTIFICATION_BG_ALPHA = "notification_bg_alpha";
 
         /**
+         * Direction of repeat animations of Ambient edge light
+         * 0 is restart
+         * 1 is reverse
+         * @hide
+         */
+        public static final String AMBIENT_LIGHT_REPEAT_DIRECTION = "ambient_light_repeat_direction";
+
+        /**
          * Whether to show or hide the background and gradient behind the QS panel
          * @hide
          */
