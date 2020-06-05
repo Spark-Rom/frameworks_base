@@ -279,6 +279,19 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.MEDIA_ARTWORK_BLUR_RADIUS, new InclusiveFloatRangeValidator(1f, 25f));
         VALIDATORS.put(System.VOLUME_BUTTON_MUSIC_CONTROL, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.QS_SYSTEM_INFO, ANY_INTEGER_VALIDATOR);
-        VALIDATORS.put(System.RINGTONE_VIBRATION_PATTERN, new InclusiveIntegerRangeValidator(0, 4));
+        VALIDATORS.put(System.RINGTONE_VIBRATION_PATTERN, new InclusiveIntegerRangeValidator(0, 5));
+        VALIDATORS.put(System.CUSTOM_RINGTONE_VIBRATION_PATTERN,
+                 new ListValidator(",") {
+
+                    @Override
+                    protected boolean isEntryValid(String entry) {
+                        return entry != null;
+                    }
+
+                    @Override
+                    protected boolean isItemValid(String item) {
+                        return new InclusiveIntegerRangeValidator(0, 1000).validate(item);
+                    }
+                });
     }
 }
