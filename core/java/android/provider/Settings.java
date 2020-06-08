@@ -6722,6 +6722,20 @@ public final class Settings {
         public static final String SENSOR_BLOCK = "sensor_block";
 
         /**
+         * Sensor blocked packages
+         * @hide
+         */
+        @Readable
+        public static final String SENSOR_BLOCKED_APP = "sensor_blocked_app";
+
+        /**
+         * Sensor blocked packages dummy
+         * @hide
+         */
+        @Readable
+        public static final String SENSOR_BLOCKED_APP_DUMMY = "sensor_blocked_app_dummy";
+
+        /**
          *  Toggle the wallpaper zoom effects
          *  0 = 0ff, 1 = on
          * @hide
