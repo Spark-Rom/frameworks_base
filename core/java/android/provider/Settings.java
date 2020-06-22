@@ -6146,6 +6146,12 @@ public final class Settings {
         public static final String QS_SHOW_AUTO_BRIGHTNESS_BUTTON = "qs_show_auto_brightness_button";
 
         /**
+         * Whether to show VoWiFi icon or not
+         * @hide
+         */
+        public static final String VOWIFI_ICON = "vowifi_icon";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
