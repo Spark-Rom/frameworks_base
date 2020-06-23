@@ -579,8 +579,10 @@ public class NetworkControllerImpl extends BroadcastReceiver
                 resId = R.drawable.ic_volte_oos;
             } else if (mVolteIconStyle == 3) {
                 resId = R.drawable.ic_hd_volte;
-            } else {
+            } else if (mVolteIconStyle == 4) {
                 resId = R.drawable.ic_volte_miui;
+            } else {
+                resId = R.drawable.ic_volte_emui;
             }
             cb.setImsIcon(new ImsIconState(volte && mShowImsIcon,
                     vowifi && mShowImsIcon,
@@ -627,8 +629,10 @@ public class NetworkControllerImpl extends BroadcastReceiver
 	        resId = R.drawable.ic_volte_oos;
             } else if (mVolteIconStyle == 3) {
                 resId = R.drawable.ic_hd_volte;
-	    } else {
-	        resId = R.drawable.ic_volte_miui;
+            } else if (mVolteIconStyle == 4) {
+                resId = R.drawable.ic_volte_miui;
+            } else {
+                resId = R.drawable.ic_volte_emui;
             }
             mCallbackHandler.setImsIcon(new ImsIconState(volte && mShowImsIcon,
                     vowifi && mShowImsIcon,
@@ -660,8 +664,10 @@ public class NetworkControllerImpl extends BroadcastReceiver
                 resId = R.drawable.ic_volte_oos;
             } else if (mVolteIconStyle == 3) {
                 resId = R.drawable.ic_hd_volte;
-            } else {
+            } else if (mVolteIconStyle == 4) {
                 resId = R.drawable.ic_volte_miui;
+            } else {
+                resId = R.drawable.ic_volte_emui;
             }
         } else if (volte1) {
             if (mVolteIconStyle == 0) {
@@ -672,8 +678,10 @@ public class NetworkControllerImpl extends BroadcastReceiver
                 resId = R.drawable.ic_volte_oos;
             } else if (mVolteIconStyle == 3) {
                 resId = R.drawable.ic_hd_volte;
-            } else {
+            } else if (mVolteIconStyle == 4) {
                 resId = R.drawable.ic_volte_miui;
+            } else {
+                resId = R.drawable.ic_volte_emui;
             }
         } else if (volte2) {
             if (mVolteIconStyle == 0) {
@@ -684,8 +692,10 @@ public class NetworkControllerImpl extends BroadcastReceiver
                 resId = R.drawable.ic_volte_oos;
             } else if (mVolteIconStyle == 3) {
                 resId = R.drawable.ic_hd_volte;
-            } else {
+            } else if (mVolteIconStyle == 4) {
                 resId = R.drawable.ic_volte_miui;
+            } else {
+                resId = R.drawable.ic_volte_emui;
             }
         }
         return resId;
