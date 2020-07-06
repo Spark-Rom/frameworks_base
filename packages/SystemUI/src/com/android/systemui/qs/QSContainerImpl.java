@@ -22,6 +22,7 @@ import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.WallpaperManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.om.IOverlayManager;
 import android.content.res.ColorUtils;
@@ -99,6 +100,9 @@ public class QSContainerImpl extends FrameLayout implements ColorExtractor.OnCol
     private int mContentPaddingEnd = -1;
     private boolean mAnimateBottomOnNextLayout;
 
+    private boolean mLandscape;
+    private boolean mHideQSBlackGradient;
+
     private Drawable mQsBackGround;
     private int mQsBackGroundAlpha;
     private int mQsBackGroundColor;
@@ -127,7 +131,7 @@ public class QSContainerImpl extends FrameLayout implements ColorExtractor.OnCol
         mQSPanelContainer = findViewById(R.id.expanded_qs_scroll_view);
         mQSDetail = findViewById(R.id.qs_detail);
         mHeader = findViewById(R.id.header);
-        mQSCustomizer = findViewById(R.id.qs_customize);
+        mQSCustomizer = (QSCustomizer) findViewById(R.id.qs_customize);
         mDragHandle = findViewById(R.id.qs_drag_handle_view);
         mBackground = findViewById(R.id.quick_settings_background);
         mStatusBarBackground = findViewById(R.id.quick_settings_status_bar_background);
@@ -143,9 +147,7 @@ public class QSContainerImpl extends FrameLayout implements ColorExtractor.OnCol
                 mAnimateBottomOnNextLayout = true;
             }
         });
-
         mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
-
         setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);
         updateSettings();
     }
@@ -175,6 +177,9 @@ public class QSContainerImpl extends FrameLayout implements ColorExtractor.OnCol
             getContext().getContentResolver().registerContentObserver(Settings.System
                     .getUriFor(Settings.System.QS_PANEL_BG_USE_FW), false,
                     this, UserHandle.USER_ALL);
+            getContext().getContentResolver().registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.QS_HEADER_BACKGROUND), false,
+                    this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -196,6 +201,7 @@ public class QSContainerImpl extends FrameLayout implements ColorExtractor.OnCol
                         Settings.System.QS_PANEL_BG_USE_FW, 1, UserHandle.USER_CURRENT) == 1;
                 setQsBackground();
             }
+            updateSettings();
         }
     }
 
@@ -208,8 +214,11 @@ public class QSContainerImpl extends FrameLayout implements ColorExtractor.OnCol
                 Settings.System.SYSUI_COLORS_ACTIVE, 0, UserHandle.USER_CURRENT) == 1;
         mSetQsFromResources = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.QS_PANEL_BG_USE_FW, 1, UserHandle.USER_CURRENT) == 1;
-
         setQsBackground();
+        mHideQSBlackGradient = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.QS_HEADER_BACKGROUND, 0,
+                UserHandle.USER_CURRENT) == 1;
+        updateResources();
     }
 
     private void setBackgroundBottom(int value) {
@@ -230,6 +239,7 @@ public class QSContainerImpl extends FrameLayout implements ColorExtractor.OnCol
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         setBackgroundGradientVisibility(newConfig);
+        mLandscape = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE;
         updateResources();
         mSizePoint.set(0, 0); // Will be retrieved on next measure pass.
     }
@@ -354,6 +364,7 @@ public class QSContainerImpl extends FrameLayout implements ColorExtractor.OnCol
         if (marginsChanged) {
             updatePaddingsAndMargins();
         }
+        setBackgroundGradientVisibility(getResources().getConfiguration());
     }
 
     /**
@@ -403,13 +414,13 @@ public class QSContainerImpl extends FrameLayout implements ColorExtractor.OnCol
     }
 
     private void setBackgroundGradientVisibility(Configuration newConfig) {
-        if (newConfig.orientation == ORIENTATION_LANDSCAPE) {
+        boolean shouldHideStatusbar = (mLandscape || mHideQSBlackGradient);
+        if (mLandscape || mHideQSBlackGradient) {
             mBackgroundGradient.setVisibility(View.INVISIBLE);
-            mStatusBarBackground.setVisibility(View.INVISIBLE);
         } else {
-            mBackgroundGradient.setVisibility(mQsDisabled ? View.INVISIBLE : View.VISIBLE);
-            mStatusBarBackground.setVisibility(View.VISIBLE);
+            mBackgroundGradient.setVisibility((mQsDisabled) ? View.INVISIBLE : View.VISIBLE);
         }
+        mStatusBarBackground.setVisibility(shouldHideStatusbar ? View.INVISIBLE : View.VISIBLE);
     }
 
     public void setExpansion(float expansion) {
