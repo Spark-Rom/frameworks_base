@@ -30,6 +30,8 @@ import android.content.res.ColorUtils;
 import android.content.res.Configuration;
 import android.database.ContentObserver;
 import android.graphics.Color;
+import android.os.Handler;
+import android.provider.Settings;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -109,6 +111,7 @@ public class QSContainerImpl extends FrameLayout implements ColorExtractor.OnCol
     private int mQsBackGroundColor;
     private boolean mSetQsFromWall;
     private boolean mSetQsFromResources;
+    private boolean mImmerseMode;
 
     private SysuiColorExtractor mColorExtractor;
     private IOverlayManager mOverlayManager;
@@ -181,6 +184,9 @@ public class QSContainerImpl extends FrameLayout implements ColorExtractor.OnCol
             getContext().getContentResolver().registerContentObserver(Settings.System
                     .getUriFor(Settings.System.QS_HEADER_BACKGROUND), false,
                     this, UserHandle.USER_ALL);
+            getContext().getContentResolver().registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.DISPLAY_CUTOUT_MODE), false,
+                    this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -219,6 +225,8 @@ public class QSContainerImpl extends FrameLayout implements ColorExtractor.OnCol
         mHideQSBlackGradient = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.QS_HEADER_BACKGROUND, 0,
                 UserHandle.USER_CURRENT) == 1;
+        mImmerseMode = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.DISPLAY_CUTOUT_MODE, 0, UserHandle.USER_CURRENT) == 1;
         updateResources();
     }
 
