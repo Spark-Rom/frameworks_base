@@ -44,6 +44,7 @@ import com.android.systemui.qs.tiles.ColorInversionTile;
 import com.android.systemui.qs.tiles.CompassTile;
 import com.android.systemui.qs.tiles.DataSaverTile;
 import com.android.systemui.qs.tiles.DataSwitchTile;
+import com.android.systemui.qs.tiles.DcDimmingTile;
 import com.android.systemui.qs.tiles.DeviceControlsTile;
 import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.qs.tiles.DreamTile;
@@ -148,6 +149,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<ScreenshotTile> mScreenshotTileProvider;
     private final Provider<SparkIdleManagerTile> mSparkIdleManagerTileProvider;
     private final Provider<SparkBoostManagerTile> mSparkBoostManagerTileProvider;
+    private final Provider<DcDimmingTile> mDcDimmingTileProvider;
 
     private final Lazy<QSHost> mQsHostLazy;
     private final Provider<CustomTile.Builder> mCustomTileBuilderProvider;
@@ -210,10 +212,11 @@ public class QSFactoryImpl implements QSFactory {
             Provider<PreferredNetworkTile> preferredNetworkTileProvider,
             Provider<ScreenshotTile> screenshotTileProvider,
             Provider<SparkIdleManagerTile> sparkIdleManagerTileProvider,
-            Provider<SparkBoostManagerTile> sparkBoostManagerTileProvider) {
+            Provider<SparkBoostManagerTile> sparkBoostManagerTileProvider,
+            Provider<DcDimmingTile> dcDimTileProvider) {
         mQsHostLazy = qsHostLazy;
         mCustomTileBuilderProvider = customTileBuilderProvider;
-    
+
         mWifiTileProvider = wifiTileProvider;
         mInternetTileProvider = internetTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
@@ -269,6 +272,7 @@ public class QSFactoryImpl implements QSFactory {
         mScreenshotTileProvider = screenshotTileProvider;
         mSparkIdleManagerTileProvider = sparkIdleManagerTileProvider;
         mSparkBoostManagerTileProvider = sparkBoostManagerTileProvider;
+        mDcDimmingTileProvider = dcDimTileProvider;
     }
 
     /** Creates a tile with a type based on {@code tileSpec} */
@@ -394,6 +398,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mSparkIdleManagerTileProvider.get();
             case "spark_boost":
                 return mSparkBoostManagerTileProvider.get();
+            case "dc_dimming":
+                return mDcDimmingTileProvider.get();
         }
         // Custom tiles
         if (tileSpec.startsWith(CustomTile.PREFIX)) {

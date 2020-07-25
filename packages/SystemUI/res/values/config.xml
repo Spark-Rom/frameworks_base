@@ -81,7 +81,7 @@
 
     <!-- Tiles native to System UI. Order should match "quick_settings_tiles_default" -->
     <string name="quick_settings_tiles_stock" translatable="false">
-        internet,wifi,cell,bt,flashlight,dnd,alarm,airplane,controls,wallet,rotation,battery,cast,screenrecord,mictoggle,cameratoggle,location,nfc,hotspot,inversion,saver,dark,work,night,reverse,reduce_brightness,qr_code_scanner,onehanded,color_correction,dream,onthego,aod,powershare,caffeine,ambient_display,usb_tether,sync,sound,heads_up,reboot,volume_panel,dataswitch,fpsinfo,livedisplay,reading_mode,anti_flicker,compass,cpuinfo,soundsearch,smartpixels,refresh_rate,preferred_network,screenshot,spark_idle,spark_boost
+        internet,wifi,cell,bt,flashlight,dnd,alarm,airplane,controls,wallet,rotation,battery,cast,screenrecord,mictoggle,cameratoggle,location,nfc,hotspot,inversion,saver,dark,work,night,reverse,reduce_brightness,qr_code_scanner,onehanded,color_correction,dream,onthego,aod,powershare,caffeine,ambient_display,usb_tether,sync,sound,heads_up,reboot,volume_panel,dataswitch,fpsinfo,livedisplay,reading_mode,anti_flicker,compass,cpuinfo,soundsearch,smartpixels,refresh_rate,preferred_network,screenshot,spark_idle,spark_boost,dc_dimming
     </string>
 
     <!-- The tiles to display in QuickSettings -->
@@ -773,7 +773,7 @@
         <item>@color/dream_overlay_aqi_very_unhealthy</item>
         <item>@color/dream_overlay_aqi_hazardous</item>
     </integer-array>
-    
+
     <integer name="background_blur_radius">80</integer>
     <item name="background_blur_colour_opacity" format="float" type="dimen">0.88</item>
 </resources>
