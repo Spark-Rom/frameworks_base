@@ -651,7 +651,18 @@ public class VolumeDialogImpl implements VolumeDialog,
                             mActivityManager.getLockTaskModeState() == LOCK_TASK_MODE_NONE ?
                             VISIBLE : GONE);
         }
+
         if (mExpandRows != null) {
+            mExpandRows.setOnLongClickListener(v -> {
+                Events.writeEvent(Events.EVENT_SETTINGS_CLICK);
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.setClassName("com.android.settings",
+                        "com.android.settings.Settings$SoundSettingsActivity");
+                dismissH(DISMISS_REASON_SETTINGS_CLICKED);
+                Dependency.get(ActivityStarter.class).startActivity(intent,
+                        true /* dismissShade */);
+                return true;
+            });
             mExpandRows.setOnClickListener(v -> {
                 rescheduleTimeoutH();
                 animateExpandedRowsChange(!mExpanded);
