@@ -41,6 +41,7 @@ import android.graphics.Shader;
 import android.media.MediaMetadata;
 import android.media.session.MediaController;
 import android.media.session.MediaSession;
+import android.media.session.MediaSessionManager;
 import android.media.session.PlaybackState;
 import android.os.AsyncTask;
 import android.os.Trace;
@@ -99,6 +100,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import java.util.List;
+
 import dagger.Lazy;
 
 /**
@@ -152,6 +155,7 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable 
 
     private final DelayableExecutor mMainExecutor;
 
+    private final MediaSessionManager mMediaSessionManager;
     private final Context mContext;
     private final ArrayList<MediaListener> mMediaListeners;
     private final Lazy<Optional<CentralSurfaces>> mCentralSurfacesOptionalLazy;
@@ -247,7 +251,7 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable 
         mColorExtractor = colorExtractor;
         mKeyguardStateController = keyguardStateController;
         mDisplayManager = displayManager;
-
+        mMediaSessionManager = mContext.getSystemService(MediaSessionManager.class);
         setupNotifPipeline();
 
         dumpManager.registerDumpable(this);
@@ -525,6 +529,18 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable 
         for (int i = 0; i < callbacks.size(); i++) {
             callbacks.get(i).onPrimaryMetadataOrStateChanged(mMediaMetadata, state);
             callbacks.get(i).setMediaNotificationColor(mColorExtractor.getMediaBackgroundColor());
+        }
+    }
+
+    public boolean getPlaybackStateIsEqual(@PlaybackState.State int state) {
+        if (mMediaController != null) {
+            if (mMediaController.getPlaybackState() != null) {
+               return state == mMediaController.getPlaybackState().getState();
+            } else {
+               return false;
+            }
+        } else {
+            return false;
         }
     }
 
@@ -947,5 +963,53 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable 
                 @PlaybackState.State int state) {}
 
         default void setMediaNotificationColor(int color) {};
+    }
+
+    public void skipTrackNext() {
+        if (mMediaSessionManager != null) {
+            final List<MediaController> sessions
+                    = mMediaSessionManager.getActiveSessionsForUser(
+                    null, UserHandle.CURRENT);
+            for (MediaController aController : sessions) {
+                if (PlaybackState.STATE_PLAYING ==
+                        getMediaControllerPlaybackState(aController)) {
+                    aController.getTransportControls().skipToNext();
+                    break;
+                }
+            }
+        }
+    }
+
+    public void skipTrackPrevious() {
+        if (mMediaSessionManager != null) {
+            final List<MediaController> sessions
+                    = mMediaSessionManager.getActiveSessionsForUser(
+                    null, UserHandle.CURRENT);
+            for (MediaController aController : sessions) {
+                if (PlaybackState.STATE_PLAYING ==
+                        getMediaControllerPlaybackState(aController)) {
+                    aController.getTransportControls().skipToPrevious();
+                    break;
+                }
+            }
+        }
+    }
+
+    public void playPauseTrack() {
+        if (mMediaSessionManager != null) {
+            final List<MediaController> sessions
+                    = mMediaSessionManager.getActiveSessionsForUser(
+                    null, UserHandle.CURRENT);
+            for (MediaController aController : sessions) {
+                if (PlaybackState.STATE_PLAYING ==
+                        getMediaControllerPlaybackState(aController)) {
+                    aController.getTransportControls().pause();
+                    break;
+                } else {
+                    aController.getTransportControls().play();
+                    break;
+                }
+            }
+        }
     }
 }

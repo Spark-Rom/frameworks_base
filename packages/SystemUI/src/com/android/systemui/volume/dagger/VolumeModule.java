@@ -27,6 +27,7 @@ import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.plugins.VolumeDialog;
 import com.android.systemui.plugins.VolumeDialogController;
 import com.android.systemui.statusbar.policy.AccessibilityManagerWrapper;
+import com.android.systemui.statusbar.NotificationMediaManager;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.DeviceProvisionedController;
 import com.android.systemui.tuner.TunerService;
@@ -65,7 +66,8 @@ public interface VolumeModule {
             DeviceConfigProxy deviceConfigProxy,
             @Main Executor executor,
             DumpManager dumpManager,
-            TunerService tunerService) {
+            TunerService tunerService,
+            NotificationMediaManager mediaManager) {
         VolumeDialogImpl impl = new VolumeDialogImpl(
                 context,
                 volumeDialogController,
@@ -79,10 +81,12 @@ public interface VolumeModule {
                 deviceConfigProxy,
                 executor,
                 dumpManager,
-                tunerService);
+                tunerService,
+                mediaManager);
         impl.setStreamImportant(AudioManager.STREAM_SYSTEM, false);
         impl.setAutomute(true);
         impl.setSilentMode(false);
+        impl.initText(mediaManager);
         return impl;
     }
 }

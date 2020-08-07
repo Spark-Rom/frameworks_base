@@ -215,6 +215,15 @@
                 android:layout_gravity="center"
                 android:soundEffectsEnabled="false"/>
         </FrameLayout>
+
+       <include
+            layout="@layout/volume_media_card"
+            android:layout_width="@dimen/volume_media_card_height"
+            android:layout_height="@dimen/volume_media_card_height"
+            android:layout_gravity="start"
+            android:layout_marginTop="@dimen/volume_dialog_spacer"
+            android:layout_marginStart="2dp" />
+
     </com.android.systemui.animation.view.LaunchableLinearLayout>
 
     <ViewStub
