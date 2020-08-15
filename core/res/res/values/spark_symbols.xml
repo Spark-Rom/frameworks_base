@@ -173,4 +173,8 @@
   <!-- Smart cutoff temperature -->
   <java-symbol type="integer" name="config_smartCutoffTemperature" />
   <java-symbol type="integer" name="config_smartCutoffResumeTemperature" />
+
+  <!-- Clipboard access toast -->
+  <java-symbol type="string" name="app_clipboard_access_denied" />
+  <java-symbol type="string" name="app_clipboard_access_granted" />
 </resources>
