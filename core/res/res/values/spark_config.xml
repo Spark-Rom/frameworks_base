@@ -228,4 +228,7 @@
     <!-- Smart cutoff -->
     <integer name="config_smartCutoffTemperature">30</integer>
     <integer name="config_smartCutoffResumeTemperature">25</integer>
+
+    <!-- Whether device has fingerprint on power button -->
+    <bool name="config_powerButtonFingerprint">false</bool>
 </resources>
