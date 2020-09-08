@@ -289,4 +289,7 @@
     <string name="accessibility_quick_settings_reading_mode_changed_off">Reading mode turned off.</string>
 
     <string name="usage_wifi_prefix">Wi-Fi</string>
+
+    <!-- Anti flicker QS tile -->
+    <string name="quick_settings_anti_flicker">Anti flicker</string>
 </resources>
