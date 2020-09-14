@@ -264,4 +264,6 @@
     <!-- Daily data usage -->
     <string name="daily_data_usage_title">Today\'s usage</string>
 
+   <!-- Change clockface -->
+    <string name="change_clock_face">Swipe to change the clock face</string>
 </resources>
