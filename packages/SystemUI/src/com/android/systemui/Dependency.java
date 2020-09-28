@@ -49,6 +49,7 @@ import com.android.systemui.keyguard.ScreenLifecycle;
 import com.android.systemui.keyguard.WakefulnessLifecycle;
 import com.android.systemui.media.dialog.MediaOutputDialogFactory;
 import com.android.systemui.model.SysUiState;
+import com.android.systemui.spark.OmniSettingsService;
 import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.plugins.DarkIconDispatcher;
 import com.android.systemui.plugins.PluginDependencyProvider;
@@ -332,6 +333,7 @@ public class Dependency {
     @Inject Lazy<MediaOutputDialogFactory> mMediaOutputDialogFactory;
     @Inject Lazy<ScreenDecorations> mScreenDecorations;
     @Inject Lazy<TaskHelper> mTaskHelper;
+    @Inject Lazy<OmniSettingsService> mOmniSettingsService;
 
     @Inject
     public Dependency() {
@@ -530,8 +532,8 @@ public class Dependency {
 
         mProviders.put(RecordingController.class, mRecordingController::get);
         mProviders.put(Divider.class, mDivider::get);
-
         mProviders.put(MediaOutputDialogFactory.class, mMediaOutputDialogFactory::get);
+        mProviders.put(OmniSettingsService.class, mOmniSettingsService::get);
 
         mProviders.put(ScreenDecorations.class, mScreenDecorations::get);
 
