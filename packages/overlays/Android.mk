@@ -97,8 +97,20 @@ LOCAL_REQUIRED_MODULES := \
 	IconPackRoundedSettingsOverlay \
 	IconPackRoundedSystemUIOverlay \
 	IconPackRoundedThemePickerOverlay \
+	IconPackSamAndroidOverlay \
+	IconPackSamPixelLauncherOverlay \
+	IconPackSamPixelThemePickerOverlay \
+	IconPackSamSettingsOverlay \
+	IconPackSamSystemUIOverlay \
+	IconPackVictorAndroidOverlay \
+	IconPackVictorPixelLauncherOverlay \
+	IconPackVictorPixelThemePickerOverlay \
+	IconPackVictorSettingsOverlay \
+	IconPackVictorSystemUIOverlay \
+	IconShapeHeartOverlay \
 	IconShapePebbleOverlay \
 	IconShapeRoundedRectOverlay \
+	IconShapeSquareOverlay \
 	IconShapeSquircleOverlay \
 	IconShapeTaperedRectOverlay \
 	IconShapeTeardropOverlay \
