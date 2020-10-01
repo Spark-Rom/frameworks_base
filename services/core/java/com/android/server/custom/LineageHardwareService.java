@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2015-2016 The CyanogenMod Project
- *               2017-2019 The LineageOS Project
+ *               2017-2020 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -335,7 +335,6 @@ public class LineageHardwareService extends SystemService {
         super(context);
         mContext = context;
         mLineageHwImpl = getImpl(context);
-        publishBinderService(LineageContextConstants.LINEAGE_HARDWARE_SERVICE, mService);
     }
 
     @Override
@@ -350,6 +349,7 @@ public class LineageHardwareService extends SystemService {
 
     @Override
     public void onStart() {
+        publishBinderService(LineageContextConstants.LINEAGE_HARDWARE_SERVICE, mService);
     }
 
     private final IBinder mService = new ILineageHardwareService.Stub() {
