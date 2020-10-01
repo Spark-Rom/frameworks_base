@@ -1,0 +1,7 @@
+<resources>
+    <!-- Cal Clock-->
+    <color name="first_shape_internal">#e5e5e5</color>
+    <color name="first_shape_stroke">#d8d8d8</color>
+    <color name="second_shape_internal">#f2f2f2</color>
+    <color name="second_shape_stroke">#878787</color>
+</resources>
