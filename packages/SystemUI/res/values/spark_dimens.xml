@@ -42,4 +42,8 @@
     <dimen name="status_bar_mobile_signal_width">16dp</dimen>
     <dimen name="status_bar_mobile_type_height">9dp</dimen>
     <dimen name="status_bar_mobile_type_width">12dp</dimen>
+
+    <!-- Additional gesture navbar lengths -->
+    <dimen name="navigation_home_handle_width_short">72dp</dimen>
+    <dimen name="navigation_home_handle_width_long">140dp</dimen>
 </resources>
