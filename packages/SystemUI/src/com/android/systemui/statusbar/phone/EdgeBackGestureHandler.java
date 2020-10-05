@@ -240,12 +240,18 @@ public class EdgeBackGestureHandler extends CurrentUserTracker implements Displa
     private static final int MAX_LOGGED_PREDICTIONS = 10;
     private ArrayDeque<String> mPredictionLog = new ArrayDeque<>();
 
+    private boolean mEdgeHapticEnabled;
+    private static final int HAPTIC_DURATION = 20;
+
     private final GestureNavigationSettingsObserver mGestureNavigationSettingsObserver;
 
     private final NavigationEdgeBackPlugin.BackCallback mBackCallback =
             new NavigationEdgeBackPlugin.BackCallback() {
                 @Override
                 public void triggerBack() {
+                    if (mEdgeHapticEnabled) {
+                        vibrateTick();
+                    }
                     sendEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK);
                     sendEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK);
 
@@ -270,6 +276,7 @@ public class EdgeBackGestureHandler extends CurrentUserTracker implements Displa
             Runnable stateChangeCallback) {
         super(Dependency.get(BroadcastDispatcher.class));
         mContext = context;
+        mVibrator = context.getSystemService(Vibrator.class);
         mDisplayId = context.getDisplayId();
         mMainExecutor = context.getMainExecutor();
         mOverviewProxyService = overviewProxyService;
@@ -316,6 +323,7 @@ public class EdgeBackGestureHandler extends CurrentUserTracker implements Displa
                 .getResources();
         mEdgeWidthLeft = mGestureNavigationSettingsObserver.getLeftSensitivity(res);
         mEdgeWidthRight = mGestureNavigationSettingsObserver.getRightSensitivity(res);
+        mEdgeHapticEnabled = mGestureNavigationSettingsObserver.getEdgeHaptic();
         mIsBackGestureAllowed =
                 !mGestureNavigationSettingsObserver.areNavigationButtonForcedVisible();
         mIsBackGestureArrowEnabled = mGestureNavigationSettingsObserver.getBackArrowGesture();
@@ -427,6 +435,11 @@ public class EdgeBackGestureHandler extends CurrentUserTracker implements Displa
 
     public void onSettingsChanged() {
         updateEdgeHeightValue();
+    }
+
+    private void vibrateTick() {
+        AsyncTask.execute(() ->
+            mVibrator.vibrate(VibrationEffect.createOneShot(HAPTIC_DURATION, VibrationEffect.DEFAULT_AMPLITUDE)));
     }
 
     private void disposeInputChannel() {
