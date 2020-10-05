@@ -33,6 +33,7 @@ import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.Region;
 import android.hardware.input.InputManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -40,6 +41,9 @@ import android.os.RemoteException;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.Trace;
+import android.os.UserHandle;
+import android.os.Vibrator;
+import android.os.VibrationEffect;
 import android.provider.DeviceConfig;
 import android.util.DisplayMetrics;
 import android.os.UserHandle;
@@ -269,6 +273,11 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
     private String mPackageName;
     private float mMLResults;
 
+    private boolean mEdgeHapticEnabled;
+    private static final int HAPTIC_DURATION = 20;
+
+    private final Vibrator mVibrator;
+
     // For debugging
     private LogArray mPredictionLog = new LogArray(MAX_NUM_LOGGED_PREDICTIONS);
     private LogArray mGestureLogInsideInsets = new LogArray(MAX_NUM_LOGGED_GESTURES);
@@ -282,6 +291,9 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
                 public void triggerBack() {
                     // Notify FalsingManager that an intentional gesture has occurred.
                     // TODO(b/186519446): use a different method than isFalseTouch
+                    if (mEdgeHapticEnabled) {
+                        vibrateTick();
+                    }
                     mFalsingManager.isFalseTouch(BACK_GESTURE);
                     // Only inject back keycodes when ahead-of-time back dispatching is disabled.
                     if (mBackAnimation == null) {
@@ -326,6 +338,7 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
             FalsingManager falsingManager, LatencyTracker latencyTracker) {
         super(broadcastDispatcher);
         mContext = context;
+        mVibrator = context.getSystemService(Vibrator.class);
         mDisplayId = context.getDisplayId();
         mMainExecutor = executor;
         mOverviewProxyService = overviewProxyService;
@@ -405,6 +418,7 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
         Resources res = mNavigationModeController.getCurrentUserContext().getResources();
         mEdgeWidthLeft = mGestureNavigationSettingsObserver.getLeftSensitivity(res);
         mEdgeWidthRight = mGestureNavigationSettingsObserver.getRightSensitivity(res);
+        mEdgeHapticEnabled = mGestureNavigationSettingsObserver.getEdgeHaptic();
         mIsBackGestureAllowed =
                 !mGestureNavigationSettingsObserver.areNavigationButtonForcedVisible();
 
@@ -497,6 +511,12 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
 
     public void onNavBarTransientStateChanged(boolean isTransient) {
         mIsNavBarShownTransiently = isTransient;
+    }
+
+
+    private void vibrateTick() {
+            AsyncTask.execute(() ->
+                    mVibrator.vibrate(VibrationEffect.createOneShot(HAPTIC_DURATION, VibrationEffect.DEFAULT_AMPLITUDE)));
     }
 
     private void disposeInputChannel() {
