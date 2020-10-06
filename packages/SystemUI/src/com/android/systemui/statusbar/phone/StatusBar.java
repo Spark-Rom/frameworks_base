@@ -308,6 +308,8 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     private static final String NOTIFICATION_MATERIAL_DISMISS =
             "system:" + Settings.System.NOTIFICATION_MATERIAL_DISMISS;
+    private static final String STATUS_BAR_SHOW_LYRIC =
+            "system:" + Settings.System.STATUS_BAR_SHOW_LYRIC;
 
     private static final String BANNER_ACTION_CANCEL =
             "com.android.systemui.statusbar.banner_action_cancel";
@@ -460,6 +462,9 @@ public class StatusBar extends SystemUI implements DemoMode,
     // Other views that need hiding for the notification ticker
     View mCenterClockLayout;
 
+    LinearLayout mStatusBarLeftSide;
+    View mCenteredIconArea;
+
     // expanded notifications
     // the sliding/resizing panel within the notification window
     protected NotificationPanelViewController mNotificationPanelViewController;
@@ -515,6 +520,11 @@ public class StatusBar extends SystemUI implements DemoMode,
     private boolean mTicking;
     private int mTickerAnimationMode;
     private int mTickerTickDuration;
+
+    // lyric ticker
+    public LyricTicker mLyricTicker;
+    private boolean mLyricTicking;
+    public boolean mLyricEnabled;
 
     // for disabling the status bar
     private int mDisabled1 = 0;
@@ -956,6 +966,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         mStatusBarStateController.addCallback(this,
                 SysuiStatusBarStateController.RANK_STATUS_BAR);
         mTunerService.addTunable(this, NOTIFICATION_MATERIAL_DISMISS);
+        mTunerService.addTunable(this, STATUS_BAR_SHOW_LYRIC);
 
         mDisplayManager = mContext.getSystemService(DisplayManager.class);
 
@@ -1228,6 +1239,8 @@ public class StatusBar extends SystemUI implements DemoMode,
                             mStatusBarView.findViewById(R.id.notification_lights_out));
                     mNotificationShadeWindowViewController.setStatusBarView(mStatusBarView);
                     checkBarModes();
+                    mStatusBarLeftSide = (LinearLayout) mStatusBarView.findViewById(R.id.status_bar_left_side);
+                    mCenteredIconArea = mStatusBarView.findViewById(R.id.centered_icon_area);
                     handleCutout(null);
                     mBurnInProtectionController =
                         new BurnInProtectionController(mContext, this, mStatusBarView);
@@ -1803,6 +1816,18 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     public int getStatusBarHeight() {
         return mStatusBarWindowController.getStatusBarHeight();
+    }
+
+    public void createLyricTicker(Context ctx, View statusBarView,
+                             TickerView tickerTextView, ImageSwitcher tickerIcon, View tickerView) {
+        mLyricEnabled = true;
+        if (mLyricTicker == null) {
+            mLyricTicker = new MyLyricTicker(ctx, statusBarView);
+        }
+        ((MyLyricTicker)mLyricTicker).setView(tickerView);
+        tickerTextView.setLyricTicker(mLyricTicker);
+        mLyricTicker.setViews(tickerTextView, tickerIcon);
+
     }
 
     protected boolean toggleSplitScreenMode(int metricsDockAction, int metricsUndockAction) {
@@ -3161,6 +3186,10 @@ public class StatusBar extends SystemUI implements DemoMode,
         // not for you
         if (!isNotificationForCurrentProfiles(n)) return;
 
+        boolean isLyric = ((n.getNotification().flags & Notification.FLAG_ALWAYS_SHOW_TICKER) != 0)
+                            || ((n.getNotification().flags & Notification.FLAG_ONLY_UPDATE_TICKER) != 0);
+        if (isLyric) return;
+
         // Show the ticker if one is requested. Also don't do this
         // until status bar window is attached to the window manager,
         // because...  well, what's the point otherwise?  And trying to
@@ -3172,6 +3201,88 @@ public class StatusBar extends SystemUI implements DemoMode,
                 mTicker.addEntry(n, isMusic, metaMediaData, notificationText);
             }
         }
+    }
+
+    public void updateLyricTicker(StatusBarNotification n) {
+        if (!mLyricEnabled || mLyricTicker == null) return;
+        mLyricTicker.updateNotification(n);
+    }
+
+    private class MyLyricTicker extends LyricTicker {
+        // the inflated ViewStub
+        public View mTickerView;
+
+        MyLyricTicker(Context context, View sb) {
+            super(context, sb);
+            if (!mLyricEnabled) {
+                Log.w(TAG, "MyLyricTicker instantiated with mLyricEnabled=false", new Throwable());
+            }
+        }
+
+        public void setView(View tv) {
+            mTickerView = tv;
+        }
+
+        @Override
+        public void tickerStarting() {
+            if (mLyricTicker == null || !mLyricEnabled) return;
+            mLyricTicking = true;
+            Animation outAnim, inAnim;
+            outAnim = loadAnim(com.android.internal.R.anim.push_up_out, null);
+            inAnim = loadAnim(com.android.internal.R.anim.push_up_in, null);
+            mStatusBarLeftSide.setVisibility(View.GONE);
+            mStatusBarLeftSide.startAnimation(outAnim);
+            mCenteredIconArea.setVisibility(View.GONE);
+            mCenteredIconArea.startAnimation(outAnim);
+            if (mTickerView != null) {
+                mTickerView.setVisibility(View.VISIBLE);
+                mTickerView.startAnimation(inAnim);
+            }
+        }
+
+        @Override
+        public void tickerDone() {
+            Animation outAnim, inAnim;
+            outAnim = loadAnim(com.android.internal.R.anim.push_up_out, mTickingDoneListener);
+            inAnim = loadAnim(com.android.internal.R.anim.push_up_in, null);
+            mStatusBarLeftSide.setVisibility(View.VISIBLE);
+            mStatusBarLeftSide.startAnimation(inAnim);
+            mCenteredIconArea.setVisibility(View.VISIBLE);
+            mCenteredIconArea.startAnimation(inAnim);
+            if (mTickerView != null) {
+                mTickerView.setVisibility(View.GONE);
+                mTickerView.startAnimation(outAnim);
+            }
+        }
+
+        @Override
+        public void tickerHalting() {
+            if (mStatusBarLeftSide.getVisibility() != View.VISIBLE) {
+                mStatusBarLeftSide.setVisibility(View.VISIBLE);
+                mStatusBarLeftSide.startAnimation(loadAnim(false, null));
+                mCenteredIconArea.setVisibility(View.VISIBLE);
+                mCenteredIconArea.startAnimation(loadAnim(false, null));
+            }
+            if (mTickerView != null) {
+                mTickerView.setVisibility(View.GONE);
+                // we do not animate the ticker away at this point, just get rid of it (b/6992707)
+            }
+        }
+
+        @Override
+        public void onDarkChanged(Rect area, float darkIntensity, int tint) {
+            applyDarkIntensity(area, mTickerView, tint);
+        }
+
+        Animation.AnimationListener mTickingDoneListener = new Animation.AnimationListener() {
+            public void onAnimationEnd(Animation animation) {
+                mLyricTicking = false;
+            }
+            public void onAnimationRepeat(Animation animation) {
+            }
+            public void onAnimationStart(Animation animation) {
+            }
+        };
     }
 
     private class MyTicker extends Ticker {
@@ -3250,17 +3361,17 @@ public class StatusBar extends SystemUI implements DemoMode,
         public void onDarkChanged(Rect area, float darkIntensity, int tint) {
             applyDarkIntensity(area, mTickerView, tint);
         }
-    }
 
-    Animation.AnimationListener mTickingDoneListener = new Animation.AnimationListener() {
-        public void onAnimationEnd(Animation animation) {
-            mTicking = false;
-        }
-        public void onAnimationRepeat(Animation animation) {
-        }
-        public void onAnimationStart(Animation animation) {
-        }
-    };
+        Animation.AnimationListener mTickingDoneListener = new Animation.AnimationListener() {
+            public void onAnimationEnd(Animation animation) {
+                mTicking = false;
+            }
+            public void onAnimationRepeat(Animation animation) {
+            }
+            public void onAnimationStart(Animation animation) {
+            }
+        };
+    }
 
     private Animation loadAnim(boolean outAnim, Animation.AnimationListener listener) {
         AlphaAnimation animation = new AlphaAnimation((outAnim ? 1.0f : 0.0f), (outAnim ? 0.0f : 1.0f));
@@ -3304,6 +3415,12 @@ public class StatusBar extends SystemUI implements DemoMode,
     public void haltTicker() {
         if (mTicker != null && mTickerEnabled != 0) {
             mTicker.halt();
+        }
+    }
+
+    public void haltLyricTicker() {
+        if (mLyricTicker != null && mLyricEnabled) {
+            mLyricTicker.halt();
         }
     }
 
@@ -4299,6 +4416,7 @@ public class StatusBar extends SystemUI implements DemoMode,
      */
     protected void updateTheme() {
         haltTicker();
+        haltLyricTicker();
 
         // Lock wallpaper defines the color of the majority of the views, hence we'll use it
         // to set our default theme.
@@ -5378,6 +5496,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                 mShowDimissButton =
                         TunerService.parseIntegerSwitch(newValue, false);
                 updateDismissAllVisibility(true);
+                break;
+            case STATUS_BAR_SHOW_LYRIC:
+             mLyricEnabled = TunerService.parseIntegerSwitch(newValue, false);
                 break;
             default:
                 break;

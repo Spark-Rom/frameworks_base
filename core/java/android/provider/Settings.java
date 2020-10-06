@@ -6376,6 +6376,12 @@ public final class Settings {
         public static final String POWER_PROFILE_TYPE = "power_profile_type";
 
         /**
+         * Whether to show the lyric on the status bar
+         * @hide
+         */
+        public static final String STATUS_BAR_SHOW_LYRIC = "status_bar_show_lyric";
+
+        /**
          * Whether to vibrate on call state change
          * @hide
          */
