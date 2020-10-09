@@ -118,5 +118,6 @@ public class SystemSettings {
         Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL,
         Settings.System.HEADS_UP_NOTIFICATIONS_THRESHOLD,
         Settings.System.KEYGUARD_QUICK_TOGGLES,
+        Settings.System.NOTIFICATION_HEADERS,
     };
 }
