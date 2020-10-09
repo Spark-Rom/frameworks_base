@@ -201,6 +201,7 @@ import com.android.systemui.statusbar.notification.stack.NotificationStackSizeCa
 import com.android.systemui.statusbar.notification.stack.StackStateAnimator;
 import com.android.systemui.statusbar.phone.LockscreenGestureLogger.LockscreenUiEvent;
 import com.android.systemui.statusbar.phone.dagger.CentralSurfacesComponent;
+import com.android.systemui.statusbar.phone.CentralSurfacesImpl;
 import com.android.systemui.statusbar.phone.fragment.CollapsedStatusBarFragment;
 import com.android.systemui.statusbar.phone.panelstate.PanelExpansionStateManager;
 import com.android.systemui.statusbar.phone.panelstate.PanelState;
@@ -528,6 +529,7 @@ public class NotificationPanelViewController extends PanelViewController impleme
     private boolean mUserSetupComplete;
     private boolean mHideIconsDuringLaunchAnimation = true;
     private int mStackScrollerMeasuringPass;
+    private CentralSurfacesImpl mCentralSurfacesImpl;
     /**
      * Non-null if there's a heads-up notification that we're currently tracking the position of.
      */
@@ -3280,6 +3282,9 @@ public class NotificationPanelViewController extends PanelViewController impleme
             alpha *= mClockPositionResult.clockAlpha;
         }
         mNotificationStackScrollLayoutController.setAlpha(alpha);
+        if (mBarState != StatusBarState.KEYGUARD && !isFullyCollapsed()) {
+            mCentralSurfacesImpl.updateDismissAllVisibility(true);
+        }
     }
 
     private float getFadeoutAlpha() {

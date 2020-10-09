@@ -115,6 +115,7 @@ public abstract class PanelViewController {
     }
 
     protected CentralSurfaces mCentralSurfaces;
+    protected CentralSurfacesImpl mCentralSurfacesImpl;
     protected HeadsUpManagerPhone mHeadsUpManager;
     protected final StatusBarTouchableRegionManager mStatusBarTouchableRegionManager;
 
@@ -1170,6 +1171,7 @@ public abstract class PanelViewController {
 
     public void setIsLaunchAnimationRunning(boolean running) {
         mIsLaunchAnimationRunning = running;
+        mCentralSurfacesImpl.updateDismissAllVisibility(false);
     }
 
     protected void setIsClosing(boolean isClosing) {
