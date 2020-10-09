@@ -87,5 +87,6 @@ public class SystemSettings {
         Settings.System.DOZE_ON_CHARGE,
         Settings.System.QS_FOOTER_TEXT_SHOW,
         Settings.System.QS_FOOTER_TEXT_STRING,
+        Settings.System.NOTIFICATION_HEADERS,
     };
 }

@@ -5560,6 +5560,13 @@ public final class Settings {
         public static final String VOLUME_KEY_CURSOR_CONTROL = "volume_key_cursor_control";
 
         /**
+         * Controls whether to show notification headers
+         * @hide
+         */
+        @Readable
+        public static final String NOTIFICATION_HEADERS = "notification_headers";
+
+        /**
          * Whether the phone vibrates on call connect
          * @hide
          */
