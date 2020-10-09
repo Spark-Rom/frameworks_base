@@ -1848,7 +1848,7 @@ public class NotificationPanelViewController extends PanelViewController {
         return !mQsTouchAboveFalsingThreshold;
     }
 
-    private float computeQsExpansionFraction() {
+    public float computeQsExpansionFraction() {
         if (mQSAnimatingHiddenFromCollapsed) {
             // When hiding QS from collapsed state, the expansion can sometimes temporarily
             // be larger than 0 because of the timing, leading to flickers.
@@ -2990,6 +2990,7 @@ public class NotificationPanelViewController extends PanelViewController {
             alpha *= mClockPositionResult.clockAlpha;
         }
         mNotificationStackScrollLayoutController.setAlpha(alpha);
+        mStatusBar.updateDismissAllVisibility(true);
     }
 
     private float getFadeoutAlpha() {

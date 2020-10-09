@@ -46,6 +46,7 @@ import static com.android.systemui.statusbar.phone.BarTransitions.MODE_TRANSPARE
 import static com.android.systemui.statusbar.phone.BarTransitions.MODE_WARNING;
 import static com.android.systemui.statusbar.phone.BarTransitions.TransitionMode;
 import static com.android.wm.shell.bubbles.BubbleController.TASKBAR_CHANGED_BROADCAST;
+import com.android.systemui.tuner.TunerService;
 
 import android.annotation.Nullable;
 import android.app.ActivityManager;
@@ -82,6 +83,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.hardware.display.DisplayManager;
+import android.graphics.drawable.GradientDrawable;
 import android.media.AudioAttributes;
 import android.metrics.LogMaker;
 import android.net.Uri;
@@ -129,6 +131,9 @@ import android.view.WindowManager;
 import android.view.WindowManagerGlobal;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.DateTimeView;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
@@ -250,6 +255,7 @@ import com.android.systemui.statusbar.phone.dagger.StatusBarComponent;
 import com.android.systemui.statusbar.phone.dagger.StatusBarPhoneModule;
 import com.android.systemui.statusbar.phone.ongoingcall.OngoingCallController;
 import com.android.systemui.statusbar.policy.BatteryController;
+import com.android.systemui.statusbar.phone.NotificationPanelView;
 import com.android.systemui.statusbar.policy.BrightnessMirrorController;
 import com.android.systemui.statusbar.policy.BurnInProtectionController;
 import com.android.systemui.statusbar.policy.ConfigurationController;
@@ -292,7 +298,9 @@ public class StatusBar extends SystemUI implements DemoMode,
         ColorExtractor.OnColorsChangedListener, ConfigurationListener,
         StatusBarStateController.StateListener,
         LifecycleOwner, BatteryController.BatteryStateChangeCallback,
-        ActivityLaunchAnimator.Callback, PackageChangedListener {
+        ActivityLaunchAnimator.Callback, PackageChangedListener,
+        TunerService.Tunable {
+
     public static final boolean MULTIUSER_DEBUG = false;
 
     protected static final int MSG_HIDE_RECENT_APPS = 1020;
@@ -305,6 +313,9 @@ public class StatusBar extends SystemUI implements DemoMode,
     public static final String SYSTEM_DIALOG_REASON_HOME_KEY = "homekey";
     public static final String SYSTEM_DIALOG_REASON_RECENT_APPS = "recentapps";
     static public final String SYSTEM_DIALOG_REASON_SCREENSHOT = "screenshot";
+
+    private static final String NOTIFICATION_MATERIAL_DISMISS =
+            "system:" + Settings.System.NOTIFICATION_MATERIAL_DISMISS;
 
     private static final String BANNER_ACTION_CANCEL =
             "com.android.systemui.statusbar.banner_action_cancel";
@@ -468,6 +479,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     private final SystemStatusAnimationScheduler mAnimationScheduler;
     private final StatusBarLocationPublisher mStatusBarLocationPublisher;
     private final StatusBarIconController mStatusBarIconController;
+    private final TunerService mTunerService;
 
     protected TaskHelper mTaskHelper;
 
@@ -534,6 +546,10 @@ public class StatusBar extends SystemUI implements DemoMode,
     private final ScreenPinningRequest mScreenPinningRequest;
 
     private final MetricsLogger mMetricsLogger;
+
+    private ImageButton mDismissAllButton;
+    private boolean mClearableNotifications = true;
+    private boolean mShowDimissButton;
 
     Runnable mLongPressBrightnessChange = new Runnable() {
         @Override
@@ -868,7 +884,8 @@ public class StatusBar extends SystemUI implements DemoMode,
             Optional<StartingSurface> startingSurfaceOptional,
             TaskHelper taskHelper,
             FlashlightController flashlightController,
-            BurnInProtectionController burnInProtectionController) {
+            BurnInProtectionController burnInProtectionController,
+            TunerService tunerService) {
         super(context);
         mNotificationsController = notificationsController;
         mLightBarController = lightBarController;
@@ -961,6 +978,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         mFlashlightController = flashlightController;
         mBurnInProtectionController = burnInProtectionController;
         lockscreenShadeTransitionController.setStatusbar(this);
+        mTunerService = tunerService;
 
         mExpansionChangedListeners = new ArrayList<>();
 
@@ -994,6 +1012,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         mColorExtractor.addOnColorsChangedListener(this);
         mStatusBarStateController.addCallback(this,
                 SysuiStatusBarStateController.RANK_STATUS_BAR);
+        mTunerService.addTunable(this, NOTIFICATION_MATERIAL_DISMISS);
 
         mDisplayManager = mContext.getSystemService(DisplayManager.class);
 
@@ -1190,6 +1209,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         inflateStatusBarWindow();
         mNotificationShadeWindowViewController.setService(this, mNotificationShadeWindowController);
         mNotificationShadeWindowView.setOnTouchListener(getStatusBarWindowTouchListener());
+        mDismissAllButton = mNotificationShadeWindowView.findViewById(R.id.clear_notifications);
 
         // TODO: Deal with the ugliness that comes from having some of the statusbar broken out
         // into fragments, but the rest here, it leaves some awkward lifecycle and whatnot.
@@ -1594,6 +1614,38 @@ public class StatusBar extends SystemUI implements DemoMode,
                 || action == MotionEvent.ACTION_CANCEL) {
             mHandler.removeCallbacks(mLongPressBrightnessChange);
         }
+    }
+
+    public void updateDismissAllVisibility(boolean visible) {
+        if (mDismissAllButton != null) {
+        if (!mShowDimissButton && !mClearableNotifications || !visible || mState == StatusBarState.KEYGUARD || mQSPanelController.isExpanded()) {
+                mDismissAllButton.setAlpha(0);
+                mDismissAllButton.getBackground().setAlpha(0);
+                mDismissAllButton.setVisibility(View.GONE);
+                return;
+            }
+            mDismissAllButton.setVisibility(View.VISIBLE);
+            int round = Math.round(mNotificationPanelViewController.getExpandedFraction() * 255.0f);
+            mDismissAllButton.setAlpha(round);
+            mDismissAllButton.getBackground().setAlpha(round);
+            mDismissAllButton.setElevation(mContext.getResources().getDimension(R.dimen.dismiss_all_button_elevation));
+        }
+    }
+
+
+    public void updateDismissAllButton(int iconcolor) {
+        if (mDismissAllButton != null) {
+            mDismissAllButton.setColorFilter(iconcolor);
+            mDismissAllButton.setBackground(mContext.getResources().getDrawable(R.drawable.dismiss_all_background));
+        }
+    }
+
+    public void setHasClearableNotifs(boolean notifs) {
+        mClearableNotifications = notifs;
+    }
+
+    public View getDismissAllButton() {
+        return mDismissAllButton;
     }
 
     protected QS createDefaultQSFragment() {
@@ -4126,6 +4178,9 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     @Override
     public void onStateChanged(int newState) {
+        if (mState != newState) {
+            updateDismissAllVisibility(true);
+        }
         mState = newState;
         updateReportRejectedTouchVisibility();
         mDozeServiceHost.updateDozing();
@@ -5311,6 +5366,20 @@ public class StatusBar extends SystemUI implements DemoMode,
     public void startAssist(Bundle args) {
         mAssistManagerLazy.get().startAssist(args);
     }
+
+    @Override
+    public void onTuningChanged(String key, String newValue) {
+        switch (key) {
+            case NOTIFICATION_MATERIAL_DISMISS:
+                mShowDimissButton =
+                        TunerService.parseIntegerSwitch(newValue, false);
+                updateDismissAllVisibility(true);
+                break;
+            default:
+                break;
+         }
+    }
+
     // End Extra BaseStatusBarMethods.
 
     public NotificationGutsManager getGutsManager() {

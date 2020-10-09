@@ -100,6 +100,8 @@ import com.android.systemui.wmshell.BubblesManager;
 import com.android.wm.shell.bubbles.Bubbles;
 import com.android.wm.shell.legacysplitscreen.LegacySplitScreen;
 import com.android.wm.shell.startingsurface.StartingSurface;
+import com.android.systemui.tuner.TunerService;
+
 import com.google.android.systemui.NotificationLockscreenUserManagerGoogle;
 import com.google.android.systemui.smartspace.SmartSpaceController;
 
@@ -210,7 +212,8 @@ public class StatusBarGoogle extends StatusBar {
             Optional<StartingSurface> startingSurfaceOptional,
             TaskHelper taskHelper,
             FlashlightController flashlightController,
-            BurnInProtectionController burnInProtectionController) {
+            BurnInProtectionController burnInProtectionController,
+            TunerService tunerService) {
         super(
             context,
             notificationsController,
@@ -303,7 +306,8 @@ public class StatusBarGoogle extends StatusBar {
             startingSurfaceOptional,
             taskHelper,
             flashlightController,
-            burnInProtectionController);
+            burnInProtectionController,
+            tunerService);
     }
 
     @Override
