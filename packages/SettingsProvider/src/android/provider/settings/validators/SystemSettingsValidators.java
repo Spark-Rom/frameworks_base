@@ -233,5 +233,6 @@ public class SystemSettingsValidators {
                         return true;
                     }
                 });
+        VALIDATORS.put(System.NOTIFICATION_HEADERS, BOOLEAN_VALIDATOR);
     }
 }
