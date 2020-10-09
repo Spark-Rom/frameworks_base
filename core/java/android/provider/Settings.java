@@ -6288,6 +6288,13 @@ public final class Settings {
         public static final String UDFPS_COLOR = "udfps_color";
 
         /**
+         * Controls whether to show notification headers
+         * @hide
+         */
+        @Readable
+        public static final String NOTIFICATION_HEADERS = "notification_headers";
+
+        /**
          * QS battery style
          * @hide
          */
