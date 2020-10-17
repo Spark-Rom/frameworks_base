@@ -18,6 +18,7 @@ package com.android.keyguard;
 
 import android.graphics.Rect;
 import android.util.Slog;
+import android.view.View;
 
 import com.android.keyguard.KeyguardClockSwitch.ClockSize;
 import com.android.systemui.statusbar.notification.AnimatableProperty;
@@ -91,6 +92,14 @@ public class KeyguardStatusViewController extends ViewController<KeyguardStatusV
     public void dozeTimeTick() {
         refreshTime();
         mKeyguardSliceViewController.refresh();
+    }
+
+    /**
+     * Sets the view visibility
+     * @hide
+     */
+    public void setViewVisible(boolean visible) {
+        mView.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
     }
 
     /**
