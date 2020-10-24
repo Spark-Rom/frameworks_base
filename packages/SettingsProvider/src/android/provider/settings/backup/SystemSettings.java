@@ -98,5 +98,6 @@ public class SystemSettings {
         Settings.System.NOTIFICATION_HEADERS,
         Settings.System.ACCENT_COLOR,
         Settings.System.QS_MEDIA_PLAYER,
+        Settings.System.CENTER_NOTIFICATION_HEADERS,
     };
 }
