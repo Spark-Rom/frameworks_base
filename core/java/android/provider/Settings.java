@@ -5966,6 +5966,12 @@ public final class Settings {
         public static final String QS_HEADER_BACKGROUND = "qs_header_background";
 
         /**
+         * whether to show center notification headers
+         * @hide
+         */
+        public static final String CENTER_NOTIFICATION_HEADERS = "center_notification_headers";
+
+        /**
          * Whether StatusBar icons should use app icon
          * @hide
          */
@@ -6264,6 +6270,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUS_BAR_SHOW_TICKER);
             PRIVATE_SETTINGS.add(STATUS_BAR_TICKER_ANIMATION_MODE);
             PRIVATE_SETTINGS.add(STATUS_BAR_TICKER_TICK_DURATION);
+            PRIVATE_SETTINGS.add(CENTER_NOTIFICATION_HEADERS);
         }
 
         /**

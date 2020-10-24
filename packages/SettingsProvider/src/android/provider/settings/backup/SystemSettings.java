@@ -94,6 +94,7 @@ public class SystemSettings {
         Settings.System.RINGTONE_VIBRATION_PATTERN,
         Settings.System.CUSTOM_RINGTONE_VIBRATION_PATTERN,
         Settings.System.COLOR_BUCKET_OVERLAY,
+        Settings.System.CENTER_NOTIFICATION_HEADERS,
         Settings.System.NOTIFICATION_HEADERS,
         Settings.System.ACCENT_COLOR,
         Settings.System.QS_MEDIA_PLAYER,
