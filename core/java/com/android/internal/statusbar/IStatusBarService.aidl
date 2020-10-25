@@ -238,4 +238,6 @@ interface IStatusBarService
     void killForegroundApp();
     void startAssist(in Bundle args);
     void setBlockedGesturalNavigation(boolean blocked);
+
+    void screenPinningStateChanged(boolean enabled);
 }
