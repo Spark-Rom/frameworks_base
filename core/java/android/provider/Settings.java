@@ -6148,6 +6148,13 @@ public final class Settings {
         public static final String STATUS_BAR_CLOCK_AUTO_HIDE_HDURATION = "status_bar_clock_auto_hide_hduration";
 
         /**
+         * Whether to enable SmartSpace
+         * @hide
+         */
+        @Readable
+        public static final String SMART_SPACE = "smart_space";
+
+        /**
          * Auto hide clock seconds duration
          * @hide
          */
