@@ -229,6 +229,6 @@ public class SystemSettingsValidators {
                         return true;
                     }
                 });
-
+        VALIDATORS.put(System.VOLUME_DIALOG_TIMEOUT, NON_NEGATIVE_INTEGER_VALIDATOR);
     }
 }

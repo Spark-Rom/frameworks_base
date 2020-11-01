@@ -5862,6 +5862,13 @@ public final class Settings {
         public static final String CHARGING_ANIMATION = "charging_animation";
 
         /**
+         * Volume dialog timeout. Value in seconds
+         * @hide
+         */
+        @Readable
+        public static final String VOLUME_DIALOG_TIMEOUT = "volume_dialog_timeout";
+
+        /**
          * Whether StatusBar icons should use app icon
          * @hide
          */
