@@ -99,6 +99,10 @@ public class SparkUtils {
     }
 
 
+    public static void toggleCameraFlash() {
+        FireActions.toggleCameraFlash();
+    }
+
    public static void showSystemRestartDialog(Context context) {
         new AlertDialog.Builder(context)
                 .setTitle(R.string.system_restart_title)
@@ -198,5 +202,33 @@ public class SparkUtils {
             needsNav = true;
         }
         return needsNav;
+    }
+
+    /**
+     * Keep FireAction methods below this point.
+     * Place calls to methods above this point.
+     */
+    private static final class FireActions {
+        private static IStatusBarService mStatusBarService = null;
+        private static IStatusBarService getStatusBarService() {
+            synchronized (FireActions.class) {
+                if (mStatusBarService == null) {
+                    mStatusBarService = IStatusBarService.Stub.asInterface(
+                            ServiceManager.getService("statusbar"));
+                }
+                return mStatusBarService;
+            }
+        }
+
+        public static void toggleCameraFlash() {
+            IStatusBarService service = getStatusBarService();
+            if (service != null) {
+                try {
+                    service.toggleCameraFlash();
+                } catch (RemoteException e) {
+                    // do nothing.
+                }
+            }
+        }
     }
 }
