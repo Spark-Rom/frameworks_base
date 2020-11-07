@@ -158,4 +158,9 @@ interface IStatusBarService
     void suppressAmbientDisplay(boolean suppress);
 
     void killForegroundApp();
+
+    /**
+     * Starts the default assistant app.
+     */
+    void startAssist(in Bundle args);
 }
