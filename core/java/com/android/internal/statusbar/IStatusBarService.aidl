@@ -236,5 +236,5 @@ interface IStatusBarService
     void preloadRecentApps();
     void cancelPreloadRecentApps();
     void killForegroundApp();
-
+    void startAssist(in Bundle args);
 }
