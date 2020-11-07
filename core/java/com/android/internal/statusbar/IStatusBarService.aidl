@@ -156,7 +156,12 @@ interface IStatusBarService
     void hideInDisplayFingerprintView();
 
     /**
-     * Evolution X extensions
+     * Spark extensions
      */
     void toggleCameraFlash();
+
+    /**
+     * Starts the default assistant app.
+     */
+    void startAssist(in Bundle args);
 }
