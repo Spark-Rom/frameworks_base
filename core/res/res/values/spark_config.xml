@@ -101,4 +101,6 @@
         <item>restart</item>
         <item>logout</item>
     </string-array>
+
+    <bool name="config_has_Soli">false</bool>
 </resources>

@@ -78,4 +78,6 @@
   <java-symbol type="string" name="config_regularFontFamily" />
 
   <java-symbol type="array" name="custom_config_globalActionsList" />
+
+  <java-symbol type="bool" name="config_has_Soli" />
 </resources>
