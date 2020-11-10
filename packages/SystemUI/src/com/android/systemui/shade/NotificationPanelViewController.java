@@ -4064,7 +4064,7 @@ public final class NotificationPanelViewController extends PanelViewController i
                             // but we dont want them here
                             mPulseLightsView.setVisibility(View.GONE);
                         }
-                        if (ambientLights) {
+                        if (ambientLights && aodEnabled) {
                             mPulseLightHandled = false;
                             // tell power manager that we want to enable aod
                             // must do that here already not on pulsing = false
@@ -4078,7 +4078,7 @@ public final class NotificationPanelViewController extends PanelViewController i
                 }
             } else {
                 // continue to pulse - if not screen was turned on in the meantime
-                if (activeNotif && ambientLights && mDozing && !mPulseLightHandled) {
+                if (activeNotif && ambientLights && aodEnabled && mDozing && !mPulseLightHandled) {
                     // no-op if pulseLights is also enabled
                     if (ambientLightsHideAod) {
                         showAodContent(false);
