@@ -6295,6 +6295,20 @@ public final class Settings {
         public static final String NOTIFICATION_HEADERS = "notification_headers";
 
         /**
+         * reTicker Status
+         * @hide
+         */
+        @Readable
+        public static final String RETICKER_STATUS = "reticker_status";
+
+        /**
+         * reTicker Colored
+         * @hide
+         */
+        @Readable
+        public static final String RETICKER_COLORED = "reticker_colored";
+
+        /**
          * QS battery style
          * @hide
          */
