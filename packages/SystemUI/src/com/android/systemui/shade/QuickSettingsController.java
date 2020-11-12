@@ -1005,6 +1005,7 @@ public class QuickSettingsController {
         mLargeScreenShadeHeaderController.setShadeExpandedFraction(shadeExpandedFraction);
         mLargeScreenShadeHeaderController.setQsExpandedFraction(qsExpansionFraction);
         mLargeScreenShadeHeaderController.setQsVisible(mVisible);
+        mPanelViewControllerLazy.get().reTickerViewVisibility();
     }
 
     /** */
