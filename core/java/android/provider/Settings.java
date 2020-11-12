@@ -6416,6 +6416,10 @@ public final class Settings {
          */
         public static final String ON_THE_GO_ALPHA = "on_the_go_alpha";
 
+        /** reTicker **/
+        public static final String RETICKER_STATUS = "reticker_status";
+        public static final String RETICKER_COLORED = "reticker_colored";
+
         /**
          * Whether the service should restart itself or not.
          *
