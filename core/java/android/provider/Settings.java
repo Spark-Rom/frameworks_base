@@ -5844,6 +5844,10 @@ public final class Settings {
          */
         public static final String QS_PANEL_BG_COLOR = "qs_panel_bg_color";
 
+        /** reTicker **/
+        public static final String RETICKER_STATUS = "reticker_status";
+        public static final String RETICKER_COLORED = "reticker_colored";
+
         /**
          * Whether to use framework styles and resources on qs panel
          * @hide
