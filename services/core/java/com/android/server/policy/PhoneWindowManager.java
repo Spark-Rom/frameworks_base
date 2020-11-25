@@ -1972,7 +1972,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mSwipeToScreenshot = new SwipeToScreenshotListener(context, new SwipeToScreenshotListener.Callbacks() {
             @Override
             public void onSwipeThreeFinger() {
-                mHandler.post(mScreenshotRunnable);
+                if (!mPocketLockShowing) {
+                    SparkUtils.takeScreenshot(true);
+                }
             }
         });
         mCameraManager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
