@@ -5509,6 +5509,12 @@ public final class Settings {
         public static final String AMBIENT_WAKE_GESTURES = "ambient_wake_gestures";
 
         /**
+         * FOD icon picker
+         * @hide
+         */
+        public static final String FOD_ICON = "fod_icon";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
