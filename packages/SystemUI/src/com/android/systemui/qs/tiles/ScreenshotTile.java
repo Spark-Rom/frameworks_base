@@ -64,10 +64,9 @@ public class ScreenshotTile extends QSTileImpl<BooleanState> {
         mHost.collapsePanels();
 
         //finish collapsing the panel
-        try {
-             Thread.sleep(1000); //1s
-        } catch (InterruptedException ie) {}
-        SparkUtils.takeScreenshot(mRegion ? false : true);
+        mUiHandler.postDelayed(() -> {
+            SparkUtils.takeScreenshot(mRegion ? false : true);
+        }, 1000/*timeout*/);
     }
 
     @Override
