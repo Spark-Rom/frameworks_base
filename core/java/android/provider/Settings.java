@@ -6108,6 +6108,12 @@ public final class Settings {
         public static final String SCREENSHOT_SHUTTER_SOUND = "screenshot_shutter_sound";
 
         /**
+         * FOD pressed color
+         * @hide
+         */
+        public static final String UDFPS_COLOR = "udfps_color";
+
+        /**
          * Whether to use the custom quick unlock screen control
          * @hide
          */

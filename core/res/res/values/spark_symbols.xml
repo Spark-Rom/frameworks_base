@@ -119,4 +119,7 @@
     <!-- Soft restart dialog -->
     <java-symbol type="string" name="system_restart_title" />
     <java-symbol type="string" name="system_restart_message" />
+
+  <!-- Default UDFPS pressed icon -->
+    <java-symbol type="integer" name="config_udfps_pressed_color" />
 </resources>
