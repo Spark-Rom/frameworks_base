@@ -451,6 +451,12 @@ public class KeyguardStatusView extends GridLayout implements
         mPulsing = pulsing;
     }
 
+    private boolean isFpIconShown() {
+        return (Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.LOCK_FP_ICON, 0,
+                UserHandle.USER_CURRENT) == 1);
+    }
+
     private boolean shouldShowLogout() {
         return Dependency.get(KeyguardUpdateMonitor.class).isLogoutEnabled()
                 && KeyguardUpdateMonitor.getCurrentUser() != UserHandle.USER_SYSTEM;
@@ -470,10 +476,10 @@ public class KeyguardStatusView extends GridLayout implements
         mHasFod = FodUtils.hasFodSupport(mContext);
 
 		FingerprintManager fingerprintManager = (FingerprintManager) mContext.getSystemService(Context.FINGERPRINT_SERVICE);
-	        if (fingerprintManager == null || !fingerprintManager.isHardwareDetected() || !fingerprintManager.hasEnrolledFingerprints() || mHasFod) {
+	        if (fingerprintManager == null || !isFpIconShown() || !fingerprintManager.isHardwareDetected() || !fingerprintManager.hasEnrolledFingerprints() || mHasFod) {
                         fpIcon.setVisibility(View.GONE);
 			Log.d("FluidLSManager", "FP icon: Fingerprint icon not showing");
-		} else if (fingerprintManager.hasEnrolledFingerprints()) { 
+		} else if (fingerprintManager.hasEnrolledFingerprints() && isFpIconShown()) { 
 			fpIcon.setVisibility(View.VISIBLE);
 			Log.d("FluidLSManager", "FP icon: fingerprint icon showing");
 		} else {
