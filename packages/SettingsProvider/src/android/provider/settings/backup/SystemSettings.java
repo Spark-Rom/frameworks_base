@@ -99,5 +99,6 @@ public class SystemSettings {
         Settings.System.ACCENT_COLOR,
         Settings.System.QS_MEDIA_PLAYER,
         Settings.System.DONT_TOUCH_HEADSUP,
+        Settings.System.LOCK_FP_ICON,
     };
 }
