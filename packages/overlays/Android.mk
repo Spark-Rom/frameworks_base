@@ -53,7 +53,7 @@ LOCAL_REQUIRED_MODULES := \
 	AccentColorOrangeOverlay \
 	AccentColorParanoidOverlay \
 	AccentColorPepsiOverlay \
-	AccentColorPixelBlueOverlay \
+	AccentColorPixelBlueOGOverlay \
 	AccentColorRazerOverlay \
 	AccentColorSalmonOverlay \
 	AccentColorStarbucksOverlay \
@@ -61,6 +61,21 @@ LOCAL_REQUIRED_MODULES := \
 	AccentColorUbuntuOverlay \
 	AccentColorXboxOverlay \
 	AccentColorXiaomiOverlay \
+	AccentColorPixelBlueOverlay \
+	AccentColorGoogleBlueOverlay \
+	AccentColorGoogleRedOverlay \
+	AccentColorGoogleYellowOverlay \
+	AccentColorGoogleGreenOverlay \
+	AccentColorGoogleGrayOverlay \
+	AccentColorAppleBlueOverlay \
+	AccentColorAppleGreenOverlay \
+	AccentColorAppleIndigoOverlay \
+	AccentColorAppleOrangeOverlay \
+	AccentColorApplePinkOverlay \
+	AccentColorApplePurpleOverlay \
+	AccentColorAppleRedOverlay \
+	AccentColorAppleTealOverlay \
+	AccentColorAppleYellowOverlay \
 	DisplayCutoutEmulationCornerOverlay \
 	DisplayCutoutEmulationDoubleOverlay \
     DisplayCutoutEmulationHoleOverlay \
