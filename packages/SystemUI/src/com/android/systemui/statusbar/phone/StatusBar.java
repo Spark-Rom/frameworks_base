@@ -437,6 +437,10 @@ public class StatusBar extends SystemUI implements DemoMode,
     // the sliding/resizing panel within the notification window
     protected NotificationPanelViewController mNotificationPanelViewController;
 
+    //Lockscreen Notifications
+    private int mMaxKeyguardNotifConfig;
+    private boolean mCustomMaxKeyguard;
+
     // settings
     private QSPanel mQSPanel;
 
@@ -2281,6 +2285,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SYSUI_COLORS_ACTIVE),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -2317,6 +2324,8 @@ public class StatusBar extends SystemUI implements DemoMode,
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.SWITCH_STYLE))) {
                 stockSwitchStyle();
                 updateSwitchStyle();
+            } else if (uri.equals(Settings.System.getUriFor(Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG))) {
+                setMaxKeyguardNotifConfig();
             }
         }
 
@@ -2331,6 +2340,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             setPulseOnNewTracks();
             setScreenBrightnessMode();
             setGamingMode();
+            setMaxKeyguardNotifConfig();
         }
     }
 
@@ -2399,6 +2409,11 @@ public class StatusBar extends SystemUI implements DemoMode,
                 UserHandle.USER_CURRENT);
         if (mNotificationInterruptStateProvider != null)
             mNotificationInterruptStateProvider.setGamingPeekMode(mGamingModeActivated, mHeadsUpDisabled);
+    }
+
+    private void setMaxKeyguardNotifConfig() {
+        mMaxKeyguardNotifConfig = Settings.System.getIntForUser(mContext.getContentResolver(),
+                 Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG, 3, UserHandle.USER_CURRENT);
     }
 
     /**
