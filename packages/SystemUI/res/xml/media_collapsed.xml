@@ -147,8 +147,8 @@
 
     <Constraint
         android:id="@+id/action1"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="@dimen/qs_media_action_button_size"
+        android:layout_height="@dimen/qs_media_action_button_size"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="@dimen/qs_media_panel_outer_padding"
@@ -161,8 +161,8 @@
 
     <Constraint
         android:id="@+id/action2"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="@dimen/qs_media_action_button_size"
+        android:layout_height="@dimen/qs_media_action_button_size"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="@dimen/qs_media_panel_outer_padding"

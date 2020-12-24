@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2019-2020 The Spark Project
+     Copyright (C) 2020-2021 The Spark Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
      limitations under the License.
 -->
 <resources>
+
     <!-- Burn-in protection -->
     <dimen name="horizontal_max_swift">3.0dp</dimen>
     <dimen name="vertical_max_swift">1.0dp</dimen>
@@ -83,4 +84,7 @@
     <dimen name="quick_settings_top_margin_media">4dp</dimen>
     <dimen name="quick_settings_top_margin_media_extra">10dp</dimen>
     <dimen name="qs_media_action_button_size">48dp</dimen>
+
+    <dimen name="op_qs_footer_height">98dp</dimen>
+    <dimen name="op_qs_footer_action_layout_size">96dp</dimen>
 </resources>
