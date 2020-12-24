@@ -112,6 +112,12 @@ public class SparkUtils {
         return wifi.isConnected();
     }
 
+
+    private static boolean mBlurSupportedSysProp = SystemProperties
+            .getBoolean("ro.surface_flinger.supports_background_blur", false);
+    private static boolean mBlurDisabledSysProp = SystemProperties
+            .getBoolean("persist.sys.sf.disable_blurs", false);
+
     // Returns today's passed time in Millisecond
     public static long getTodayMillis() {
         final long passedMillis;
@@ -571,5 +577,15 @@ public class SparkUtils {
         final TypedValue value = new TypedValue ();
         context.getTheme ().resolveAttribute (android.R.attr.colorAccent, value, true);
         return value.data;
+    }
+
+
+    /**
+     * If this device can render blurs.
+     *
+     * @return {@code true} when supported.
+     */
+    public static boolean supportsBlur() {
+        return mBlurSupportedSysProp && !mBlurDisabledSysProp && ActivityManager.isHighEndGfx();
     }
 }
