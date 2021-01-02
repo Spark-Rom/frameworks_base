@@ -5051,6 +5051,12 @@ public final class Settings {
         public static final String LOCKSCREEN_MEDIA_METADATA = "lockscreen_media_metadata";
 
         /**
+         * Whether to use accent lock clock colors
+         * @hide
+         */
+        public static final String LOCKSCREEN_ACCENT_COLOR = "lockscreen_accent_color";
+
+        /**
          * Whether to enable the pixel navbar animation
          * @hide
          */
