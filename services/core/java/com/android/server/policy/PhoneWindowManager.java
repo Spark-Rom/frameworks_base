@@ -197,6 +197,7 @@ import com.android.internal.accessibility.AccessibilityShortcutController;
 import com.android.internal.accessibility.util.AccessibilityUtils;
 import com.android.internal.app.AssistUtils;
 import com.android.internal.inputmethod.SoftInputShowHideReason;
+import com.android.internal.lineage.hardware.LineageHardwareManager;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.internal.os.DeviceKeyHandler;
@@ -887,6 +888,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.HOME_WAKE_BUTTON), false, this,
                     UserHandle.USER_ALL);
+            if (mLineageHardware.isSupported(LineageHardwareManager.FEATURE_KEY_SWAP)) {
+                resolver.registerContentObserver(Settings.Secure.getUriFor(
+                        Settings.Secure.SWAP_CAPACITIVE_KEYS), false, this,
+                        UserHandle.USER_ALL);
+            }
+
             updateSettings();
         }
 
@@ -2110,7 +2117,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             mKeyHandler = new HardkeyActionHandler(mContext, mHandler);
         }
         mSettingsObserver = new SettingsObserver(mHandler);
-
         mModifierShortcutManager = new ModifierShortcutManager(context);
         mUiMode = context.getResources().getInteger(
                 com.android.internal.R.integer.config_defaultUiModeType);
@@ -2756,6 +2762,16 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         if (updateRotation) {
             updateRotation(true);
         }
+        updateKeySwapper();
+    }
+
+    private void updateKeySwapper(){
+        if (!mLineageHardware.isSupported(LineageHardwareManager.FEATURE_KEY_SWAP)) {
+            return;
+        }
+        final boolean enabled = Settings.Secure.getInt(mContext.getContentResolver(),
+                Settings.Secure.SWAP_CAPACITIVE_KEYS, 0) == 1;
+        mLineageHardware.set(LineageHardwareManager.FEATURE_KEY_SWAP, enabled);
     }
 
     private void updateWakeGestureListenerLp() {
