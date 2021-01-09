@@ -595,8 +595,6 @@ public class StatusBar extends SystemUI implements DemoMode,
     private final NotificationRemoteInputManager mRemoteInputManager;
     private boolean mWallpaperSupported;
 
-    private int mChargingAnimation;
-
     private VolumePluginManager mVolumePluginManager;
 
     private final BroadcastReceiver mWallpaperChangedReceiver = new BroadcastReceiver() {
@@ -2254,9 +2252,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.PULSE_ON_NEW_TRACKS),
                     false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.LOCKSCREEN_CHARGING_ANIMATION_STYLE),
-                    false, this, UserHandle.USER_ALL);
             /*resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SCREEN_BRIGHTNESS_MODE),
                     false, this, UserHandle.USER_ALL);*/
@@ -2301,9 +2296,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.PULSE_ON_NEW_TRACKS))) {
                 setPulseOnNewTracks();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.LOCKSCREEN_CHARGING_ANIMATION_STYLE))) {
-                updateChargingAnimation();
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_TILE_STYLE))) {
                 stockTileStyle();
                 updateTileStyle();
@@ -2323,7 +2315,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             setQsBatteryEstimate();
             updateQsPanelResources();
             setPulseOnNewTracks();
-            updateChargingAnimation();
             setScreenBrightnessMode();
             setGamingMode();
         }
@@ -2376,14 +2367,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             KeyguardSliceProvider.getAttachedInstance().setPulseOnNewTracks(Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.PULSE_ON_NEW_TRACKS, 1,
                     UserHandle.USER_CURRENT) == 1);
-        }
-    }
-
-    private void updateChargingAnimation() {
-        mChargingAnimation = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.LOCKSCREEN_CHARGING_ANIMATION_STYLE, 1, UserHandle.USER_CURRENT);
-        if (mKeyguardIndicationController != null) {
-            mKeyguardIndicationController.updateChargingIndication(mChargingAnimation);
         }
     }
 
