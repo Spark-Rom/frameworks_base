@@ -7439,5 +7439,6 @@ message MetricsEvent {
     // Spark
     SPARK = 1999;
     SPARK_SETTINGS = 2000;
+    SPARK_QS_TILES = 2001;
   }
 }
