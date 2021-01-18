@@ -7437,7 +7437,8 @@ message MetricsEvent {
     // END OF AOSP CONSTANTS
 
     // Spark
-    SPARK = 1999;
+    SPARK = 1998;
+    FIREWORKS = 1999;
     SPARK_SETTINGS = 2000;
     SPARK_QS_TILES = 2001;
 
