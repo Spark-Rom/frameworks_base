@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   Copyright (C) 2018 The Android Open Source Project
+                2021 Paranoid Android
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -19,7 +20,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="8dp"
+    android:background="@drawable/settings_action_buttons_background"
+    android:layout_marginBottom="25dp"
+    android:layout_marginStart="?android:attr/listPreferredItemPaddingStart"
+    android:layout_marginEnd="?android:attr/listPreferredItemPaddingStart"
     android:orientation="horizontal">
 
     <Button
