@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   Copyright (C) 2018 The Android Open Source Project
+                2021 Paranoid Android
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -17,10 +18,14 @@
 
 <resources>
     <style name="SettingsActionButton" parent="android:Widget.DeviceDefault.Button.Borderless.Colored">
-        <item name="android:drawablePadding">4dp</item>
+        <item name="android:drawablePadding">8dp</item>
         <item name="android:drawableTint">@*android:color/btn_colored_borderless_text_material</item>
-        <item name="android:layout_marginEnd">8dp</item>
-        <item name="android:paddingTop">20dp</item>
-        <item name="android:paddingBottom">20dp</item>
+        <item name="android:layout_marginEnd">0dp</item>
+        <item name="android:paddingTop">24dp</item>
+        <item name="android:paddingBottom">24dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@*android:color/btn_colored_borderless_text_material</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 </resources>
