@@ -238,6 +238,10 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mSystemIconsView = findViewById(R.id.quick_status_bar_system_icons);
         mQuickQsStatusIcons = findViewById(R.id.quick_qs_status_icons);
         StatusIconContainer iconContainer = findViewById(R.id.statusIcons);
+
+        mAllIndicatorsEnabled = mPrivacyItemController.getAllIndicatorsAvailable();
+        mMicCameraIndicatorsEnabled = mPrivacyItemController.getMicCameraAvailable();
+
         // Ignore privacy icons because they show in the space above QQS
         iconContainer.addIgnoredSlots(getIgnoredIconSlots());
         iconContainer.setShouldRestrictIcons(false);
@@ -292,8 +296,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mRingerModeTextView.setSelected(true);
         mNextAlarmTextView.setSelected(true);
 
-        mAllIndicatorsEnabled = mPrivacyItemController.getAllIndicatorsAvailable();
-        mMicCameraIndicatorsEnabled = mPrivacyItemController.getMicCameraAvailable();
     }
 
     public QuickQSPanel getHeaderQsPanel() {
