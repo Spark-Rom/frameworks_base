@@ -199,10 +199,10 @@ public class LockIcon extends KeyguardAffordanceView {
             // Scanning animation is a pulsing padlock. This means that the resting state is
             // just a padlock.
             case STATE_BIOMETRICS_ERROR:
-                iconRes = com.android.internal.R.drawable.ic_lock;
+                iconRes = R.drawable.ic_lock;
                 break;
             case STATE_LOCK_OPEN:
-                iconRes = com.android.internal.R.drawable.ic_lock_open;
+                iconRes = R.drawable.ic_lock_open;
                 break;
             default:
                 throw new IllegalArgumentException();
