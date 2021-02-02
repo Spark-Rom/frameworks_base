@@ -2543,17 +2543,22 @@ public final class NotificationPanelViewController implements Dumpable {
     }
 
     private void updateNotificationTranslucency() {
+        boolean showIconsLockScreen = Settings.System.getIntForUser(mView.getContext().getContentResolver(),
+                Settings.System.AMBIENT_ICONS_LOCKSCREEN,
+                0, UserHandle.USER_CURRENT) != 0;
         if (mIsOcclusionTransitionRunning) {
             return;
         }
         float alpha = 1f;
         if (mClosingWithAlphaFadeOut && !mExpandingFromHeadsUp
-                && !mHeadsUpManager.hasPinnedHeadsUp()) {
+                && !mHeadsUpManager.hasPinnedHeadsUp() && !showIconsLockScreen) {
             alpha = getFadeoutAlpha();
         }
         if (mBarState == KEYGUARD && !mHintAnimationRunning
-                && !mKeyguardBypassController.getBypassEnabled()) {
+                && !mKeyguardBypassController.getBypassEnabled() && !showIconsLockScreen) {
             alpha *= mClockPositionResult.clockAlpha;
+        } else if (mBarState == KEYGUARD && showIconsLockScreen) {
+            alpha = 0;
         }
         mNotificationStackScrollLayoutController.setAlpha(alpha);
         if (mBarState != StatusBarState.KEYGUARD && !isFullyCollapsed() && !isPanelVisibleBecauseOfHeadsUp()) {
