@@ -650,7 +650,7 @@ public class UserRestrictionsUtils {
                                 Settings.Secure.DOZE_DOUBLE_TAP_GESTURE, 0, userId);
                         android.provider.Settings.Secure.putIntForUser(
                                 context.getContentResolver(),
-                                Settings.Secure.DOZE_ON_CHARGE, 0, userId);
+                                Settings.Secure.DOZE_ON_CHARGE_NOW, 0, userId);
                     }
                     break;
                 case UserManager.DISALLOW_CONFIG_LOCATION:
@@ -764,6 +764,7 @@ public class UserRestrictionsUtils {
             case android.provider.Settings.Secure.DOZE_PICK_UP_GESTURE:
             case android.provider.Settings.Secure.DOZE_PULSE_ON_LONG_PRESS:
             case android.provider.Settings.Secure.DOZE_DOUBLE_TAP_GESTURE:
+            case android.provider.Settings.Secure.DOZE_ON_CHARGE_NOW:
                 if ("0".equals(value)) {
                     return false;
                 }
