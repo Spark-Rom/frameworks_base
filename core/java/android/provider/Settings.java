@@ -6424,9 +6424,22 @@ public final class Settings {
         public static final String LIVE_DISPLAY_HINTED = "live_display_hinted";
 
         /**
+         * Whether to show VoWiFi icon or not
+         * @hide
+         */
+        public static final String VOWIFI_ICON = "vowifi_icon";
+
+        /**
+         * VoWiFi icon style
+         * @hide
+         */
+        public static final String VOWIFI_ICON_STYLE = "vowifi_icon_style";
+
+
+        /**
          * Data usage period
          * 0: Daily
-         * 1: Monthly
+         * 1: Monthl
          * @hide
          */
         public static final String DATA_USAGE_PERIOD = "data_usage_period";
