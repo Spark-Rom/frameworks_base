@@ -410,7 +410,7 @@
                   android:theme="@style/ExTunerSettings"
                   android:label="@string/statusbar_items_title"
                   android:process=":tuner"
-                  android:parentActivityName="com.spark.settings.fragments.StatusbarSettings"
+                  android:parentActivityName="com.spark.settings.fragments.StatusBarSettings"
                   android:exported="true">
         </activity>
 
@@ -426,7 +426,7 @@
                   android:theme="@style/ExTunerSettings"
                   android:label="@string/tuner_lock_screen"
                   android:process=":tuner"
-                  android:parentActivityName="com.spark.settings.fragments.LockscreenSettings"
+                  android:parentActivityName="com.spark.settings.fragments.LockScreenSettings"
                   android:exported="true">
         </activity>
 
