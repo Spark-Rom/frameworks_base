@@ -27,12 +27,14 @@ import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.annotation.Nullable;
 import android.annotation.SuppressLint;
-import android.app.ActivityTaskManager;
 import android.app.ActivityManager;
+import android.app.ActivityOptions;
+import android.app.ActivityTaskManager;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -50,20 +52,16 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.graphics.drawable.LayerDrawable;
-import android.media.AudioManager;
 import android.media.MediaActionSound;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.RemoteException;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.MathUtils;
-import android.view.Choreographer;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -89,8 +87,20 @@ import com.android.internal.logging.UiEventLogger;
 import com.android.systemui.R;
 import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.dagger.qualifiers.UiBackground;
+import com.android.systemui.shared.system.ActivityManagerWrapper;
 import com.android.systemui.shared.system.QuickStepContract;
 import com.android.systemui.shared.system.TaskStackChangeListener;
+import com.android.systemui.statusbar.phone.StatusBar;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
+import com.android.systemui.shared.system.QuickStepContract;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -179,7 +189,7 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
     private static final long SCREENSHOT_DISMISS_ALPHA_OFFSET_MS = 50; // delay before starting fade
     private static final float SCREENSHOT_ACTIONS_START_SCALE_X = .7f;
     private static final float ROUNDED_CORNER_RADIUS = .05f;
-    private static final int SCREENSHOT_CORNER_DEFAULT_TIMEOUT_MILLIS = 6000;
+    private static final int SCREENSHOT_CORNER_DEFAULT_TIMEOUT_MILLIS = 2000;
     private static final int MESSAGE_CORNER_TIMEOUT = 2;
 
     private final Interpolator mAccelerateInterpolator = new AccelerateInterpolator();
@@ -210,16 +220,14 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
     private Animator mScreenshotAnimation;
     private Runnable mOnCompleteRunnable;
     private Animator mDismissAnimation;
-    private boolean mInDarkMode;
-    private boolean mDirectionLTR;
-    private boolean mOrientationPortrait;
+    private boolean mInDarkMode = false;
+    private boolean mDirectionLTR = true;
+    private boolean mOrientationPortrait = true;
 
     private float mCornerSizeX;
     private float mDismissDeltaY;
 
     private MediaActionSound mCameraSound;
-    private AudioManager mAudioManager;
-    private Vibrator mVibrator;
 
     private int mNavMode;
     private int mLeftInset;
@@ -271,6 +279,9 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
         }
     }
 
+    /**
+     * @param context everything needs a context :(
+     */
     @Inject
     public GlobalScreenshot(
             Context context, @Main Resources resources,
@@ -316,10 +327,6 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
         // Setup the Camera shutter sound
         mCameraSound = new MediaActionSound();
         mCameraSound.load(MediaActionSound.SHUTTER_CLICK);
-
-        // Grab system services needed for screenshot sound
-        mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
-        mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
 
         // Store UI background executor
         mUiBgExecutor = uiBgExecutor;
@@ -432,11 +439,8 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
     void stopScreenshot() {
         // If the selector layer still presents on screen, we remove it and resets its state.
         if (mScreenshotSelectorView.getSelectionRect() != null) {
-            try {
-                mWindowManager.removeView(mScreenshotLayout);
-                mScreenshotSelectorView.stopSelection();
-            } catch (IllegalArgumentException ignored) {
-            }
+            mWindowManager.removeView(mScreenshotLayout);
+            mScreenshotSelectorView.stopSelection();
         }
     }
 
@@ -613,27 +617,13 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
      * Takes a screenshot of the current display and shows an animation.
      */
     private void takeScreenshotInternal(Consumer<Uri> finisher, Rect crop) {
-        // Dismiss the old screenshot first to prevent it from showing up in the new screenshot
-        dismissScreenshot("new screenshot requested", true);
-
-        // Force a new frame to be rendered now that the old screenshot has been cleared
-        mScreenshotLayout.getRootView().invalidate();
-        Choreographer.getInstance().postFrameCallback(time1 -> {
-            // Unfortunately, we need to introduce another frame of latency because this
-            // is a pre-draw callback
-            mScreenshotLayout.getRootView().invalidate();
-
-            // Finally, take the screenshot once we're sure that old screenshot view is gone
-            Choreographer.getInstance().postFrameCallback(time2 -> {
-                // copy the input Rect, since SurfaceControl.screenshot can mutate it
-                Rect screenRect = new Rect(crop);
-                int rot = mDisplay.getRotation();
-                int width = crop.width();
-                int height = crop.height();
-                takeScreenshot(SurfaceControl.screenshot(crop, width, height, rot), finisher, screenRect,
-                        Insets.NONE, true);
-            });
-        });
+        // copy the input Rect, since SurfaceControl.screenshot can mutate it
+        Rect screenRect = new Rect(crop);
+        int rot = mDisplay.getRotation();
+        int width = crop.width();
+        int height = crop.height();
+        saveScreenshot(SurfaceControl.screenshot(crop, width, height, rot), finisher, screenRect,
+                Insets.NONE, true);
     }
 
     private void saveScreenshot(Bitmap screenshot, Consumer<Uri> finisher, Rect screenRect,
@@ -687,24 +677,7 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
     private void saveScreenshotAndToast(Consumer<Uri> finisher) {
         // Play the shutter sound to notify that we've taken a screenshot
         mScreenshotHandler.post(() -> {
-            switch (mAudioManager.getRingerMode()) {
-                case AudioManager.RINGER_MODE_SILENT:
-                    // do nothing
-                    break;
-                case AudioManager.RINGER_MODE_VIBRATE:
-                    if (mVibrator != null && mVibrator.hasVibrator()) {
-                        mVibrator.vibrate(VibrationEffect.createOneShot(50,
-                                VibrationEffect.DEFAULT_AMPLITUDE));
-                    }
-                    break;
-                case AudioManager.RINGER_MODE_NORMAL:
-                    // Play the shutter sound to notify that we've taken a screenshot
-                    if (Settings.System.getInt(mContext.getContentResolver(),
-                            Settings.System.SCREENSHOT_SOUND, 0) == 1) {
-                        mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
-                    }
-                    break;
-            }
+            mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
         });
 
         saveScreenshotInWorkerThread(finisher, new ActionsReadyListener() {
@@ -759,24 +732,8 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
                     }
                 });
 
-                switch (mAudioManager.getRingerMode()) {
-                    case AudioManager.RINGER_MODE_SILENT:
-                        // do nothing
-                        break;
-                    case AudioManager.RINGER_MODE_VIBRATE:
-                        if (mVibrator != null && mVibrator.hasVibrator()) {
-                            mVibrator.vibrate(VibrationEffect.createOneShot(50,
-                                    VibrationEffect.DEFAULT_AMPLITUDE));
-                        }
-                        break;
-                    case AudioManager.RINGER_MODE_NORMAL:
-                        // Play the shutter sound to notify that we've taken a screenshot
-                        if (Settings.System.getInt(mContext.getContentResolver(),
-                                Settings.System.SCREENSHOT_SOUND, 0) == 1) {
-                            mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
-                        }
-                        break;
-                }
+                // Play the shutter sound to notify that we've taken a screenshot
+                mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
 
                 mScreenshotPreview.setLayerType(View.LAYER_TYPE_HARDWARE, null);
                 mScreenshotPreview.buildLayer();
@@ -794,7 +751,6 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
         data.image = mScreenBitmap;
         data.finisher = finisher;
         data.mActionsReadyListener = actionsReadyListener;
-        data.appLabel = getForegroundAppLabel();
 
         if (mSaveInBgTask != null) {
             // just log success/failure for the pre-existing screenshot
@@ -856,7 +812,8 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
             mUiEventLogger.log(ScreenshotEvent.SCREENSHOT_SAVED);
         }
     }
-        private AnimatorSet createScreenshotDropInAnimation(Rect bounds, boolean showFlash) {
+
+    private AnimatorSet createScreenshotDropInAnimation(Rect bounds, boolean showFlash) {
         Rect previewBounds = new Rect();
         mScreenshotPreview.getBoundsOnScreen(previewBounds);
 
