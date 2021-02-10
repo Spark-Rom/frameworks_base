@@ -160,4 +160,6 @@
 
   <!-- DC Dimming -->
   <java-symbol type="string" name="config_deviceDcDimmingSysfsNode" />
+
+  <java-symbol type="color" name="background_floating_device_default_dark" />
 </resources>
