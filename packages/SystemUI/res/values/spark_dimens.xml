@@ -5,4 +5,16 @@
 -->
 <resources>
 
+    <!-- AlertSlider -->
+    <!-- Absolute distance of the top position of alert slider from the top of the display -->
+    <integer name="alert_slider_top_y">0</integer>
+
+    <!-- Absolute width of the alert slider -->
+    <integer name="alertslider_width">0</integer>
+
+    <dimen name="alertslider_dialog_minradius">24dp</dimen>
+    <dimen name="alertslider_dialog_minheight">48dp</dimen>
+    <dimen name="alertslider_dialog_minwidth">108dp</dimen>
+    <dimen name="alertslider_padding">15dp</dimen>
+
 </resources>

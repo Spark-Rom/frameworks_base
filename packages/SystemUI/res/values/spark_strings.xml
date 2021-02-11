@@ -5,4 +5,8 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
+    <!-- AlertSlider -->
+    <string name="alert_slider_mode_priority_text">Priority</string>
+    <string name="alert_slider_mode_dnd_text">DND</string>
+
 </resources>
