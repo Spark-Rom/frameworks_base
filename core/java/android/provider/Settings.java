@@ -5801,6 +5801,13 @@ public final class Settings {
         public static final String LESS_BORING_HEADS_UP = "less_boring_heads_up";
 
         /**
+         * Time required for volume button music control to be pressed
+         * @hide
+         */
+        @Readable
+        public static final String VOLUME_BUTTON_MUSIC_CONTROL_DELAY = "volume_button_music_control_delay";
+
+        /**
          * Position of gesture bar length slider.
          * @hide
          */

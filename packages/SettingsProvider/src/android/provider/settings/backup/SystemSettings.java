@@ -89,5 +89,6 @@ public class SystemSettings {
         Settings.System.QS_FOOTER_TEXT_STRING,
         Settings.System.NOTIFICATION_HEADERS,
         Settings.System.SCREEN_OFF_FOD,
+        Settings.System.VOLUME_BUTTON_MUSIC_CONTROL_DELAY,
     };
 }
