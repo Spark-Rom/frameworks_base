@@ -229,6 +229,7 @@ public class SystemSettingsValidators {
                         }
                         return true;
                     }
+<<<<<<< HEAD
                 });
         VALIDATORS.put(System.VOLUME_DIALOG_TIMEOUT, new InclusiveIntegerRangeValidator(1, 7));
         VALIDATORS.put(System.NOTIFICATION_PULSE, BOOLEAN_VALIDATOR);
@@ -247,5 +248,8 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.ARTWORK_MEDIA_BACKGROUND_ENABLE_BLUR, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.ARTWORK_MEDIA_BACKGROUND_BLUR_RADIUS, new InclusiveFloatRangeValidator(1f, 25f));
         VALIDATORS.put(System.ARTWORK_MEDIA_BACKGROUND_ALPHA, new InclusiveIntegerRangeValidator(0, 255));
+        VALIDATORS.put(System.ALERTSLIDER_MODE_POSITION_BOTTOM, ANY_STRING_VALIDATOR);
+        VALIDATORS.put(System.ALERTSLIDER_MODE_POSITION_MIDDLE, ANY_STRING_VALIDATOR);
+        VALIDATORS.put(System.ALERTSLIDER_MODE_POSITION_TOP, ANY_STRING_VALIDATOR);
     }
 }

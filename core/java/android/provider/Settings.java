@@ -5302,6 +5302,27 @@ public final class Settings {
         public static final String ARTWORK_MEDIA_BACKGROUND_ALPHA = "artwork_media_background_alpha";
 
 	/**
+         * AlertSlider mode when alertslider is at the bottom.
+         * @hide
+         */
+        @SuppressLint("NoSettingsProvider")
+        public static final String ALERTSLIDER_MODE_POSITION_BOTTOM = "alertslider_mode_position_bottom";
+
+        /**
+         * AlertSlider mode when alertslider is at the middle.
+         * @hide
+         */
+        @SuppressLint("NoSettingsProvider")
+        public static final String ALERTSLIDER_MODE_POSITION_MIDDLE = "alertslider_mode_position_middle";
+
+        /**
+         * AlertSlider mode when alertslider is at the top.
+         * @hide
+         */
+        @SuppressLint("NoSettingsProvider")
+        public static final String ALERTSLIDER_MODE_POSITION_TOP = "alertslider_mode_position_top";
+
+        /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
          * it to PRIVATE_SETTINGS below. Also add a validator that can validate
