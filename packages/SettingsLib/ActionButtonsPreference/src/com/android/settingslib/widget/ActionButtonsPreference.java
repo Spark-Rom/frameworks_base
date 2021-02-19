@@ -83,8 +83,8 @@ public class ActionButtonsPreference extends Preference {
     @Override
     public void onBindViewHolder(PreferenceViewHolder holder) {
         super.onBindViewHolder(holder);
-        holder.setDividerAllowedAbove(true);
-        holder.setDividerAllowedBelow(true);
+        holder.setDividerAllowedAbove(false);
+        holder.setDividerAllowedBelow(false);
 
         mButton1Info.mButton = (Button) holder.findViewById(R.id.button1);
         mButton2Info.mButton = (Button) holder.findViewById(R.id.button2);
