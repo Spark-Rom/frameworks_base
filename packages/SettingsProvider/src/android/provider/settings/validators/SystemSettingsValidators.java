@@ -213,6 +213,22 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.SCREEN_OFF_FOD, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.VOLUME_BUTTON_MUSIC_CONTROL_DELAY, NON_NEGATIVE_INTEGER_VALIDATOR);
         VALIDATORS.put(System.RINGTONE_VIBRATION_PATTERN, new InclusiveIntegerRangeValidator(0, 5));
-        VALIDATORS.put(System.CUSTOM_RINGTONE_VIBRATION_PATTERN, ANY_STRING_VALIDATOR);
+        VALIDATORS.put(System.CUSTOM_RINGTONE_VIBRATION_PATTERN,
+                new Validator() {
+                    @Override
+                    public boolean validate(String value) {
+                        String[] args = value.split(",", 0);
+                        if (args.length != 3) return false;
+                        try {
+                            for (String str : args)
+                                if (Integer.parseInt(str) < 0)
+                                    return false;
+                        } catch (NumberFormatException e) {
+                            return false;
+                        }
+                        return true;
+                    }
+                });
+
     }
 }
