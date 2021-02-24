@@ -424,7 +424,7 @@
                   android:theme="@style/CustomTunerSettings"
                   android:label="@string/nav_bar"
                   android:process=":tuner"
-                  android:parentActivityName="com.spark.settings.fragments.GestureSettings"
+                  android:parentActivityName="com.spark.settings.fragments.NavigationSettings"
                   android:exported="true">
         </activity>
 
