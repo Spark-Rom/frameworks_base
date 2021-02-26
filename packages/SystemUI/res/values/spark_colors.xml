@@ -24,4 +24,7 @@
     <color name="dismiss_all_background_color_ripple">#a8a8a8</color>
     <color name="dismiss_all_icon_color">#8a000000</color>
 
+    <!-- QS Drag handle -->
+    <color name="ssos_qs_footer_drag_handle">#ffc8c8c8</color>
+
 </resources>
