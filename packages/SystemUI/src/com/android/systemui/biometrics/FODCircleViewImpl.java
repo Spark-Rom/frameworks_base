@@ -21,6 +21,8 @@ import android.content.pm.PackageManager;
 import android.hardware.display.ColorDisplayManager;
 import android.os.Handler;
 import android.os.SystemProperties;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Slog;
 import android.view.View;
 
@@ -42,10 +44,15 @@ public class FODCircleViewImpl extends SystemUI implements CommandQueue.Callback
     private boolean mNightModeActive;
     private int mAutoModeState;
 
+    private final Runnable mHideFodViewRunnable = () -> mFodCircleView.hide();
+    private final Handler mHandler;
+
+
     @Inject
     public FODCircleViewImpl(Context context, CommandQueue commandQueue) {
         super(context);
         mCommandQueue = commandQueue;
+        mHandler = new Handler(Looper.getMainLooper());
     }
 
     @Override
@@ -70,6 +77,7 @@ public class FODCircleViewImpl extends SystemUI implements CommandQueue.Callback
             if (mDisableNightMode) {
                 disableNightMode();
             }
+            mHandler.removeCallbacks(mHideFodViewRunnable);
             mFodCircleView.show();
         }
     }
@@ -81,6 +89,7 @@ public class FODCircleViewImpl extends SystemUI implements CommandQueue.Callback
                 setNightMode(mNightModeActive, mAutoModeState);
             }
             mFodCircleView.hide();
+            mHandler.postDelayed(mHideFodViewRunnable, 500);
         }
     }
 
