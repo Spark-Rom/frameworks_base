@@ -247,4 +247,8 @@
     <!-- Hide IME space -->
     <java-symbol type="dimen" name="navigation_bar_frame_height_hide_ime" />
     <java-symbol type="dimen" name="navigation_bar_frame_height_landscape_hide_ime" />
+
+    <!-- Smart cutoff temperature -->
+    <java-symbol type="integer" name="config_smartCutoffTemperature" />
+    <java-symbol type="integer" name="config_smartCutoffResumeTemperature" />
 </resources>
