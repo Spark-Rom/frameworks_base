@@ -6952,6 +6952,21 @@ public final class Settings {
         /**
          * @hide
          */
+        public static final String SMART_CUTOFF = "smart_cutoff";
+
+        /**
+         * @hide
+         */
+        public static final String SMART_CUTOFF_TEMPERATURE = "smart_cutoff_temperature";
+
+        /**
+         * @hide
+         */
+        public static final String SMART_CUTOFF_RESUME_TEMPERATURE = "smart_cutoff_resume_temperature";
+
+        /**
+         * @hide
+         */
         public static final String NOTIFICATION_MATERIAL_DISMISS_BGSTYLE = "notification_material_dismiss_bgstyle";
 
         /**
