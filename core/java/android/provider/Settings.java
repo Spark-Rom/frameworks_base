@@ -9767,18 +9767,6 @@ public final class Settings {
         public static final String ADAPTIVE_CONNECTIVITY_ENABLED = "adaptive_connectivity_enabled";
 
         /**
-         * @hide
-         */
-        public static final String QS_SHOW_AUTO_BRIGHTNESS =
-                "qs_show_auto_brightness";
-
-        /**
-         * @hide
-         */
-        public static final String QS_SHOW_BRIGHTNESS_SLIDER =
-                "qs_show_brightness_slider";
-
-        /**
          * Enable and disable Lockscreen visualizer
          * @hide
          */
