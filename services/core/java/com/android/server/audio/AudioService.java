@@ -2379,7 +2379,10 @@ public class AudioService extends IAudioService.Stub
                     // Unmute the stream if it was previously muted
                     if (direction == AudioManager.ADJUST_RAISE) {
                         // unmute immediately for volume up
-                        streamState.mute(false);
+                        // if stream is not muted by ringermode or zenmode
+                        if (!isStreamMutedByRingerOrZenMode(streamType)) {
+                            streamState.mute(false);
+                        }
                     } else if (direction == AudioManager.ADJUST_LOWER) {
                         if (mIsSingleVolume) {
                             sendMsg(mAudioHandler, MSG_UNMUTE_STREAM, SENDMSG_QUEUE,
@@ -2624,7 +2627,8 @@ public class AudioService extends IAudioService.Stub
         }
         // setting non-zero volume for a muted stream unmutes the stream and vice versa,
         // except for BT SCO stream where only explicit mute is allowed to comply to BT requirements
-        if (streamType != AudioSystem.STREAM_BLUETOOTH_SCO) {
+        if (streamType != AudioSystem.STREAM_BLUETOOTH_SCO
+                && !isStreamMutedByRingerOrZenMode(streamType)) {
             mStreamStates[stream].mute(index == 0);
         }
     }
