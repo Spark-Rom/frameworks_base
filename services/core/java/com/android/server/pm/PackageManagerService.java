@@ -3962,6 +3962,7 @@ public class PackageManagerService extends IPackageManager.Stub
         final String cacheName = FORCE_PACKAGE_PARSED_CACHE_ENABLED ? "debug"
                 : SystemProperties.digestOf(
                         "ro.build.datetime",
+                        "ro.build.version.real_security_patch",
                         StorageManager.PROP_ISOLATED_STORAGE,
                         StorageManager.PROP_ISOLATED_STORAGE_SNAPSHOT
                 );
