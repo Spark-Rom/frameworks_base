@@ -1467,7 +1467,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         if (mPocketLockShowing) {
             return LONG_PRESS_POWER_HIDE_POCKET_LOCK;
         }
-        if (mTorchLongPressPowerEnabled && (!isScreenOn() || isDozeMode() || mTorchEnabled)) {
+        if (mTorchLongPressPowerEnabled && !isScreenOn()) {
             return LONG_PRESS_POWER_TORCH;
         }
         return mLongPressOnPowerBehavior;
