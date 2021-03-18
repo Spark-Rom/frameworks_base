@@ -88,8 +88,6 @@ public class SystemSettings {
         Settings.System.DOUBLE_TAP_SLEEP_GESTURE,
         Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN,
         Settings.System.SCREENSHOT_SOUND,
-        Settings.System.TORCH_LONG_PRESS_POWER_GESTURE,
-        Settings.System.TORCH_LONG_PRESS_POWER_TIMEOUT,
         Settings.System.VOLUME_ROCKER_WAKE,
         Settings.System.VOLUME_BUTTON_MUSIC_CONTROL,
         Settings.System.VOLUME_KEY_CURSOR_CONTROL,
