@@ -19,4 +19,9 @@
 <resources>
     <!-- Bootleg unneccesary gradient declaration | Just for our shishu bars -->
     <color name="bootleg_accent_gradient_end_color">#00000000</color>
+
+    <!-- Value of these colors are not used. They are replaced later -->
+    <color name="accent_background_device_default">#fefefe</color>
+    <color name="accent_overlay_device_default_light">#fefefe</color>
+    <color name="accent_overlay_device_default_dark">#fefefe</color>
 </resources>
