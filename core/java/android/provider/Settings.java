@@ -10932,16 +10932,11 @@ public final class Settings {
         public static final String DOUBLE_TAP_SLEEP_LOCKSCREEN = "double_tap_sleep_lockscreen";
 
         /**
-         * Dark Accent Color
+         * RGB Accent Color
          * @hide
          */
-        public static final String ACCENT_DARK = "accent_dark";
+        public static final String ACCENT_COLOR = "accent_color";
 
-        /**
-         * Light Accent Color
-         * @hide
-         */
-        public static final String ACCENT_LIGHT = "accent_light";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
