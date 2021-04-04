@@ -239,6 +239,9 @@ import java.util.TreeSet;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
 
+// SparkGlobalActionsService
+import com.android.server.spark.globalactions.SparkGlobalActionsService;
+
 /**
  * Entry point to {@code system_server}.
  */
@@ -2557,6 +2560,13 @@ public final class SystemServer implements Dumpable {
             if (!mOnlyCore){
                 t.traceBegin("StartLiveDisplayService");
                 mSystemServiceManager.startService(LiveDisplayService.class);
+                t.traceEnd();
+            }
+
+            // SparkGlobalActionsService
+            if (!mOnlyCore){
+                t.traceBegin("StartSparkGlobalActionsService");
+                mSystemServiceManager.startService(SparkGlobalActionsService.class);
                 t.traceEnd();
             }
 

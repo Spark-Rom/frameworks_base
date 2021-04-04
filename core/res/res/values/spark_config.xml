@@ -289,4 +289,11 @@
 
     <!-- The list of package IDs that are allowed to skip camera high frame rate checks. -->
     <string-array name="config_cameraHFRPrivAppList" translatable="false" />
+
+    <!-- Defines the actions shown in advanced reboot submenu -->
+    <string-array name="config_restartActionsList">
+        <item>restart</item>
+        <item>restart_recovery</item>
+        <item>restart_bootloader</item>
+     </string-array>
 </resources>
