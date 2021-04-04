@@ -13,7 +13,6 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="module_1_name" translatable="false">module_1_name</string>
     <string name="module_2_name" translatable="false">module_2_name</string>

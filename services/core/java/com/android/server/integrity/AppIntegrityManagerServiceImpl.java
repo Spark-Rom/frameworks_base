@@ -125,7 +125,7 @@ public class AppIntegrityManagerServiceImpl extends IAppIntegrityManager.Stub {
     private static final Set<String> PACKAGE_INSTALLER =
             new HashSet<>(
                     Arrays.asList(
-                            "com.google.android.packageinstaller", "com.android.packageinstaller"));
+                            "com.google.android.packageinstaller", "com.spark.packageinstaller"));
 
     // Access to files inside mRulesDir is protected by mRulesLock;
     private final Context mContext;
