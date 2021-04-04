@@ -36,10 +36,11 @@ public class TwoGToggle extends ScreenStateToggle {
     protected boolean isEnabled(){
         ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (!cm.isNetworkSupported(ConnectivityManager.TYPE_MOBILE)){
-            Log.d(TAG, "Data not enabled");
+            if (DEBUG) Log.d(TAG, "Data not enabled");
             return false;
         }
         int s = Settings.System.getInt(mContext.getContentResolver(), Settings.System.SCREEN_STATE_TWOG, 0);
+        if (DEBUG) Log.d(TAG, "isEnabled = " + (s != 0));
         if(s!=0)
             return true;
         else
@@ -75,7 +76,7 @@ public class TwoGToggle extends ScreenStateToggle {
         } catch (Settings.SettingNotFoundException e) {
             e.printStackTrace();
         }
-        Log.d(TAG, "preferred SIM data network: " + network);
+        if (DEBUG) Log.d(TAG, "preferred SIM data network: " + network);
         return network;
     }
 
@@ -89,7 +90,7 @@ public class TwoGToggle extends ScreenStateToggle {
             public void run() {
                 TelephonyManager tm = (TelephonyManager) mContext
                         .getSystemService(Context.TELEPHONY_SERVICE);
-                Log.d(TAG, "2G = true");
+                if (DEBUG) Log.d(TAG, "2G = true");
                 tm.toggle2G(true);
             }
         };
@@ -100,7 +101,7 @@ public class TwoGToggle extends ScreenStateToggle {
             public void run() {
                 TelephonyManager tm = (TelephonyManager) mContext
                         .getSystemService(Context.TELEPHONY_SERVICE);
-                Log.d(TAG, "2G = false");
+                if (DEBUG) Log.d(TAG, "2G = false");
                 tm.toggle2G(false);
             }
         };
