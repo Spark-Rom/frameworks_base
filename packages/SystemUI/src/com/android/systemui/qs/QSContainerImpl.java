@@ -38,25 +38,28 @@ import android.os.Handler;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
+
 import androidx.dynamicanimation.animation.FloatPropertyCompat;
 import androidx.dynamicanimation.animation.SpringForce;
 
 import com.android.systemui.R;
+import com.android.systemui.Dependency;
 import com.android.internal.colorextraction.ColorExtractor;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.qs.customize.QSCustomizer;
 import com.android.systemui.util.animation.PhysicsAnimator;
+import com.android.systemui.tuner.TunerService;
 
 /**
  * Wrapper view with background which contains {@link QSPanel} and {@link BaseStatusBarHeader}
  */
-public class QSContainerImpl extends FrameLayout implements ColorExtractor.OnColorsChangedListener,
-        TunerService.Tunable {
+public class QSContainerImpl extends FrameLayout implements ColorExtractor.OnColorsChangedListener {
 
     private static final String TAG = "QSContainerImpl";
 
