@@ -65,9 +65,7 @@ public class SparkSystemUIUtils {
     }
 
     public static void dismissNotification() {
-        Log.d("Notification", "Ciao " + String.valueOf(mNotificationId));
         if (mNotificationId != null)
-             Log.d("Notification", "Ciao2 " + String.valueOf(mNotificationId));
             mNotificationManager.cancel(mNotificationId);
     }
 
