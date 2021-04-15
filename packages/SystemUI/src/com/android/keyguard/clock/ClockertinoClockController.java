@@ -212,6 +212,7 @@ public class ClockertinoClockController implements ClockPlugin {
 
     @Override
     public void onTimeTick() {
+        mBigClockView.onTimeChanged();
         mTimeH.refreshTime();
         mTimeM.refreshTime();
         mTimeS.refreshTime();
