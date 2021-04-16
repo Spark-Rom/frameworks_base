@@ -2358,6 +2358,12 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.SYSUI_ROUNDED_FWVALS),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.CUSTOM_STATUSBAR_PADDING_START),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.CUSTOM_STATUSBAR_PADDING_END),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -2402,6 +2408,11 @@ public class StatusBar extends SystemUI implements DemoMode,
                 handleCutout(null);
             } else if (uri.equals(Settings.Secure.getUriFor(Settings.Secure.SYSUI_ROUNDED_FWVALS))) {
                 updateCorners();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.CUSTOM_STATUSBAR_PADDING_START)) ||
+                      uri.equals(Settings.Secure.getUriFor(
+                    Settings.System.CUSTOM_STATUSBAR_PADDING_END))) {
+                updateResources();
             }
         }
 
