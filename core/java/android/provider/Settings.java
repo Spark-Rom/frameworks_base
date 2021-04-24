@@ -5945,6 +5945,12 @@ public final class Settings {
          */
 
         /**
+         * Whether to change the transparency of the notifications
+         * @hide
+         */
+        public static final String NOTIFICATION_BG_ALPHA = "notification_bg_alpha";
+
+        /**
          * Whether to show or hide the background and gradient behind the QS panel
          * @hide
          */
