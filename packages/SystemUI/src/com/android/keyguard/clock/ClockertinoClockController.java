@@ -212,7 +212,7 @@ public class ClockertinoClockController implements ClockPlugin {
 
     @Override
     public void onTimeTick() {
-        mBigClockView.onTimeChanged();
+        mView.onTimeChanged();
         mTimeH.refreshTime();
         mTimeM.refreshTime();
         mTimeS.refreshTime();
@@ -224,8 +224,7 @@ public class ClockertinoClockController implements ClockPlugin {
 
     @Override
     public boolean shouldShowStatusArea() {
-        if (mContext == null) return true;
-        return Settings.System.getInt(mContext.getContentResolver(), Settings.System.CLOCK_SHOW_STATUS_AREA, 1) == 1;
+        return false;
     }
 
     private int generateColorDesat(int color) {
