@@ -536,7 +536,7 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
     public static int getColorForState(Context context, int state) {
         int defaultColor = ColorUtils.genRandomQsColor();
         int setQsUseNewTint = Settings.System.getIntForUser(context.getContentResolver(),
-                Settings.System.QS_PANEL_BG_USE_NEW_TINT, 2, UserHandle.USER_CURRENT);
+                Settings.System.QS_PANEL_BG_USE_NEW_TINT, 1, UserHandle.USER_CURRENT);
         int qsTileStyle = Settings.System.getIntForUser(context.getContentResolver(),
                 System.QS_TILE_STYLE, 0, UserHandle.USER_CURRENT);
         boolean shouldDisco = Settings.System.getIntForUser(context.getContentResolver(),
