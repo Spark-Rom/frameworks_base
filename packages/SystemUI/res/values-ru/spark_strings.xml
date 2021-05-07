@@ -24,7 +24,7 @@
     <string name="quick_settings_aod_label">Всегда включенный экран</string>
     <string name="quick_settings_aod_on_charge_label">Всегда включенный экран на зарядке</string>
     <string name="quick_settings_aod_off_label">Всегда включенный экран выкл</string>
-    <string name="quick_settings_aod_off_powersave_label">AOD выключен\nЭкономия заряда батареи</string>
+    <string name="quick_settings_aod_off_powersave_label">Всегда включенный экран выключен\nЭкономия заряда батареи</string>
 
     <!-- Caffeine QS tile -->
    <string name="quick_settings_caffeine_label">Кофеин</string>
