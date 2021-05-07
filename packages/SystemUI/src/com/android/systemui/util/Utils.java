@@ -133,7 +133,7 @@ public class Utils {
      */
     public static boolean useQsMediaPlayer(Context context) {
         return Settings.System.getInt(context.getContentResolver(),
-                Settings.System.QS_MEDIA_PLAYER, 1) == 1;
+                Settings.System.QS_MEDIA_PLAYER, 0) == 1;
     }
 
     /**
