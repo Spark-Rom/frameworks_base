@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2019-2020 The Spark Project
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Button that copies the url to the log of a crashed application -->
+    <string name="aerr_copy">Скопировать URL журнала сбоев</string>
+    <string name="url_copy_success">Ссылка успешно скопирована</string>
+    <string name="url_copy_failed">Произошла ошибка при загрузке журнала на dogbin</string>
+
+    <string name="reboot_to_recovery_title" translatable="true">Рекавери</string>
+    <string name="reboot_to_recovery_message" translatable="true">Перезагрузка в рекавери</string>
+    <string name="reboot_to_bootloader_title" translatable="true">Загрузчик</string>
+    <string name="reboot_to_bootloader_message" translatable="true">Перезагрузка в загрузчик</string>
+    <string name="reboot_title">Перезагрузка</string>
+    <string name="reboot_message">Перезагрузка системы</string>
+
+    <!-- Cycle through ringer modes -->
+    <string name="volume_dialog_ringer_guidance_normal">Для звонков и уведомлений включен звуковой сигнал</string>
+
+    <!-- Pocket Lock -->
+    <string name="pocket_lock_message_long_press">Нажмите и удерживайте кнопку питания, чтобы разблокировать</string>
+
+    <!-- SystemUI Restart -->
+    <string name="systemui_restart_title">Требуется перезапуск SystemUI</string>
+    <string name="systemui_restart_message">Чтобы все изменения вступили в силу, требуется перезапуск SystemUI. Перезагрузить SystemUI сейчас?</string>
+
+    <!-- Gaming mode -->
+    <string name="notification_channel_gaming">Игровой режим</string>
+    <string name="gaming_mode_notification_title">Игровой режим включен</string>
+    <string name="gaming_mode_notification_content">Нажмите, чтобы выключить игровой режим</string>
+    <string name="gaming_mode_enabled_toast">Игровой режим включен</string>
+    <string name="gaming_mode_disabled_toast">Игровой режим выключен</string>
+
+    <!-- Clipboard access toast -->
+    <string name="app_clipboard_access_denied">%1$s было отказано в доступе к буферу обмена</string>
+    <string name="app_clipboard_access_granted">%1$s получил доступ к буферу обмена</string>
+</resources>
