@@ -6126,6 +6126,11 @@ public final class Settings {
         public static final String SCREEN_STATE_ON_DELAY = "screen_state_on_delay";
 
         /**
+         * Settings dasbhoard icons
+         */
+        public static final String SETTINGS_DASHBOARD_ICONS = "settings_dashboard_icons";
+
+	/**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -6314,6 +6319,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(CENTER_NOTIFICATION_HEADERS);
             PRIVATE_SETTINGS.add(DISPLAY_CUTOUT_MODE);
             PRIVATE_SETTINGS.add(STOCK_STATUSBAR_IN_HIDE);
+            PRIVATE_SETTINGS.add(SETTINGS_DASHBOARD_ICONS);
         }
 
         /**
