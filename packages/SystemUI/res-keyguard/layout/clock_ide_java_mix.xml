@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
                 android:textColor="?attr/wallpaperTextColor"
-                android:text="com.projectsakura."
+                android:text="com.spark."
                 android:textSize="12sp" />
 
             <TextView
