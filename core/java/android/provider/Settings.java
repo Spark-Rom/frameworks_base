@@ -5863,12 +5863,6 @@ public final class Settings {
         public static final String DONT_TOUCH_HEADSUP = "dont_touch_headsup";
 
         /**
-         * Enable and disable Artwork on background media notification
-         * @hide
-         */
-        public static final String ARTWORK_MEDIA_BACKGROUND = "artwork_media_background";
-
-        /**
          * enable custom lockscreen max notifications config
          * @hide
          */
