@@ -271,7 +271,7 @@ public class MediaControlPanel {
 
         if (hasArtwork) {
             backgroundImage.setImageDrawable(ImageUtils.resize(mContext, data.getArtwork().loadDrawable(mContext), maxWidth));
-            backgroundImage.setImageAlpha(120);
+            backgroundImage.setImageAlpha(185);
             mBackgroundOutlineProvider = new ViewOutlineProvider() {
                 @Override
                 public void getOutline(View view, Outline outline) {
