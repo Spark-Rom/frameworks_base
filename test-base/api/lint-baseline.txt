@@ -1,3 +1,0 @@
-// Baseline format: 1.0
-MissingNullability: junit.framework.ComparisonFailure#getMessage():
-    Missing nullability on method `getMessage` return
