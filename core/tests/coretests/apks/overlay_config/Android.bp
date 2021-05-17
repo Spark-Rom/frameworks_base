@@ -1,4 +1,0 @@
-android_test_helper_app {
-    name: "FrameworksCoreTests_overlay_config",
-    defaults: ["FrameworksCoreTests_apks_defaults"],
-}
