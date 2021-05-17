@@ -1,8 +1,0 @@
-{
-  "presubmit": [
-    {
-      "name": "ApkVerityTest",
-      "file_patterns": ["VerityUtils\\.java"]
-    }
-  ]
-}
