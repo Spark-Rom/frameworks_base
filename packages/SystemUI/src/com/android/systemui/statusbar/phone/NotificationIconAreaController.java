@@ -220,11 +220,6 @@ public class NotificationIconAreaController implements DarkReceiver,
                 Settings.System.AMBIENT_ICONS_SIZE, 80, UserHandle.USER_CURRENT);
     }
 
-    private int getAodIconsColor() {
-        return Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.AMBIENT_ICONS_COLOR, Color.WHITE, UserHandle.USER_CURRENT);
-    }
-
     /**
      * Returns the view that represents the notification area.
      */
@@ -625,7 +620,8 @@ public class NotificationIconAreaController implements DarkReceiver,
     }
 
     private void reloadAodColor() {
-        mAodIconTint = getAodIconsColor();
+        mAodIconTint = Utils.getColorAttrDefaultColor(mContext,
+                R.attr.wallpaperTextColor);
     }
     private void updateAodIconColors() {
         for (int i = 0; i < mAodIcons.getChildCount(); i++) {
