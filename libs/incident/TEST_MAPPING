@@ -1,7 +1,0 @@
-{
-  "presubmit": [
-    {
-      "name": "libincident_test"
-    }
-  ]
-}
