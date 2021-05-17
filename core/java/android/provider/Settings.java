@@ -6032,12 +6032,6 @@ public final class Settings {
         public static final String AMBIENT_ICONS_SIZE = "ambient_icons_size";
 
         /**
-         * Change color of ambient icons on lockscreen
-         * @hide
-         */
-        public static final String AMBIENT_ICONS_COLOR = "ambient_icons_color";
-
-        /**
          * Whether to show the notification ticker on the status bar
          * @hide
          */
