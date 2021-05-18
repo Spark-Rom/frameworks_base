@@ -148,8 +148,10 @@ public class VolumeDialogImpl implements VolumeDialog,
     static final int DIALOG_SAFETYWARNING_TIMEOUT_MILLIS = 5000;
     static final int DIALOG_ODI_CAPTIONS_TOOLTIP_TIMEOUT_MILLIS = 5000;
     static final int DIALOG_HOVERING_TIMEOUT_MILLIS = 16000;
-    static final int DIALOG_SHOW_ANIMATION_DURATION = 300;
-    static final int DIALOG_HIDE_ANIMATION_DURATION = 250;
+//    static final int DIALOG_SHOW_ANIMATION_DURATION = 300;
+    static final int DIALOG_SHOW_ANIMATION_DURATION = 250;
+    static final int DIALOG_HIDE_ANIMATION_DURATION = 200;
+    static final int DIALOG_EXPAND_ANIMATION_DURATION = 150;
 
     private final Context mContext;
     private WindowManager mWindowManager;
@@ -207,6 +209,7 @@ public class VolumeDialogImpl implements VolumeDialog,
 
     // Volume panel placement left or right
     private boolean mVolumePanelOnLeft;
+    private ValueAnimator mExpandAnimator;
 
     private class CustomSettingsObserver extends ContentObserver {
         CustomSettingsObserver(Handler handler) {
@@ -696,6 +699,7 @@ public class VolumeDialogImpl implements VolumeDialog,
     }
 
     private void animateExpandedRowsChange(boolean expand) {
+        if (mExpandAnimator != null) return;
         final int startWidth = mDialogRowsView.getLayoutParams().width;
         final int targetWidth;
 
@@ -708,24 +712,24 @@ public class VolumeDialogImpl implements VolumeDialog,
                     R.dimen.volume_dialog_panel_width);
         }
 
-        ValueAnimator animator = ValueAnimator.ofInt(startWidth, targetWidth);
-        animator.addUpdateListener(valueAnimator -> {
+        mExpandAnimator = ValueAnimator.ofInt(startWidth, targetWidth);
+        mExpandAnimator.addUpdateListener(valueAnimator -> {
             ViewGroup.LayoutParams layoutParams = mDialogRowsView.getLayoutParams();
             layoutParams.width = (Integer) valueAnimator.getAnimatedValue();
             mDialogRowsView.setLayoutParams(layoutParams);
         });
-        if (!expand) {
-            animator.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    updateExpandedRows(false);
-                }
-            });
-        }
-        animator.setInterpolator(expand ? new SystemUIInterpolators.LogDecelerateInterpolator()
-                : new SystemUIInterpolators.LogAccelerateInterpolator());
-        animator.setDuration(expand ? DIALOG_SHOW_ANIMATION_DURATION : DIALOG_HIDE_ANIMATION_DURATION);
-        animator.start();
+        mExpandAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if (!expand) updateExpandedRows(false);
+                mExpandRows.setExpanded(expand);
+                mExpanded = expand;
+                mExpandAnimator = null;
+            }
+        });
+        mExpandAnimator.setInterpolator(new SystemUIInterpolators.LogDecelerateInterpolator());
+        mExpandAnimator.setDuration(DIALOG_EXPAND_ANIMATION_DURATION);
+        mExpandAnimator.start();
     }
 
     public void updateMediaOutputH() {
@@ -774,12 +778,8 @@ public class VolumeDialogImpl implements VolumeDialog,
             });
             mExpandRows.setOnClickListener(v -> {
                 rescheduleTimeoutH();
-                animateExpandedRowsChange(!mExpanded);
-
-                mExpandRows.setExpanded(!mExpanded);
-                mExpanded = !mExpanded;
-
                 updateMediaOutputH();
+                animateExpandedRowsChange(!mExpanded); // will update mExpanded when done
             });
         }
     }
