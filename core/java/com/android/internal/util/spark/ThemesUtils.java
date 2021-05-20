@@ -61,6 +61,7 @@ public class ThemesUtils {
         "com.android.system.switch.md2", // 3
         "com.android.system.switch.retro", // 4
         "com.android.system.switch.oos", // 5
+        "com.android.system.switch.fluid", // 6
     };
 
     public static final String[] STATUSBAR_HEIGHT = {
