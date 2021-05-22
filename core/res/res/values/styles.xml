@@ -1511,6 +1511,7 @@ please see styles_device_defaults.xml.
 
     <!-- Pocket Mode -->
     <style name="pocket_view_title">
+        <item name="android:fontFamily">@string/config_headlineFontFamily</item>
         <item name="android:textSize">@dimen/pocket_view_title_size</item>
         <item name="android:textColor">#ffffff</item>
         <item name="android:alpha">0.87</item>
