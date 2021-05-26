@@ -134,5 +134,4 @@
     <dimen name="media_player_action">48dp</dimen>
     <dimen name="media_progress_bar_top">35dp</dimen>
 
-     <dimen name="volume_dialog_panel_land_margin">68dp</dimen>
 </resources>
