@@ -2408,10 +2408,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                 handleCutout(null);
             } else if (uri.equals(Settings.Secure.getUriFor(Settings.Secure.SYSUI_ROUNDED_FWVALS))) {
                 updateCorners();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.CUSTOM_STATUSBAR_PADDING_START)) ||
-                      uri.equals(Settings.Secure.getUriFor(
-                    Settings.System.CUSTOM_STATUSBAR_PADDING_END))) {
+            } else if (uri.equals(Settings.System.getUriFor(Settings.System.CUSTOM_STATUSBAR_PADDING_START))) {
+                updateResources();
+            } else if (uri.equals(Settings.System.getUriFor(Settings.System.CUSTOM_STATUSBAR_PADDING_END))) {
                 updateResources();
             }
         }
