@@ -193,8 +193,8 @@ public class TypeClockController implements ClockPlugin {
             return;
         }
         final int color = colorPalette[Math.max(0, colorPalette.length - 5)];
-        mTypeClock.setTextColor(color);
-        mLockClock.setTextColor(color);
+        mTypeClock.setClockColor(color);
+        mLockClock.setClockColor(color);
     }
 
     @Override
