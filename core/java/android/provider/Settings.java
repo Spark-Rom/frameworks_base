@@ -6091,6 +6091,12 @@ public final class Settings {
         public static final String LOCKSCREEN_BLUR = "lockscreen_blur";
 
         /**
+         * Whether to change the transparency of the power menu
+         * @hide
+         */
+        public static final String POWER_MENU_BG_ALPHA = "power_menu_bg_alpha";
+
+        /**
          * Control how to handle the display cutout
          * @hide
          */
