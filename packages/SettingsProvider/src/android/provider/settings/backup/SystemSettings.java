@@ -102,5 +102,6 @@ public class SystemSettings {
         Settings.System.LOCK_FP_ICON,
         Settings.System.CUSTOM_STATUSBAR_PADDING_START,
         Settings.System.CUSTOM_STATUSBAR_PADDING_END,
+        Settings.System.OMNI_CUSTOM_FP_ICON,
     };
 }

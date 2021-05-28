@@ -6304,6 +6304,11 @@ public final class Settings {
         public static final String RIGHT_VERTICAL_BACK_SWIPE_APP_ACTIVITY_ACTION = "right_vertical_back_swipe_app_activity_action";
 
         /**
+         * @hide
+         */
+        public static final String OMNI_CUSTOM_FP_ICON = "custom_fingerprint_icon";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -6494,6 +6499,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SETTINGS_DASHBOARD_ICONS);
             PRIVATE_SETTINGS.add(CUSTOM_STATUSBAR_PADDING_START);
             PRIVATE_SETTINGS.add(CUSTOM_STATUSBAR_PADDING_END);
+            PRIVATE_SETTINGS.add(OMNI_CUSTOM_FP_ICON);
         }
 
         /**

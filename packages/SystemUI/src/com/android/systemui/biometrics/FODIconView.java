@@ -29,10 +29,19 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.view.WindowManager;
 import android.widget.ImageView;
-
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.os.ParcelFileDescriptor;
+import android.os.UserHandle;
+import android.text.TextUtils;
+import com.android.systemui.Dependency;
+import com.android.systemui.spark.OmniSettingsService;
+import java.io.FileDescriptor;
 import com.android.systemui.R;
 
-public class FODIconView extends ImageView {
+public class FODIconView extends ImageView implements OmniSettingsService.OmniSettingsObserver {
     private AnimationDrawable iconAnim;
     private boolean mIsFODIconAnimated;
     private boolean mIsKeyguard;
@@ -41,7 +50,7 @@ public class FODIconView extends ImageView {
     private int mPositionY;
     private int mSize;
     private final WindowManager mWindowManager;
-
+    private BitmapDrawable mCustomImage;
     private Handler mHandler;
 
     private int mSelectedAnim;
@@ -103,6 +112,7 @@ public class FODIconView extends ImageView {
         layoutParams.gravity = 51;
         layoutParams.setTitle("Fingerprint on display icon");
         this.mWindowManager.addView(this, this.mParams);
+        boolean x =  Settings.System.getInt(getContext().getContentResolver(), "custom_fingerprint_icon", 0) != 0;
         boolean z = Settings.System.getInt(getContext().getContentResolver(), "fod_icon_animation", 0) != 0;
         this.mIsFODIconAnimated = z;
         if (z) {
@@ -110,6 +120,10 @@ public class FODIconView extends ImageView {
             mCustomSettingsObserver.update();
             setBackgroundResource(ANIMATION_STYLES_NAMES[mSelectedAnim]);
             this.iconAnim = (AnimationDrawable) getBackground();
+        } else if (!x) {
+            setCustomIcon();
+        mCustomSettingsObserver.observe();
+        mCustomSettingsObserver.update();
         } else {
             setImageResource(ICON_STYLES[mSelectedIcon]);
         }
@@ -134,26 +148,34 @@ public class FODIconView extends ImageView {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.FOD_ICON_ANIM_TYPE),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                   Settings.System.OMNI_CUSTOM_FP_ICON),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             boolean z = Settings.System.getInt(getContext().getContentResolver(), "fod_icon_animation", 0) != 0;
+            boolean x = Settings.System.getInt(getContext().getContentResolver(), "custom_fingerprint_icon", 0) != 0;
             mIsFODIconAnimated = z;
             if (uri.equals(Settings.System.getUriFor(Settings.System.FOD_ICON)) ||
-                    uri.equals(Settings.System.getUriFor(Settings.System.FOD_ICON_ANIM_TYPE))) {
+                    uri.equals(Settings.System.getUriFor(Settings.System.FOD_ICON_ANIM_TYPE)) ||
+                    uri.equals(Settings.System.getUriFor(Settings.System.OMNI_CUSTOM_FP_ICON))) {
                 updateStyle(z);
             }
         }
 
         public void update() {
+            boolean x = Settings.System.getInt(getContext().getContentResolver(), "custom_fingerprint_icon", 0) != 0;
             boolean z = Settings.System.getInt(getContext().getContentResolver(), "fod_icon_animation", 0) != 0;
             mIsFODIconAnimated = z;
             updateStyle(z);
+            updateStyle(x);
         }
     }
 
     public void updateStyle(boolean isEnabled) {
+        Dependency.get(OmniSettingsService.class).addStringObserver(this, Settings.System.OMNI_CUSTOM_FP_ICON);
         mSelectedIcon = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.FOD_ICON, 0);
         mSelectedAnim = Settings.System.getInt(mContext.getContentResolver(),
@@ -188,6 +210,7 @@ public class FODIconView extends ImageView {
     }
 
     public void setIsAnimationEnabled(boolean z) {
+            boolean x = Settings.System.getInt(getContext().getContentResolver(), "custom_fingerprint_icon", 0) != 0;
         this.mIsFODIconAnimated = z;
         if (z) {
             setImageResource(0);
@@ -196,9 +219,45 @@ public class FODIconView extends ImageView {
             setBackgroundResource(ANIMATION_STYLES_NAMES[mSelectedAnim]);
             this.iconAnim = (AnimationDrawable) getBackground();
             return;
-        }
+        } else if (!x) {
+        setCustomIcon();
+            mCustomSettingsObserver.observe();
+            mCustomSettingsObserver.update();
+        setBackgroundResource(0);
+        } else {
         setBackgroundResource(0);
         setImageResource(ICON_STYLES[mSelectedIcon]);
+    }
+ }
+    private void setCustomIcon(){
+        if (mCustomImage != null) {
+            setImageDrawable(mCustomImage);
+        } else {
+        setImageResource(ICON_STYLES[mSelectedIcon]);
+        }
+    }
+
+    @Override
+    public void onStringSettingChanged(String key, String customIconURI) {
+        if (!TextUtils.isEmpty(customIconURI)) {
+            loadCustomImage(customIconURI);
+        } else {
+            mCustomImage = null;
+        }
+    }
+
+    private void loadCustomImage(String customIconURI) {
+        try {
+            ParcelFileDescriptor parcelFileDescriptor =
+                    getContext().getContentResolver().openFileDescriptor(Uri.parse(customIconURI), "r");
+            FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+            Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+            parcelFileDescriptor.close();
+            mCustomImage = new BitmapDrawable(getResources(), image);
+        }
+        catch (Exception e) {
+            mCustomImage = null;
+        }
     }
 
     public void setIsKeyguard(boolean z) {
