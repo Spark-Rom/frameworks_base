@@ -202,7 +202,6 @@ public class EdgeBackGestureHandler extends CurrentUserTracker implements Displa
     private int mLeftVerticalSwipeAction;
     private int mRightVerticalSwipeAction;
     private Handler mHandler;
-    private final Vibrator mVibrator;
     private boolean mImeVisible;
 
     private boolean mIsAttached;
@@ -221,9 +220,6 @@ public class EdgeBackGestureHandler extends CurrentUserTracker implements Displa
     private int mSysUiFlags;
 
     private boolean mBlockedGesturalNavigation;
-
-    private boolean mEdgeHapticEnabled;
-    private static final int HAPTIC_DURATION = 20;
 
     private int mEdgeHeight;
 
@@ -250,9 +246,6 @@ public class EdgeBackGestureHandler extends CurrentUserTracker implements Displa
             new NavigationEdgeBackPlugin.BackCallback() {
                 @Override
                 public void triggerBack() {
-                    if (mEdgeHapticEnabled) {
-                        vibrateTick();
-                    }
                     sendEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK);
                     sendEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK);
 
@@ -277,7 +270,6 @@ public class EdgeBackGestureHandler extends CurrentUserTracker implements Displa
             Runnable stateChangeCallback) {
         super(Dependency.get(BroadcastDispatcher.class));
         mContext = context;
-        mVibrator = context.getSystemService(Vibrator.class);
         mDisplayId = context.getDisplayId();
         mMainExecutor = context.getMainExecutor();
         mOverviewProxyService = overviewProxyService;
@@ -324,7 +316,6 @@ public class EdgeBackGestureHandler extends CurrentUserTracker implements Displa
                 .getResources();
         mEdgeWidthLeft = mGestureNavigationSettingsObserver.getLeftSensitivity(res);
         mEdgeWidthRight = mGestureNavigationSettingsObserver.getRightSensitivity(res);
-        mEdgeHapticEnabled = mGestureNavigationSettingsObserver.getEdgeHaptic();
         mIsBackGestureAllowed =
                 !mGestureNavigationSettingsObserver.areNavigationButtonForcedVisible();
         mIsBackGestureArrowEnabled = mGestureNavigationSettingsObserver.getBackArrowGesture();
@@ -432,11 +423,6 @@ public class EdgeBackGestureHandler extends CurrentUserTracker implements Displa
 
     public void onNavBarTransientStateChanged(boolean isTransient) {
         mIsNavBarShownTransiently = isTransient;
-    }
-
-    private void vibrateTick() {
-        AsyncTask.execute(() ->
-            mVibrator.vibrate(VibrationEffect.createOneShot(HAPTIC_DURATION, VibrationEffect.DEFAULT_AMPLITUDE)));
     }
 
     public void onSettingsChanged() {
