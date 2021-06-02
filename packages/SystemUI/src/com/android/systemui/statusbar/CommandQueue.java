@@ -129,7 +129,9 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
     private static final int MSG_SHOW_IN_DISPLAY_FINGERPRINT_VIEW  = 57 << MSG_SHIFT;
     private static final int MSG_HIDE_IN_DISPLAY_FINGERPRINT_VIEW  = 58 << MSG_SHIFT;
     private static final int MSG_TOGGLE_CAMERA_FLASH               = 59 << MSG_SHIFT;
+    private static final int MSG_TOGGLE_SETTINGS_PANEL             = 60 << MSG_SHIFT;
     private static final int MSG_SET_BLOCKED_GESTURAL_NAVIGATION   = 61 << MSG_SHIFT;
+    private static final int MSG_KILL_FOREGROUND_APP               = 62 << MSG_SHIFT;
 
     public static final int FLAG_EXCLUDE_NONE = 0;
     public static final int FLAG_EXCLUDE_SEARCH_PANEL = 1 << 0;
@@ -173,6 +175,7 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
         default void animateExpandNotificationsPanel() { }
         default void animateCollapsePanels(int flags, boolean force) { }
         default void togglePanel() { }
+        default void toggleSettingsPanel() { }
         default void animateExpandSettingsPanel(String obj) { }
 
         /**
@@ -347,6 +350,8 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
         default void onTracingStateChanged(boolean enabled) { }
 
         default void toggleCameraFlash() { }
+
+        default void killForegroundApp() { }
     }
 
     public CommandQueue(Context context) {
@@ -505,6 +510,13 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
         synchronized (mLock) {
             mHandler.removeMessages(MSG_TOGGLE_PANEL);
             mHandler.obtainMessage(MSG_TOGGLE_PANEL, 0, 0).sendToTarget();
+        }
+    }
+
+    public void toggleSettingsPanel() {
+        synchronized (mLock) {
+            mHandler.removeMessages(MSG_TOGGLE_SETTINGS_PANEL);
+            mHandler.obtainMessage(MSG_TOGGLE_SETTINGS_PANEL, 0, 0).sendToTarget();
         }
     }
 
@@ -997,6 +1009,15 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
         }
     }
 
+    @Override
+    public void killForegroundApp() {
+        synchronized (mLock) {
+            mHandler.removeMessages(MSG_KILL_FOREGROUND_APP);
+            mHandler.sendEmptyMessage(MSG_KILL_FOREGROUND_APP);
+        }
+    }
+
+    @Override
     public void toggleCameraFlash() {
         synchronized (mLock) {
             mHandler.removeMessages(MSG_TOGGLE_CAMERA_FLASH);
@@ -1049,6 +1070,11 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
                 case MSG_TOGGLE_PANEL:
                     for (int i = 0; i < mCallbacks.size(); i++) {
                         mCallbacks.get(i).togglePanel();
+                    }
+                    break;
+                case MSG_TOGGLE_SETTINGS_PANEL:
+                    for (int i = 0; i < mCallbacks.size(); i++) {
+                        mCallbacks.get(i).toggleSettingsPanel();
                     }
                     break;
                 case MSG_EXPAND_SETTINGS:
@@ -1362,6 +1388,11 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
                 case MSG_SET_BLOCKED_GESTURAL_NAVIGATION:
                     for (int i = 0; i < mCallbacks.size(); i++) {
                         mCallbacks.get(i).setBlockedGesturalNavigation((Boolean) msg.obj);
+                    }
+                    break;
+                case MSG_KILL_FOREGROUND_APP:
+                    for (int i = 0; i < mCallbacks.size(); i++) {
+                        mCallbacks.get(i).killForegroundApp();
                     }
                     break;
             }
