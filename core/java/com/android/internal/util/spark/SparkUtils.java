@@ -43,6 +43,7 @@ import android.os.AsyncTask;
 import android.os.BatteryManager;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -50,6 +51,7 @@ import android.os.SystemProperties;
 import android.os.SystemClock;
 import android.os.UserHandle;
 import android.os.Vibrator;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -61,6 +63,7 @@ import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.WindowManagerGlobal;
 import android.util.DisplayMetrics;
+import android.widget.Toast;
 
 import com.android.internal.R;
 import com.android.internal.statusbar.IStatusBarService;
@@ -349,13 +352,87 @@ public class SparkUtils {
         return ctx.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
     }
 
-    public static void toggleCameraFlash() {
-        IStatusBarService service = getStatusBarService();
-        if (service != null) {
-            try {
-                service.toggleCameraFlash();
-            } catch (RemoteException e) {
-                // do nothing.
+    public static void killForegroundApp() {
+        FireActions.killForegroundApp();
+    }
+
+    private static final class FireActions {
+        private static IStatusBarService mStatusBarService = null;
+        private static IStatusBarService getStatusBarService() {
+            synchronized (FireActions.class) {
+                if (mStatusBarService == null) {
+                    mStatusBarService = IStatusBarService.Stub.asInterface(
+                            ServiceManager.getService("statusbar"));
+                }
+                return mStatusBarService;
+            }
+        }
+
+        public static void toggleCameraFlash() {
+            IStatusBarService service = getStatusBarService();
+            if (service != null) {
+                try {
+                    service.toggleCameraFlash();
+                } catch (RemoteException e) {
+                    // do nothing.
+                }
+            }
+        }
+
+        // Clear notifications
+        public static void clearAllNotifications() {
+            IStatusBarService service = getStatusBarService();
+            if (service != null) {
+                try {
+                    service.onClearAllNotifications(ActivityManager.getCurrentUser());
+                } catch (RemoteException e) {
+                    // do nothing.
+                }
+           }
+        }
+
+        public static void killForegroundApp() {
+            IStatusBarService service = getStatusBarService();
+            if (service != null) {
+                try {
+                    service.killForegroundApp();
+                } catch (RemoteException e) {
+                    // do nothing.
+                }
+            }
+        }
+
+        // Toggle notifications panel
+        public static void toggleNotifications() {
+            IStatusBarService service = getStatusBarService();
+            if (service != null) {
+                try {
+                    service.expandNotificationsPanel();
+                } catch (RemoteException e) {
+                    // do nothing.
+                }
+            }
+        }
+
+        // Toggle qs panel
+        public static void toggleQsPanel() {
+            IStatusBarService service = getStatusBarService();
+            if (service != null) {
+                try {
+                    service.toggleSettingsPanel();
+                } catch (RemoteException e) {
+                    // do nothing.
+                }
+            }
+        }
+
+        // Start assistant
+        public static void startAssist() {
+            IStatusBarService service = getStatusBarService();
+            if (service != null) {
+                try {
+                    service.startAssist(new Bundle());
+                } catch (RemoteException e) {}
             }
         }
     }
@@ -367,7 +444,7 @@ public class SparkUtils {
     }
 
     public static void takeScreenshot(boolean full) {
-        IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
+        final IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
         try {
             wm.sendCustomAction(new Intent(full? INTENT_SCREENSHOT : INTENT_REGION_SCREENSHOT));
         } catch (RemoteException e) {
@@ -420,46 +497,20 @@ public class SparkUtils {
         return displayCutoutExists;
     }
 
-    // Volume panel
-    public static void toggleVolumePanel(Context context) {
-        AudioManager am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        am.adjustVolume(AudioManager.ADJUST_SAME, AudioManager.FLAG_SHOW_UI);
-    }
-
-    // Clear notifications
     public static void clearAllNotifications() {
-        IStatusBarService service = getStatusBarService();
-        if (service != null) {
-            try {
-                service.onClearAllNotifications(ActivityManager.getCurrentUser());
-            } catch (RemoteException e) {
-                // do nothing.
-            }
-        }
+        FireActions.clearAllNotifications();
     }
 
-    // Toggle notifications panel
-    public static void toggleNotifications() {
-        IStatusBarService service = getStatusBarService();
-        if (service != null) {
-            try {
-                service.expandNotificationsPanel();
-            } catch (RemoteException e) {
-                // do nothing.
-            }
-        }
-    }
-
-    // Toggle qs panel
     public static void toggleQsPanel() {
-        IStatusBarService service = getStatusBarService();
-        if (service != null) {
-            try {
-                service.expandSettingsPanel(null);
-            } catch (RemoteException e) {
-                // do nothing.
-            }
-        }
+        FireActions.toggleQsPanel();
+    }
+
+    public static void toggleNotifications() {
+        FireActions.toggleNotifications();
+    }
+
+    public static void toggleCameraFlash() {
+        FireActions.toggleCameraFlash();
     }
 
     // Cycle ringer modes
@@ -484,6 +535,12 @@ public class SparkUtils {
                 am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
                 break;
         }
+    }
+
+    // Volume panel
+    public static void toggleVolumePanel(Context context) {
+        AudioManager am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        am.adjustVolume(AudioManager.ADJUST_SAME, AudioManager.FLAG_SHOW_UI);
     }
 
     /* e.g.
@@ -587,5 +644,75 @@ public class SparkUtils {
      */
     public static boolean supportsBlur() {
         return mBlurSupportedSysProp && !mBlurDisabledSysProp && ActivityManager.isHighEndGfx();
+    }
+
+    public static void launchCamera(Context context) {
+        Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA_SECURE);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        context.startActivity(intent);
+    }
+
+    public static void launchVoiceSearch(Context context) {
+        Intent intent = new Intent(Intent.ACTION_SEARCH_LONG_PRESS);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    public static void triggerHushMute(Context context) {
+        // We can't call AudioService#silenceRingerModeInternal from here, so this is a partial copy of it
+        int silenceRingerSetting = Settings.Secure.getIntForUser(context.getContentResolver(),
+                Settings.Secure.VOLUME_HUSH_GESTURE, Settings.Secure.VOLUME_HUSH_OFF,
+                UserHandle.USER_CURRENT);
+
+        int ringerMode;
+        int toastText;
+        if (silenceRingerSetting == Settings.Secure.VOLUME_HUSH_VIBRATE) {
+            ringerMode = AudioManager.RINGER_MODE_VIBRATE;
+            toastText = com.android.internal.R.string.volume_dialog_ringer_guidance_vibrate;
+        } else {
+            // VOLUME_HUSH_MUTE and VOLUME_HUSH_OFF
+            ringerMode = AudioManager.RINGER_MODE_SILENT;
+            toastText = com.android.internal.R.string.volume_dialog_ringer_guidance_silent;
+        }
+        AudioManager audioMan = (AudioManager)
+                context.getSystemService(Context.AUDIO_SERVICE);
+        audioMan.setRingerModeInternal(ringerMode);
+        Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void showPowerMenu() {
+        final IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
+        try {
+            wm.showGlobalActions();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void startAssist() {
+        FireActions.startAssist();
+    }
+
+    public static void launchApp(Context context, boolean leftEdgeApp, boolean isVerticalSwipe) {
+        Intent intent = null;
+        String packageName = Settings.System.getStringForUser(context.getContentResolver(),
+                leftEdgeApp ? (isVerticalSwipe ? Settings.System.LEFT_VERTICAL_BACK_SWIPE_APP_ACTION : Settings.System.LEFT_LONG_BACK_SWIPE_APP_ACTION)
+                : (isVerticalSwipe ? Settings.System.RIGHT_VERTICAL_BACK_SWIPE_APP_ACTION : Settings.System.RIGHT_LONG_BACK_SWIPE_APP_ACTION),
+                UserHandle.USER_CURRENT);
+        String activity = Settings.System.getStringForUser(context.getContentResolver(),
+                leftEdgeApp ? (isVerticalSwipe ? Settings.System.LEFT_VERTICAL_BACK_SWIPE_APP_ACTIVITY_ACTION : Settings.System.LEFT_LONG_BACK_SWIPE_APP_ACTIVITY_ACTION)
+                : (isVerticalSwipe ? Settings.System.RIGHT_VERTICAL_BACK_SWIPE_APP_ACTIVITY_ACTION : Settings.System.RIGHT_LONG_BACK_SWIPE_APP_ACTIVITY_ACTION),
+                UserHandle.USER_CURRENT);
+        boolean launchActivity = activity != null && !TextUtils.equals("NONE", activity);
+        try {
+            if (launchActivity) {
+                intent = new Intent(Intent.ACTION_MAIN);
+                intent.setClassName(packageName, activity);
+            } else {
+                intent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+            }
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            context.startActivity(intent);
+        } catch (Exception e) {}
     }
 }

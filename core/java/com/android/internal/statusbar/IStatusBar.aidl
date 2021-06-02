@@ -36,6 +36,7 @@ oneway interface IStatusBar
     void animateExpandSettingsPanel(String subPanel);
     void animateCollapsePanels();
     void togglePanel();
+    void toggleSettingsPanel();
 
     void showWirelessChargingAnimation(int batteryLevel);
 
@@ -235,9 +236,11 @@ oneway interface IStatusBar
     void hideInDisplayFingerprintView();
 
     /**
-     * Evolution X extensions
+     * Spark extensions
      */
     void toggleCameraFlash();
+
+    void killForegroundApp();
 
     /**
      * Used to block or unblock usage of gestural navigation

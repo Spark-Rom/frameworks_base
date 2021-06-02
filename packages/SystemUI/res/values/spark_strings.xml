@@ -266,4 +266,12 @@
 
    <!-- Change clockface -->
     <string name="change_clock_face">Swipe to change the clock face</string>
+
+    <!-- Kill foreground app -->
+    <string name="task_helper_app_killed">%1$s force stopped</string>
+    <string name="empty_app_killed">App</string>
+
+    <!-- App picker manifest entry -->
+    <string name="app_picker_dialog_title">Select an app</string>
+    <string name="app_picker_activity_select_title">Select activity</string>
 </resources>

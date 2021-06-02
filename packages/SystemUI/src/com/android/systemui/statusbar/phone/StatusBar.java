@@ -264,6 +264,7 @@ import com.android.systemui.statusbar.policy.KeyguardUserSwitcher;
 import com.android.systemui.statusbar.policy.NetworkController;
 import com.android.systemui.statusbar.policy.OnHeadsUpChangedListener;
 import com.android.systemui.statusbar.policy.RemoteInputQuickSettingsDisabler;
+import com.android.systemui.statusbar.policy.TaskHelper;
 import com.android.systemui.statusbar.policy.UserInfoControllerImpl;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
 import com.android.systemui.volume.VolumeComponent;
@@ -271,6 +272,7 @@ import com.android.systemui.volume.VolumeComponent;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.Executor;
@@ -441,6 +443,8 @@ public class StatusBar extends SystemUI implements DemoMode,
     private final UserInfoControllerImpl mUserInfoControllerImpl;
     private final DismissCallbackRegistry mDismissCallbackRegistry;
     private NotificationsController mNotificationsController;
+
+    protected TaskHelper mTaskHelper;
 
     // viewgroup containing the normal contents of the statusbar
     LinearLayout mStatusBarContent;
@@ -835,7 +839,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             KeyguardIndicationController keyguardIndicationController,
             DismissCallbackRegistry dismissCallbackRegistry,
             Lazy<NotificationShadeDepthController> notificationShadeDepthControllerLazy,
-            StatusBarTouchableRegionManager statusBarTouchableRegionManager) {
+            StatusBarTouchableRegionManager statusBarTouchableRegionManager,
+            FlashlightController flashlightController,
+            TaskHelper taskHelper) {
         super(context);
         mNotificationsController = notificationsController;
         mLightBarController = lightBarController;
@@ -912,13 +918,14 @@ public class StatusBar extends SystemUI implements DemoMode,
         mUserInfoControllerImpl = userInfoControllerImpl;
         mIconPolicy = phoneStatusBarPolicy;
         mDismissCallbackRegistry = dismissCallbackRegistry;
+        mFlashlightController = flashlightController;
+        mTaskHelper = taskHelper;
 
         mBubbleExpandListener =
                 (isExpanding, key) -> {
                     mNotificationsController.requestNotificationUpdate("onBubbleExpandChanged");
                     updateScrimController();
                 };
-
 
         DateTimeView.setReceiverHandler(timeTickHandler);
     }
@@ -2658,11 +2665,11 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     @Override
     public void toggleCameraFlash() {
-        if (DEBUG) {
-            Log.d(TAG, "Toggling camera flashlight");
-        }
-        if (mFlashlightController.isAvailable()) {
-            mFlashlightController.setFlashlight(!mFlashlightController.isEnabled());
+        if (mFlashlightController != null) {
+            mFlashlightController.initFlashLight();
+            if (mFlashlightController.hasFlashlight() && mFlashlightController.isAvailable()) {
+                mFlashlightController.setFlashlight(!mFlashlightController.isEnabled());
+            }
         }
     }
 
@@ -2702,6 +2709,15 @@ public class StatusBar extends SystemUI implements DemoMode,
             mShadeController.animateCollapsePanels();
         } else {
             animateExpandNotificationsPanel();
+        }
+    }
+
+    @Override
+    public void toggleSettingsPanel() {
+        if (mPanelExpanded) {
+            mShadeController.animateCollapsePanels();
+        } else {
+            animateExpandSettingsPanel(null);
         }
     }
 

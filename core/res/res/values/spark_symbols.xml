@@ -182,4 +182,11 @@
   <!-- System fonts -->
   <java-symbol type="array" name="config_fontPackages" />
   <java-symbol type="string" name="fontservice_incompatible_font" />
+
+  <!-- App Picker -->
+  <java-symbol type="id" name="app_name" />
+  <java-symbol type="id" name="app_icon" />
+  <java-symbol type="layout" name="app_list_item" />
+  <java-symbol type="string" name="active_edge_app_select_title" />
+  <java-symbol type="string" name="active_edge_activity_select_title" />
 </resources>
