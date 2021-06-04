@@ -194,6 +194,7 @@
 
     <!-- Data usage info -->
     <string name="usage_data">used</string>
+    <string name="usage_data_today">used today</string>
 
     <!-- HW Keys Tile -->
     <string name="accessibility_quick_settings_hwkeys_on">HW keys on</string>
