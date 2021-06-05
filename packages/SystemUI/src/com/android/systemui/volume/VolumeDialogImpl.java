@@ -708,6 +708,7 @@ public class VolumeDialogImpl implements VolumeDialog,
             mDialogRowsView.measure(WRAP_CONTENT, WRAP_CONTENT);
             targetWidth = mDialogRowsView.getMeasuredWidth();
         } else {
+            if (!mVolumePanelOnLeft) updateExpandedRows(false);
             targetWidth = mContext.getResources().getDimensionPixelSize(
                     R.dimen.volume_dialog_panel_width);
         }
