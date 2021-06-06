@@ -324,7 +324,6 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
     };
 
     private final Handler mHandler;
-    private final boolean mHasFod;
 
     private final Observer<Integer> mRingerModeObserver = new Observer<Integer>() {
         @Override
@@ -1745,8 +1744,6 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                 }
             }
         };
-
-        mHasFod = FodUtils.hasFodSupport(mContext);
 
         // Since device can't be un-provisioned, we only need to register a content observer
         // to update mDeviceProvisioned when we are...
