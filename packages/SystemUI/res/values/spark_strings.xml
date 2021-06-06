@@ -216,9 +216,6 @@
     <string name="screenrecord_lowquality_label">Lower quality for smaller file size</string>
     <string name="screenrecord_longer_timeout_switch_label">Bigger file size limit\nLimit recording size to 15 GB</string>
 
-    <!-- Ambient Music Ticker -->
-    <string name="ambientmusic_songinfo" formatted="false">%s by %s</string>
-
     <!-- Scrolling Screenshot string -->
     <string name="scrollss">Scroll</string>
 
