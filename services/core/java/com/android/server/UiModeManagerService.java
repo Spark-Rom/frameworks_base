@@ -635,7 +635,7 @@ final class UiModeManagerService extends SystemService {
     private void applyAccentColor() {
         final Context context = getContext();
         int intColor = System.getIntForUser(context.getContentResolver(),
-                System.ACCENT_COLOR, 0xFF1A73E8, UserHandle.USER_CURRENT);
+                System.ACCENT_COLOR, 0xFFFCDC33, UserHandle.USER_CURRENT);
         String colorHex = String.format("%08x", (0xFFFFFFFF & intColor));
         setAccentColor(colorHex);
     }
