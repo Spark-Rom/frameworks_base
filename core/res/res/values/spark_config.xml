@@ -165,8 +165,6 @@
     <!-- -1 means use same as config_screenBrightnessDoze -->
     <integer name="config_screenBrightnessPulse">-1</integer>
 
-    <bool name="config_has_weird_dt_sensor">false</bool>
-
     <!-- If not zero, limits the internal screen recorder's framerate to the set value. -->
     <integer name="config_screenRecorderMaxFramerate">0</integer>
 
