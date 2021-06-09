@@ -44,4 +44,22 @@
     <!-- Clipboard access toast -->
     <string name="app_clipboard_access_denied">%1$s было отказано в доступе к буферу обмена</string>
     <string name="app_clipboard_access_granted">%1$s получил доступ к буферу обмена</string>
+     
+    <!-- Pocket Lock -->
+    <string name="pocket_view_title">Карманный режим включен</string>
+    <string name="pocket_view_title_cancel">Чтобы активировать ваш телефон:</string>
+    <string name="pocket_view_top_tag_cancel">Не закрывайте синюю часть Вашего телефона и удалите любые загрязнения или пыль на этой синей части.</string>
+    <string name="pocket_view_top_tag_cancel2">Длительно удерживайте кнопку питания для принудительного выхода из карманного режима.</string>
+
+
+    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permlab_accessFontManager">доступ к менеджеру шрифтов</string>
+    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permdesc_accessFontManager">Позволяет приложению получить доступ к менеджеру шрифтов.</string>
+    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
+    <string name="fontservice_incompatible_font">Пакет шрифта который вы установили несовместим, из-за отсутствия fonts.xml в нём. Пожалуйста, обратитесь к разработчику пакета для помощи.</string>
+
+    <!-- App Picker -->
+    <string name="active_edge_app_select_title">Выбрать приложение</string>
+    <string name="active_edge_activity_select_title">Выбрать действие</string>
 </resources>
