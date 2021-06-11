@@ -30,52 +30,6 @@ LOCAL_REQUIRED_MODULES := \
 	AccentColorAmethystOverlay \
 	AccentColorAquamarineOverlay \
 	AccentColorTangerineOverlay \
-	AccentColorBlueGrayOverlay \
-	AccentColorCyanOverlay \
-	AccentColorDorsetGoldOverlay \
-	AccentColorFlatPinkOverlay \
-	AccentColorIndigoOverlay \
-	AccentColorInfernoRedOverlay \
-	AccentColorLightPurpleOverlay \
-	AccentColorMetallicGoldOverlay \
-	AccentColorPinkOverlay \
-	AccentColorRedOverlay \
-	AccentColorTealOverlay \
-	AccentColorCocaColaOverlay \
-	AccentColorCoralOverlay \
-	AccentColorDiscordOverlay \
-	AccentColorFerrariRedOverlay \
-	AccentColorGoldenShowerOverlay \
-	AccentColorJollibeeOverlay \
-	AccentColorMatrixOverlay \
-	AccentColorNextbitOverlay \
-	AccentColorOnePlusOverlay \
-	AccentColorOrangeOverlay \
-	AccentColorParanoidOverlay \
-	AccentColorPepsiOverlay \
-	AccentColorPixelBlueOGOverlay \
-	AccentColorRazerOverlay \
-	AccentColorSalmonOverlay \
-	AccentColorStarbucksOverlay \
-        AccentColorSparkOverlay \
-	AccentColorUbuntuOverlay \
-	AccentColorXboxOverlay \
-	AccentColorXiaomiOverlay \
-	AccentColorPixelBlueOverlay \
-	AccentColorGoogleBlueOverlay \
-	AccentColorGoogleRedOverlay \
-	AccentColorGoogleYellowOverlay \
-	AccentColorGoogleGreenOverlay \
-	AccentColorGoogleGrayOverlay \
-	AccentColorAppleBlueOverlay \
-	AccentColorAppleGreenOverlay \
-	AccentColorAppleIndigoOverlay \
-	AccentColorAppleOrangeOverlay \
-	AccentColorApplePinkOverlay \
-	AccentColorApplePurpleOverlay \
-	AccentColorAppleRedOverlay \
-	AccentColorAppleTealOverlay \
-	AccentColorAppleYellowOverlay \
 	DisplayCutoutEmulationCornerOverlay \
 	DisplayCutoutEmulationDoubleOverlay \
     DisplayCutoutEmulationHoleOverlay \
@@ -112,22 +66,11 @@ LOCAL_REQUIRED_MODULES := \
 	IconPackRoundedSettingsOverlay \
 	IconPackRoundedSystemUIOverlay \
 	IconPackRoundedThemePickerOverlay \
-	IconPackSamAndroidOverlay \
-	IconPackSamPixelLauncherOverlay \
-	IconPackSamPixelThemePickerOverlay \
-	IconPackSamSettingsOverlay \
-	IconPackSamSystemUIOverlay \
-	IconPackVictorAndroidOverlay \
-	IconPackVictorPixelLauncherOverlay \
-	IconPackVictorPixelThemePickerOverlay \
-	IconPackVictorSettingsOverlay \
-	IconPackVictorSystemUIOverlay \
 	IconShapeHeartOverlay \
 	IconShapeLeafOverlay \
 	IconShapeMallowOverlay \
 	IconShapePebbleOverlay \
 	IconShapeRoundedRectOverlay \
-	IconShapeSquareOverlay \
 	IconShapeSquircleOverlay \
 	IconShapeTaperedRectOverlay \
 	IconShapeTeardropOverlay \
