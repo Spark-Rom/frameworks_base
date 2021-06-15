@@ -6403,6 +6403,13 @@ public final class Settings {
         public static final String LIVE_DISPLAY_HINTED = "live_display_hinted";
 
         /**
+         * Wallpaper based accents
+         * @hide
+         */
+        public static final String USE_WALL_ACCENT = "use_wall_accent";
+        public static final String AUTO_ACCENT_TYPE = "auto_accent_type";
+
+        /**
          * These are all public system settings
          *
          * @hide
@@ -6586,6 +6593,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_ADJUSTMENT);
             PRIVATE_SETTINGS.add(DISPLAY_PICTURE_ADJUSTMENT);
             PRIVATE_SETTINGS.add(LIVE_DISPLAY_HINTED);
+            PRIVATE_SETTINGS.add(USE_WALL_ACCENT);
+            PRIVATE_SETTINGS.add(AUTO_ACCENT_TYPE);
         }
 
         /**
