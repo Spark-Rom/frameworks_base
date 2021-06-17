@@ -47,6 +47,7 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.app.IUiModeManager;
 import android.os.SystemProperties;
 import android.os.SystemClock;
 import android.os.UserHandle;
@@ -747,6 +748,18 @@ public class SparkUtils {
             }
         } else {
             return hasNavigationBar == 1;
+        }
+    }
+
+    // Check if system is in dark mode
+    public static boolean isDarkMode() {
+        IUiModeManager uiModeManager = IUiModeManager.Stub.asInterface(
+                    ServiceManager.getService(Context.UI_MODE_SERVICE));
+        try {
+            return uiModeManager.getNightMode() == 2;
+        } catch (android.os.RemoteException e) {
+            // assume light mode
+            return false;
         }
     }
 }
