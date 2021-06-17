@@ -61,8 +61,8 @@
 
     <Constraint
         android:id="@+id/album_art"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="@dimen/qs_media_album_size"
+        android:layout_height="@dimen/qs_media_album_size"
         android:layout_marginTop="@dimen/qs_media_panel_outer_padding"
         android:layout_marginStart="@dimen/qs_media_panel_outer_padding"
         android:layout_marginBottom="@dimen/qqs_media_spacing"
@@ -102,7 +102,7 @@
         android:id="@+id/media_progress_bar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="@dimen/media_progress_bar_top"
         app:layout_constraintTop_toBottomOf="@id/header_artist"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -122,8 +122,8 @@
 
     <Constraint
         android:id="@+id/action0"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="@dimen/media_player_action"
+        android:layout_height="@dimen/media_player_action"
         android:layout_marginTop="5dp"
         android:layout_marginStart="@dimen/qs_media_panel_outer_padding"
         android:layout_marginBottom="@dimen/qs_media_panel_outer_padding"
@@ -136,8 +136,8 @@
 
     <Constraint
         android:id="@+id/action1"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="@dimen/media_player_action"
+        android:layout_height="@dimen/media_player_action"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="@dimen/qs_media_panel_outer_padding"
@@ -150,8 +150,8 @@
 
     <Constraint
         android:id="@+id/action2"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="@dimen/media_player_action"
+        android:layout_height="@dimen/media_player_action"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="@dimen/qs_media_panel_outer_padding"
@@ -163,8 +163,8 @@
 
     <Constraint
         android:id="@+id/action3"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="@dimen/media_player_action"
+        android:layout_height="@dimen/media_player_action"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
         app:layout_constraintLeft_toRightOf="@id/action2"
@@ -176,8 +176,8 @@
 
     <Constraint
         android:id="@+id/action4"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="@dimen/media_player_action"
+        android:layout_height="@dimen/media_player_action"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="@dimen/qs_media_panel_outer_padding"
         android:layout_marginBottom="@dimen/qs_media_panel_outer_padding"

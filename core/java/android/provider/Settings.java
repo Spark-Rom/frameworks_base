@@ -5114,6 +5114,11 @@ public final class Settings {
         public static final String QS_TILE_TITLE_VISIBILITY = "qs_tile_title_visibility";
 
         /**
+         * @hide
+         */
+        public static final String MEDIA_PLAYER_STYLE = "media_player_style";
+
+        /**
          * Volume rocker wake
          * @hide
          */

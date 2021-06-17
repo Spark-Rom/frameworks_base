@@ -75,6 +75,7 @@ LOCAL_REQUIRED_MODULES := \
 	IconShapeTaperedRectOverlay \
 	IconShapeTeardropOverlay \
 	IconShapeVesselOverlay \
+        CompactMediaPlayer \
 	NavigationBarMode2ButtonOverlay \
 	NavigationBarMode3ButtonOverlay \
 	NavigationBarModeGesturalOverlay \
