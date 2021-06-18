@@ -281,5 +281,6 @@ public class SecureSettingsValidators {
         VALIDATORS.put(Secure.ASSIST_HANDLES_LEARNING_EVENT_COUNT, NON_NEGATIVE_INTEGER_VALIDATOR);
         // Spark Customization
         VALIDATORS.put(Secure.VOLUME_LINK_NOTIFICATION, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(Secure.FACE_UNLOCK_METHOD, BOOLEAN_VALIDATOR);
     }
 }
