@@ -6406,6 +6406,18 @@ public final class Settings {
                 "display_picture_adjustment";
 
         /**
+         * VoLTE icon style
+         * @hide
+         */
+        public static final String VOLTE_ICON_STYLE = "volte_icon_style";
+
+        /**
+         * Whether to show VoLTE icon or not
+         * @hide
+         */
+        public static final String SHOW_VOLTE_ICON = "show_volte_icon";
+
+        /**
          * Did we tell about how they can stop breaking their eyes?
          * @hide
          */
@@ -6612,6 +6624,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(USE_WALL_ACCENT);
             PRIVATE_SETTINGS.add(AUTO_ACCENT_TYPE);
             PRIVATE_SETTINGS.add(SHOW_FOURG);
+            PRIVATE_SETTINGS.add(SHOW_VOLTE_ICON);
+            PRIVATE_SETTINGS.add(VOLTE_ICON_STYLE);
         }
 
         /**
