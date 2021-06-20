@@ -27,6 +27,7 @@
         <item name="android:textColor">?attr/wallpaperTextColorSecondary</item>
         <item name="android:textSize">14dp</item>
         <item name="android:background">@drawable/kg_emergency_button_background</item>
+        <item name="android:fontFamily">@*android:string/config_headlineFontFamily</item>
         <item name="android:paddingLeft">12dp</item>
         <item name="android:paddingRight">12dp</item>
     </style>
@@ -52,6 +53,7 @@
     </style>
     <style name="Widget.TextView.NumPadKey.Klondike" parent="Widget.TextView.NumPadKey">
         <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@*android:string/config_bodyFontFamily</item>
         <item name="android:textColor">?attr/wallpaperTextColorSecondary</item>
         <item name="android:paddingBottom">0dp</item>
     </style>
@@ -63,6 +65,8 @@
     <style name="widget_big">
         <item name="android:textSize">@dimen/widget_big_font_size</item>
         <item name="android:paddingBottom">@dimen/bottom_text_spacing_digital</item>
+        <item name="android:fontFamily">@*android:string/config_headlineFontFamily</item>
+        <item name="android:fontFeatureSettings">@*android:string/config_headlineFontFeatureSettings</item>
         <item name="android:ellipsize">none</item>
         <item name="android:shadowColor">@color/keyguard_shadow_color</item>
         <item name="android:shadowRadius">?attr/shadowRadius</item>
@@ -71,6 +75,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/widget_title_font_size</item>
         <item name="android:paddingBottom">@dimen/widget_vertical_padding_clock</item>
+        <item name="android:fontFamily">@*android:string/config_headlineFontFamily</item>
         <item name="android:ellipsize">none</item>
         <item name="android:shadowColor">@color/keyguard_shadow_color</item>
         <item name="android:shadowRadius">?attr/shadowRadius</item>
@@ -79,6 +84,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/widget_small_font_size</item>
         <item name="android:paddingBottom">@dimen/bottom_text_spacing_digital</item>
+        <item name="android:fontFamily">@*android:string/config_headlineFontFamily</item>
         <item name="android:ellipsize">none</item>
         <item name="android:shadowColor">@color/keyguard_shadow_color</item>
         <item name="android:shadowRadius">?attr/shadowRadius</item>
@@ -113,6 +119,7 @@
         <item name="android:gravity">center</item>
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">2</item>
+        <item name="android:fontFamily">@*android:string/config_headlineFontFamily</item>
         <item name="android:shadowColor">@color/keyguard_shadow_color</item>
         <item name="android:shadowRadius">?attr/shadowRadius</item>
     </style>
