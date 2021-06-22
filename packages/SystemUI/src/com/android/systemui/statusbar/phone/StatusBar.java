@@ -57,6 +57,7 @@ import android.app.ActivityManager;
 import android.app.ActivityOptions;
 import android.app.ActivityTaskManager;
 import android.app.IWallpaperManager;
+import android.app.Instrumentation;
 import android.app.KeyguardManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -5499,6 +5500,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 break;
             case STATUS_BAR_SHOW_LYRIC:
              mLyricEnabled = TunerService.parseIntegerSwitch(newValue, false);
+             SystemProperties.set(Instrumentation.EXTHM_STATUS_BAR_LYRIC_PROP, mLyricEnabled ? "true" : "false");
                 break;
             default:
                 break;
