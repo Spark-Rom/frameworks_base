@@ -6364,6 +6364,11 @@ public final class Settings {
          */
         public static final String LIVE_DISPLAY_HINTED = "live_display_hinted";
 
+	/**
+         * @hide
+        */
+        public static final String EDGE_MUSIC_CONTROL = "edge_music_control";
+
         /**
          * Whether to show VoWiFi icon or not
          * @hide
@@ -6613,6 +6618,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(VOLTE_ICON_STYLE);
             PRIVATE_SETTINGS.add(BACK_GESTURE_HAPTIC);
             PRIVATE_SETTINGS.add(PROXIMITY_ON_WAKE);
+            PRIVATE_SETTINGS.add(EDGE_MUSIC_CONTROL);
         }
 
         /**
