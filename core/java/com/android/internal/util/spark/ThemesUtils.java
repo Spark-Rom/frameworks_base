@@ -62,6 +62,7 @@ public class ThemesUtils {
         "com.android.system.switch.retro", // 4
         "com.android.system.switch.oos", // 5
         "com.android.system.switch.fluid", // 6
+        "com.android.system.switch.android_s", // 7
     };
 
     public static final String[] NAVBAR_STYLES = {
@@ -101,7 +102,6 @@ public class ThemesUtils {
     public static final String HEADER_LARGE = "com.android.theme.header.large";
 
     public static final String HEADER_XLARGE = "com.android.theme.header.xlarge";
-
     // Switches qs tile style to user selected.
     public static void updateNewTileStyle(IOverlayManager om, int userId, int qsTileStyle) {
         if (qsTileStyle == 0) {
