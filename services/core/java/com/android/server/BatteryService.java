@@ -186,6 +186,9 @@ public final class BatteryService extends SystemService {
     private boolean mHasTurboPower;
     private boolean mLastTurboPower;
 
+    private boolean mOemFastCharger;
+    private boolean mLastOemFastCharger;
+
     private long mDischargeStartTime;
     private int mDischargeStartLevel;
 
@@ -585,7 +588,7 @@ public final class BatteryService extends SystemService {
         traceEnd();
     }
 
-    private static int plugType(HealthInfo healthInfo) {
+    private int plugType(HealthInfo healthInfo) {
         if (healthInfo.chargerAcOnline) {
             return BatteryManager.BATTERY_PLUGGED_AC;
         } else if (healthInfo.chargerUsbOnline) {
@@ -638,6 +641,7 @@ public final class BatteryService extends SystemService {
         mWarpCharger = mHasWarpCharger && isWarpCharger();
         mVoocCharger = mHasVoocCharger && isVoocCharger();
         mTurboPower = mHasTurboPower && isTurboPower();
+        mOemFastCharger = isOemFastCharger();
 
         if (force
                 || (mHealthInfo.batteryStatus != mLastBatteryStatus
@@ -654,7 +658,8 @@ public final class BatteryService extends SystemService {
                         || mDashCharger != mLastDashCharger
                         || mWarpCharger != mLastWarpCharger
                         || mVoocCharger != mLastVoocCharger
-                        || mTurboPower != mLastTurboPower)) {
+                        || mTurboPower != mLastTurboPower
+                        || mOemFastCharger != mLastOemFastCharger)) {
 
             if (mPlugType != mLastPlugType) {
                 if (mLastPlugType == BATTERY_PLUGGED_NONE) {
@@ -832,6 +837,7 @@ public final class BatteryService extends SystemService {
             mLastWarpCharger = mWarpCharger;
             mLastVoocCharger = mVoocCharger;
             mLastTurboPower = mTurboPower;
+            mLastOemFastCharger = mOemFastCharger;
         }
     }
 
@@ -867,6 +873,7 @@ public final class BatteryService extends SystemService {
         intent.putExtra(BatteryManager.EXTRA_WARP_CHARGER, mWarpCharger);
         intent.putExtra(BatteryManager.EXTRA_VOOC_CHARGER, mVoocCharger);
         intent.putExtra(BatteryManager.EXTRA_TURBO_POWER, mTurboPower);
+        intent.putExtra(BatteryManager.EXTRA_OEM_FAST_CHARGER, mOemFastCharger);
         if (DEBUG) {
             Slog.d(TAG, "Sending ACTION_BATTERY_CHANGED. scale:" + BATTERY_SCALE
                     + ", info:" + mHealthInfo.toString());
@@ -974,6 +981,21 @@ public final class BatteryService extends SystemService {
             return "Turbo".equals(state);
         } catch (FileNotFoundException e) {
         } catch (IOException e) {
+        }
+        return false;
+    }
+
+    private boolean isOemFastCharger() {
+        for (String path : mContext.getResources().getStringArray(
+                com.android.internal.R.array.config_oemFastChargerStatusPaths)) {
+            try {
+                if ("1".equals(FileUtils.readTextFile(new File(path), 1, null))) {
+                    return true;
+                }
+            } catch (IOException e) {
+                Slog.e(TAG, "Failed to read oem fast charger status path: "
+                    + path);
+            }
         }
         return false;
     }
