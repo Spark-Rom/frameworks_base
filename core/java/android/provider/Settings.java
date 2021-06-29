@@ -5119,6 +5119,11 @@ public final class Settings {
         public static final String MEDIA_PLAYER_STYLE = "media_player_style";
 
         /**
+         * @hide
+         */
+        public static final String SLIDER_STYLE = "slider_style";
+
+        /**
          * Volume rocker wake
          * @hide
          */
