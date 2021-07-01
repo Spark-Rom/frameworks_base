@@ -129,12 +129,6 @@
     <!-- Daily data usage -->
     <dimen name="data_usage_padding_start">4dp</dimen>
 
-    <!-- Ambient Indication -->
-    <dimen name="dock_logo_min_size">48dp</dimen>
-    <dimen name="dock_top_logo_margin">12dp</dimen>
-    <dimen name="dock_top_logo_padding">8dp</dimen>
-    <dimen name="ambient_indication_icon_size">20dp</dimen>
-
     <dimen name="media_player_action">48dp</dimen>
     <dimen name="media_progress_bar_top">35dp</dimen>
 </resources>
