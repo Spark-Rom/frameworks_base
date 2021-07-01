@@ -108,12 +108,11 @@ public class QSContainerImpl extends FrameLayout implements ColorExtractor.OnCol
     private boolean mImmerseMode;
 
     private SysuiColorExtractor mColorExtractor;
-    private Handler mHandler;
 
     public QSContainerImpl(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mHandler = new Handler();
-        SettingsObserver settingsObserver = new SettingsObserver(mHandler);
+        Handler handler = new Handler();
+        SettingsObserver settingsObserver = new SettingsObserver(handler);
         settingsObserver.observe();
         mColorExtractor = Dependency.get(SysuiColorExtractor.class);
         mColorExtractor.addOnColorsChangedListener(this);
@@ -148,9 +147,7 @@ public class QSContainerImpl extends FrameLayout implements ColorExtractor.OnCol
 
     @Override
     public void onColorsChanged(ColorExtractor colorExtractor, int which) {
-        mHandler.postDelayed(() -> {
-            setQsBackground();
-        }, 1000);
+        setQsBackground();
     }
 
     private class SettingsObserver extends ContentObserver {
