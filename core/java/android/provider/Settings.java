@@ -6340,14 +6340,6 @@ public final class Settings {
         };
 
         /**
-         * Data usage period
-         * 0: Daily
-         * 1: Monthly
-         * @hide
-         */
-        public static final String DATA_USAGE_PERIOD = "data_usage_period";
-
-        /**
          * Color temperature of the display during the day
          */
         public static final String DISPLAY_TEMPERATURE_DAY = "display_temperature_day";
