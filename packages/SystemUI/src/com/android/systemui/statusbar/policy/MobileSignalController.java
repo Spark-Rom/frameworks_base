@@ -109,7 +109,9 @@ public class MobileSignalController extends SignalController<
 
     // Data disabled icon
     private boolean mDataDisabledIcon;
-    
+
+    private boolean mShow4gForLte;
+
     // VoWiFi icon
     private boolean mIsVowifiAvailable;
 
@@ -189,6 +191,9 @@ public class MobileSignalController extends SignalController<
            resolver.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.DATA_DISABLED_ICON), false,
                     this, UserHandle.USER_ALL);
+           resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.SHOW_FOURG_ICON), false,
+                    this, UserHandle.USER_ALL);
            updateSettings();
         }
 
@@ -206,7 +211,9 @@ public class MobileSignalController extends SignalController<
         mDataDisabledIcon = Settings.System.getIntForUser(resolver,
                 Settings.System.DATA_DISABLED_ICON, 1,
                 UserHandle.USER_CURRENT) == 1;
-
+        mShow4gForLte = Settings.System.getIntForUser(resolver,
+                Settings.System.SHOW_FOURG_ICON, 1,
+                UserHandle.USER_CURRENT) == 1;
         mapIconSets();
         updateTelephony();
     }
@@ -338,7 +345,7 @@ public class MobileSignalController extends SignalController<
         mNetworkToIconLookup.put(toIconKey(TelephonyManager.NETWORK_TYPE_HSPA), hGroup);
         mNetworkToIconLookup.put(toIconKey(TelephonyManager.NETWORK_TYPE_HSPAP), hPlusGroup);
 
-        if (mConfig.show4gForLte) {
+        if (mShow4gForLte) {
             mNetworkToIconLookup.put(toIconKey(
                     TelephonyManager.NETWORK_TYPE_LTE),
                     TelephonyIcons.FOUR_G);
