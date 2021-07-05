@@ -96,6 +96,7 @@ import com.android.systemui.statusbar.policy.DateView;
 import com.android.systemui.statusbar.policy.NextAlarmController;
 import com.android.systemui.statusbar.policy.ZenModeController;
 import com.android.systemui.util.RingerModeTracker;
+import com.android.systemui.qs.QSHeaderInfoLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -180,6 +181,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private TextClock mTextClock;
     private LinearLayout mQsClockOos;
     private LinearLayout mQsClockNormal;
+    private QSHeaderInfoLayout mQSHeaderInfoLayout;
 
 
     // Used for RingerModeTracker
@@ -304,6 +306,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
  	mQsClockOos = findViewById(R.id.oos_qsclock);
         mQsClockNormal = findViewById(R.id.normal_qsclock);
  	mTextClock = findViewById(R.id.textClock);
+        mQSHeaderInfoLayout = findViewById(R.id.status_container);
 
         updateResources();
 
@@ -534,12 +537,16 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mHeaderTextContainerView.setLayoutParams(mHeaderTextContainerView.getLayoutParams());
            mQsClockNormal.setVisibility(View.INVISIBLE);
 	   mQsClockOos.setVisibility(View.VISIBLE);
+           mQSHeaderInfoLayout.setVisibility(View.INVISIBLE);
+           mCarrierGroup.setVisibility(View.INVISIBLE);
         } else {
         mHeaderTextContainerView.getLayoutParams().height =
                 resources.getDimensionPixelSize(R.dimen.qs_header_tooltip_height_normal);
         mHeaderTextContainerView.setLayoutParams(mHeaderTextContainerView.getLayoutParams());
            mQsClockNormal.setVisibility(View.VISIBLE);
            mQsClockOos.setVisibility(View.GONE);
+           mQSHeaderInfoLayout.setVisibility(View.VISIBLE);
+           mCarrierGroup.setVisibility(View.VISIBLE);
        }
     }
 
