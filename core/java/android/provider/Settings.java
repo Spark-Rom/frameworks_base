@@ -3114,7 +3114,6 @@ public final class Settings {
             // At one time in System, then Global, but now back in Secure
             MOVED_TO_SECURE.add(Secure.INSTALL_NON_MARKET_APPS);
             // Spark Customization
-            MOVED_TO_SECURE.add(Secure.VOLUME_LINK_NOTIFICATION);
         }
 
         @UnsupportedAppUsage
@@ -6073,12 +6072,6 @@ public final class Settings {
          * @hide
          */
         public static final String HEADS_UP_TIMEOUT = "heads_up_timeout";
-
-        /**
-         * Show app volume rows in volume panel
-         * @hide
-         */
-        public static final String SHOW_APP_VOLUME = "show_app_volume";
 
         /**
          * Defines the global heads up notification snooze
