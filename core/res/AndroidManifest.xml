@@ -673,9 +673,6 @@
     <protected-broadcast android:name="android.intent.action.GAMING_MODE_TURN_OFF" />
     <protected-broadcast android:name="android.intent.action.GAMING_MODE_TURN_ON" />
 
-    <!-- IMS Status -->
-    <protected-broadcast android:name="android.intent.action.IMS_REGISTRATION_CHANGED" />
-
     <!-- Font service -->
     <protected-broadcast android:name="com.android.server.ACTION_FONT_CHANGED" />
 

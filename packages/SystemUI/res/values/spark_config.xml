@@ -55,10 +55,4 @@
 
     <!-- System icon area layout weight -->
     <item name="system_icon_area_weight" format="float" type="integer">1</item>
-
-    <!-- Whether to show VoWiFi icon in the status bar -->
-    <bool name="config_display_vowifi">true</bool>
-
-    <!-- Whether to invert the sim slots for VoLTE/VoWiFi icon -->
-    <bool name="config_invertImsSlots">false</bool>
 </resources>

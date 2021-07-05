@@ -241,9 +241,6 @@
     <string name="applock_credential">&#160;to unlock</string>
     <string name="applock_unlock">Unlock</string>
 
-    <string name="status_bar_ims">VoLTE/VoWiFi</string>
-    <string name="status_bar_data_disabled">Data disabled</string>
-
     <!-- Heads up snooze toast -->
     <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Peeking notification are snoozing for 1 minute</string>
     <string name="heads_up_snooze_message"><xliff:g id="string">%1$s</xliff:g> - Peeking notifications are snoozing for <xliff:g id="number">%2$d</xliff:g> minutes</string>
@@ -266,9 +263,6 @@
 
     <!-- Oneplus Analog clock -->
     <string name="clock_title_oneplus_roman" translatable="false">OnePlus Roman</string>
-
-    <!-- Daily data usage -->
-    <string name="daily_data_usage_title">Today\'s usage</string>
 
    <!-- Change clockface -->
     <string name="change_clock_face">Swipe to change the clock face</string>

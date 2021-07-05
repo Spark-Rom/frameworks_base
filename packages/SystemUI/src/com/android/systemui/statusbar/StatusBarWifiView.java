@@ -48,14 +48,15 @@ public class StatusBarWifiView extends FrameLayout implements DarkReceiver,
     private StatusBarIconView mDotView;
     /// Contains the main icon layout
     private LinearLayout mWifiGroup;
-    private ImageView mWifiActivity;
     private ImageView mWifiIcon;
+    private ImageView mIn;
+    private ImageView mOut;
+    private View mInoutContainer;
     private View mSignalSpacer;
     private View mAirplaneSpacer;
     private WifiIconState mState;
     private String mSlot;
     private int mVisibleState = -1;
-    private int mWifiActivityId = 0;
 
     public static StatusBarWifiView fromContext(Context context, String slot) {
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -90,8 +91,9 @@ public class StatusBarWifiView extends FrameLayout implements DarkReceiver,
     @Override
     public void setStaticDrawableColor(int color) {
         ColorStateList list = ColorStateList.valueOf(color);
-        mWifiActivity.setImageTintList(list);
         mWifiIcon.setImageTintList(list);
+        mIn.setImageTintList(list);
+        mOut.setImageTintList(list);
         mDotView.setDecorColor(color);
     }
 
@@ -153,9 +155,11 @@ public class StatusBarWifiView extends FrameLayout implements DarkReceiver,
     private void init() {
         mWifiGroup = findViewById(R.id.wifi_group);
         mWifiIcon = findViewById(R.id.wifi_signal);
-        mWifiActivity = findViewById(R.id.wifi_inout);
+        mIn = findViewById(R.id.wifi_in);
+        mOut = findViewById(R.id.wifi_out);
         mSignalSpacer = findViewById(R.id.wifi_signal_spacer);
         mAirplaneSpacer = findViewById(R.id.wifi_airplane_spacer);
+        mInoutContainer = findViewById(R.id.inout_container);
 
         initDotView();
     }
@@ -195,10 +199,11 @@ public class StatusBarWifiView extends FrameLayout implements DarkReceiver,
         if (mState.resId != state.resId && state.resId >= 0) {
             mWifiIcon.setImageDrawable(mContext.getDrawable(state.resId));
         }
-        mWifiActivityId = getWifiActivityId(state.activityIn, state.activityOut);
-        if (mWifiActivityId != 0) {
-            mWifiActivity.setImageResource(mWifiActivityId);
-        }
+
+        mIn.setVisibility(state.activityIn ? View.VISIBLE : View.GONE);
+        mOut.setVisibility(state.activityOut ? View.VISIBLE : View.GONE);
+        mInoutContainer.setVisibility(
+                (state.activityIn || state.activityOut) ? View.VISIBLE : View.GONE);
         mAirplaneSpacer.setVisibility(state.airplaneSpacerVisible ? View.VISIBLE : View.GONE);
         mSignalSpacer.setVisibility(state.signalSpacerVisible ? View.VISIBLE : View.GONE);
 
@@ -219,11 +224,11 @@ public class StatusBarWifiView extends FrameLayout implements DarkReceiver,
         if (mState.resId >= 0) {
             mWifiIcon.setImageDrawable(mContext.getDrawable(mState.resId));
         }
-        mWifiActivityId = getWifiActivityId(mState.activityIn, mState.activityOut);
-        if (mWifiActivityId != 0) {
-            mWifiActivity.setImageResource(mWifiActivityId);
-        }
 
+        mIn.setVisibility(mState.activityIn ? View.VISIBLE : View.GONE);
+        mOut.setVisibility(mState.activityOut ? View.VISIBLE : View.GONE);
+        mInoutContainer.setVisibility(
+                (mState.activityIn || mState.activityOut) ? View.VISIBLE : View.GONE);
         mAirplaneSpacer.setVisibility(mState.airplaneSpacerVisible ? View.VISIBLE : View.GONE);
         mSignalSpacer.setVisibility(mState.signalSpacerVisible ? View.VISIBLE : View.GONE);
         setVisibility(mState.visible ? View.VISIBLE : View.GONE);
@@ -234,24 +239,15 @@ public class StatusBarWifiView extends FrameLayout implements DarkReceiver,
         int areaTint = getTint(area, this, tint);
         ColorStateList color = ColorStateList.valueOf(areaTint);
         mWifiIcon.setImageTintList(color);
-        mWifiActivity.setImageTintList(color);
+        mIn.setImageTintList(color);
+        mOut.setImageTintList(color);
         mDotView.setDecorColor(areaTint);
         mDotView.setIconColor(areaTint, false);
     }
 
+
     @Override
     public String toString() {
         return "StatusBarWifiView(slot=" + mSlot + " state=" + mState + ")";
-    }
-
-    private int getWifiActivityId(boolean activityIn, boolean activityOut) {
-        if (activityIn && !activityOut) {
-            return R.drawable.stat_sys_signal_in;
-        } else if (!activityIn && activityOut) {
-            return R.drawable.stat_sys_signal_out;
-        } else if (!activityIn && !activityOut) {
-            return R.drawable.stat_sys_signal_none;
-        }
-        return R.drawable.stat_sys_signal_inout;
     }
 }

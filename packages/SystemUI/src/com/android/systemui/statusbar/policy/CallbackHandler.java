@@ -23,7 +23,6 @@ import android.telephony.SubscriptionInfo;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.systemui.statusbar.policy.NetworkController.EmergencyListener;
 import com.android.systemui.statusbar.policy.NetworkController.IconState;
-import com.android.systemui.statusbar.policy.NetworkController.ImsIconState;
 import com.android.systemui.statusbar.policy.NetworkController.SignalCallback;
 
 import java.util.ArrayList;
@@ -43,7 +42,6 @@ public class CallbackHandler extends Handler implements EmergencyListener, Signa
     private static final int MSG_MOBILE_DATA_ENABLED_CHANGED = 5;
     private static final int MSG_ADD_REMOVE_EMERGENCY        = 6;
     private static final int MSG_ADD_REMOVE_SIGNAL           = 7;
-    private static final int MSG_IMS_STATE_CHANGED           = 8;
 
     // All the callbacks.
     private final ArrayList<EmergencyListener> mEmergencyListeners = new ArrayList<>();
@@ -106,11 +104,6 @@ public class CallbackHandler extends Handler implements EmergencyListener, Signa
                     mSignalCallbacks.remove((SignalCallback) msg.obj);
                 }
                 break;
-            case MSG_IMS_STATE_CHANGED:
-                for (SignalCallback signalCluster : mSignalCallbacks) {
-                    signalCluster.setImsIcon((ImsIconState) msg.obj);
-                }
-                break;
         }
     }
 
@@ -129,13 +122,13 @@ public class CallbackHandler extends Handler implements EmergencyListener, Signa
     @Override
     public void setMobileDataIndicators(final IconState statusIcon, final IconState qsIcon,
             final int statusType, final int qsType, final boolean activityIn,
-            final boolean activityOut, final int stackedVoiceIcon, final CharSequence typeContentDescription,
+            final boolean activityOut, final CharSequence typeContentDescription,
             CharSequence typeContentDescriptionHtml, final CharSequence description,
             final boolean isWide, final int subId, boolean roaming) {
         post(() -> {
             for (SignalCallback signalCluster : mSignalCallbacks) {
                 signalCluster.setMobileDataIndicators(statusIcon, qsIcon, statusType, qsType,
-                        activityIn, activityOut, stackedVoiceIcon, typeContentDescription,
+                        activityIn, activityOut, typeContentDescription,
                         typeContentDescriptionHtml, description, isWide, subId, roaming);
             }
         });
@@ -169,11 +162,6 @@ public class CallbackHandler extends Handler implements EmergencyListener, Signa
     @Override
     public void setIsAirplaneMode(IconState icon) {
         obtainMessage(MSG_AIRPLANE_MODE_CHANGED, icon).sendToTarget();;
-    }
-
-    @Override
-    public void setImsIcon(ImsIconState icon) {
-        obtainMessage(MSG_IMS_STATE_CHANGED, icon).sendToTarget();;
     }
 
     public void setListening(EmergencyListener listener, boolean listening) {
