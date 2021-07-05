@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
      Copyright (C) 2018 The Android Open Source Project
 
@@ -26,5 +25,5 @@
         android:layout_height="14dp"
         android:layout_gravity="right|top"
         android:src="@*android:drawable/ic_qs_dnd"
-        android:tint="@android:color/white"/>
+        android:tint="?android:attr/textColorTertiary"/>
 </FrameLayout>
