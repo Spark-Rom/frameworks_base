@@ -531,6 +531,10 @@ public class MobileSignalController extends SignalController<
                 case 9:
                     resId = R.drawable.ic_volte_moto;
                     break;
+                // Vivo VoLTE icon
+                case 10:
+                    resId = R.drawable.ic_volte_vivo;
+                    break;
                 case 0:
                 default:
                     resId = 0;
@@ -898,6 +902,9 @@ public class MobileSignalController extends SignalController<
                 // OOS
                 case 8:
                     return TelephonyIcons.VOWIFI_OOS11;
+                // Vivo
+                case 9:
+                    return TelephonyIcons.VOWIFI_VIVO;
                 default:
                     return TelephonyIcons.VOWIFI;
             }
