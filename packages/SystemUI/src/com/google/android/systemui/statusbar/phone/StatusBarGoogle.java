@@ -91,6 +91,7 @@ import com.android.systemui.statusbar.policy.TaskHelper;
 import com.android.systemui.statusbar.policy.UserInfoControllerImpl;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
 import com.android.systemui.volume.VolumeComponent;
+import com.android.systemui.tuner.TunerService;
 
 import com.google.android.systemui.NotificationLockscreenUserManagerGoogle;
 import com.google.android.systemui.smartspace.SmartSpaceController;
@@ -195,6 +196,7 @@ public class StatusBarGoogle extends StatusBar {
             DismissCallbackRegistry dismissCallbackRegistry,
             Lazy<NotificationShadeDepthController> notificationShadeDepthControllerLazy,
             StatusBarTouchableRegionManager statusBarTouchableRegionManager,
+            TunerService tunerService,
             FlashlightController flashlightController,
             TaskHelper taskHelper) {
 
@@ -275,6 +277,7 @@ public class StatusBarGoogle extends StatusBar {
                 dismissCallbackRegistry,
                 notificationShadeDepthControllerLazy,
                 statusBarTouchableRegionManager,
+                tunerService,
                 flashlightController,
                 taskHelper);
         mSmartSpaceController = smartSpaceController;
