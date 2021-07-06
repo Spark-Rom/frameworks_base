@@ -35,5 +35,6 @@
         <item>com.google.android.dialer</item>
         <item>#FF2162D7</item>
         <item>com.google.android.youtube</item>
+        <item>com.android.dialer</item>
     </string-array>
 </resources>
