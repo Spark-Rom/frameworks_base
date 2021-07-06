@@ -1,0 +1,5 @@
+<resources>
+
+    <color name="dismiss_all_icon_color">@android:color/white</color>
+
+</resources>

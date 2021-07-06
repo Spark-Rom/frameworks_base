@@ -6436,6 +6436,13 @@ public final class Settings {
 
 
         /**
+         * Clear all icon style
+         * @hide
+         */
+        public static final String CLEAR_ALL_ICON_STYLE = "clear_all_icon_style";
+
+
+        /**
          * Data usage period
          * 0: Daily
          * 1: Monthl

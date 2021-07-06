@@ -1,0 +1,5 @@
+<resources>
+
+    <dimen name="dismiss_all_fab_src_size">24dp</dimen>
+
+</resources>
