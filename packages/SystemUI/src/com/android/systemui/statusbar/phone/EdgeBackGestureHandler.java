@@ -315,7 +315,6 @@ public class EdgeBackGestureHandler extends CurrentUserTracker implements Displa
         sysUiFlagContainer.addCallback(sysUiFlags -> mSysUiFlags = sysUiFlags);
 
         mHandler = new Handler();
-        mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
     }
 
     public void updateCurrentUserResources() {
