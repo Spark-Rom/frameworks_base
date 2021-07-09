@@ -310,6 +310,4 @@
     <string name="onthego_service_toggle">Automatically restart service</string>
     <string name="onthego_channel_name">Main</string>
     <string name="global_action_onthego">OnTheGo</string>
-
-    <string name="status_bar_data_disabled">Data disabled</string>
 </resources>
