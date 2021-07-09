@@ -6181,19 +6181,6 @@ public final class Settings {
         public static final String CUSTOM_STATUSBAR_PADDING_END  = "custom_statusbar_padding_end";
 
         /**
-         * Hold current font name and name of the originating package Uses "|" as a delimiter
-         * @hide
-         */
-        public static final String FONT_INFO = "font_info";
-
-        /**
-         * Hold list of installed font provider packages. Uses "|" as a delimiter
-         * @hide
-         */
-        public static final String FONT_PACKAGES = "font_packages";
-
-
-        /**
          * Weather an oos like  qs clock should be shown
          * @hide
          */

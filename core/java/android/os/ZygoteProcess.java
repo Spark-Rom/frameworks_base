@@ -565,8 +565,7 @@ public class ZygoteProcess {
         "--set-api-blacklist-exemptions",
         "--hidden-api-log-sampling-rate",
         "--hidden-api-statslog-sampling-rate",
-        "--invoke-with",
-        "--refresh-typeface"
+        "--invoke-with"
     };
 
     /**
@@ -972,13 +971,6 @@ public class ZygoteProcess {
         }
     }
 
-    public void refreshTypeface() {
-        synchronized (mLock) {
-            maybeRefreshTypeface(primaryZygoteState);
-            maybeRefreshTypeface(secondaryZygoteState);
-        }
-    }
-
     @GuardedBy("mLock")
     private boolean maybeSetApiBlacklistExemptions(ZygoteState state, boolean sendIfEmpty) {
         if (state == null || state.isClosed()) {
@@ -1053,27 +1045,6 @@ public class ZygoteProcess {
         }
     }
 
-    @GuardedBy("mLock")
-    private void maybeRefreshTypeface(ZygoteState state) {
-        if (state == null || state.isClosed()) {
-            return;
-        }
-
-        try {
-            state.mZygoteOutputWriter.write(Integer.toString(1));
-            state.mZygoteOutputWriter.newLine();
-            state.mZygoteOutputWriter.write("--refresh-typeface");
-            state.mZygoteOutputWriter.newLine();
-            state.mZygoteOutputWriter.flush();
-            int status = state.mZygoteInputStream.readInt();
-            if (status != 0) {
-                Slog.e(LOG_TAG, "Failed to refresh USAP Pool for Typeface change status:" + status);
-            }
-        } catch (IOException ioe) {
-            Slog.e(LOG_TAG, "Failed to refresh USAP Pool for Typeface change", ioe);
-        }
-    }
-
     /**
      * Creates a ZygoteState for the primary zygote if it doesn't exist or has been disconnected.
      */
@@ -1085,7 +1056,6 @@ public class ZygoteProcess {
 
             maybeSetApiBlacklistExemptions(primaryZygoteState, false);
             maybeSetHiddenApiAccessLogSampleRate(primaryZygoteState);
-            maybeRefreshTypeface(primaryZygoteState);
         }
     }
 
@@ -1101,7 +1071,6 @@ public class ZygoteProcess {
 
             maybeSetApiBlacklistExemptions(secondaryZygoteState, false);
             maybeSetHiddenApiAccessLogSampleRate(secondaryZygoteState);
-            maybeRefreshTypeface(secondaryZygoteState);
         }
     }
 
@@ -1359,6 +1328,7 @@ public class ZygoteProcess {
                     null /* disabledCompatChanges */, null /* pkgDataInfoMap */,
                     null /* whitelistedDataInfoMap */, true /* bindMountAppsData*/,
                     /* bindMountAppStorageDirs */ false, extraArgs);
+
         } catch (ZygoteStartFailedEx ex) {
             throw new RuntimeException("Starting child-zygote through Zygote failed", ex);
         }

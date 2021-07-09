@@ -175,10 +175,6 @@
   <!-- Toast animation -->
   <java-symbol type="style" name="Animation.Toast.Material" />
 
-  <!-- System fonts -->
-  <java-symbol type="array" name="config_fontPackages" />
-  <java-symbol type="string" name="fontservice_incompatible_font" />
-
   <!-- App Picker -->
   <java-symbol type="id" name="app_name" />
   <java-symbol type="id" name="app_icon" />
@@ -189,7 +185,6 @@
   <!-- Vendor mismatch fingerprint warning -->
   <java-symbol type="string" name="system_error_vendorprint" />
 
-<<<<<<< HEAD:core/res/res/values/spark_symbols.xml
   <!-- Whether or not we should show vendor mismatch message -->
   <java-symbol type="bool" name="config_show_vendor_mismatch_message" />
 
