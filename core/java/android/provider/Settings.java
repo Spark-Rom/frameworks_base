@@ -6481,13 +6481,6 @@ public final class Settings {
        public static final String PROXIMITY_ON_WAKE = "proximity_on_wake";
 
         /**
-         * Wallpaper based accents
-         * @hide
-         */
-        public static final String USE_WALL_ACCENT = "use_wall_accent";
-        public static final String AUTO_ACCENT_TYPE = "auto_accent_type";
-
-        /**
          * These are all public system settings
          *
          * @hide
@@ -6669,8 +6662,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_ADJUSTMENT);
             PRIVATE_SETTINGS.add(DISPLAY_PICTURE_ADJUSTMENT);
             PRIVATE_SETTINGS.add(LIVE_DISPLAY_HINTED);
-            PRIVATE_SETTINGS.add(USE_WALL_ACCENT);
-            PRIVATE_SETTINGS.add(AUTO_ACCENT_TYPE);
             PRIVATE_SETTINGS.add(SHOW_FOURG);
             PRIVATE_SETTINGS.add(SHOW_VOLTE_ICON);
             PRIVATE_SETTINGS.add(VOLTE_ICON_STYLE);
