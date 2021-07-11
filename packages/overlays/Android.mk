@@ -79,6 +79,7 @@ LOCAL_REQUIRED_MODULES := \
         SliderStyleOOS \
         SliderStyleAosp \
         SliderStyleRUI \
+        SliderStyleA12 \
         ClearAllOos \
 	NavigationBarMode2ButtonOverlay \
 	NavigationBarMode3ButtonOverlay \
