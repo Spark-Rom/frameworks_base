@@ -380,6 +380,7 @@ public class KeyguardClockSwitch extends RelativeLayout {
             mClockPlugin.setDarkAmount(darkAmount);
         }
         updateBigClockAlpha();
+        updateClockVisibleNotifications();
     }
 
     /**
@@ -390,9 +391,6 @@ public class KeyguardClockSwitch extends RelativeLayout {
             return;
         }
         mHasVisibleNotifications = hasVisibleNotifications;
-        if (mClockPlugin != null) {
-            mClockPlugin.setHasVisibleNotifications(mHasVisibleNotifications);
-        }
         if (mDarkAmount == 0f && mBigClockContainer != null) {
             // Starting a fade transition since the visibility of the big clock will change.
             TransitionManager.beginDelayedTransition(mBigClockContainer,
@@ -400,6 +398,7 @@ public class KeyguardClockSwitch extends RelativeLayout {
                             mBigClockContainer));
         }
         updateBigClockAlpha();
+        updateClockVisibleNotifications();
     }
 
     public Paint getPaint() {
@@ -486,6 +485,12 @@ public class KeyguardClockSwitch extends RelativeLayout {
             } else if (mBigClockContainer.getVisibility() == INVISIBLE) {
                 mBigClockContainer.setVisibility(VISIBLE);
             }
+        }
+    }
+
+    private void updateClockVisibleNotifications() {
+        if (mClockPlugin != null) {
+            mClockPlugin.setHasVisibleNotifications(mHasVisibleNotifications && mDarkAmount == 0f);
         }
     }
 
