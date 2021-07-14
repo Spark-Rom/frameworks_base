@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2019-2020 The Spark Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Button that copies the url to the log of a crashed application -->
+    <string name="aerr_copy">Copiar URL del registro del problema</string>
+    <string name="url_copy_success">URL copiada exitosamente</string>
+    <string name="url_copy_failed">Ocurrió un error durante la subida del log a pasty</string>
+
+    <string name="reboot_to_recovery_title" translatable="false">Recovery</string>
+    <string name="reboot_to_recovery_message" translatable="false">Rebooting to recovery</string>
+    <string name="reboot_to_bootloader_title" translatable="false">Bootloader</string>
+    <string name="reboot_to_bootloader_message" translatable="false">Rebooting to bootloader</string>
+    <string name="reboot_title">Reiniciar</string>
+    <string name="reboot_message">Reiniciando sistema</string>
+
+    <!-- Alert slider proc nodes paths. -->
+    <string name="alert_slider_state_path"></string>
+    <string name="alert_slider_uevent_match_path"></string>
+
+    <!-- Cycle through ringer modes -->
+    <string name="volume_dialog_ringer_guidance_normal">Las llamadas y notificaciones sonarán</string>
+
+    <!-- Pocket Lock -->
+    <string name="pocket_lock_message_long_press">Presionar y mantener el botón de encendido para desbloquear</string>
+
+    <!-- SystemUI Restart -->
+    <string name="systemui_restart_title">Requiere reiniciar SystemUI</string>
+    <string name="systemui_restart_message">Para que todos los cambios tengan efecto, se requiere el reinicio de SystemUI. ¿Reiniciar SystemUI ahora?</string>
+
+    <!-- Gaming mode -->
+    <string name="notification_channel_gaming">Modo juego</string>
+    <string name="gaming_mode_notification_title">Modo juego habilitado</string>
+    <string name="gaming_mode_notification_content">Toca para desactivar el modo juego</string>
+    <string name="gaming_mode_enabled_toast">Modo juego encendido</string>
+    <string name="gaming_mode_disabled_toast">Modo juego apagado</string>
+
+    <!-- Clipboard access toast -->
+    <string name="app_clipboard_access_denied">%1$s fue denegado el acceso al portapapeles</string>
+    <string name="app_clipboard_access_granted">%1$s fue permitido el acceso al portapapeles</string>
+
+    <!-- Pocket Lock -->
+    <string name="pocket_view_title">Modo bolsillo activado</string>
+    <string name="pocket_view_title_cancel">Para usar tu teléfono:</string>
+    <string name="pocket_view_top_tag_cancel">Comprueba que el área azul de tu teléfono está libre de obstrucciones, y limpia cualquier mancha o polvo.</string>
+    <string name="pocket_view_top_tag_cancel2">Mantén presionado el botón de encendido para salir del modo bolsillo.</string>
+    <string name="pocket_view_top_tag_number1" translatable="false">1.\u0020</string>
+    <string name="pocket_view_top_tag_number2" translatable="false">2.\u0020</string>
+
+    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permlab_accessFontManager">acceso al gestor de fuentes</string>
+    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permdesc_accessFontManager">Permite a una aplicación acceder al gestor de fuentes.</string>
+
+    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
+    <string name="fontservice_incompatible_font">El paquete de fuentes que has instalado no es compatible debido a fonts.xml faltantes en sus archivos. Por favor contacta con el desarrollador del paquete para ayuda.</string>
+
+    <!-- App Picker -->
+    <string name="active_edge_app_select_title">Selleciona aplicación</string>
+    <string name="active_edge_activity_select_title">Selecciona actividad</string>
+
+    <!-- Vendor mismatch fingerprint warning [CHAR LIMIT=NONE] -->
+    <string name="system_error_vendorprint">Tu imagen de vendor no concide con el sistema. Por favor instala la imagen de vendor <xliff:g id="string">%s</xliff:g> para tu dispositivo</string>
+
+    <!-- LiveDisplay strings -->
+    <string name="live_display_title" translatable="false">LiveDisplay</string>
+    <string name="live_display_auto">Automático</string>
+    <string name="live_display_auto_summary">Ajustar automáticamente la temperatura del color de pantalla después del atardecer y amanecer</string>
+    <string name="live_display_off">Off</string>
+    <string name="live_display_off_summary">Desactivar todos los ajustes</string>
+    <string name="live_display_day">Diurno</string>
+    <string name="live_display_day_summary">Usar solo ajustes diurnos</string>
+    <string name="live_display_night">Nocturno</string>
+    <string name="live_display_night_summary">Usar solo ajustes nocturnos</string>
+    <string name="live_display_outdoor">Exteriores (sol intenso)</string>
+    <string name="live_display_outdoor_summary">Usar solo ajustes de exteriores</string>
+    <string name="live_display_hint">LiveDisplay puede ayudara a reducir la fatiga ocular y mejorar tu calidad de sueño. ¡Click aquí para probarlo!</string>
+    <string name="accessibility_quick_settings_live_display_off">LiveDisplay off.</string>
+    <string name="accessibility_quick_settings_live_display_auto">LiveDisplay: modo automático.</string>
+    <string name="accessibility_quick_settings_live_display_day">LiveDisplay: modo diurno.</string>
+    <string name="accessibility_quick_settings_live_display_night">LiveDisplay: modo nocturno.</string>
+    <string name="accessibility_quick_settings_live_display_outdoor">LiveDisplay: modo exteriores.</string>
+    <string name="accessibility_quick_settings_live_display_changed_off">LiveDisplay se ha apagado.</string>
+    <string name="accessibility_quick_settings_live_display_changed_auto">LiveDisplay cambiado a modo automático.</string>
+    <string name="accessibility_quick_settings_live_display_changed_day">LiveDisplay cambiado a modo diurno.</string>
+    <string name="accessibility_quick_settings_live_display_changed_night">LiveDisplay cambiado a modo nocturno.</string>
+    <string name="accessibility_quick_settings_live_display_changed_outdoor">LiveDisplay cambiado a modo exteriores.</string>
+</resources>
