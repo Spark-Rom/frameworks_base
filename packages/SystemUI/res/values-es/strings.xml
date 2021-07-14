@@ -37,6 +37,7 @@
     <string name="battery_saver_confirmation_title_generic" msgid="2299231884234959849">"Información de Ahorro de batería"</string>
     <string name="battery_saver_confirmation_ok" msgid="5042136476802816494">"Activar"</string>
     <string name="battery_saver_start_action" msgid="4553256017945469937">"Activar Ahorro de batería"</string>
+    <string name="extreme_battery_saver_text">Extremo</string>
     <string name="status_bar_settings_settings_button" msgid="534331565185171556">"Ajustes"</string>
     <string name="status_bar_settings_wifi_button" msgid="7243072479837270946">"Wi-Fi"</string>
     <string name="status_bar_settings_auto_rotation" msgid="8329080442278431708">"Girar pantalla automáticamente"</string>
@@ -108,8 +109,10 @@
     <string name="screenrecord_resume_label" msgid="4972223043729555575">"Seguir"</string>
     <string name="screenrecord_cancel_label" msgid="7850926573274483294">"Cancelar"</string>
     <string name="screenrecord_share_label" msgid="5025590804030086930">"Compartir"</string>
+    <string name="screenrecord_delete_label">Borrar</string>
     <string name="screenrecord_cancel_success" msgid="1775448688137393901">"Se ha cancelado la grabación de la pantalla"</string>
     <string name="screenrecord_save_message" msgid="490522052388998226">"Se ha guardado la grabación de la pantalla; toca para verla"</string>
+    <string name="screenrecord_delete_description">Grabación de pantalla borrada</string>
     <string name="screenrecord_delete_error" msgid="2870506119743013588">"No se ha podido eliminar la grabación de la pantalla"</string>
     <string name="screenrecord_permission_error" msgid="7856841237023137686">"No se han podido obtener los permisos"</string>
     <string name="screenrecord_start_error" msgid="2200660692479682368">"No se ha podido empezar a grabar la pantalla"</string>
@@ -755,7 +758,7 @@
     <string name="notification_menu_snooze_description" msgid="4740133348901973244">"Opciones para posponer las notificaciones"</string>
     <string name="notification_menu_snooze_action" msgid="5415729610393475019">"Recordar"</string>
     <string name="notification_menu_settings_action" msgid="7085494017202764285">"Ajustes"</string>
-    <string name="snooze_undo" msgid="60890935148417175">"DESHACER"</string>
+    <string name="snooze_undo" msgid="60890935148417175">"Deshacer"</string>
     <string name="snoozed_for_time" msgid="7586689374860469469">"Volverá a mostrarse en <xliff:g id="TIME_AMOUNT">%1$s</xliff:g>"</string>
     <plurals name="snoozeHourOptions" formatted="false" msgid="2066838694120718170">
       <item quantity="other">%d horas</item>
@@ -854,7 +857,7 @@
     <string name="right_keycode" msgid="2480715509844798438">"Código de teclado a la derecha"</string>
     <string name="left_icon" msgid="5036278531966897006">"Icono a la izquierda"</string>
     <string name="right_icon" msgid="1103955040645237425">"Icono a la derecha"</string>
-    <string name="drag_to_add_tiles" msgid="8933270127508303672">"Pulsa y arrastra para añadir funciones"</string>
+    <string name="drag_to_add_tiles" msgid="8933270127508303672">"Tocar para añadir funciones"</string>
     <string name="drag_to_rearrange_tiles" msgid="2143204300089638620">"Mantén pulsado un icono y arrástralo para reubicarlo"</string>
     <string name="drag_to_remove_tiles" msgid="4682194717573850385">"Arrastra aquí para quitar una función"</string>
     <string name="drag_to_remove_disabled" msgid="933046987838658850">"Necesitas al menos <xliff:g id="MIN_NUM_TILES">%1$d</xliff:g> iconos"</string>
