@@ -6119,24 +6119,10 @@ public final class Settings {
         public static final String SETTINGS_DASHBOARD_ICONS = "settings_dashboard_icons";
 
         /**
-         * Statusbar padding Start
-         *
-         * @hide
-         */
-        public static final String CUSTOM_STATUSBAR_PADDING_START = "custom_statusbar_padding_start";
-
-        /**
          * Show data usage in QS header
          * @hide
          */
         public static final String QS_DATAUSAGE = "qs_datausage";
-
-        /**
-         * Statusbar padding End
-         *
-         * @hide
-         */
-        public static final String CUSTOM_STATUSBAR_PADDING_END  = "custom_statusbar_padding_end";
 
         /**
          * Weather an oos like  qs clock should be shown
@@ -6609,8 +6595,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(DISPLAY_CUTOUT_MODE);
             PRIVATE_SETTINGS.add(STOCK_STATUSBAR_IN_HIDE);
             PRIVATE_SETTINGS.add(SETTINGS_DASHBOARD_ICONS);
-            PRIVATE_SETTINGS.add(CUSTOM_STATUSBAR_PADDING_START);
-            PRIVATE_SETTINGS.add(CUSTOM_STATUSBAR_PADDING_END);
             PRIVATE_SETTINGS.add(OMNI_CUSTOM_FP_ICON);
             PRIVATE_SETTINGS.add(DISPLAY_TEMPERATURE_DAY);
             PRIVATE_SETTINGS.add(DISPLAY_TEMPERATURE_NIGHT);
