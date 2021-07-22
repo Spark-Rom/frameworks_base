@@ -147,4 +147,8 @@
     <dimen name="num_pad_key_margin_end">20.0dip</dimen>
     <dimen name="num_pad_key_width">84.0dip</dimen>
     <dimen name="num_pad_row_margin_bottom">16.0dip</dimen>
+
+    <!-- Height of the battery icon in the status bar. -->
+    <dimen name="status_bar_battery_icon_height_landscape">12.5dp</dimen>
+    <dimen name="status_bar_battery_icon_width_landscape">24dp</dimen>
 </resources>
