@@ -6369,20 +6369,8 @@ public final class Settings {
         */
         public static final String EDGE_MUSIC_CONTROL = "edge_music_control";
 
-        /**
-         * Whether to show VoWiFi icon or not
-         * @hide
-         */
-        public static final String VOWIFI_ICON = "vowifi_icon";
-
         /** @hide */
         public static final String BACK_GESTURE_HAPTIC = "back_gesture_haptic";
-
-        /**
-         * VoWiFi icon style
-         * @hide
-         */
-        public static final String VOWIFI_ICON_STYLE = "vowifi_icon_style";
 
 
         /**
@@ -6395,7 +6383,7 @@ public final class Settings {
         /**
          * Data usage period
          * 0: Daily
-         * 1: Monthl
+         * 1: Monthly
          * @hide
          */
         public static final String DATA_USAGE_PERIOD = "data_usage_period";
