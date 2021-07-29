@@ -216,6 +216,12 @@ public final class DefaultPermissionGrantPolicy {
 
     private static final int MSG_READ_DEFAULT_PERMISSION_EXCEPTIONS = 1;
 
+    private static final Set<String> PULSE_EQ_PERMISSIONS = new ArraySet<>();
+    static {
+        PULSE_EQ_PERMISSIONS.add(Manifest.permission.MODIFY_AUDIO_SETTINGS);
+        PULSE_EQ_PERMISSIONS.add(Manifest.permission.RECORD_AUDIO);
+    }
+
     private static final String ACTION_TRACK = "com.android.fitness.TRACK";
 
     private final Handler mHandler;
@@ -932,6 +938,8 @@ public final class DefaultPermissionGrantPolicy {
         grantSystemFixedPermissionsToSystemPackage(pm,
                 getDefaultProviderAuthorityPackage("com.google.android.apps.wellbeing", userId),
                 userId, SUSPEND_APP_PERMISSIONS);
+
+        grantSystemFixedPermissionsToSystemPackage(pm, "com.android.systemui", userId, PULSE_EQ_PERMISSIONS);
 
         // OmniJaws
         grantSystemFixedPermissionsToSystemPackage(pm, "org.omnirom.omnijaws", userId, ALWAYS_LOCATION_PERMISSIONS);
