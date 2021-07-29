@@ -107,7 +107,6 @@ import com.android.systemui.statusbar.phone.StatusBar;
 
 import com.google.android.systemui.LiveWallpaperScrimController;
 import com.google.android.systemui.statusbar.phone.StatusBarGoogle;
-import com.google.android.systemui.smartspace.SmartSpaceController;
 
 import java.util.Optional;
 import java.util.concurrent.Executor;
@@ -125,7 +124,6 @@ public interface StatusBarGoogleModule {
     @Provides
     @Singleton
     static StatusBar provideStatusBar(
-            SmartSpaceController smartSpaceController,
             Context context,
             NotificationsController notificationsController,
             LightBarController lightBarController,
@@ -209,7 +207,6 @@ public interface StatusBarGoogleModule {
             TaskHelper taskHelper) {
 
         return new StatusBarGoogle(
-                smartSpaceController,
                 context,
                 notificationsController,
                 lightBarController,
