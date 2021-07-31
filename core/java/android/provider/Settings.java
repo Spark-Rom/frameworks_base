@@ -6397,6 +6397,12 @@ public final class Settings {
         public static final String LOCKSCREEN_WEATHER_STYLE = "lockscreen_weather_style";
 
         /**
+         * Battery saver profiles
+         * @hide
+         */
+        public static final String POWER_PROFILE_TYPE = "power_profile_type";
+
+        /**
          * Whether to vibrate on call state change
          * @hide
          */
