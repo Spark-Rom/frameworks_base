@@ -6424,6 +6424,12 @@ public final class Settings {
         */
        public static final String PROXIMITY_ON_WAKE = "proximity_on_wake";
 
+       /**
+        * Vowifi + Volte Icon Picker
+        * @hide
+        */
+       public static final String VO_ICON_PICKER = "vo_icon_picker";
+
         /**
          * These are all public system settings
          *
