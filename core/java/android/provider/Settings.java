@@ -6430,6 +6430,12 @@ public final class Settings {
         */
        public static final String VO_ICON_PICKER = "vo_icon_picker";
 
+       /**
+        * @hide
+        */
+       public static final String COLLAPSED_TOOLBAR = "collapsed_toolbar";
+
+
         /**
          * These are all public system settings
          *
