@@ -312,4 +312,6 @@
     <string name="global_action_onthego">OnTheGo</string>
 
     <string name="status_bar_ims">VoLTE/VoWiFi</string>
+
+    <string name="quick_settings_fireworks_label">Fireworks</string>
 </resources>
