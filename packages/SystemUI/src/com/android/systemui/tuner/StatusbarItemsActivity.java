@@ -47,4 +47,3 @@ public class StatusbarItemsActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 }
-
