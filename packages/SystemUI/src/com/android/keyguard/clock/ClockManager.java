@@ -179,10 +179,10 @@ public final class ClockManager {
         addBuiltinClock(() -> new OPMinimalClockController(res, layoutInflater, colorExtractor));
         addBuiltinClock(() -> new OPRomanClockController(res, layoutInflater, colorExtractor));
         addBuiltinClock(() -> new SammyClockController(res, layoutInflater, colorExtractor));
-        addBuiltinClock(() -> new AndroidSClockController(res, layoutInflater, colorExtractor));
-        addBuiltinClock(() -> new AndroidSDP3ClockController(res, layoutInflater, colorExtractor));
+        addBuiltinClock(() -> new AndroidSClockController(res, layoutInflater, colorExtractor, context));
+        addBuiltinClock(() -> new AndroidSDP3ClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new TuxClockController(res, layoutInflater, colorExtractor));
-        addBuiltinClock(() -> new AndroidTwelveClockController(res, layoutInflater, colorExtractor));
+        addBuiltinClock(() -> new AndroidTwelveClockController(res, layoutInflater, colorExtractor, context));
         // Store the size of the display for generation of clock preview.
         DisplayMetrics dm = res.getDisplayMetrics();
         mWidth = dm.widthPixels;

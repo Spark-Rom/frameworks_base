@@ -45,7 +45,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
-
+import android.provider.Settings;
 import com.android.internal.colorextraction.ColorExtractor;
 import com.android.internal.graphics.ColorUtils;
 import com.android.internal.util.Converter;
@@ -54,7 +54,7 @@ import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.ClockPlugin;
-
+import com.android.internal.util.spark.SparkUtils;
 import com.android.systemui.keyguard.KeyguardSliceProvider;
 import com.android.keyguard.KeyguardSliceView.KeyguardSliceTextView;
 import com.android.keyguard.KeyguardSliceView.Row;
@@ -108,6 +108,8 @@ public class AndroidSClockController implements ClockPlugin {
      */
     private final LayoutInflater mLayoutInflater;
 
+    private Context mContext;
+
     /**
      * Extracts accent color from wallpaper.
      */
@@ -133,7 +135,6 @@ public class AndroidSClockController implements ClockPlugin {
     private ConstraintSet mContainerSet = new ConstraintSet();
     private ConstraintSet mContainerSetBig = new ConstraintSet();
 
-    private Context mContext;
     private Row mRow;
     private TextView mTitle;
     private int mIconSize;
@@ -167,7 +168,7 @@ public class AndroidSClockController implements ClockPlugin {
      * @param colorExtractor Extracts accent color from wallpaper.
      */
     public AndroidSClockController(Resources res, LayoutInflater inflater,
-            SysuiColorExtractor colorExtractor) {
+            SysuiColorExtractor colorExtractor, Context context) {
         mResources = res;
         mLayoutInflater = inflater;
         mContext = mLayoutInflater.getContext();
@@ -269,7 +270,11 @@ public class AndroidSClockController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {
+        if(SparkUtils.LsClockWallpaperColor(mContext)) {
         updateTextColors();
+        } else {
+         mClock.setTextColor(color);
+        }
     }
 
     @Override
@@ -503,13 +508,11 @@ public class AndroidSClockController implements ClockPlugin {
                 ((TextView) v).setTextColor(blendedColor);
             }
         }
-
         ColorExtractor.GradientColors colors = mColorExtractor.getColors(
                 WallpaperManager.FLAG_LOCK);
         mPalette.setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
         mClock.setTextColor(ColorUtils.blendARGB(mPalette.getPrimaryColor(), Color.WHITE, mDarkAmount));
-    }
-
+        }
     int getTextColor() {
         return ColorUtils.blendARGB(mTextColor, Color.WHITE, mDarkAmount);
     }

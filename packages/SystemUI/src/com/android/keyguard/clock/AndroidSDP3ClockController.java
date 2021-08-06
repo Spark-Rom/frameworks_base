@@ -69,7 +69,8 @@ import androidx.slice.widget.ListContent;
 import androidx.slice.widget.RowContent;
 import androidx.slice.widget.SliceContent;
 import androidx.slice.widget.SliceLiveData;
-
+import android.provider.Settings;
+import com.android.internal.util.spark.SparkUtils;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
@@ -138,7 +139,7 @@ public class AndroidSDP3ClockController implements ClockPlugin {
     private float mRowWithHeaderTextSize;
     private final HashMap<View, PendingIntent> mClickActions;
     private Uri mKeyguardSliceUri;
-
+    private final ClockPalette mPalette = new ClockPalette();
     private int mTextColor;
     private float mDarkAmount = 0;
 
@@ -152,7 +153,7 @@ public class AndroidSDP3ClockController implements ClockPlugin {
      * @param colorExtractor Extracts accent color from wallpaper.
      */
     public AndroidSDP3ClockController(Resources res, LayoutInflater inflater,
-            SysuiColorExtractor colorExtractor) {
+            SysuiColorExtractor colorExtractor, Context context) {
         mResources = res;
         mLayoutInflater = inflater;
         mContext = mLayoutInflater.getContext();
@@ -239,7 +240,11 @@ public class AndroidSDP3ClockController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {
-        mClock.setTextColor(color);
+        if(SparkUtils.LsClockWallpaperColor(mContext)) {
+        updateTextColors();
+        } else {
+         mClock.setTextColor(color);
+        }
     }
 
     @Override
@@ -405,6 +410,10 @@ public class AndroidSDP3ClockController implements ClockPlugin {
                 ((TextView) v).setTextColor(blendedColor);
             }
         }
+        ColorExtractor.GradientColors colors = mColorExtractor.getColors(
+                WallpaperManager.FLAG_LOCK);
+        mPalette.setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
+        mClock.setTextColor(ColorUtils.blendARGB(mPalette.getPrimaryColor(), Color.WHITE, 0.3f));
     }
 
     int getTextColor() {

@@ -22,6 +22,8 @@ import android.animation.ValueAnimator;
 import android.app.PendingIntent;
 import android.app.WallpaperManager;
 import android.content.Context;
+import android.provider.Settings;
+import com.android.internal.util.spark.SparkUtils;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -160,7 +162,7 @@ public class AndroidTwelveClockController implements ClockPlugin {
      * @param colorExtractor Extracts accent color from wallpaper.
      */
     public AndroidTwelveClockController(Resources res, LayoutInflater inflater,
-            SysuiColorExtractor colorExtractor) {
+            SysuiColorExtractor colorExtractor, Context context) {
         mResources = res;
         mLayoutInflater = inflater;
         mContext = mLayoutInflater.getContext();
@@ -253,7 +255,11 @@ public class AndroidTwelveClockController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {
+        if(SparkUtils.LsClockWallpaperColor(mContext)) {
         updateTextColors();
+        } else {
+         mClock.setTextColor(color);
+        }
     }
 
     @Override
@@ -427,11 +433,7 @@ public class AndroidTwelveClockController implements ClockPlugin {
         ColorExtractor.GradientColors colors = mColorExtractor.getColors(
                 WallpaperManager.FLAG_LOCK);
         mPalette.setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
-        float colorIntensity = mDarkAmount;
-        if (mDarkAmount < 0.4f) {
-            colorIntensity = 0.4f;
-        }
-        mClock.setTextColor(ColorUtils.blendARGB(mPalette.getPrimaryColor(), Color.WHITE, colorIntensity));
+        mClock.setTextColor(ColorUtils.blendARGB(mPalette.getPrimaryColor(), Color.WHITE, mDarkAmount));
     }
 
     int getTextColor() {

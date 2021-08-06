@@ -6435,6 +6435,12 @@ public final class Settings {
         */
        public static final String COLLAPSED_TOOLBAR = "collapsed_toolbar";
 
+        /**
+         * Whether to use Wallpaper Color On S Clocks
+         * @hide
+         */
+        public static final String LS_WALLPAPER_COLOR = "ls_wallpaper_color";
+
 
         /**
          * These are all public system settings

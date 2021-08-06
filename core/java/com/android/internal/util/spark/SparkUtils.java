@@ -719,4 +719,11 @@ public class SparkUtils {
             context.startActivity(intent);
         } catch (Exception e) {}
     }
+
+    // Check for lockscreen wallpaper color
+    public static boolean LsClockWallpaperColor(Context context) {
+        return Settings.System.getInt(context.getContentResolver(),
+          Settings.System.LS_WALLPAPER_COLOR, 0) == 1;
+    }
+
 }
