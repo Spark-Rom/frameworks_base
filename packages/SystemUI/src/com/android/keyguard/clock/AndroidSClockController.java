@@ -154,6 +154,7 @@ public class AndroidSClockController implements ClockPlugin {
     private int mRowHeight = 0;
 
     private Typeface mSliceTypeface;
+    private Typeface mClockTypeface;
 
     /**
      * Time and calendars to check the date
@@ -482,6 +483,12 @@ public class AndroidSClockController implements ClockPlugin {
             final boolean isDateSlice = child.getTag().toString().equals(KeyguardSliceProvider.KEYGUARD_DATE_URI);
             child.setTextSize((isDateSlice ? mTitleTextSize : mSliceTextSize) + (8f * darkAmount));
         }
+
+        Typeface.Builder builder = new Typeface.Builder(mContext.getAssets(),"google_sans_clock.ttf");
+        builder.setFontVariationSettings("'wght' " + String.valueOf(Math.round(300 - (darkAmount * 200))));
+        mClockTypeface = builder.build();
+
+        mClock.setTypeface(mClockTypeface);
         mTitle.setTextSize(mTitleTextSize + (8f * darkAmount));
         mRow.setDarkAmount(darkAmount);
         mTitle.requestLayout();
