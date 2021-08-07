@@ -511,8 +511,9 @@ public class AndroidSClockController implements ClockPlugin {
         ColorExtractor.GradientColors colors = mColorExtractor.getColors(
                 WallpaperManager.FLAG_LOCK);
         mPalette.setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
-        mClock.setTextColor(ColorUtils.blendARGB(mPalette.getPrimaryColor(), Color.WHITE, mDarkAmount));
-        }
+        mClock.setTextColor(ColorUtils.blendARGB(mPalette.getPrimaryColor(), Color.WHITE, 0.3f));
+    }
+
     int getTextColor() {
         return ColorUtils.blendARGB(mTextColor, Color.WHITE, mDarkAmount);
     }

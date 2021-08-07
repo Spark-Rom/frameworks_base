@@ -163,12 +163,6 @@ public class KeyguardClockSwitch extends RelativeLayout {
      */
     private boolean mAnimationStatus;
 
-    /**
-     * Track if the device is dozing or not, let the clock be white when dozing 
-     * and dark on the lockscreen as in Android S Beta 3
-     */
-    private boolean mIsDozing;
-
     private final StatusBarStateController.StateListener mStateListener =
             new StatusBarStateController.StateListener() {
                 @Override
@@ -252,16 +246,6 @@ public class KeyguardClockSwitch extends RelativeLayout {
         mStatusBarStateController.removeCallback(mStateListener);
         mSysuiColorExtractor.removeOnColorsChangedListener(mColorsListener);
         setClockPlugin(null);
-    }
-
-    private boolean isDozing(){
-        mIsDozing = mStatusBarStateController.isDozing();
-        if(mIsDozing){
-            return true;
-        }
-        else {
-            return false;
-        }
     }
 
     private void setClockPlugin(ClockPlugin plugin) {
@@ -391,12 +375,7 @@ public class KeyguardClockSwitch extends RelativeLayout {
      * @param darkAmount Amount of transition to doze: 1f for doze and 0f for awake.
      */
     public void setDarkAmount(float darkAmount) {
-        if (isDozing()){
-            mDarkAmount = darkAmount;
-        }
-        else {
-            mDarkAmount = 0.7f;
-        }
+        mDarkAmount = darkAmount;
         if (mClockPlugin != null) {
             mClockPlugin.setDarkAmount(darkAmount);
         }
