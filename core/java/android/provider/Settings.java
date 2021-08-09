@@ -5722,6 +5722,11 @@ public final class Settings {
         public static final String ADVANCED_REBOOT = "advanced_reboot";
 
         /**
+         * @hide
+         */
+        public static final String FORCE_SHOW_NAVBAR = "navbar_visibility";
+
+        /**
          * User definable value of pulse notification screen brightness
          *
          * @hide
