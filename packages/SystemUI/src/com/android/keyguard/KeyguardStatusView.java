@@ -38,7 +38,7 @@ import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ImageView;
-
+import android.widget.LinearLayout;
 import android.hardware.biometrics.BiometricSourceType;
 import android.hardware.fingerprint.FingerprintManager;
 
@@ -68,6 +68,7 @@ public class KeyguardStatusView extends GridLayout implements
     private final IActivityManager mIActivityManager;
 
     private LinearLayout mStatusViewContainer;
+    private LinearLayout mWeather;
     private TextView mLogoutView;
     private KeyguardClockSwitch mClockView;
     private TextView mOwnerInfo;
@@ -583,9 +584,18 @@ public class KeyguardStatusView extends GridLayout implements
     }
 
     public void updateWeatherView() {
+         mWeather = findViewById(R.id.current);
         if (mWeatherView != null) {
             if (mShowWeather && (!mPixelStyle || mKeyguardSlice.getVisibility() != View.VISIBLE)) {
                 mWeatherView.enableUpdates();
+            if (isTypeClock() || isShapeShiftClock() || isIDEClock() || isSClock()) {
+                mWeather.setPaddingRelative((int) mContext.getResources()
+                    .getDimension(R.dimen.custom_clock_left_padding) + 8, 0, 0, 0);
+                mWeather.setGravity(Gravity.START);
+            } else {
+                mWeather.setPaddingRelative(0, 0, 0, 0);
+                mWeather.setGravity(Gravity.CENTER);
+            }
             } else if (!mShowWeather || mPixelStyle) {
                 mWeatherView.disableUpdates();
             }
