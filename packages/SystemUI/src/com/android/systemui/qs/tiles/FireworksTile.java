@@ -54,7 +54,7 @@ public class FireworksTile extends QSTileImpl<BooleanState> {
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
         state.label = mContext.getString(R.string.quick_settings_fireworks_label);
-        state.icon = ResourceIcon.get(R.drawable.ic_qs_volume_panel); // TODO needs own icon
+        state.icon = ResourceIcon.get(R.drawable.ic_qs_fireworks);
         state.state = Tile.STATE_ACTIVE;
     }
 
