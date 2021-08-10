@@ -141,7 +141,7 @@
     <bool name="config_physicalDisplayCutoutCentered">@bool/config_physicalDisplayCutout</bool>
 
     <!-- Default value for Ambient Pulse light color -->
-    <integer name="config_ambientNotificationDefaultColor">0xFFFCDC33</integer>
+    <integer name="config_ambientNotificationDefaultColor">0xFF1A73E8</integer>
 
     <!-- Default fod pressed color -->
     <integer name="config_fod_pressed_color">1</integer>
