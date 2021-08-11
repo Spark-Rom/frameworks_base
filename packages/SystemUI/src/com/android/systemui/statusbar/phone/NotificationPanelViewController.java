@@ -3533,7 +3533,8 @@ public class NotificationPanelViewController extends PanelViewController {
                 }
 
                 if (mIsLockscreenDoubleTapEnabled
-                        && mBarState == StatusBarState.KEYGUARD) {
+                        && mBarState == StatusBarState.KEYGUARD
+                        && !mPulsing) {
                     mLockscreenDoubleTapToSleep.onTouchEvent(event);
                 }
 
