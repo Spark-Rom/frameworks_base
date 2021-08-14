@@ -490,7 +490,7 @@ public class KeyguardClockSwitch extends RelativeLayout {
     }
 
     private void adjustStatusAreaPadding(ClockPlugin plugin) {
-        final boolean mIsTypeClock = plugin != null && (plugin.getName().equals("type") || plugin.getName().equals("android_twelve_clock") || plugin.getName().equals("android_s") || plugin.getName().equals("android_s_dp3"));
+        final boolean mIsTypeClock = plugin != null && plugin.getName().equals("type");
         mKeyguardStatusArea.setRowGravity(mIsTypeClock ? Gravity.LEFT : Gravity.CENTER);
         mKeyguardStatusArea.setRowPadding(mIsTypeClock ? mContext.getResources()
                 .getDimensionPixelSize(R.dimen.keyguard_status_area_typeclock_padding) : 0, 0, 0,
