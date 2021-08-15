@@ -136,7 +136,7 @@
 
     <dimen name="current_weather_image_size">42dp</dimen>
 
-    <dimen name="weather_icon_size">24dp</dimen>
+    <dimen name="weather_icon_size">20dp</dimen>
 
     <dimen name="media_spacer_height">28dp</dimen>
     <dimen name="brightness_slider_height">48dp</dimen>

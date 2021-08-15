@@ -38,7 +38,7 @@ import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ImageView;
-
+import android.widget.RelativeLayout;
 import android.hardware.biometrics.BiometricSourceType;
 import android.hardware.fingerprint.FingerprintManager;
 
@@ -89,6 +89,8 @@ public class KeyguardStatusView extends GridLayout implements
             "system:" + Settings.System.LOCKSCREEN_WEATHER_ENABLED;
     private static final String LOCKSCREEN_WEATHER_STYLE =
             "system:" + Settings.System.LOCKSCREEN_WEATHER_STYLE;
+    private static final String LOCKSCREEN_CUSTOM_CLOCK_FACE =
+            "secure:" + Settings.Secure.LOCK_SCREEN_CUSTOM_CLOCK_FACE;
 
     /**
      * Bottom margin that defines the margin between bottom of smart space and top of notification
@@ -165,6 +167,7 @@ public class KeyguardStatusView extends GridLayout implements
         final TunerService tunerService = Dependency.get(TunerService.class);
         tunerService.addTunable(this, LOCKSCREEN_WEATHER_ENABLED);
         tunerService.addTunable(this, LOCKSCREEN_WEATHER_STYLE);
+        tunerService.addTunable(this, LOCKSCREEN_CUSTOM_CLOCK_FACE);
         onDensityOrFontScaleChanged();
     }
 
@@ -273,6 +276,7 @@ public class KeyguardStatusView extends GridLayout implements
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         layoutOwnerInfo();
+        layoutWeatherView();
     }
 
     @Override
@@ -377,6 +381,22 @@ public class KeyguardStatusView extends GridLayout implements
         return (int) mContext.getResources().getDimension(R.dimen.ssos_clock_left_padding);
     }
 
+
+    private int getLeftPadding() {
+        int leftPadding = 0;
+        final ContentResolver resolver = mContext.getContentResolver();
+        String currentClock = Settings.Secure.getString(
+            resolver, Settings.Secure.LOCK_SCREEN_CUSTOM_CLOCK_FACE);
+        if (currentClock == null) return leftPadding;
+        if (isIDEClock()) {
+            leftPadding = (int) mContext.getResources().getDimension(R.dimen.ide_clock_left_padding);
+        } else if(isTypeClock()) {
+            leftPadding = (int) mContext.getResources().getDimension(R.dimen.custom_clock_left_padding);
+        } else {
+            leftPadding = (int) mContext.getResources().getDimension(R.dimen.ssos_clock_left_padding);
+        }
+        return leftPadding;
+    }
 
     private void updateOwnerInfo() {
         if (mOwnerInfo == null) return;
@@ -577,18 +597,35 @@ public class KeyguardStatusView extends GridLayout implements
                         TunerService.parseIntegerSwitch(newValue, false);
                 updateWeatherView();
                 break;
+            case LOCKSCREEN_CUSTOM_CLOCK_FACE:
+                updateWeatherView();
+                invalidate();
+                break;
             default:
                 break;
         }
     }
 
     public void updateWeatherView() {
-        if (mWeatherView != null) {
-            if (mShowWeather && (!mPixelStyle || mKeyguardSlice.getVisibility() != View.VISIBLE)) {
-                mWeatherView.enableUpdates();
-            } else if (!mShowWeather || mPixelStyle) {
-                mWeatherView.disableUpdates();
-            }
+        if (mWeatherView == null) return;
+        if (mShowWeather && !mPixelStyle) {
+            layoutWeatherView();
+            mWeatherView.setVisibility(isSClock() ? View.GONE : View.VISIBLE);
+            mWeatherView.enableUpdates();
+        } else if (!mShowWeather || mPixelStyle) {
+            mWeatherView.setVisibility(View.GONE);
+            mWeatherView.disableUpdates();
+        }
+    }
+    protected void layoutWeatherView() {
+        // If left aligned style clock, align the weatherView to start else keep it center
+        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams)mWeatherView.getLayoutParams();
+        if (isTypeClock() || isShapeShiftClock() || isIDEClock() || isSClock()) {
+            mWeatherView.setPaddingRelative(getLeftPadding(), 0, 0, 0);
+            lp.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        } else {
+            mWeatherView.setPaddingRelative(0, 0, 0, 0);
+            lp.removeRule(RelativeLayout.ALIGN_PARENT_LEFT);
         }
     }
 }
