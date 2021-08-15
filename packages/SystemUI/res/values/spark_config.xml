@@ -67,7 +67,4 @@
 
     <!-- Whether to invert the sim slots for VoLTE/VoWiFi icon -->
     <bool name="config_invertImsSlots">false</bool>
-
-    <!-- Show the network traffic monitor on statusbar even if the device has a notch -->
-    <bool name="config_forceShowNetworkTrafficOnStatusBar">false</bool>
 </resources>
