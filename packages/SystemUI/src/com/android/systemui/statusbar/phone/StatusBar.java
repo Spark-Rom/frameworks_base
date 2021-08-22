@@ -529,10 +529,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     private boolean mAppImmersive;
 
     private final DisplayMetrics mDisplayMetrics;
-
     private PackageMonitor mPackageMonitor;
-    private boolean mGamingModeActivated;
-    private int mHeadsUpDisabled;
 
     // XXX: gesture research
     private final GestureRecorder mGestureRec = DEBUG_GESTURES
@@ -2332,12 +2329,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.QS_SHOW_BATTERY_ESTIMATE),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.GAMING_MODE_ACTIVE),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.GAMING_MODE_HEADSUP_TOGGLE),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_TILE_STYLE),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -2418,9 +2409,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_COLOR)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.SYSUI_COLORS_ACTIVE))) {
                 mQSPanel.getHost().reloadAllTiles();
-            } else if (uri.equals(Settings.System.getUriFor(Settings.System.GAMING_MODE_ACTIVE)) ||
-                    uri.equals(Settings.System.getUriFor(Settings.System.GAMING_MODE_HEADSUP_TOGGLE))) {
-                setGamingMode();
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.SWITCH_STYLE))) {
                 stockSwitchStyle();
                 updateSwitchStyle();
@@ -2448,7 +2436,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateQsPanelResources();
             setPulseOnNewTracks();
             setScreenBrightnessMode();
-            setGamingMode();
             setMaxKeyguardNotifConfig();
             updateTickerAnimation();
             updateTickerTickDuration();
@@ -2536,17 +2523,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         mBrightnessControl = Settings.System.getIntForUser(
             mContext.getContentResolver(), Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
             UserHandle.USER_CURRENT) == 1;
-    }
-
-    private void setGamingMode() {
-        mGamingModeActivated = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.GAMING_MODE_ACTIVE, 0,
-                UserHandle.USER_CURRENT) == 1;
-        mHeadsUpDisabled = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.GAMING_MODE_HEADSUP_TOGGLE, 1,
-                UserHandle.USER_CURRENT);
-        if (mNotificationInterruptStateProvider != null)
-            mNotificationInterruptStateProvider.setGamingPeekMode(mGamingModeActivated, mHeadsUpDisabled);
     }
 
     private void setMaxKeyguardNotifConfig() {

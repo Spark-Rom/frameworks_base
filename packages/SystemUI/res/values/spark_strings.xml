@@ -201,10 +201,6 @@
     <string name="accessibility_quick_settings_hwkeys_off">HW keys off</string>
     <string name="quick_settings_hwkeys_label">HW keys</string>
 
-    <!-- Gaming mode -->
-    <string name="gaming_mode_not_enabled">Gaming mode is disabled in settings</string>
-    <string name="quick_settings_gaming_mode_label">Gaming mode</string>
-
     <!-- Headphones Buddy -->
     <string name="hp_buddy">Headphones Buddy</string>
     <string name="hp_buddy_left">Left only</string>

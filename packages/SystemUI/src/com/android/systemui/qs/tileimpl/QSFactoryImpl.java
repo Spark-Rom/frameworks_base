@@ -46,7 +46,6 @@ import com.android.systemui.qs.tiles.DcDimmingTile;
 import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.qs.tiles.FlashlightTile;
 import com.android.systemui.qs.tiles.FPSInfoTile;
-import com.android.systemui.qs.tiles.GamingModeTile;
 import com.android.systemui.qs.tiles.HWKeysTile;
 import com.android.systemui.qs.tiles.HeadphonesBuddyTile;
 import com.android.systemui.qs.tiles.HeadsUpTile;
@@ -118,7 +117,6 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<DataSwitchTile> mDataSwitchTileProvider;
     private final Provider<DcDimmingTile> mDcDimmingTileProvider;
     private final Provider<FPSInfoTile> mFPSInfoTileProvider;
-    private final Provider<GamingModeTile> mGamingModeTileProvider;
     private final Provider<HWKeysTile> mHWKeysTileProvider;
     private final Provider<HeadphonesBuddyTile> mHeadphonesBuddyTile;
     private final Provider<HeadsUpTile> mHeadsUpTileProvider;
@@ -174,7 +172,6 @@ public class QSFactoryImpl implements QSFactory {
             Provider<DataSwitchTile> dataSwitchTileProvider,
             Provider<DcDimmingTile> dcDimTileProvider,
             Provider<FPSInfoTile> fpsInfoTileProvider,
-            Provider<GamingModeTile> gamingModeTileProvider,
             Provider<HWKeysTile> hWKeysTileProvider,
             Provider<HeadphonesBuddyTile> headphonesBuddyTile,
             Provider<HeadsUpTile> headsUpTileProvider,
@@ -226,7 +223,6 @@ public class QSFactoryImpl implements QSFactory {
         mDataSwitchTileProvider = dataSwitchTileProvider;
         mDcDimmingTileProvider = dcDimTileProvider;
         mFPSInfoTileProvider = fpsInfoTileProvider;
-        mGamingModeTileProvider = gamingModeTileProvider;
         mHWKeysTileProvider = hWKeysTileProvider;
         mHeadphonesBuddyTile = headphonesBuddyTile;
         mHeadsUpTileProvider = headsUpTileProvider;
@@ -319,8 +315,6 @@ public class QSFactoryImpl implements QSFactory {
                 return mDcDimmingTileProvider.get();
             case "fpsinfo":
                 return mFPSInfoTileProvider.get();
-            case "gaming":
-                return mGamingModeTileProvider.get();
             case "headphonesbuddy":
                 return mHeadphonesBuddyTile.get();
             case "heads_up":
