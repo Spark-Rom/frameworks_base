@@ -530,6 +530,8 @@ public class TypedArray {
                     newColor = utils.getOverlayLightAccentColor(defValue);
                 else if (utils.isResourceAccentOverlayDark(resName))
                     newColor = utils.getOverlayDarkAccentColor(defValue);
+                else if (utils.isResourceAltAccent(resName))
+                    newColor = utils.getDarkAccentColor(defValue);
                 if (newColor != defValue)
                     return newColor;
             }

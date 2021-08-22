@@ -1073,6 +1073,8 @@ public class Resources {
                             value.data = utils.getOverlayLightAccentColor(value.data);
                         else if (utils.isResourceAccentOverlayDark(resName))
                             value.data = utils.getOverlayDarkAccentColor(value.data);
+                        else if (utils.isResourceAltAccent(resName))
+                            value.data = utils.getDarkAccentColor(value.data);
                     } catch (NotFoundException ignored) {
                     } catch (Exception ex) {
                         Log.e(TAG, ex.getMessage());
