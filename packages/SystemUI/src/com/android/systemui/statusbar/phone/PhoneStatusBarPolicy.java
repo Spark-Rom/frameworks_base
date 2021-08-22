@@ -69,6 +69,8 @@ import com.android.systemui.statusbar.policy.DeviceProvisionedController.DeviceP
 import com.android.systemui.statusbar.policy.HotspotController;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.statusbar.policy.LocationController;
+import com.android.systemui.statusbar.policy.NetworkTrafficMonitor;
+import com.android.systemui.statusbar.policy.NetworkTrafficMonitor.NetworkTrafficState;
 import com.android.systemui.statusbar.policy.NextAlarmController;
 import com.android.systemui.statusbar.policy.RotationLockController;
 import com.android.systemui.statusbar.policy.RotationLockController.RotationLockControllerCallback;
@@ -101,12 +103,14 @@ public class PhoneStatusBarPolicy
                 KeyguardStateController.Callback,
                 PrivacyItemController.Callback,
                 LocationController.LocationChangeCallback,
-                RecordingController.RecordingStateChangeCallback {
+                RecordingController.RecordingStateChangeCallback,
+                NetworkTrafficMonitor.Callback {
     private static final String TAG = "PhoneStatusBarPolicy";
     private static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
 
     static final int LOCATION_STATUS_ICON_ID = R.drawable.stat_sys_location;
 
+    private final String mSlotNetworkTraffic;
     private final String mSlotCast;
     private final String mSlotHotspot;
     private final String mSlotBluetooth;
@@ -153,6 +157,7 @@ public class PhoneStatusBarPolicy
     private final RecordingController mRecordingController;
     private final RingerModeTracker mRingerModeTracker;
     private final Context mContext;
+    private final NetworkTrafficMonitor mNetworkTrafficMonitor;
 
     private boolean mZenVisible;
     private boolean mVolumeVisible;
@@ -182,7 +187,8 @@ public class PhoneStatusBarPolicy
             @Nullable TelecomManager telecomManager, @DisplayId int displayId,
             @Main SharedPreferences sharedPreferences, DateFormatUtil dateFormatUtil,
             RingerModeTracker ringerModeTracker,
-            PrivacyItemController privacyItemController) {
+            PrivacyItemController privacyItemController,
+            NetworkTrafficMonitor NetworkTrafficMonitor) {
         mContext = context;
         mIconController = iconController;
         mCommandQueue = commandQueue;
@@ -208,7 +214,9 @@ public class PhoneStatusBarPolicy
         mUiBgExecutor = uiBgExecutor;
         mTelecomManager = telecomManager;
         mRingerModeTracker = ringerModeTracker;
+        mNetworkTrafficMonitor = NetworkTrafficMonitor;
 
+        mSlotNetworkTraffic = resources.getString(com.android.internal.R.string.status_bar_network_traffic);
         mSlotCast = resources.getString(com.android.internal.R.string.status_bar_cast);
         mSlotHotspot = resources.getString(com.android.internal.R.string.status_bar_hotspot);
         mSlotBluetooth = resources.getString(com.android.internal.R.string.status_bar_bluetooth);
@@ -347,7 +355,7 @@ public class PhoneStatusBarPolicy
         mSensorPrivacyController.addCallback(mSensorPrivacyListener);
         mLocationController.addCallback(this);
         mRecordingController.addCallback(this);
-
+        mNetworkTrafficMonitor.addCallback(this);
         mCommandQueue.addCallback(this);
     }
 
@@ -863,5 +871,10 @@ public class PhoneStatusBarPolicy
         // Ensure this is on the main thread
         if (DEBUG) Log.d(TAG, "screenrecord: hiding icon");
         mHandler.post(() -> mIconController.setIconVisibility(mSlotScreenRecord, false));
+    }
+
+    @Override
+    public void onTrafficUpdate(NetworkTrafficState state) {
+        mIconController.setNetworkTrafficIcon(mSlotNetworkTraffic, state);
     }
 }

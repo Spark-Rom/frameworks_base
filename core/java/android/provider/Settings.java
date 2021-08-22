@@ -5376,6 +5376,24 @@ public final class Settings {
         public static final String QS_SMART_PULLDOWN = "qs_smart_pulldown";
 
         /**
+         * Whether to enable StatusBar network traffic indicator.
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_ENABLED = "network_traffic_enabled";
+
+        /**
+         * Threshold value in KiB/s below which upload speed will be hidden
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_AUTO_HIDE_THRESHOLD_TX = "network_traffic_auto_hide_threshold_tx";
+
+        /**
+         * Threshold value in KiB/s below which download speed will be hidden
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_AUTO_HIDE_THRESHOLD_RX = "network_traffic_auto_hide_threshold_rx";
+
+        /**
          * @hide
          */
         public static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
