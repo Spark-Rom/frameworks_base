@@ -41,7 +41,7 @@ import android.os.RemoteException;
 import android.content.pm.PackageManager;
 import android.os.ServiceManager;
 import com.android.systemui.statusbar.policy.ConfigurationController;
-
+import com.android.systemui.settings.CurrentUserTracker;
 
 import com.android.systemui.R;
 import com.android.systemui.SystemUI;
@@ -80,7 +80,7 @@ public class ThemeOverlayController extends SystemUI {
     private BroadcastDispatcher mBroadcastDispatcher;
     private final Handler mBgHandler;
     private final ConfigurationController mConfigurationController;
-
+    private CurrentUserTracker mUserTracker;
 
     @Inject
     public ThemeOverlayController(Context context, BroadcastDispatcher broadcastDispatcher,
@@ -101,7 +101,6 @@ public class ThemeOverlayController extends SystemUI {
                 mContext.getString(R.string.launcher_overlayable_package),
                 mContext.getString(R.string.themepicker_overlayable_package));
         final IntentFilter filter = new IntentFilter();
-        filter.addAction(Intent.ACTION_USER_SWITCHED);
         filter.addAction(Intent.ACTION_MANAGED_PROFILE_ADDED);
         mBroadcastDispatcher.registerReceiverWithHandler(new BroadcastReceiver() {
             @Override
@@ -190,6 +189,13 @@ public class ThemeOverlayController extends SystemUI {
                 Settings.System.getUriFor(Settings.System.DISPLAY_CUTOUT_MODE),
                 false, observer, UserHandle.USER_ALL);
         new MonetWatcher(mContext);
+        mUserTracker = new CurrentUserTracker(mBroadcastDispatcher) {
+            @Override
+            public void onUserSwitched(int newUserId) {
+                if (DEBUG) Log.d(TAG, "onUserSwitched");
+            }
+        };
+        mUserTracker.startTracking();
     }
 
     private void updateThemeOverlays() {
