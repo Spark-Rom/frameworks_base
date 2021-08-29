@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2018 Potato Open Sauce Project
- * Copyright (C) 2021 WaveOS
+ * Copyright (C) 2021 Jyotiraditya Panda <jyotiraditya@aospa.co>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,14 +19,15 @@ package com.android.internal.util;
 
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.util.JsonReader;
-import android.util.JsonWriter;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.StringWriter;
+import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.stream.Collectors;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -52,29 +53,20 @@ public final class KatBinUtils {
                 urlConnection.setRequestProperty("Accept-Charset", "UTF-8");
                 urlConnection.setDoOutput(true);
 
-                StringWriter stringWriter = new StringWriter();
-                JsonWriter jsonWriter = new JsonWriter(stringWriter);
-                jsonWriter.beginObject().name("content").value(content).endObject();
+                JSONObject dataBody = new JSONObject();
+                dataBody.put("content", content);
 
-                try (OutputStream output = urlConnection.getOutputStream()) {
-                    output.write(stringWriter.toString().getBytes(StandardCharsets.UTF_8));
-                }
+                OutputStreamWriter streamWriter = new OutputStreamWriter(urlConnection.getOutputStream());
+                streamWriter.write(dataBody.toString());
+                streamWriter.flush();
 
-                String id = "";
-                try (JsonReader reader = new JsonReader(new InputStreamReader(urlConnection.getInputStream(),
+                String responseBody;
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),
                         StandardCharsets.UTF_8))) {
-                    reader.beginObject();
-                    while (reader.hasNext()) {
-                        if (reader.nextName().equals("paste_id")) {
-                            id = reader.nextString();
-                            break;
-                        } else {
-                            reader.skipValue();
-                        }
-                    }
-                    reader.endObject();
+                    responseBody = reader.lines().map(String::trim).collect(Collectors.joining());
                 }
 
+                String id = new JSONObject(responseBody).getString("paste_id");
                 if (!id.isEmpty()) {
                     callback.onSuccess(String.format("https://katb.in/%s", id));
                 } else {
