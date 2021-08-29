@@ -126,6 +126,9 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
     private boolean mRoamingIconAllowed;
     private boolean mDataDisabledIcon;
 
+    // Volte Icon Style
+    private int mVolteIconStyle = 1;
+
     private final MobileStatusTracker.Callback mMobileCallback =
             new MobileStatusTracker.Callback() {
                 private String mLastStatus;
@@ -265,6 +268,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         Dependency.get(TunerService.class).addTunable(this, ROAMING_INDICATOR_ICON);
         Dependency.get(TunerService.class).addTunable(this, SHOW_FOURG_ICON);
         Dependency.get(TunerService.class).addTunable(this, DATA_DISABLED_ICON);
+        Dependency.get(TunerService.class).addTunable(this, VOLTE_ICON_STYLE);
     }
 
     @Override
@@ -285,6 +289,13 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
                     TunerService.parseIntegerSwitch(newValue, true);
                 updateTelephony();
                 break; 
+            case VOLTE_ICON_STYLE:
+                mVolteIconStyle =
+                    TunerService.parseInteger(newValue, 1);
+                mConfig = Config.readConfig(mContext);
+                setConfiguration(mConfig);
+                notifyListeners();
+                break;
             default:
                 break;
         }
@@ -424,16 +435,6 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
     @Override
     public int getQsCurrentIconId() {
         return getCurrentIconId();
-    }
-
-    private int getVolteResId() {
-        int resId = 0;
-
-        if ((mCurrentState.voiceCapable || mCurrentState.videoCapable)
-                && mCurrentState.imsRegistered) {
-            resId = R.drawable.ic_volte;
-        }
-        return resId;
     }
 
     private void setListeners() {
