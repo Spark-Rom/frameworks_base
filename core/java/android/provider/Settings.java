@@ -6541,6 +6541,12 @@ public final class Settings {
         public static final String GAMING_MODE_USE_GAME_DRIVER = "gaming_mode_use_game_driver";
 
         /**
+         * VoLTE icon style
+         * @hide
+         */
+        public static final String VOLTE_ICON_STYLE = "volte_icon_style";
+
+        /**
          * Whether to use Wallpaper Color On S Clocks
          * @hide
          */
