@@ -158,6 +158,10 @@ public class NetworkControllerImpl extends BroadcastReceiver
     private int mVolteIconStyle = 1;
     private int resId;
 
+    // VoWiFi Icon
+    private int mVoWifiIconStyle = 1;
+    private int resVowId;
+
     private TelephonyCallback.ActiveDataSubscriptionIdListener mPhoneStateListener;
     private int mActiveMobileDataSubscription = INVALID_SUBSCRIPTION_ID;
 
@@ -597,6 +601,9 @@ public class NetworkControllerImpl extends BroadcastReceiver
             resolver.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.VOLTE_ICON_STYLE), false,
                     this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.VOWIFI_ICON_STYLE), false,
+                    this, UserHandle.USER_ALL);
         }
 
         /*
@@ -611,6 +618,9 @@ public class NetworkControllerImpl extends BroadcastReceiver
             ContentResolver resolver = mContext.getContentResolver();
 	        mVolteIconStyle = Settings.System.getIntForUser(resolver,
     	            Settings.System.VOLTE_ICON_STYLE, 1,
+        	        UserHandle.USER_CURRENT);
+	        mVoWifiIconStyle = Settings.System.getIntForUser(resolver,
+    	            Settings.System.VOWIFI_ICON_STYLE, 1,
         	        UserHandle.USER_CURRENT);
             updateImsIcon();
             notifyListeners();
@@ -812,6 +822,8 @@ public class NetworkControllerImpl extends BroadcastReceiver
         mEthernetSignalController.notifyListeners(cb);
         mVolteIconStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.VOLTE_ICON_STYLE, 1, UserHandle.USER_CURRENT);
+        mVoWifiIconStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.VOWIFI_ICON_STYLE, 1, UserHandle.USER_CURRENT);
         for (int i = 0; i < mMobileSignalControllers.size(); i++) {
             MobileSignalController mobileSignalController = mMobileSignalControllers.valueAt(i);
             mobileSignalController.notifyListeners(cb);
@@ -825,7 +837,7 @@ public class NetworkControllerImpl extends BroadcastReceiver
             boolean vowifi1 = mMobileSignalControllers.valueAt(0).isVowifiAvailable();
             boolean vowifi2 = mMobileSignalControllers.valueAt(1).isVowifiAvailable();
             cb.setImsIcon(new ImsIconState((volte1 || volte2) && (mVolteIconStyle != 0),
-                    (vowifi1 || vowifi2),
+                    (vowifi1 || vowifi2) && (mVoWifiIconStyle != 0),
                     getVolteResId(volte1, volte2),
                     getVowifiResId(vowifi1, vowifi2),
                     mContext.getString(com.android.internal.R.string.status_bar_ims)
@@ -864,10 +876,34 @@ public class NetworkControllerImpl extends BroadcastReceiver
                     resId = R.drawable.stat_sys_volte;
                     break;
             }
-            cb.setImsIcon(new ImsIconState(volte && (mVolteIconStyle !=0),
-                    vowifi,
+            switch(mVoWifiIconStyle) {
+                // Asus
+                case 2:
+                    resVowId = R.drawable.ic_vowifi_asus;
+                    break;
+                 // OOS
+                case 3:
+                    resVowId = R.drawable.ic_vowifi_oneplus;
+                    break;
+                // Moto
+                case 4:
+                    resVowId = R.drawable.ic_vowifi_moto;
+                    break;
+                // EmUI
+                case 5:
+                    resVowId = R.drawable.ic_vowifi_emui;
+                    break;
+                 //Dynamic
+                case 1:
+                default:
+                    resVowId = R.drawable.stat_sys_vowifi;
+                    break;
+            }
+            cb.setImsIcon(new ImsIconState(
+                    volte && (mVolteIconStyle !=0),
+                    vowifi && (mVoWifiIconStyle != 0),
                     volte && (mVolteIconStyle !=0) ? resId : 0,
-                    vowifi ? R.drawable.stat_sys_vowifi : 0,
+                    vowifi && (mVoWifiIconStyle != 0) ? resVowId : 0,
                     mContext.getString(com.android.internal.R.string.status_bar_ims)
             ));
         } else {
@@ -884,13 +920,15 @@ public class NetworkControllerImpl extends BroadcastReceiver
     public void updateImsIcon() {
         mVolteIconStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.VOLTE_ICON_STYLE, 1, UserHandle.USER_CURRENT);
+        mVoWifiIconStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.VOWIFI_ICON_STYLE, 1, UserHandle.USER_CURRENT);
         if (mMobileSignalControllers.size() == 2) {
             boolean volte1 = mMobileSignalControllers.valueAt(0).isVolteAvailable();
             boolean volte2 = mMobileSignalControllers.valueAt(1).isVolteAvailable();
             boolean vowifi1 = mMobileSignalControllers.valueAt(0).isVowifiAvailable();
             boolean vowifi2 = mMobileSignalControllers.valueAt(1).isVowifiAvailable();
             mCallbackHandler.setImsIcon(new ImsIconState((volte1 || volte2) && (mVolteIconStyle != 0),
-                    (vowifi1 || vowifi2),
+                    (vowifi1 || vowifi2) && (mVoWifiIconStyle != 0),
                     getVolteResId(volte1, volte2),
                     getVowifiResId(vowifi1, vowifi2),
                     mContext.getString(com.android.internal.R.string.status_bar_ims)
@@ -929,10 +967,34 @@ public class NetworkControllerImpl extends BroadcastReceiver
                     resId = R.drawable.stat_sys_volte;
                     break;
             }
-            mCallbackHandler.setImsIcon(new ImsIconState(volte && (mVolteIconStyle != 0),
-                    vowifi,
+            switch(mVoWifiIconStyle) {
+                // Asus
+                case 2:
+                    resVowId = R.drawable.ic_vowifi_asus;
+                    break;
+                 // OOS
+                case 3:
+                    resVowId = R.drawable.ic_vowifi_oneplus;
+                    break;
+                // Moto
+                case 4:
+                    resVowId = R.drawable.ic_vowifi_moto;
+                    break;
+                // EmUI
+                case 5:
+                    resVowId = R.drawable.ic_vowifi_emui;
+                    break;
+                 //Dynamic
+                case 1:
+                default:
+                    resVowId = R.drawable.stat_sys_vowifi;
+                    break;
+            }
+            mCallbackHandler.setImsIcon(new ImsIconState(
+                    volte && (mVolteIconStyle != 0),
+                    vowifi && (mVoWifiIconStyle != 0),
                     volte && (mVolteIconStyle !=0) ? resId : 0,
-                    vowifi ? R.drawable.stat_sys_vowifi : 0,
+                    vowifi && (mVoWifiIconStyle != 0) ? resVowId : 0,
                     mContext.getString(com.android.internal.R.string.status_bar_ims)
             ));
         } else {
@@ -1056,13 +1118,87 @@ public class NetworkControllerImpl extends BroadcastReceiver
 
     private int getVowifiResId(boolean vowifi1, boolean vowifi2) {
         if (vowifi1 && vowifi2) {
-            return R.drawable.stat_sys_vowifi_slot12;
+            switch(mVoWifiIconStyle) {
+                // Asus
+                case 2:
+                    resVowId = R.drawable.ic_vowifi_asus;
+                    break;
+                 // OOS
+                case 3:
+                    resVowId = R.drawable.ic_vowifi_oneplus;
+                    break;
+                // Moto
+                case 4:
+                    resVowId = R.drawable.ic_vowifi_moto;
+                    break;
+                // EmUI
+                case 5:
+                    resVowId = R.drawable.ic_vowifi_emui;
+                    break;
+                 //Dynamic
+                case 1:
+                default:
+                    resVowId = R.drawable.stat_sys_vowifi_slot12;
+                    break;
+            }
         } else if (vowifi1) {
-            return mSwap ? R.drawable.stat_sys_vowifi_slot2 : R.drawable.stat_sys_vowifi_slot1;
+            switch(mVoWifiIconStyle) {
+                // Asus
+                case 2:
+                    resVowId = R.drawable.ic_vowifi_asus;
+                    break;
+                 // OOS
+                case 3:
+                    resVowId = R.drawable.ic_vowifi_oneplus;
+                    break;
+                // Moto
+                case 4:
+                    resVowId = R.drawable.ic_vowifi_moto;
+                    break;
+                // EmUI
+                case 5:
+                    resVowId = R.drawable.ic_vowifi_emui;
+                    break;
+                 //Dynamic
+                case 1:
+                default:
+                    if (mSwap) {
+                        resVowId = R.drawable.stat_sys_vowifi_slot2;
+                    } else {
+                        resVowId = R.drawable.stat_sys_vowifi_slot1;
+                    }
+                    break;
+            }
         } else if (vowifi2) {
-            return mSwap ? R.drawable.stat_sys_vowifi_slot1 : R.drawable.stat_sys_vowifi_slot2;
+            switch(mVoWifiIconStyle) {
+                // Asus
+                case 2:
+                    resVowId = R.drawable.ic_vowifi_asus;
+                    break;
+                 // OOS
+                case 3:
+                    resVowId = R.drawable.ic_vowifi_oneplus;
+                    break;
+                // Moto
+                case 4:
+                    resVowId = R.drawable.ic_vowifi_moto;
+                    break;
+                // EmUI
+                case 5:
+                    resVowId = R.drawable.ic_vowifi_emui;
+                    break;
+                 //Dynamic
+                case 1:
+                default:
+                    if (mSwap) {
+                        resVowId = R.drawable.stat_sys_vowifi_slot1;
+                    } else {
+                        resVowId = R.drawable.stat_sys_vowifi_slot2;
+                    }
+                    break;
+            }
         }
-        return 0;
+        return resVowId;
     }
 
     @Override
