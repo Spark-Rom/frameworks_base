@@ -6578,6 +6578,12 @@ public final class Settings {
         public static final String LS_WALLPAPER_COLOR = "ls_wallpaper_color";
 
         /**
+         * Whether to show IME space
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_IME_SPACE = "navigation_bar_ime_space";
+
+        /**
          * These are all public system settings
          *
          * @hide
