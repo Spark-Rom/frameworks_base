@@ -4976,16 +4976,16 @@ public final class Settings {
         public static final String THREE_FINGER_GESTURE = "three_finger_gesture";
 
         /**
-         * Hold current font name and name of the originating package Uses "|" as a delimiter
+         * Stores information about current font as a FontInfo object converted to string with "|" as a delimiter
          * @hide
          */
         public static final String FONT_INFO = "font_info";
 
         /**
-         * Hold list of installed font provider packages. Uses "|" as a delimiter
+         * Hold list of installed user selected. Uses "|" as a delimiter
          * @hide
          */
-        public static final String FONT_PACKAGES = "font_packages";
+        public static final String FONT_LIST = "font_list";
 
         /**
          * Whether to blink flashlight for incoming calls
