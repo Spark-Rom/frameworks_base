@@ -2125,7 +2125,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         if (!isExpanded) {
             mRemoteInputManager.onPanelCollapsed();
         }
-        ((StatusBarIconControllerImpl) mIconController).onPanelExpanded(isExpanded);
     }
 
     public ViewGroup getNotificationScrollLayout() {
@@ -4475,9 +4474,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         mPresenter.updateMediaMetaData(false, mState != StatusBarState.KEYGUARD);
         Dependency.get(PulseController.class).setKeyguardShowing(mState == StatusBarState.KEYGUARD);
         updateKeyguardState();
-    
-        ((StatusBarIconControllerImpl) mIconController).setKeyguardShowing(mState == StatusBarState.KEYGUARD);
-
         if (mAmbientIndicationContainer != null) {
             ((AmbientIndicationContainer)mAmbientIndicationContainer)
                     .updateKeyguardState(mState == StatusBarState.KEYGUARD);

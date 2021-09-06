@@ -22,7 +22,6 @@ import android.animation.ObjectAnimator;
 import android.content.res.Resources;
 import android.view.View;
 
-import com.android.internal.util.spark.SparkUtils;
 import com.android.systemui.R;
 
 public final class PhoneStatusBarTransitions extends BarTransitions {
@@ -33,7 +32,6 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
     private final float mIconAlphaWhenOpaque;
 
     private View mLeftSide, mStatusIcons, mBattery, mClock, mCenterClock, mRightClock;
-
     private Animator mCurrentAnimation;
 
     private View mBatteryBars[] = new View[2];
