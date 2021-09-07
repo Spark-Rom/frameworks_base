@@ -29,6 +29,7 @@ import static android.os.Process.INVALID_UID;
 import static android.os.Process.SYSTEM_UID;
 
 import android.annotation.NonNull;
+import android.annotation.UserIdInt;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -55,6 +56,7 @@ import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.LocalServices;
 import com.android.server.SystemConfig;
+import com.android.server.pm.permission.PermissionManagerServiceInternal;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -80,6 +82,7 @@ public class PermissionMonitor {
     private static final int VERSION_Q = Build.VERSION_CODES.Q;
 
     private final PackageManager mPackageManager;
+    private final PackageManagerInternal mPackageManagerInternal;
     private final UserManager mUserManager;
     private final INetd mNetd;
 
@@ -104,26 +107,6 @@ public class PermissionMonitor {
 
     private class PackageListObserver implements PackageManagerInternal.PackageListObserver {
 
-        private int getPermissionForUid(int uid) {
-            int permission = 0;
-            // Check all the packages for this UID. The UID has the permission if any of the
-            // packages in it has the permission.
-            String[] packages = mPackageManager.getPackagesForUid(uid);
-            if (packages != null && packages.length > 0) {
-                for (String name : packages) {
-                    final PackageInfo app = getPackageInfo(name);
-                    if (app != null && app.requestedPermissions != null) {
-                        permission |= getNetdPermissionMask(app.requestedPermissions,
-                              app.requestedPermissionsFlags);
-                    }
-                }
-            } else {
-                // The last package of this uid is removed from device. Clean the package up.
-                permission = INetd.PERMISSION_UNINSTALLED;
-            }
-            return permission;
-        }
-
         @Override
         public void onPackageAdded(String packageName, int uid) {
             sendPackagePermissionsForUid(uid, getPermissionForUid(uid));
@@ -140,10 +123,47 @@ public class PermissionMonitor {
         }
     }
 
+    private int getPermissionForUid(int uid) {
+        int permission = 0;
+        // Check all the packages for this UID. The UID has the permission if any of the
+        // packages in it has the permission.
+        String[] packages = mPackageManager.getPackagesForUid(uid);
+        if (packages != null && packages.length > 0) {
+            for (String name : packages) {
+                int userId = UserHandle.getUserId(uid);
+                final PackageInfo app = getPackageInfo(name, userId);
+                if (app != null && app.requestedPermissions != null) {
+                    permission |= getNetdPermissionMask(app.requestedPermissions,
+                          app.requestedPermissionsFlags);
+                }
+            }
+        } else {
+            // The last package of this uid is removed from device. Clean the package up.
+            permission = INetd.PERMISSION_UNINSTALLED;
+        }
+        return permission;
+    }
+
+    // implements OnRuntimePermissionStateChangedListener
+    private void enforceINTERNETAsRuntimePermission(@NonNull String packageName,
+            @UserIdInt int userId) {
+        // userId is _not_ uid
+        int uid = mPackageManagerInternal.getPackageUidInternal( packageName, GET_PERMISSIONS, userId);
+        sendPackagePermissionsForUid(uid, getPermissionForUid(uid));
+    }
+
     public PermissionMonitor(Context context, INetd netd) {
         mPackageManager = context.getPackageManager();
         mUserManager = (UserManager) context.getSystemService(Context.USER_SERVICE);
         mNetd = netd;
+
+        mPackageManagerInternal = LocalServices.getService(
+                PackageManagerInternal.class);
+
+        final PermissionManagerServiceInternal permManagerInternal = LocalServices.getService(
+                PermissionManagerServiceInternal.class);
+        permManagerInternal.addOnRuntimePermissionStateChangedListener(
+                this::enforceINTERNETAsRuntimePermission);
     }
 
     // Intended to be called only once at startup, after the system is ready. Installs a broadcast
@@ -345,12 +365,13 @@ public class PermissionMonitor {
     }
 
     @VisibleForTesting
-    protected Boolean highestPermissionForUid(Boolean currentPermission, String name) {
+    protected Boolean highestPermissionForUid(Boolean currentPermission, String name, int uid) {
         if (currentPermission == SYSTEM) {
             return currentPermission;
         }
         try {
-            final PackageInfo app = mPackageManager.getPackageInfo(name, GET_PERMISSIONS);
+            final PackageInfo app = mPackageManager.getPackageInfoAsUser(name, GET_PERMISSIONS,
+                    UserHandle.getUserId(uid));
             final boolean isNetwork = hasNetworkPermission(app);
             final boolean hasRestrictedPermission = hasRestrictedNetworkPermission(app);
             if (isNetwork || hasRestrictedPermission) {
@@ -374,7 +395,7 @@ public class PermissionMonitor {
     public synchronized void onPackageAdded(String packageName, int uid) {
         // If multiple packages share a UID (cf: android:sharedUserId) and ask for different
         // permissions, don't downgrade (i.e., if it's already SYSTEM, leave it as is).
-        final Boolean permission = highestPermissionForUid(mApps.get(uid), packageName);
+        final Boolean permission = highestPermissionForUid(mApps.get(uid), packageName, uid);
         if (permission != mApps.get(uid)) {
             mApps.put(uid, permission);
 
@@ -426,7 +447,7 @@ public class PermissionMonitor {
         String[] packages = mPackageManager.getPackagesForUid(uid);
         if (packages != null && packages.length > 0) {
             for (String name : packages) {
-                permission = highestPermissionForUid(permission, name);
+                permission = highestPermissionForUid(permission, name, uid);
                 if (permission == SYSTEM) {
                     // An app with this UID still has the SYSTEM permission.
                     // Therefore, this UID must already have the SYSTEM permission.
@@ -466,11 +487,9 @@ public class PermissionMonitor {
         return permissions;
     }
 
-    private PackageInfo getPackageInfo(String packageName) {
+    private PackageInfo getPackageInfo(String packageName, int userId) {
         try {
-            PackageInfo app = mPackageManager.getPackageInfo(packageName, GET_PERMISSIONS
-                    | MATCH_ANY_USER);
-            return app;
+            return mPackageManager.getPackageInfoAsUser(packageName, GET_PERMISSIONS, userId);
         } catch (NameNotFoundException e) {
             return null;
         }
