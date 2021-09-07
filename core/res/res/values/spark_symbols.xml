@@ -123,4 +123,7 @@
     <java-symbol type="string" name="alert_slider_mode_vibrate" />
     <java-symbol type="string" name="alert_slider_mode_silent" />
     <java-symbol type="string" name="alert_slider_mode_dnd" />
+
+    <!-- Wheter device supports an gaming mode profiles -->
+    <java-symbol type="bool" name="config_gamingmode_performance" />
 </resources>
