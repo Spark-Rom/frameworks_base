@@ -45,6 +45,9 @@ public class StatusBarIconList {
                 return i;
             }
         }
+        // Auto insert new items at the beginning.
+        mSlots.add(0, new Slot(slot, null));
+        return 0;
     }
 
     protected ArrayList<Slot> getSlots() {

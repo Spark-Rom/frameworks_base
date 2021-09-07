@@ -409,11 +409,11 @@ public interface StatusBarIconController {
                 case TYPE_MOBILE:
                     onSetMobileIcon(viewIndex, holder.getMobileState());
                     break;
-                case TYPE_NETWORK_TRAFFIC:
-                    onSetNetworkTrafficIcon(viewIndex, holder.getNetworkTrafficState());
                 case TYPE_IMS:
                     onSetImsIcon(viewIndex, holder.getImsState());
                     break;
+                case TYPE_NETWORK_TRAFFIC:
+                    onSetNetworkTrafficIcon(viewIndex, holder.getNetworkTrafficState());
             }
         }
 

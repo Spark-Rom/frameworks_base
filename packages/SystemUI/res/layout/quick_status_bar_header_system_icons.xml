@@ -64,8 +64,6 @@
 
     <include layout="@layout/ongoing_privacy_chip" />
 
-    </LinearLayout>
-
     <com.android.systemui.BatteryMeterView
         android:id="@+id/batteryRemainingIcon"
         android:layout_height="match_parent"
