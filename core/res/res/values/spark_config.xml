@@ -280,4 +280,7 @@
 
     <!-- Whether doze feature is enabled by default in settings -->
     <bool name="config_dozeDefaultEnabled">true</bool>
+
+    <!-- Wheter device supports an gaming mode profiles -->
+    <bool name="config_gamingmode_performance">false</bool>
 </resources>

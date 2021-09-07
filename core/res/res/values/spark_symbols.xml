@@ -236,4 +236,7 @@
     <java-symbol type="string" name="sleep_mode_notification_content" />
     <java-symbol type="string" name="sleep_mode_enabled_toast" />
     <java-symbol type="string" name="sleep_mode_disabled_toast" />
+
+    <!-- Wheter device supports an gaming mode profiles -->
+    <java-symbol type="bool" name="config_gamingmode_performance" />
 </resources>
