@@ -78,14 +78,12 @@ LOCAL_REQUIRED_MODULES := \
 	IconShapeTaperedRectOverlay \
 	IconShapeTeardropOverlay \
 	IconShapeVesselOverlay \
-    CompactMediaPlayer \
-    SliderStyleOOS \
-    SliderStyleAosp \
-    SliderStyleRUI \
-    SliderStyleA12 \
-    ClearAllOos \
-    VoIconPackVivo \
-	VoIconPackOOS \
+        CompactMediaPlayer \
+        SliderStyleOOS \
+        SliderStyleAosp \
+        SliderStyleRUI \
+        SliderStyleA12 \
+        ClearAllOos \
 	NavigationBarMode2ButtonOverlay \
 	NavigationBarMode3ButtonOverlay \
 	NavigationBarModeGesturalOverlay \

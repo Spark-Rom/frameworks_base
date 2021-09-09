@@ -6411,12 +6411,6 @@ public final class Settings {
        public static final String PROXIMITY_ON_WAKE = "proximity_on_wake";
 
        /**
-        * Vowifi + Volte Icon Picker
-        * @hide
-        */
-       public static final String VO_ICON_PICKER = "vo_icon_picker";
-
-       /**
         * @hide
         */
        public static final String COLLAPSED_TOOLBAR = "collapsed_toolbar";
@@ -6557,7 +6551,6 @@ public final class Settings {
          * @hide
          */
         public static final String LS_WALLPAPER_COLOR = "ls_wallpaper_color";
-
 
         /**
          * These are all public system settings
