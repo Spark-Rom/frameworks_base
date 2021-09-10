@@ -6579,8 +6579,13 @@ public final class Settings {
         public static final String VOWIFI_ICON_STYLE = "vowifi_icon_style";
 
         /**
+          * @hide
+          */
+        public static final String GAMING_MODE_USE_OVERLAY_MENU = "gaming_mode_use_overlay_menu";
+
+        /**
          * Whether to use Wallpaper Color On S Clocks
-         * @hide
+          * @hide
          */
         public static final String LS_WALLPAPER_COLOR = "ls_wallpaper_color";
 
