@@ -6387,6 +6387,12 @@ public final class Settings {
         public static final String GAMING_MODE_DANMAKU_APP_BLACKLIST = "gaming_mode_danmaku_app_blacklist";
 
         /**
+         * @hide
+         */
+        @Readable
+        public static final String GAMING_MODE_USE_OVERLAY_MENU = "gaming_mode_use_overlay_menu";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
