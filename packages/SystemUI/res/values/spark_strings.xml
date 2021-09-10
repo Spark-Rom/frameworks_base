@@ -302,4 +302,9 @@
     <string name="quick_settings_spark_idle_mode_label">Aggressive Idle Manager</string>
     <string name="quick_settings_spark_idle_mode_enabled">Agrressive Idle Active</string>
     <string name="quick_settings_spark_idle_mode_disabled">Agrressive Idle Inactive</string>
+
+    <!-- Data usage info in QS footer -->
+    <string name="usage_data">used today</string>
+    <string name="usage_data_default_suffix">Data</string>
+    <string name="usage_wifi_default_suffix">Wi-Fi</string>
 </resources>

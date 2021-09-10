@@ -40,9 +40,10 @@
             android:layout_gravity="center_vertical">
 
             <TextView
-                android:id="@+id/build"
+                android:id="@+id/usage_info"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:paddingStart="4dp"
                 android:paddingEnd="4dp"
                 android:layout_weight="1"
                 android:clickable="true"
@@ -60,15 +61,31 @@
                 android:layout_gravity="center_vertical"
                 android:visibility="gone" />
 
-            <FrameLayout
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/build"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:layout_toLeftOf="@android:id/edit"
+                android:ellipsize="marquee"
+                android:paddingEnd="10dp"
+                android:focusable="true"
+                android:gravity="center_vertical|end"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.QS.Status.Build"
+                android:visibility="gone" />
+
                 <com.android.systemui.statusbar.AlphaOptimizedImageView
                     android:id="@android:id/edit"
                     android:layout_width="@dimen/qs_footer_action_button_size"
                     android:layout_height="@dimen/qs_footer_action_button_size"
-                    android:layout_gravity="center_vertical|end"
+                    android:layout_alignParentEnd="true"
                     android:background="?android:attr/actionBarItemBackground"
                     android:clickable="true"
                     android:contentDescription="@string/accessibility_quick_settings_edit"
@@ -76,7 +93,7 @@
                     android:padding="@dimen/qs_footer_icon_padding"
                     android:src="@*android:drawable/ic_mode_edit"
                     android:tint="?android:attr/textColorPrimary" />
-            </FrameLayout>
+            </RelativeLayout>
     </LinearLayout>
 
         <include layout="@layout/data_usage_panel"
