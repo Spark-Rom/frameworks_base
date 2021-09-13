@@ -78,6 +78,7 @@ import com.android.systemui.statusbar.phone.StatusBarNotificationActivityStarter
 import com.android.systemui.statusbar.phone.StatusBarTouchableRegionManager;
 import com.android.systemui.statusbar.phone.dagger.StatusBarComponent;
 import com.android.systemui.statusbar.policy.BatteryController;
+import com.android.systemui.statusbar.policy.BurnInProtectionController;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.DeviceProvisionedController;
 import com.android.systemui.statusbar.policy.ExtensionController;
@@ -186,6 +187,7 @@ public class StatusBarGoogle extends StatusBar {
             StatusBarTouchableRegionManager statusBarTouchableRegionManager,
             TunerService tunerService,
             FlashlightController flashlightController,
+            BurnInProtectionController burnInProtectionController,
             TaskHelper taskHelper) {
 
         super(context,
@@ -267,6 +269,7 @@ public class StatusBarGoogle extends StatusBar {
                 statusBarTouchableRegionManager,
                 tunerService,
                 flashlightController,
+                burnInProtectionController,
                 taskHelper);
     }
 

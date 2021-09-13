@@ -890,6 +890,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             StatusBarTouchableRegionManager statusBarTouchableRegionManager,
             TunerService tunerService,
             FlashlightController flashlightController,
+            BurnInProtectionController burnInProtectionController,
             TaskHelper taskHelper) {
         super(context);
         mNotificationsController = notificationsController;
@@ -969,6 +970,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         mDismissCallbackRegistry = dismissCallbackRegistry;
         mTunerService = tunerService;
         mFlashlightController = flashlightController;
+        mBurnInProtectionController = burnInProtectionController;
         mTaskHelper = taskHelper;
 
         mBubbleExpandListener =
@@ -979,8 +981,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         DateTimeView.setReceiverHandler(timeTickHandler);
 
-        mBurnInProtectionController = new BurnInProtectionController(context,
-            this, configurationController);
+        mBurnInProtectionController.setStatusBar(this);
 
     }
 

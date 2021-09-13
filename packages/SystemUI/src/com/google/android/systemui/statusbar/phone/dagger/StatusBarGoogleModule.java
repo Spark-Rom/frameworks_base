@@ -90,6 +90,7 @@ import com.android.systemui.statusbar.phone.StatusBarTouchableRegionManager;
 import com.android.systemui.statusbar.phone.dagger.StatusBarComponent;
 import com.android.systemui.statusbar.phone.dagger.StatusBarPhoneDependenciesModule;
 import com.android.systemui.statusbar.policy.BatteryController;
+import com.android.systemui.statusbar.policy.BurnInProtectionController;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.DeviceProvisionedController;
 import com.android.systemui.statusbar.policy.ExtensionController;
@@ -204,6 +205,7 @@ public interface StatusBarGoogleModule {
             StatusBarTouchableRegionManager statusBarTouchableRegionManager,
             TunerService tunerService,
             FlashlightController flashlightController,
+            BurnInProtectionController burnInProtectionController,
             TaskHelper taskHelper) {
 
         return new StatusBarGoogle(
@@ -286,6 +288,7 @@ public interface StatusBarGoogleModule {
                 statusBarTouchableRegionManager,
                 tunerService,
                 flashlightController,
+                burnInProtectionController,
                 taskHelper);
     }
 }
