@@ -88,13 +88,14 @@ public class SensorPrivacyTile extends QSTileImpl<BooleanState> implements
                 : mSensorPrivacyManager.isSensorPrivacyEnabled();
         state.value = enabled;
         state.label = mContext.getString(R.string.sensor_privacy_mode_tile);
-        state.state = enabled ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE;
         if (state.value) {
             state.secondaryLabel = mContext.getString(R.string.quick_settings_off);
             state.icon = ResourceIcon.get(R.drawable.ic_signal_sensors);
+            state.state = Tile.STATE_INACTIVE;
         } else {
             state.secondaryLabel = mContext.getString(R.string.quick_settings_on);
             state.icon = ResourceIcon.get(R.drawable.ic_sensors_on);
+            state.state = Tile.STATE_ACTIVE;
         }
         state.contentDescription = state.label;
         state.expandedAccessibilityClassName = Switch.class.getName();
