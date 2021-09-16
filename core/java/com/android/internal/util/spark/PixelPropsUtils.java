@@ -34,26 +34,29 @@ public class PixelPropsUtils {
     private static final Map<String, Object> propsToChangePixel5a;
     private static final Map<String, Object> propsToChangeOnePlus9Pro;
 
+    // Keep the arrays sorted lexicographically
     private static final String[] packagesToChangePixelXL = {
-            "com.google.android.apps.photos",
-            "com.samsung.accessory.fridaymgr",
-            "com.samsung.accessory.berrymgr",
-            "com.samsung.accessory.neobeanmgr",
-            "com.samsung.android.app.watchmanager",
-            "com.samsung.android.geargplugin",
-            "com.samsung.android.gearnplugin",
-            "com.samsung.android.modenplugin",
-            "com.samsung.android.neatplugin",
-            "com.samsung.android.waterplugin"
+        "com.google.android.apps.photos",
+        "com.samsung.accessory.berrymgr",
+        "com.samsung.accessory.fridaymgr",
+        "com.samsung.accessory.neobeanmgr",
+        "com.samsung.android.app.watchmanager",
+        "com.samsung.android.geargplugin",
+        "com.samsung.android.gearnplugin",
+        "com.samsung.android.modenplugin",
+        "com.samsung.android.neatplugin",
+        "com.samsung.android.waterplugin"
     };
 
+    // Keep the arrays sorted lexicographically
     private static final String[] packagesToChangePixel2 = {
             "com.google.android.gms",
             "com.google.android.gms.location.history"
     };
 
+    // Keep the arrays sorted lexicographically
     private static final String[] packagesToChangePixel3XL = {
-            "com.google.android.googlequicksearchbox"
+        "com.google.android.googlequicksearchbox"
     };
 
     private static final String[] packagesToChangePixel5a = {
@@ -178,6 +181,6 @@ public class PixelPropsUtils {
     }
 
     private static boolean contains(String[] pkgs, String pkg) {
-        return Arrays.binarySearch(pkgs, pkg) != -1;
+        return Arrays.binarySearch(pkgs, pkg) >= 0;
     }
 }
