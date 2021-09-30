@@ -27,17 +27,16 @@ import android.net.Uri;
 
 import java.lang.annotation.Retention;
 
-import java.util.List;
 
 /**
  * Font configuration descriptions for System fonts.
  * @hide
  */
 public final class FontConfig {
-    private final @NonNull List<Family> mFamilies;
-    private final @NonNull List<Alias> mAliases;
+    private final @NonNull Family[] mFamilies;
+    private final @NonNull Alias[] mAliases;
 
-    public FontConfig(@NonNull List<Family> families, @NonNull List<Alias> aliases) {
+    public FontConfig(@NonNull Family[] families, @NonNull Alias[] aliases) {
         mFamilies = families;
         mAliases = aliases;
     }
@@ -46,14 +45,14 @@ public final class FontConfig {
      * Returns the ordered list of families included in the system fonts.
      */
     @UnsupportedAppUsage
-    public @NonNull List<Family> getFamilies() {
+    public @NonNull Family[] getFamilies() {
         return mFamilies;
     }
 
     /**
      * Returns the list of aliases defined for the font families in the system fonts.
      */
-    public @NonNull List<Alias> getAliases() {
+    public @NonNull Alias[] getAliases() {
         return mAliases;
     }
 
@@ -180,7 +179,7 @@ public final class FontConfig {
      * Class that holds information about a Font family.
      */
     public static final class Family {
-        private String mName;
+        private final @NonNull String mName;
         private final @NonNull Font[] mFonts;
         // Comma separated BCP47 complient locale strings
         private final @NonNull String mLanguages;
@@ -258,10 +257,6 @@ public final class FontConfig {
         @UnsupportedAppUsage
         public @Variant int getVariant() {
             return mVariant;
-        }
-
-        public void clearName() {
-            mName = null;
         }
     }
 }

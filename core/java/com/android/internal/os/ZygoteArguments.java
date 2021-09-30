@@ -119,9 +119,6 @@ class ZygoteArguments {
     /** from --package-name */
     String mPackageName;
 
-    /** from --refresh-theme */
-    boolean refreshTheme;
-
     /**
      * Any args after and including the first non-option arg (or after a '--')
      */
@@ -472,8 +469,6 @@ class ZygoteArguments {
                 mBindMountAppStorageDirs = true;
             } else if (arg.equals(Zygote.BIND_MOUNT_APP_DATA_DIRS)) {
                 mBindMountAppDataDirs = true;
-            } else if (arg.equals("--refresh_theme")) {
-                refreshTheme = true;
             } else {
                 break;
             }
