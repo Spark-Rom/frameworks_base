@@ -29,7 +29,6 @@ import android.content.Context;
 import android.content.FontInfo;
 import android.content.IFontService;
 import android.content.IFontServiceCallback;
-import android.content.om.IOverlayManager;
 import android.os.Binder;
 import android.os.Environment;
 import android.os.FileUtils;
@@ -41,7 +40,6 @@ import android.os.ParcelFileDescriptor;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.SELinux;
-import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.Settings;
@@ -54,6 +52,7 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.function.Consumer;
 import java.util.HashMap;
 import java.util.List;
@@ -144,7 +143,8 @@ public class FontService extends IFontService.Stub {
                     }
                     mService.sendInitializeFontMapMessage();
                 }
-            } else if (phase == PHASE_THIRD_PARTY_APPS_CAN_START) {
+            }
+            if (phase == PHASE_THIRD_PARTY_APPS_CAN_START) {
                 mService.sendRefreshFontsMessage();
             }
         }
@@ -318,15 +318,12 @@ public class FontService extends IFontService.Stub {
             makeDir(sCurrentFontDir);
         }
 
-        // Reload resources for core packages
-        try {
-            IOverlayManager om = IOverlayManager.Stub.asInterface(
-                ServiceManager.getService(Context.OVERLAY_SERVICE));
-            om.reloadAssets("android", UserHandle.USER_CURRENT);
-            om.reloadAssets("com.android.systemui", UserHandle.USER_CURRENT);
-        } catch (RemoteException e) {
-            Log.e(TAG, "Unable to reload resources", e);
-        }
+        // Notify zygote that typeface need a refresh
+        SystemProperties.set("sys.refresh_typeface", "1");
+        final float fontSize = Settings.System.getFloatForUser(mContext.getContentResolver(),
+                Settings.System.FONT_SCALE, 1.0f, UserHandle.USER_CURRENT);
+        Settings.System.putFloatForUser(mContext.getContentResolver(),
+                Settings.System.FONT_SCALE, (fontSize + 0.0000001f), UserHandle.USER_CURRENT);
     }
 
     private void addCallback(IFontServiceCallback callback) {
