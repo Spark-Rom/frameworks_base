@@ -470,7 +470,14 @@ public class FontService extends IFontService.Stub {
 
         if (map.isEmpty()) {
             // Even though the map is empty, notifying the callbacks is necessary for cleanup
-            notifyCallbacks(cb -> cb.onFontsAdded(null));
+            notifyCallbacks(cb -> {
+                try {
+                    logD("notifying callback " + cb);
+                    cb.onFontsAdded(null);
+                } catch (RemoteException e) {
+                    Log.e(TAG, "RemoteException on notifying callback " + cb, e);
+                }
+            });
             logD("addFontsInternal, input map is empty");
             return;
         }
@@ -512,7 +519,14 @@ public class FontService extends IFontService.Stub {
         });
 
         // If we weren't able to add any then notify callbacks and exit
-        notifyCallbacks(cb -> cb.onFontsAdded(fontsAdded));
+        notifyCallbacks(cb -> {
+            try {
+                logD("notifying callback " + cb);
+                cb.onFontsAdded(fontsAdded);
+            } catch (RemoteException e) {
+                Log.e(TAG, "RemoteException on notifying callback " + cb, e);
+            }
+        });
         if (fontsAdded.isEmpty()) {
             logD("addFontsInternal, no fonts were added");
             return;
@@ -567,7 +581,14 @@ public class FontService extends IFontService.Stub {
         logD("removeFontsInternal, list = " + list);
         if (list.isEmpty()) {
             // Even though the list is empty, notifying the callbacks is necessary for cleanup
-            notifyCallbacks(cb -> cb.onFontsRemoved(null));
+            notifyCallbacks(cb -> {
+                try {
+                    logD("notifying callback " + cb);
+                    cb.onFontsRemoved(null);
+                } catch (RemoteException e) {
+                    Log.e(TAG, "RemoteException on notifying callback " + cb, e);
+                }
+            });
             logD("removeFontsInternal, input list is internal");
             return;
         }
@@ -575,7 +596,14 @@ public class FontService extends IFontService.Stub {
              Log.w(TAG, "Directory " + sSavedFontsDir.getAbsolutePath() + " does not exist");
              // Since the directory does not exist, notify that all fonts are removed
              final List<FontInfo> allFonts = new ArrayList<>(mFontMap.values());
-             notifyCallbacks(cb -> cb.onFontsRemoved(allFonts));
+             notifyCallbacks(cb -> {
+                try {
+                    logD("notifying callback " + cb);
+                    cb.onFontsRemoved(allFonts);
+                } catch (RemoteException e) {
+                    Log.e(TAG, "RemoteException on notifying callback " + cb, e);
+                }
+             });
              logD("removeFontsInternal, saved_fonts directory does not exist");
              return;
         }
@@ -613,7 +641,14 @@ public class FontService extends IFontService.Stub {
         logD("fonts removed = " + fontsRemoved);
 
         // If we weren't able to add any then notify callbacks and exit
-        notifyCallbacks(cb -> cb.onFontsRemoved(fontsRemoved));
+        notifyCallbacks(cb -> {
+            try {
+                logD("notifying callback " + cb);
+                cb.onFontsRemoved(fontsRemoved);
+            } catch (RemoteException e) {
+                Log.e(TAG, "RemoteException on notifying callback " + cb, e);
+            }
+        });
         // Reset if needed
         if (needsReset) {
             resetFonts();
@@ -629,19 +664,12 @@ public class FontService extends IFontService.Stub {
                 Settings.System.FONT_LIST, currentList, UserHandle.USER_CURRENT);
     }
 
-    private void notifyCallbacks(Consumer<IFontServiceCallback> consumer) {
+    private void notifyCallbacks(Consumer<IFontServiceCallback> action) {
         logD("notifyCallbacks, mCallbacks = " + mCallbacks);
         mCallbacks.stream()
             .map(weakRef -> weakRef.get())
             .filter(cb -> cb != null)
-            .forEach(cb -> {
-                try {
-                    logD("notifying callback " + cb);
-                    consumer.accept(cb);
-                } catch (RemoteException e) {
-                    Log.e(TAG, "RemoteException on notifying callback " + cb, e);
-                }
-            });
+            .forEach(action);
     }
 
     private void resetFonts() {
@@ -705,12 +733,5 @@ public class FontService extends IFontService.Stub {
         if (DEBUG) {
             Log.d(TAG, msg);
         }
-    }
-
-    /**
-     * Custom callback consumer
-     */
-    private interface Consumer<T> {
-        void accept(T t) throws RemoteException;
     }
 }
