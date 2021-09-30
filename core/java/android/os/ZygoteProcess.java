@@ -972,6 +972,13 @@ public class ZygoteProcess {
         }
     }
 
+    public void refreshTypeface() {
+        synchronized (mLock) {
+            maybeRefreshTypeface(primaryZygoteState);
+            maybeRefreshTypeface(secondaryZygoteState);
+        }
+    }
+
     @GuardedBy("mLock")
     private boolean maybeSetApiBlacklistExemptions(ZygoteState state, boolean sendIfEmpty) {
         if (state == null || state.isClosed()) {
@@ -1046,7 +1053,8 @@ public class ZygoteProcess {
         }
     }
 
-    private void refreshTypeface(ZygoteState state) {
+    @GuardedBy("mLock")
+    private void maybeRefreshTypeface(ZygoteState state) {
         if (state == null || state.isClosed()) {
             return;
         }
@@ -1077,7 +1085,7 @@ public class ZygoteProcess {
 
             maybeSetApiBlacklistExemptions(primaryZygoteState, false);
             maybeSetHiddenApiAccessLogSampleRate(primaryZygoteState);
-            refreshTypeface(primaryZygoteState);
+            maybeRefreshTypeface(primaryZygoteState);
         }
     }
 
@@ -1093,7 +1101,7 @@ public class ZygoteProcess {
 
             maybeSetApiBlacklistExemptions(secondaryZygoteState, false);
             maybeSetHiddenApiAccessLogSampleRate(secondaryZygoteState);
-            refreshTypeface(secondaryZygoteState);
+            maybeRefreshTypeface(secondaryZygoteState);
         }
     }
 

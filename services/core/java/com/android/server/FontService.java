@@ -19,9 +19,8 @@ package com.android.server;
 
 import static android.os.FileUtils.S_IRGRP;
 import static android.os.FileUtils.S_IROTH;
-import static android.os.FileUtils.S_IRUSR;
 import static android.os.FileUtils.S_IRWXU;
-import static android.os.FileUtils.S_IWUSR;
+import static android.os.FileUtils.S_IXOTH;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -30,6 +29,7 @@ import android.content.Context;
 import android.content.FontInfo;
 import android.content.IFontService;
 import android.content.IFontServiceCallback;
+import android.content.om.IOverlayManager;
 import android.os.Binder;
 import android.os.Environment;
 import android.os.FileUtils;
@@ -41,6 +41,7 @@ import android.os.ParcelFileDescriptor;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.SELinux;
+import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.Settings;
@@ -97,11 +98,6 @@ public class FontService extends IFontService.Stub {
     // Template xml file for font configuration
     private static final File sFontConfigXml = new File(Environment.getRootDirectory(),
         "etc/custom_font_config.xml");
-
-    private static final int sInternalDirPerms = S_IRUSR | S_IWUSR;
-    private static final int sInternalFilePerms = S_IRWXU;
-    private static final int sGlobalDirPerms = sInternalDirPerms | S_IROTH;
-    private static final int sGlobalFilePerms = sInternalFilePerms | S_IROTH;
 
     // Handler messages
     private static final int MESSAGE_INITIALIZE_FONT_MAP = 1;
@@ -314,10 +310,22 @@ public class FontService extends IFontService.Stub {
     private void refreshFonts() {
         // Set permissions on font files and config xml
         if (sCurrentFontDir.isDirectory()) {
-            setPermissionsRecursive(sCurrentFontDir, sGlobalDirPerms, sGlobalFilePerms);
+            setPermissionsRecursive(sCurrentFontDir,
+                S_IRWXU | S_IRGRP | S_IROTH | S_IXOTH,
+                S_IRWXU | S_IRGRP | S_IROTH | S_IXOTH);
             restoreconThemeDir();
         } else {
-            makeDir(sCurrentFontDir, sGlobalDirPerms);
+            makeDir(sCurrentFontDir);
+        }
+
+        // Reload resources for core packages
+        try {
+            IOverlayManager om = IOverlayManager.Stub.asInterface(
+                ServiceManager.getService(Context.OVERLAY_SERVICE));
+            om.reloadAssets("android", UserHandle.USER_CURRENT);
+            om.reloadAssets("com.android.systemui", UserHandle.USER_CURRENT);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Unable to reload resources", e);
         }
     }
 
@@ -420,7 +428,7 @@ public class FontService extends IFontService.Stub {
                             sCurrentFontDir.getAbsolutePath());
                     }
                 } else {
-                    makeDir(sCurrentFontDir, sGlobalDirPerms);
+                    makeDir(sCurrentFontDir);
                 }
                 copyFont(info);
                 mFontInfo.updateFrom(info);
@@ -471,7 +479,7 @@ public class FontService extends IFontService.Stub {
         }
 
         if (!sSavedFontsDir.isDirectory()) {
-            makeDir(sSavedFontsDir, sInternalDirPerms);
+            makeDir(sSavedFontsDir);
         }
         final StringBuilder builder = new StringBuilder();
         final List<FontInfo> fontsAdded = new ArrayList<>(map.size());
@@ -481,7 +489,7 @@ public class FontService extends IFontService.Stub {
             try {
                 logD("adding font " + font);
                 final File fontDir = new File(sSavedFontsDir, font);
-                if (makeDir(fontDir, sInternalDirPerms)) {
+                if (makeDir(fontDir)) {
                     // Copy the font
                     final File fontFile = new File(fontDir, appendExtension(font));
                     final FileInputStream inStream = new FileInputStream(pfd.getFileDescriptor());
@@ -490,7 +498,6 @@ public class FontService extends IFontService.Stub {
                     inStream.close();
                     outStream.close();
                     createXMLConfig(font, fontDir);
-                    setPermissionsRecursive(fontDir, sInternalDirPerms, sInternalFilePerms);
                     if (!mFontMap.containsKey(font)) {
                         FontInfo fontInfo = new FontInfo(font, fontFile.getAbsolutePath());
                         mFontMap.put(font, fontInfo);
@@ -684,15 +691,11 @@ public class FontService extends IFontService.Stub {
     }
 
     private static boolean makeDir(File dir) {
-        return makeDir(dir, -1);
-    }
-
-    private static boolean makeDir(File dir, int perms) {
         if (dir.isDirectory()) {
             return true;
         }
         if (dir.mkdirs() && SELinux.restorecon(dir)) {
-            return setPermissions(dir, perms);
+            return setPermissions(dir, S_IRWXU | S_IRGRP | S_IROTH | S_IXOTH);
         }
         return false;
     }
