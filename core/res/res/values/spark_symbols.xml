@@ -239,7 +239,4 @@
 
     <!-- Wheter device supports an gaming mode profiles -->
     <java-symbol type="bool" name="config_gamingmode_performance" />
-
-    <!-- System fonts -->
-    <java-symbol type="array" name="config_fontPackages" /
 </resources>
