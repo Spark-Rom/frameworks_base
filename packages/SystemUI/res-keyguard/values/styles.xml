@@ -39,6 +39,7 @@
     </style>
     <style name="Widget.TextView.NumPadKey.Klondike" parent="@android:style/Widget.DeviceDefault.TextView">
         <item name="android:textSize">12.0sp</item>
+        <item name="android:fontFamily">@*android:string/config_headlineFontFamily</item>
         <item name="android:textColor">?android:textColorSecondary</item>
         <item name="android:background">@null</item>
         <item name="android:paddingBottom">0.0dip</item>
@@ -67,18 +68,22 @@
     <style name="widget_big">
         <item name="android:textSize">@dimen/widget_big_font_size</item>
         <item name="android:paddingBottom">@dimen/bottom_text_spacing_digital</item>
+        <item name="android:fontFamily">@*android:string/config_headlineFontFamily</item>
+        <item name="android:fontFeatureSettings">@*android:string/config_headlineFontFeatureSettings</item>
         <item name="android:ellipsize">none</item>
     </style>
     <style name="widget_title_bold">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/widget_title_font_size</item>
         <item name="android:paddingBottom">@dimen/widget_vertical_padding_clock</item>
+        <item name="android:fontFamily">@*android:string/config_headlineFontFamily</item>
         <item name="android:ellipsize">none</item>
     </style>
     <style name="widget_small_bold">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/widget_small_font_size</item>
         <item name="android:paddingBottom">@dimen/bottom_text_spacing_digital</item>
+        <item name="android:fontFamily">@*android:string/config_headlineFontFamily</item>
         <item name="android:ellipsize">none</item>
     </style>
 
@@ -110,6 +115,7 @@
         <item name="android:textSize">@dimen/widget_title_font_size</item>
         <item name="android:gravity">center</item>
         <item name="android:ellipsize">end</item>
+        <item name="android:fontFamily">@*android:string/config_headlineFontFamily</item>
     </style>
 
     <style name="TextAppearance.Keyguard.Secondary">
