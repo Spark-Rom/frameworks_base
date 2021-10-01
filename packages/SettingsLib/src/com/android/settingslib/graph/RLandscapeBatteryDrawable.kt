@@ -33,6 +33,9 @@ import android.util.TypedValue
 import com.android.settingslib.R
 import com.android.settingslib.Utils
 
+import android.provider.Settings.System;
+import android.os.UserHandle;
+
 /**
  * A battery meter drawable that respects paths configured in
  * frameworks/base/core/res/res/values/config.xml to allow for an easily overrideable battery icon
@@ -169,9 +172,22 @@ open class RLandscapeBatteryDrawable(private val context: Context, frameColor: I
         intrinsicHeight = (Companion.HEIGHT * density).toInt()
         intrinsicWidth = (Companion.WIDTH * density).toInt()
 
+        val setCustomBatteryLevelTint = System.getIntForUser(
+            context.getContentResolver(),
+            System.BATTERY_LEVEL_COLORS, 0, UserHandle.USER_CURRENT
+        ) === 1
+
         val res = context.resources
-        val levels = res.obtainTypedArray(R.array.batterymeter_color_levels)
-        val colors = res.obtainTypedArray(R.array.batterymeter_color_values)
+        val levels = if(setCustomBatteryLevelTint)
+            res.obtainTypedArray(R.array.corvus_batterymeter_color_levels)
+        else
+            res.obtainTypedArray(R.array.batterymeter_color_levels)
+        
+        val colors = if(setCustomBatteryLevelTint) 
+            res.obtainTypedArray(R.array.corvus_batterymeter_color_values)
+        else
+            res.obtainTypedArray(R.array.batterymeter_color_values)
+            
         val N = levels.length()
         colorLevels = IntArray(2 * N)
         for (i in 0 until N) {

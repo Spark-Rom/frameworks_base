@@ -6652,6 +6652,11 @@ public final class Settings {
          */
         public static final String STATUSBAR_TOP_PADDING = "statusbar_top_padding";
 
+        /**
+         * Toggle between stock and custom QS brightness slider
+         * @hide
+         */
+        public static final String BATTERY_LEVEL_COLORS = "battery_level_colors";
        /**
          * These are all public system settings
          *
@@ -6773,6 +6778,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUSBAR_LEFT_PADDING);
             PRIVATE_SETTINGS.add(STATUSBAR_RIGHT_PADDING);
             PRIVATE_SETTINGS.add(STATUSBAR_TOP_PADDING);
+            PRIVATE_SETTINGS.add(BATTERY_LEVEL_COLORS);
         }
 
         /**

@@ -98,5 +98,6 @@ public class SystemSettings {
         Settings.System.QS_TILE_SECONDARY_LABEL_SIZE,
         Settings.System.TOAST_ANIMATION,
         Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL,
+        Settings.System.BATTERY_LEVEL_COLORS
     };
 }
