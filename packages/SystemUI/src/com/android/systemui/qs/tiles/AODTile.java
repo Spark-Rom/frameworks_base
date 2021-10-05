@@ -48,12 +48,6 @@ public class AODTile extends QSTileImpl<State> {
     private boolean mListening;
     private final Icon mIcon = ResourceIcon.get(R.drawable.ic_qs_aod);
 
-    private static final ComponentName LS_DISPLAY_SETTINGS_COMPONENT = new ComponentName(
-            "com.android.settings", "com.android.settings.Settings$LockscreenDashboardActivity");
-
-    private static final Intent LS_DISPLAY_SETTINGS =
-            new Intent().setComponent(LS_DISPLAY_SETTINGS_COMPONENT);
-
     @Inject
     public AODTile(
         QSHost host,
@@ -67,8 +61,6 @@ public class AODTile extends QSTileImpl<State> {
     ) {
         super(host, backgroundLooper, mainHandler, falsingManager, metricsLogger,
                 statusBarStateController, activityStarter, qsLogger);
-        mAodDisabled = Settings.Secure.getInt(mContext.getContentResolver(),
-                Settings.Secure.DOZE_ALWAYS_ON, 1) == 0;
     }
 
     private int getAodState() {
@@ -109,8 +101,19 @@ public class AODTile extends QSTileImpl<State> {
     }
 
     @Override
+    protected void handleLongClick(@Nullable View view) {
+        // always toggle on/off on long click
+        Settings.Secure.putIntForUser(mContext.getContentResolver(),
+                Settings.Secure.DOZE_ALWAYS_ON, getAodState() != 0 ? 0 : 1,
+                UserHandle.USER_CURRENT);
+        Settings.System.putIntForUser(mContext.getContentResolver(),
+                Settings.System.DOZE_ON_CHARGE, 0, UserHandle.USER_CURRENT);
+        refreshState();
+    }
+
+    @Override
     public Intent getLongClickIntent() {
-        return LS_DISPLAY_SETTINGS;
+        return null;
     }
 
     @Override
@@ -137,7 +140,7 @@ public class AODTile extends QSTileImpl<State> {
         return MetricsEvent.SPARK_QS_TILES;
     }
 
-    private ContentObserver mObserver = new ContentObserver(mHandler) {
+    private final ContentObserver mObserver = new ContentObserver(mHandler) {
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             refreshState();
