@@ -48,7 +48,6 @@ import android.app.StatusBarManager;
 import android.app.WindowConfiguration;
 import android.content.res.Resources;
 import android.graphics.Rect;
-import android.util.ArrayMap;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.util.IntArray;
@@ -75,6 +74,8 @@ import com.android.internal.R;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.server.DisplayThread;
 import com.android.server.statusbar.StatusBarManagerInternal;
+
+import java.util.Map;
 
 /**
  * Policy that implements who gets control over the windows generating insets.
@@ -399,10 +400,9 @@ class InsetsPolicy {
 
             // IME needs different frames for certain cases (e.g. navigation bar in gesture nav).
             if (type == ITYPE_IME) {
-                ArrayMap<Integer, WindowContainerInsetsSourceProvider> providers = mStateController
+                Map<Integer, WindowContainerInsetsSourceProvider> providers = mStateController
                         .getSourceProviders();
-                for (int i = providers.size() - 1; i >= 0; i--) {
-                    WindowContainerInsetsSourceProvider otherProvider = providers.valueAt(i);
+                for (final WindowContainerInsetsSourceProvider otherProvider: providers.values()) {
                     if (otherProvider.overridesImeFrame()) {
                         InsetsSource override =
                                 new InsetsSource(
