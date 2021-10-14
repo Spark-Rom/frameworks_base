@@ -54,7 +54,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-public class Utils {
+public class SparkUtils {
 
     public static final String INTENT_SCREENSHOT = "action_handler_screenshot";
     public static final String INTENT_REGION_SCREENSHOT = "action_handler_region_screenshot";
