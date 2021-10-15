@@ -691,6 +691,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     };
 
     private LineageButtons mLineageButtons;
+
     private boolean mLockNowPending = false;
 
     private static final int MSG_DISPATCH_MEDIA_KEY_WITH_WAKE_LOCK = 3;
