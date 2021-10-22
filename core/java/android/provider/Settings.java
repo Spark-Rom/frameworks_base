@@ -5963,6 +5963,11 @@ public final class Settings {
         public static final String ON_THE_GO_CAMERA = "on_the_go_camera";
 
         /**
+         * @hide
+         */
+        public static final String LOCKSCREEN_WEATHER_ENABLED = "lockscreen_weather_enabled";
+
+        /**
          * Whether to show or hide alert slider notifications on supported devices
          * @hide
          */
@@ -5995,6 +6000,11 @@ public final class Settings {
          * @hide
          */
         public static final String EDGE_LIGHT_ALWAYS_TRIGGER_ON_PULSE = "edge_light_always_trigger_on_pulse";
+
+	    /**
+         * @hide
+         */
+        public static final String OMNIJAWS_WEATHER_ICON_PACK = "omnijaws_weather_icon_pack";
 
         /**
          * Whether to repeat edge light animation until pulse timeout.
@@ -6156,6 +6166,11 @@ public final class Settings {
         public static final String ENABLE_FLOATING_ROTATION_BUTTON = "enable_floating_rotation_button";
 
         /**
+         * @hide
+         */
+        public static final String LOCKSCREEN_WEATHER_STYLE = "lockscreen_weather_style";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -6277,6 +6292,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_MODE);
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_MODE_VENDOR_HINT);
             PRIVATE_SETTINGS.add(DESKTOP_MODE);
+            PRIVATE_SETTINGS.add(OMNIJAWS_WEATHER_ICON_PACK);
         }
 
         /**

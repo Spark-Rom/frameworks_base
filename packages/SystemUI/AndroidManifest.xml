@@ -349,6 +349,9 @@
     <!-- Kill button in notification guts -->
     <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES" />
 
+    <!-- OmniJaws -->
+    <uses-permission android:name="org.omnirom.omnijaws.READ_WEATHER" />
+
     <!-- Pulse -->
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
