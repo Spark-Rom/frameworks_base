@@ -91,6 +91,7 @@ import com.android.systemui.statusbar.policy.FlashlightController;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.statusbar.policy.NetworkController;
 import com.android.systemui.statusbar.policy.RemoteInputQuickSettingsDisabler;
+import com.android.systemui.statusbar.policy.TaskHelper;
 import com.android.systemui.statusbar.policy.BurnInProtectionController;
 import com.android.systemui.statusbar.policy.UserInfoControllerImpl;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
@@ -207,6 +208,7 @@ public class StatusBarGoogle extends StatusBar {
             KeyguardUnlockAnimationController keyguardUnlockAnimationController,
             UnlockedScreenOffAnimationController unlockedScreenOffAnimationController,
             Optional<StartingSurface> startingSurfaceOptional,
+            TaskHelper taskHelper,
             FlashlightController flashlightController,
             BurnInProtectionController burnInProtectionController) {
         super(
@@ -299,6 +301,7 @@ public class StatusBarGoogle extends StatusBar {
             keyguardUnlockAnimationController,
             unlockedScreenOffAnimationController,
             startingSurfaceOptional,
+            taskHelper,
             flashlightController,
             burnInProtectionController);
     }
