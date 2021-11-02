@@ -600,6 +600,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 
             mNotificationShadeWindowController.setWallpaperSupportsAmbientMode(supportsAmbientMode);
             mScrimController.setWallpaperSupportsAmbientMode(supportsAmbientMode);
+            mKeyguardViewMediator.setWallpaperSupportsAmbientMode(supportsAmbientMode);
         }
     };
 
@@ -3960,7 +3961,8 @@ public class StatusBar extends SystemUI implements DemoMode,
     @Override
     public void onDozeAmountChanged(float linear, float eased) {
         if (mFeatureFlags.useNewLockscreenAnimations()
-                && !(mLightRevealScrim.getRevealEffect() instanceof CircleReveal)) {
+                && !(mLightRevealScrim.getRevealEffect() instanceof CircleReveal)
+                && !mBiometricUnlockController.isWakeAndUnlock()) {
             mLightRevealScrim.setRevealAmount(1f - linear);
         }
     }
