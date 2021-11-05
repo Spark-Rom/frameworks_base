@@ -997,6 +997,21 @@ public class UdfpsController implements DozeReceiver, UdfpsHbmProvider {
         }
     }
 
+    /**
+     * Callback for fingerUp and fingerDown events.
+     */
+    public interface Callback {
+        /**
+         * Called onFingerUp events. Will only be called if the finger was previously down.
+         */
+        void onFingerUp();
+
+        /**
+         * Called onFingerDown events.
+         */
+        void onFingerDown();
+    }
+
     @Override
     public void enableHbm(@HbmType int hbmType, @Nullable Surface surface,
             @Nullable Runnable onHbmEnabled) {
@@ -1012,20 +1027,5 @@ public class UdfpsController implements DozeReceiver, UdfpsHbmProvider {
         if (onHbmDisabled != null) {
             mMainHandler.post(onHbmDisabled);
         }
-    }
-
-    /**
-     * Callback for fingerUp and fingerDown events.
-     */
-    public interface Callback {
-        /**
-         * Called onFingerUp events. Will only be called if the finger was previously down.
-         */
-        void onFingerUp();
-
-        /**
-         * Called onFingerDown events.
-         */
-        void onFingerDown();
     }
 }
