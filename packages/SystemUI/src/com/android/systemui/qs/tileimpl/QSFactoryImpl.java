@@ -62,6 +62,7 @@ import com.android.systemui.qs.tiles.UsbTetherTile;
 import com.android.systemui.qs.tiles.FPSInfoTile;
 import com.android.systemui.qs.tiles.VolumeTile;
 import com.android.systemui.qs.tiles.MonoToggleTile;
+import com.android.systemui.qs.tiles.CompassTile;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -110,6 +111,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<FPSInfoTile> mFPSInfoTileProvider;
     private final Provider<VolumeTile> mVolumeTileProvider;
     private final Provider<MonoToggleTile> mMonoToggleTileProvider;
+    private final Provider<CompassTile> mCompassTileProvider;
 
     private final Lazy<QSHost> mQsHostLazy;
     private final Provider<CustomTile.Builder> mCustomTileBuilderProvider;
@@ -154,7 +156,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<SoundTile> soundTileProvider,
             Provider<FPSInfoTile> fpsInfoTileProvider,
             Provider<VolumeTile> volumeTileProvider,
-            Provider<MonoToggleTile> monoToggleTileProvider) {
+            Provider<MonoToggleTile> monoToggleTileProvider,
+            Provider<CompassTile> compassTileProvider) {
         mQsHostLazy = qsHostLazy;
         mCustomTileBuilderProvider = customTileBuilderProvider;
 
@@ -195,6 +198,7 @@ public class QSFactoryImpl implements QSFactory {
         mFPSInfoTileProvider = fpsInfoTileProvider;
         mVolumeTileProvider = volumeTileProvider;
         mMonoToggleTileProvider = monoToggleTileProvider;
+        mCompassTileProvider = compassTileProvider;
     }
 
     public QSTile createTile(String tileSpec) {
@@ -281,6 +285,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mVolumeTileProvider.get();
             case "mono":
                 return mMonoToggleTileProvider.get();
+            case "compass":
+                return mCompassTileProvider.get();
         }
 
         // Custom tiles
