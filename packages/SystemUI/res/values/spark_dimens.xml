@@ -27,4 +27,6 @@
 
     <!-- QQS Brightness slider -->
     <dimen name="quick_qs_brightness_margin_top">24dp</dimen>
+
+    <dimen name="status_bar_battery_icon_circle_width">13.5dp</dimen>
 </resources>
