@@ -21,7 +21,6 @@ import android.content.res.Resources
 import android.content.res.XmlResourceParser
 import android.graphics.Rect
 import android.testing.AndroidTestingRunner
-import android.view.Display
 import android.view.DisplayCutout
 import android.view.View
 import android.view.ViewPropertyAnimator
@@ -79,11 +78,9 @@ import org.mockito.Mockito.clearInvocations
 import org.mockito.Mockito.inOrder
 import org.mockito.Mockito.never
 import org.mockito.Mockito.reset
-import org.mockito.Mockito.same
-import org.mockito.Mockito.spy
 import org.mockito.Mockito.verify
-import org.mockito.junit.MockitoJUnit
 import org.mockito.Mockito.`when` as whenever
+import org.mockito.junit.MockitoJUnit
 
 private val EMPTY_CHANGES = ConstraintsChanges()
 
@@ -137,7 +134,6 @@ class LargeScreenShadeHeaderControllerCombinedTest : SysuiTestCase() {
 
     @Mock
     private lateinit var mockedContext: Context
-    private lateinit var viewContext: Context
     @Mock(answer = Answers.RETURNS_MOCKS)
     private lateinit var view: MotionLayout
 
@@ -148,7 +144,6 @@ class LargeScreenShadeHeaderControllerCombinedTest : SysuiTestCase() {
     @Mock
     private lateinit var largeScreenConstraints: ConstraintSet
     @Mock private lateinit var demoModeController: DemoModeController
-    @Mock private lateinit var qsBatteryModeController: QsBatteryModeController
     @Mock private lateinit var activityStarter: ActivityStarter
 
     @JvmField @Rule
@@ -182,8 +177,7 @@ class LargeScreenShadeHeaderControllerCombinedTest : SysuiTestCase() {
             .thenReturn(qsCarrierGroupControllerBuilder)
         whenever(qsCarrierGroupControllerBuilder.build()).thenReturn(qsCarrierGroupController)
 
-        viewContext = spy(context)
-        whenever(view.context).thenReturn(viewContext)
+        whenever(view.context).thenReturn(context)
         whenever(view.resources).thenReturn(context.resources)
         whenever(view.setVisibility(ArgumentMatchers.anyInt())).then {
             viewVisibility = it.arguments[0] as Int
@@ -213,7 +207,6 @@ class LargeScreenShadeHeaderControllerCombinedTest : SysuiTestCase() {
                 qsCarrierGroupControllerBuilder,
                 combinedShadeHeadersConstraintManager,
                 demoModeController,
-                qsBatteryModeController,
                 activityStarter,
         )
         whenever(view.isAttachedToWindow).thenReturn(true)
@@ -228,27 +221,11 @@ class LargeScreenShadeHeaderControllerCombinedTest : SysuiTestCase() {
 
         verify(batteryMeterViewController).init()
         verify(batteryMeterViewController).ignoreTunerUpdates()
+        verify(batteryMeterView).setPercentShowMode(BatteryMeterView.MODE_ESTIMATE)
 
         val inOrder = inOrder(qsCarrierGroupControllerBuilder)
         inOrder.verify(qsCarrierGroupControllerBuilder).setQSCarrierGroup(carrierGroup)
         inOrder.verify(qsCarrierGroupControllerBuilder).build()
-    }
-
-    @Test
-    fun `battery mode controller called when qsExpandedFraction changes`() {
-        whenever(qsBatteryModeController.getBatteryMode(same(null), eq(0f)))
-                .thenReturn(BatteryMeterView.MODE_ON)
-        whenever(qsBatteryModeController.getBatteryMode(same(null), eq(1f)))
-                .thenReturn(BatteryMeterView.MODE_ESTIMATE)
-        controller.qsVisible = true
-
-        val times = 10
-        repeat(times) {
-            controller.qsExpandedFraction = it / (times - 1).toFloat()
-        }
-
-        verify(batteryMeterView).setPercentShowMode(BatteryMeterView.MODE_ON)
-        verify(batteryMeterView).setPercentShowMode(BatteryMeterView.MODE_ESTIMATE)
     }
 
     @Test
@@ -710,11 +687,11 @@ class LargeScreenShadeHeaderControllerCombinedTest : SysuiTestCase() {
         configurationController.notifyDensityOrFontScaleChanged()
 
         val captor = ArgumentCaptor.forClass(XmlResourceParser::class.java)
-        verify(qqsConstraints).load(eq(viewContext), capture(captor))
+        verify(qqsConstraints).load(eq(context), capture(captor))
         assertThat(captor.value.getResId()).isEqualTo(R.xml.qqs_header)
-        verify(qsConstraints).load(eq(viewContext), capture(captor))
+        verify(qsConstraints).load(eq(context), capture(captor))
         assertThat(captor.value.getResId()).isEqualTo(R.xml.qs_header)
-        verify(largeScreenConstraints).load(eq(viewContext), capture(captor))
+        verify(largeScreenConstraints).load(eq(context), capture(captor))
         assertThat(captor.value.getResId()).isEqualTo(R.xml.large_screen_shade_header)
     }
 
@@ -812,13 +789,6 @@ class LargeScreenShadeHeaderControllerCombinedTest : SysuiTestCase() {
         whenever(insetsProvider.getStatusBarContentInsetsForCurrentRotation())
             .thenReturn(Pair(0, 0).toAndroidPair())
         whenever(insetsProvider.currentRotationHasCornerCutout()).thenReturn(false)
-        setupCurrentInsets(null)
-    }
-
-    private fun setupCurrentInsets(cutout: DisplayCutout?) {
-        val mockedDisplay =
-                mock<Display>().also { display -> whenever(display.cutout).thenReturn(cutout) }
-        whenever(viewContext.display).thenReturn(mockedDisplay)
     }
 
     private fun<T, U> Pair<T, U>.toAndroidPair(): android.util.Pair<T, U> {

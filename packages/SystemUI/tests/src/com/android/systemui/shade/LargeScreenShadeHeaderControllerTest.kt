@@ -77,7 +77,6 @@ class LargeScreenShadeHeaderControllerTest : SysuiTestCase() {
 
     @Mock private lateinit var mockedContext: Context
     @Mock private lateinit var demoModeController: DemoModeController
-    @Mock private lateinit var qsBatteryModeController: QsBatteryModeController
     @Mock private lateinit var activityStarter: ActivityStarter
 
     @JvmField @Rule val mockitoRule = MockitoJUnit.rule()
@@ -134,7 +133,6 @@ class LargeScreenShadeHeaderControllerTest : SysuiTestCase() {
                 qsCarrierGroupControllerBuilder,
                 combinedShadeHeadersConstraintManager,
                 demoModeController,
-                qsBatteryModeController,
                 activityStarter,
         )
         whenever(view.isAttachedToWindow).thenReturn(true)
