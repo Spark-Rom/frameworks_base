@@ -32,6 +32,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.UserHandle;
+import android.provider.Settings;
+import android.database.ContentObserver;
+import android.content.ContentResolver;
 import android.widget.Space;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -101,12 +108,13 @@ public class NavigationBarInflaterView extends FrameLayout
 
     private OverviewProxyService mOverviewProxyService;
     private int mNavBarMode = NAV_BAR_MODE_3BUTTON;
-
+    private CustomSettingsObserver mCustomSettingsObserver;
     public NavigationBarInflaterView(Context context, AttributeSet attrs) {
         super(context, attrs);
         createInflaters();
         mOverviewProxyService = Dependency.get(OverviewProxyService.class);
         mNavBarMode = Dependency.get(NavigationModeController.class).addListener(this);
+        mCustomSettingsObserver = new CustomSettingsObserver();
     }
 
     @VisibleForTesting
@@ -152,10 +160,18 @@ public class NavigationBarInflaterView extends FrameLayout
     }
 
     @Override
+    protected void onAttachedToWindow() {
+        mCustomSettingsObserver.observe();
+        super.onAttachedToWindow();
+    }
+
+    @Override
     protected void onDetachedFromWindow() {
+        mCustomSettingsObserver.stop();
         Dependency.get(NavigationModeController.class).removeListener(this);
         super.onDetachedFromWindow();
     }
+
 
     public void onLikelyDefaultLayoutChange() {
         // Reevaluate new layout
@@ -472,6 +488,33 @@ public class NavigationBarInflaterView extends FrameLayout
 
     private static float convertDpToPx(Context context, float dp) {
         return dp * context.getResources().getDisplayMetrics().density;
+    }
+
+    private class CustomSettingsObserver extends ContentObserver {
+
+        CustomSettingsObserver() {
+            super(new Handler(Looper.getMainLooper()));
+        }
+
+        void observe() {
+            final ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.GESTURE_NAVBAR_LENGTH),
+                    false, this, UserHandle.USER_ALL);
+        }
+
+        void stop() {
+            mContext.getContentResolver().unregisterContentObserver(this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.GESTURE_NAVBAR_LENGTH))) {
+                clearViews();
+                inflateLayout(getDefaultLayout());
+            }
+        }
     }
 
     public void dump(PrintWriter pw) {
