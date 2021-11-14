@@ -5591,6 +5591,14 @@ public final class Settings {
         public static final String DATA_DISABLED_ICON = "data_disabled_icon";
 
         /**
+         * Enable fod detection even when screen is off
+         * Default value is 0
+         * @hide
+         */
+        @Readable
+        public static final String SCREEN_OFF_FOD = "screen_off_fod";
+
+        /**
          * @hide
          * Whether to enable DOZE only when charging
          * @hide
