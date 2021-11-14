@@ -70,4 +70,7 @@
         <item>restart</item>
         <item>logout</item>
     </string-array>
+
+    <!-- Whether devices suports in-display fingerprint when screen is off -->
+    <bool name="config_supportsScreenOffUdfps">false</bool>
 </resources>

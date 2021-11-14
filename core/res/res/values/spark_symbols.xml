@@ -55,4 +55,7 @@
 
     <!-- Global Actions pref list -->
     <java-symbol type="array" name="custom_config_globalActionsList" />
+
+    <!-- Whether devices suports in-display fingerprint when screen is off -->
+    <java-symbol type="bool" name="config_supportsScreenOffUdfps" />
 </resources>
