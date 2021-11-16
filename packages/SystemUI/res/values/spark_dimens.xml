@@ -63,4 +63,8 @@
 
     <!-- FPSInfoService FPS Info text padding -->
     <dimen name="fps_info_text_padding">4dp</dimen>
+
+    <!-- Screenshot drawables -->
+    <dimen name="screenshot_border_corner_radius">24dp</dimen>
+    <dimen name="screenshot_preview_corner_radius">20dp</dimen>
 </resources>
