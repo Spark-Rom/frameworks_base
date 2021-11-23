@@ -230,7 +230,7 @@ public class SystemSettingsValidators {
                         return true;
                     }
                 });
-        VALIDATORS.put(System.VOLUME_DIALOG_TIMEOUT, NON_NEGATIVE_INTEGER_VALIDATOR);
+        VALIDATORS.put(System.VOLUME_DIALOG_TIMEOUT, new InclusiveIntegerRangeValidator(1, 7));
         VALIDATORS.put(System.NOTIFICATION_PULSE, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.AOD_NOTIFICATION_PULSE, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.NOTIFICATION_PULSE_COLOR_MODE, new InclusiveIntegerRangeValidator(0, 3));
