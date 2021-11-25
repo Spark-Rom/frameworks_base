@@ -89,6 +89,7 @@ public class SystemSettings {
         Settings.System.QS_FOOTER_TEXT_STRING,
         Settings.System.NOTIFICATION_HEADERS,
         Settings.System.SCREEN_OFF_FOD,
+        Settings.System.FULLSCREEN_GESTURES,
         Settings.System.VOLUME_BUTTON_MUSIC_CONTROL_DELAY,
         Settings.System.RINGTONE_VIBRATION_PATTERN,
         Settings.System.CUSTOM_RINGTONE_VIBRATION_PATTERN,
