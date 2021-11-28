@@ -5976,6 +5976,18 @@ public final class Settings {
         public static final String NOTIFICATION_MATERIAL_DISMISS = "notification_material_dismiss";
 
         /**
+         * Whether to add left padding on statusbar
+         * @hide
+         */
+        public static final String STATUSBAR_LEFT_PADDING = "statusbar_left_padding";
+
+        /**
+         * Whether to add right padding on statusbar
+         * @hide
+         */
+        public static final String STATUSBAR_RIGHT_PADDING = "statusbar_right_padding";
+
+        /**
          * Status bar carrier label
          * 0: Hide
          * 1: Display on keyguard status bar

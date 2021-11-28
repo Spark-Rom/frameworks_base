@@ -110,4 +110,23 @@
     <!-- Defines custom OEM sensor for pocket detection. -->
     <string name="config_pocketJudgeVendorSensorName"></string>
 
+    <!-- Statusbar Left-Right padding defaults -->
+    <integer name="config_statusbarPaddingStartDef">8</integer>
+    <integer name="config_statusbarPaddingEndDef">8</integer>
+
+    <!-- Global Actions prefs list -->
+    <string-array translatable="false" name="custom_config_globalActionsList">
+        <item>emergency</item>
+        <item>power</item>
+        <item>restart</item>
+        <item>advanced</item>
+        <item>logout</item>
+        <item>users</item>
+        <item>silent</item>
+        <item>screenshot</item>
+        <item>airplane</item>
+        <item>settings</item>
+        <item>lockdown</item>
+        <item>torch</item>
+    </string-array>
 </resources>

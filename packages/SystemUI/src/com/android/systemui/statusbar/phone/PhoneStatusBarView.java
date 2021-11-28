@@ -37,7 +37,9 @@ import android.view.ViewGroup;
 import android.view.WindowInsets;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.LinearLayout;
-
+import android.util.TypedValue;
+import com.android.systemui.tuner.TunerService;
+import android.provider.Settings;
 import com.android.systemui.Dependency;
 import com.android.systemui.EventLogTags;
 import com.android.systemui.R;
@@ -49,17 +51,24 @@ import com.android.systemui.util.leak.RotationUtils;
 import java.util.List;
 import java.util.Objects;
 
-public class PhoneStatusBarView extends PanelBar {
+public class PhoneStatusBarView extends PanelBar implements TunerService.Tunable {
     private static final String TAG = "PhoneStatusBarView";
     private static final boolean DEBUG = StatusBar.DEBUG;
     private static final boolean DEBUG_GESTURES = false;
     private final CommandQueue mCommandQueue;
     private final StatusBarContentInsetsProvider mContentInsetsProvider;
 
-    private int mBasePaddingBottom;
-    private int mBasePaddingLeft;
-    private int mBasePaddingRight;
+    private static final String LEFT_PADDING =
+            "system:" + Settings.System.STATUSBAR_LEFT_PADDING;
+    private static final String RIGHT_PADDING =
+            "system:" + Settings.System.STATUSBAR_RIGHT_PADDING;
+
+    private int mLeftPad;
+    private int mRightPad;
+    private int mLeftPadDef;
+    private int mRightPadDef;
     private int mBasePaddingTop;
+    private int mBasePaddingBottom;
 
     private ViewGroup mStatusBarContents;
 
@@ -122,9 +131,9 @@ public class PhoneStatusBarView extends PanelBar {
         }
 
         mStatusBarContents.setPaddingRelative(
-            mBasePaddingLeft + horizontalShift,
+            mLeftPad + horizontalShift,
             mBasePaddingTop + verticalShift,
-            mBasePaddingRight + horizontalShift,
+            mRightPad + horizontalShift,
             mBasePaddingBottom - verticalShift
         );
         invalidate();
@@ -139,11 +148,13 @@ public class PhoneStatusBarView extends PanelBar {
         mCutoutSpace = findViewById(R.id.cutout_space_view);
         mCenterIconSpace = findViewById(R.id.centered_icon_area);
         mStatusBarContents = (ViewGroup) findViewById(R.id.status_bar_contents);
-
-        mBasePaddingLeft = mStatusBarContents.getPaddingStart();
         mBasePaddingTop = mStatusBarContents.getPaddingTop();
-        mBasePaddingRight = mStatusBarContents.getPaddingEnd();
         mBasePaddingBottom = mStatusBarContents.getPaddingBottom();
+        mLeftPadDef = getResources().getInteger(com.android.internal.R.integer.config_statusbarPaddingStartDef);
+        mRightPadDef = getResources().getInteger(com.android.internal.R.integer.config_statusbarPaddingEndDef);
+        Dependency.get(TunerService.class).addTunable(this,
+                LEFT_PADDING,
+                RIGHT_PADDING);
 
         updateResources();
     }
@@ -362,13 +373,13 @@ public class PhoneStatusBarView extends PanelBar {
 
         View sbContents = findViewById(R.id.status_bar_contents);
         sbContents.setPaddingRelative(
-                statusBarPaddingStart,
+                (int) mLeftPad,
                 statusBarPaddingTop,
-                statusBarPaddingEnd,
+                (int) mRightPad,
                 0);
 
         findViewById(R.id.notification_lights_out)
-                .setPaddingRelative(0, statusBarPaddingStart, 0, 0);
+                .setPaddingRelative(0, (int) mLeftPad, 0, 0);
 
         setLayoutParams(layoutParams);
     }
@@ -426,5 +437,22 @@ public class PhoneStatusBarView extends PanelBar {
     @Override
     protected boolean shouldPanelBeVisible() {
         return mHeadsUpVisible || super.shouldPanelBeVisible();
+    }
+
+    @Override
+    public void onTuningChanged(String key, String newValue) {
+        if (LEFT_PADDING.equals(key)) {
+            int LeftPadding = TunerService.parseInteger(newValue, mLeftPadDef);
+            mLeftPad = Math.round(TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, LeftPadding,
+                getResources().getDisplayMetrics()));
+            updateStatusBarHeight();
+        } else if (RIGHT_PADDING.equals(key)) {
+            int RightPadding = TunerService.parseInteger(newValue, mRightPadDef);
+            mRightPad = Math.round(TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, RightPadding,
+                getResources().getDisplayMetrics()));
+            updateStatusBarHeight();
+        }
     }
 }

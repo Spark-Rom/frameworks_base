@@ -109,4 +109,8 @@
 
     <!-- Global Actions pref list -->
     <java-symbol type="array" name="custom_config_globalActionsList" />
+
+  <!-- Statusbar Left-Right padding -->
+  <java-symbol type="integer" name="config_statusbarPaddingStartDef" />
+  <java-symbol type="integer" name="config_statusbarPaddingEndDef" />
 </resources>
