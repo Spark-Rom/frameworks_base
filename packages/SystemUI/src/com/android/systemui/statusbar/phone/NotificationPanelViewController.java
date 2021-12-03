@@ -759,6 +759,8 @@ public class NotificationPanelViewController extends PanelViewController impleme
         }
     };
 
+    private boolean mBlockedGesturalNavigation = false;
+
     @Inject
     public NotificationPanelViewController(NotificationPanelView view,
             @Main Resources resources,
@@ -4620,6 +4622,10 @@ public class NotificationPanelViewController extends PanelViewController impleme
         mContentResolver.unregisterContentObserver(mSettingsChangeObserver);
     }
 
+    public void setBlockedGesturalNavigation(boolean blocked) {
+        mBlockedGesturalNavigation = blocked;
+    }
+
     /**
      * Updates notification panel-specific flags on {@link SysUiState}.
      */
@@ -4630,7 +4636,8 @@ public class NotificationPanelViewController extends PanelViewController impleme
         }
         mSysUiState.setFlag(SYSUI_STATE_NOTIFICATION_PANEL_EXPANDED,
                 isFullyExpanded() && !isInSettings())
-                .setFlag(SYSUI_STATE_QUICK_SETTINGS_EXPANDED, isInSettings())
+                .setFlag(SYSUI_STATE_QUICK_SETTINGS_EXPANDED,
+                    mBlockedGesturalNavigation || isInSettings())
                 .commitUpdate(mDisplayId);
     }
 
