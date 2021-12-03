@@ -237,4 +237,5 @@ interface IStatusBarService
     void cancelPreloadRecentApps();
     void killForegroundApp();
     void startAssist(in Bundle args);
+    void setBlockedGesturalNavigation(boolean blocked);
 }
