@@ -1513,7 +1513,7 @@ public class StatusBar extends SystemUI implements
 
     public void updateDismissAllVisibility(boolean visible) {
         if (mDismissAllButton != null) {
-        if (!mShowDimissButton && !mClearableNotifications || !visible || mState == StatusBarState.KEYGUARD || mQSPanelController.isExpanded()) {
+        if (!mShowDimissButton || !mClearableNotifications || !visible || mState == StatusBarState.KEYGUARD || mQSPanelController.isExpanded()) {
                 mDismissAllButton.setAlpha(0);
                 mDismissAllButton.getBackground().setAlpha(0);
                 mDismissAllButton.setVisibility(View.GONE);
