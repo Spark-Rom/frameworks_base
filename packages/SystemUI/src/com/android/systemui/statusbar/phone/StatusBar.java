@@ -4509,6 +4509,16 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     };
 
+    private void setHeadsUpStoplist() {
+        if (mNotificationInterruptStateProvider != null)
+            mNotificationInterruptStateProvider.setHeadsUpStoplist();
+    }
+
+    private void setHeadsUpBlacklist() {
+        if (mNotificationInterruptStateProvider != null)
+            mNotificationInterruptStateProvider.setHeadsUpBlacklist();
+    }
+
     public int getWakefulnessState() {
         return mWakefulnessLifecycle.getWakefulness();
     }
@@ -4896,10 +4906,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.DOUBLE_TAP_SLEEP_GESTURE),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.HEADS_UP_STOPLIST_VALUES), false, this);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.HEADS_UP_BLACKLIST_VALUES), false, this);
-            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -4919,6 +4925,12 @@ public class StatusBar extends SystemUI implements DemoMode,
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LESS_BORING_HEADS_UP),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HEADS_UP_STOPLIST_VALUES),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HEADS_UP_BLACKLIST_VALUES),
                     false, this, UserHandle.USER_ALL);
         }
 
@@ -4945,20 +4957,25 @@ public class StatusBar extends SystemUI implements DemoMode,
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL)) ||
                 uri.equals(Settings.System.getUriFor(Settings.System.SCREEN_BRIGHTNESS_MODE))) {
                 setScreenBrightnessMode();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.HEADS_UP_STOPLIST_VALUES))) {
+                setHeadsUpStoplist();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.HEADS_UP_BLACKLIST_VALUES))) {
+                setHeadsUpBlacklist();
             }
-            update();
         }
 
         public void update() {
             setDoubleTapToSleepGesture();
-            setHeadsUpStoplist();
-            setHeadsUpBlacklist();
             setStatusBarWindowViewOptions();
             setLockScreenMediaBlurLevel();
             setLockScreenMediaArt();
             setQsPanelOptions();
             setScreenBrightnessMode();
             setUseLessBoringHeadsUp();
+            setHeadsUpStoplist();
+            setHeadsUpBlacklist();
         }
     }
 
@@ -4966,16 +4983,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         if (mNotificationShadeWindowViewController != null) {
             mNotificationShadeWindowViewController.setDoubleTapToSleepGesture();
         }
-    }
-
-    private void setHeadsUpStoplist() {
-        if (mPresenter != null)
-            mPresenter.setHeadsUpStoplist();
-    }
-
-    private void setHeadsUpBlacklist() {
-        if (mPresenter != null)
-            mPresenter.setHeadsUpBlacklist();
     }
 
     private void setStatusBarWindowViewOptions() {
