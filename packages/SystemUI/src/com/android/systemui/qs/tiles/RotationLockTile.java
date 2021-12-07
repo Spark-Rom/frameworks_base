@@ -81,7 +81,7 @@ public class RotationLockTile extends QSTileImpl<BooleanState> implements
             SecureSettings secureSettings
     ) {
         super(host, backgroundLooper, mainHandler, falsingManager, metricsLogger,
-                statusBarStateController, activityStarter, qsLogger, keyguardStateController);
+                statusBarStateController, activityStarter, qsLogger);
         mController = rotationLockController;
         mController.observe(this, mCallback);
         mPrivacyManager = privacyManager;
@@ -120,11 +120,7 @@ public class RotationLockTile extends QSTileImpl<BooleanState> implements
     }
 
     @Override
-    protected void handleClick(@Nullable View view, boolean keyguardShowing) {
-        if (checkKeyguard(view, keyguardShowing)) {
-            return;
-        }
-
+    protected void handleClick(@Nullable View view) {
         final boolean newState = !mState.value;
         mController.setRotationLocked(!newState);
         refreshState(newState);
