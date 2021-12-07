@@ -58,9 +58,9 @@ public final class SingleKeyGestureDetector {
     private final Handler mHandler;
     private static final long MULTI_PRESS_TIMEOUT = ViewConfiguration.getMultiPressTimeout();
 
-    static final int TORCH_DOUBLE_TAP_DELAY = 170;
+    private static final int TORCH_DOUBLE_TAP_DELAY = 170;
 
-    private Context mContext;
+    private final Context mContext;
 
     /** Supported gesture flags */
     public static final int KEY_LONGPRESS = 1 << 1;
@@ -181,9 +181,6 @@ public final class SingleKeyGestureDetector {
 
     public SingleKeyGestureDetector(Context context) {
         mContext = context;
-        mLongPressTimeout = ViewConfiguration.get(context).getDeviceGlobalActionKeyTimeout();
-        mVeryLongPressTimeout = context.getResources().getInteger(
-                com.android.internal.R.integer.config_veryLongPressTimeout);
         mHandler = new KeyHandler();
     }
 

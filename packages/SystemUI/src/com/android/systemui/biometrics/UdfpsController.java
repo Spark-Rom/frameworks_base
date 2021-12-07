@@ -123,6 +123,7 @@ public class UdfpsController implements DozeReceiver, UdfpsHbmProvider {
     @NonNull private final DumpManager mDumpManager;
     @NonNull private final KeyguardUpdateMonitor mKeyguardUpdateMonitor;
     @Nullable private final Vibrator mVibrator;
+    @NonNull private final Handler mMainHandler;
     @NonNull private final FalsingManager mFalsingManager;
     @NonNull private final PowerManager mPowerManager;
     @NonNull private final AccessibilityManager mAccessibilityManager;
@@ -166,7 +167,6 @@ public class UdfpsController implements DozeReceiver, UdfpsHbmProvider {
     private boolean mOnFingerDown;
     private boolean mAttemptedToDismissKeyguard;
     private Set<Callback> mCallbacks = new HashSet<>();
-
     private final int mUdfpsVendorCode;
     private final SystemSettings mSystemSettings;
     private boolean mScreenOffFod;
@@ -327,7 +327,7 @@ public class UdfpsController implements DozeReceiver, UdfpsHbmProvider {
                 if (acquiredInfo == 6 && vendorCode == mUdfpsVendorCode) {
                     if ((mScreenOffFod && isDozing) /** Screen off and dozing */ ||
                             (mKeyguardUpdateMonitor.isDreaming() && mScreenOn) /** AOD or pulse */) {
-                        mPowerManager.wakeUp(SystemClock.uptimeMillis(),
+                        mPowerManager.wakeUp(mSystemClock.uptimeMillis(),
                                 PowerManager.WAKE_REASON_GESTURE, TAG);
                         onAodInterrupt(0, 0, 0, 0);
                     }
@@ -566,8 +566,8 @@ public class UdfpsController implements DozeReceiver, UdfpsHbmProvider {
             @NonNull UnlockedScreenOffAnimationController unlockedScreenOffAnimationController) {
         mContext = context;
         mExecution = execution;
-        // TODO (b/185124905): inject main handler and vibrator once done prototyping
         mVibrator = vibrator;
+        mMainHandler = mainHandler;
         mInflater = inflater;
         // The fingerprint manager is queried for UDFPS before this class is constructed, so the
         // fingerprint manager should never be null.
@@ -622,6 +622,7 @@ public class UdfpsController implements DozeReceiver, UdfpsHbmProvider {
         context.registerReceiver(mBroadcastReceiver, filter);
 
         udfpsHapticsSimulator.setUdfpsController(this);
+
         mUdfpsVendorCode = mContext.getResources().getInteger(R.integer.config_udfps_vendor_code);
         mSystemSettings = systemSettings;
         updateScreenOffFodState();
@@ -1058,21 +1059,6 @@ public class UdfpsController implements DozeReceiver, UdfpsHbmProvider {
         }
     }
 
-    /**
-     * Callback for fingerUp and fingerDown events.
-     */
-    public interface Callback {
-        /**
-         * Called onFingerUp events. Will only be called if the finger was previously down.
-         */
-        void onFingerUp();
-
-        /**
-         * Called onFingerDown events.
-         */
-        void onFingerDown();
-    }
-
     @Override
     public void enableHbm(@HbmType int hbmType, @Nullable Surface surface,
             @Nullable Runnable onHbmEnabled) {
@@ -1088,5 +1074,20 @@ public class UdfpsController implements DozeReceiver, UdfpsHbmProvider {
         if (onHbmDisabled != null) {
             mMainHandler.post(onHbmDisabled);
         }
+    }
+
+    /**
+     * Callback for fingerUp and fingerDown events.
+     */
+    public interface Callback {
+        /**
+         * Called onFingerUp events. Will only be called if the finger was previously down.
+         */
+        void onFingerUp();
+
+        /**
+         * Called onFingerDown events.
+         */
+        void onFingerDown();
     }
 }
