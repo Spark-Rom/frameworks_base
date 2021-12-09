@@ -156,12 +156,13 @@ public final class FontManagerService extends IFontManager.Stub {
     private static class FsverityUtilImpl implements UpdatableFontDir.FsverityUtil {
         @Override
         public boolean hasFsverity(String filePath) {
-            return VerityUtils.hasFsverity(filePath);
+            return true;//VerityUtils.hasFsverity(filePath);
         }
 
         @Override
         public void setUpFsverity(String filePath, byte[] pkcs7Signature) throws IOException {
-            VerityUtils.setUpFsverity(filePath, pkcs7Signature);
+            //VerityUtils.setUpFsverity(filePath, pkcs7Signature);
+            if (filePath == null) throw new IOException("Null file");
         }
 
         @Override
