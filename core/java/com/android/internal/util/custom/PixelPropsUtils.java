@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2020 The Pixel Experience Project
+ *               2021 AOSP-Krypton Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,144 +19,132 @@ package com.android.internal.util.custom;
 import android.os.Build;
 import android.util.Log;
 
-import java.util.Arrays;
 import java.lang.reflect.Field;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class PixelPropsUtils {
+public final class PixelPropsUtils {
 
-    private static final String TAG = PixelPropsUtils.class.getSimpleName();
+    private static final String TAG = "PixelPropsUtils";
     private static final boolean DEBUG = false;
 
-    private static final Map<String, Object> propsToChangeLatest;
-    private static final Map<String, Object> propsToChangePixelXL;
-    private static final Map<String, Object> propsToChangePixel3XL;
+    private static final Map<String, Object> commonProps = Map.of(
+        "BRAND", "google",
+        "MANUFACTURER", "Google",
+        "IS_DEBUGGABLE", false,
+        "IS_ENG", false,
+        "IS_USERDEBUG", false,
+        "IS_USER", true,
+        "TYPE", "user"
+    );
 
-    private static final String[] packagesToChange = {
-            "com.android.vending",
-            "com.breel.wallpapers20",
-            "com.google.android.apps.customization.pixel",
-            "com.google.android.apps.fitness",
-            "com.google.android.apps.recorder",
-            "com.google.android.apps.subscriptions.red",
-            "com.google.android.apps.tachyon",
-            "com.google.android.apps.turboadapter",
-            "com.google.android.apps.wallpaper.pixel",
-            "com.google.android.as",
-            "com.google.android.dialer",
-            "com.google.android.deskclock",
-            "com.google.android.apps.youtube.music",
-            "com.google.android.apps.podcasts",
-            "com.google.android.apps.nbu.files",
-            "com.google.android.contacts",
-            "com.google.android.apps.messaging",
-            "com.google.android.gms.location.history",
-            "com.google.android.inputmethod.latin",
-            "com.google.android.soundpicker",
-            "com.google.pixel.dynamicwallpapers",
-            "com.google.pixel.livewallpaper",
-            "com.google.android.apps.safetyhub",
-            "com.google.android.apps.turbo",
-            "com.google.android.apps.wallpaper",
-            "com.google.android.apps.googleassistant",
-            "com.google.android.apps.maps",
-            "com.google.android.gms",
-            "com.google.android.apps.nexuslauncher",
-            "com.android.chrome",
-            "com.google.android.apps.maps",
-            "com.google.android.apps.docs",
-            "com.google.android.gm",
-            "com.google.android.apps.translate",
-            "com.google.android.apps.meetings",
-            "com.google.android.calendar",
-            "com.google.ar.lens",
-            "com.google.android.keep",
-	    "com.google.android.calculator"
-    };
+    private static final Map<String, String> ravenProps = Map.of(
+        "DEVICE", "raven",
+        "PRODUCT", "raven",
+        "MODEL", "Pixel 6 Pro",
+        "FINGERPRINT", "google/raven/raven:12/SD1A.210817.036/7805805:user/release-keys"
+     );
 
-    private static final String[] packagesToChangePixelXL = {
-            "com.google.android.apps.photos"
-    };
+    private static final Map<String, String> redfinProps = Map.of(
+        "DEVICE", "redfin",
+        "PRODUCT", "redfin",
+        "MODEL", "Pixel 5",
+        "FINGERPRINT", "google/redfin/redfin:12/SQ1A.211205.008/7888514:user/release-keys"
+    );
 
-    private static final String[] packagesToChangePixel3XL = {
-            "com.google.android.googlequicksearchbox"
-    };
+    private static final Map<String, String> marlinProps = Map.of(
+        "DEVICE", "marlin",
+        "PRODUCT", "marlin",
+        "MODEL", "Pixel XL",
+        "FINGERPRINT", "google/marlin/marlin:10/QP1A.191005.007.A3/5972272:user/release-keys"
+    );
 
-    static {
-        propsToChangeLatest = new HashMap<>();
-        propsToChangeLatest.put("BRAND", "google");
-        propsToChangeLatest.put("MANUFACTURER", "Google");
-        propsToChangeLatest.put("DEVICE", "raven");
-        propsToChangeLatest.put("PRODUCT", "raven");
-        propsToChangeLatest.put("MODEL", "Pixel 6 Pro");
-        propsToChangeLatest.put("FINGERPRINT", "google/raven/raven:12/SD1A.210817.036/7805805:user/release-keys");
-        propsToChangePixelXL = new HashMap<>();
-        propsToChangePixelXL.put("BRAND", "google");
-        propsToChangePixelXL.put("MANUFACTURER", "Google");
-        propsToChangePixelXL.put("DEVICE", "marlin");
-        propsToChangePixelXL.put("PRODUCT", "marlin");
-        propsToChangePixelXL.put("MODEL", "Pixel XL");
-        propsToChangePixelXL.put("FINGERPRINT", "google/marlin/marlin:10/QP1A.191005.007.A3/5972272:user/release-keys");
-        propsToChangePixel3XL = new HashMap<>();
-        propsToChangePixel3XL.put("BRAND", "google");
-        propsToChangePixel3XL.put("MANUFACTURER", "Google");
-        propsToChangePixel3XL.put("DEVICE", "crosshatch");
-        propsToChangePixel3XL.put("PRODUCT", "crosshatch");
-        propsToChangePixel3XL.put("MODEL", "Pixel 3 XL");
-        propsToChangePixel3XL.put("FINGERPRINT", "google/crosshatch/crosshatch:12/SP1A.210812.015/7679548:user/release-keys");
-    }
+    private static final List<String> packagesToChange = List.of(
+        "com.android.vending",
+        "com.google.android.apps.fitness",
+        "com.google.android.apps.gcs",
+        "com.google.android.apps.safetyhub",
+        "com.google.android.apps.subscriptions.red",
+        "com.google.android.apps.tachyon",
+        "com.google.android.apps.turbo",
+        "com.google.android.apps.turboadapter",
+        "com.google.android.apps.wallpaper",
+        "com.google.android.apps.wallpaper.pixel",
+        "com.google.android.as",
+        "com.google.android.configupdater",
+        "com.google.android.ext.services",
+        "com.google.android.gms",
+        "com.google.android.gms.location.history",
+        "com.google.android.gsf",
+        "com.google.intelligence.sense",
+        "com.google.pixel.dynamicwallpapers",
+        "com.google.pixel.livewallpaper"
+    );
+
+    private static final List<String> packagesToChangePixel6 = List.of(
+        "com.google.android.soundpicker",
+        "com.google.android.inputmethod.latin",
+        "com.google.android.dialer",
+        "com.google.android.apps.translate",
+        "com.google.android.apps.maps",
+        "com.google.android.googlequicksearchbox",
+        "com.google.android.apps.recorder",
+        "com.google.android.apps.nexuslauncher",
+        "com.google.android.apps.messaging",
+        "com.google.android.apps.pixelmigrate",
+        "com.breel.wallpapers20",
+        "com.google.android.apps.customization.pixel",
+        "com.google.android.apps.wellbeing"
+    );
+
+    private static final List<String> packagesToChangePixelXL = List.of(
+        "com.google.android.apps.photos",
+        "com.samsung.accessory.berrymgr",
+        "com.samsung.accessory.fridaymgr",
+        "com.samsung.accessory.neobeanmgr",
+        "com.samsung.android.app.watchmanager",
+        "com.samsung.android.geargplugin",
+        "com.samsung.android.gearnplugin",
+        "com.samsung.android.modenplugin",
+        "com.samsung.android.neatplugin",
+        "com.samsung.android.waterplugin"
+    );
 
     public static void setProps(String packageName) {
-        if (packageName == null){
+        if (packageName == null) {
             return;
         }
-        if (Arrays.asList(packagesToChange).contains(packageName)){
-            if (DEBUG){
-                Log.d(TAG, "Defining props for: " + packageName);
-            }
-            for (Map.Entry<String, Object> prop : propsToChangeLatest.entrySet()) {
-                String key = prop.getKey();
-                Object value = prop.getValue();
-                // Don't set model if gms
-                if (packageName.equals("com.google.android.gms") && key.equals("MODEL")){
-                    continue;
+        if (DEBUG) {
+            Log.d(TAG, "Package = " + packageName);
+        }
+        if (packagesToChange.contains(packageName)) {
+            commonProps.forEach(PixelPropsUtils::setPropValue);
+            redfinProps.forEach((key, value) -> {
+                if (packageName.equals("com.google.android.gms") && key.equals("MODEL")) {
+                    return;
+                } else {
+                    setPropValue(key, value);
                 }
-                setPropValue(key, value);
-            }
-        }
-        if (Arrays.asList(packagesToChangePixelXL).contains(packageName)){
-            if (DEBUG){
-                Log.d(TAG, "Defining props for: " + packageName);
-            }
-            for (Map.Entry<String, Object> prop : propsToChangePixelXL.entrySet()) {
-                String key = prop.getKey();
-                Object value = prop.getValue();
-                setPropValue(key, value);
-            }
-        }
-        if (Arrays.asList(packagesToChangePixel3XL).contains(packageName)){
-            if (DEBUG){
-                Log.d(TAG, "Defining props for: " + packageName);
-            }
-            for (Map.Entry<String, Object> prop : propsToChangePixel3XL.entrySet()) {
-                String key = prop.getKey();
-                Object value = prop.getValue();
-                setPropValue(key, value);
-            }
+            });
+        } else if (packagesToChangePixelXL.contains(packageName)) {
+            commonProps.forEach(PixelPropsUtils::setPropValue);
+            marlinProps.forEach(PixelPropsUtils::setPropValue);
+        } else if (packagesToChangePixel6.contains(packageName)) {
+            commonProps.forEach(PixelPropsUtils::setPropValue);
+            ravenProps.forEach(PixelPropsUtils::setPropValue);
         }
         // Set proper indexing fingerprint
-        if (packageName.equals("com.google.android.settings.intelligence")){
+        if (packageName.equals("com.google.android.settings.intelligence")) {
             setPropValue("FINGERPRINT", Build.DATE);
         }
     }
 
-    private static void setPropValue(String key, Object value){
+    private static void setPropValue(String key, Object value) {
         try {
-            if (DEBUG){
-                Log.d(TAG, "Defining prop " + key + " to " + value.toString());
+            if (DEBUG) {
+                Log.d(TAG, "Setting prop " + key + " to " + value);
             }
-            Field field = Build.class.getDeclaredField(key);
+            final Field field = Build.class.getDeclaredField(key);
             field.setAccessible(true);
             field.set(null, value);
             field.setAccessible(false);
