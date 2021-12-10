@@ -332,6 +332,7 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
     public static final int RELAUNCH_REASON_FREE_RESIZE = 2;
 
     Context mContext;
+    AppLockService mAppLockService;
 
     /**
      * This Context is themable and meant for UI display (AlertDialogs, etc.). The theme can
@@ -817,6 +818,7 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
             mTaskSupervisor.onSystemReady();
             mActivityClientController.onSystemReady();
         }
+        mAppLockService = LocalServices.getService(AppLockService.class);
     }
 
     public void onInitPowerManagement() {
@@ -1708,11 +1710,58 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
             Binder.restoreCallingIdentity(origId);
         }
     }
+  
+    @Override
+    public final void activityResumed(IBinder token) {
+        final long origId = Binder.clearCallingIdentity();
+        final ActivityRecord r = ActivityRecord.isInRootTaskLocked(token);
+        if (r != null) {
+            if (mAppLockService != null) {
+                mAppLockService.setForegroundApp(r.packageName);
+            }
+            if (isAppLocked(r.packageName)) {
+                mAppLockService.setAppIntent(r.packageName, r.intent);
+            }
+        }
+        synchronized (mGlobalLock) {
+            ActivityRecord.activityResumedLocked(token,0);
+        }
+        Binder.restoreCallingIdentity(origId);
+    }
 
+    @Override
+    public final void activityPaused(IBinder token) {
+        final long origId = Binder.clearCallingIdentity();
+        synchronized (mGlobalLock) {
+            Trace.traceBegin(TRACE_TAG_WINDOW_MANAGER, "activityPaused");
+            final ActivityRecord r = ActivityRecord.forTokenLocked(token);
+            if (r != null) {
+                r.activityPaused(false);
+                if (isAppLocked(r.packageName)) {
+                    mAppLockService.activityStopped(r.packageName, r.intent);
+                }
+            }
+            Trace.traceEnd(TRACE_TAG_WINDOW_MANAGER);
+        }
+        Binder.restoreCallingIdentity(origId);
+    }
+
+    
     @Override
     public final int startActivityFromRecents(int taskId, Bundle bOptions) {
         mAmInternal.enforceCallingPermission(START_TASKS_FROM_RECENTS,
                 "startActivityFromRecents()");
+
+        final Task task = mRootWindowContainer.anyTaskForId(taskId);
+        final ActivityRecord r = task.getRootActivity();
+        if (r != null) {
+            if (isAppLocked(r.packageName) && !isAppOpened(r.packageName)) {
+                mAppLockService.setAppIntent(r.packageName, r.intent);
+                mAppLockService.setStartingFromRecents();
+                mAppLockService.launchBeforeActivity(r.packageName);
+                return ActivityManager.START_SWITCHES_CANCELED;
+            }
+        }
 
         final int callingPid = Binder.getCallingPid();
         final int callingUid = Binder.getCallingUid();
@@ -2741,6 +2790,10 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
                     + android.Manifest.permission.DEVICE_POWER);
         }
 
+        if (mAppLockService != null) {
+            mAppLockService.setKeyguardShown(keyguardShowing);
+        }
+
         synchronized (mGlobalLock) {
             final long ident = Binder.clearCallingIdentity();
             if (mKeyguardShown != keyguardShowing) {
@@ -3433,6 +3486,21 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
     public IWindowOrganizerController getWindowOrganizerController() {
         enforceTaskPermission("getWindowOrganizerController()");
         return mWindowOrganizerController;
+    }
+
+    boolean isAppLocked(String packageName) {
+        if (mAppLockService == null || packageName == null) return false;
+        return mAppLockService.isAppLocked(packageName);
+    }
+
+    boolean isAppOpened(String packageName) {
+        if (mAppLockService == null || packageName == null) return true;
+        return mAppLockService.isAppOpen(packageName);
+    }
+
+    boolean isAlarmOrCallIntent(Intent intent) {
+        if (mAppLockService == null) return false;
+        return mAppLockService.isAlarmOrCallIntent(intent);
     }
 
     /**

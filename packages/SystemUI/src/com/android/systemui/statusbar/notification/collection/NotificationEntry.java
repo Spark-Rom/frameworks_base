@@ -40,6 +40,8 @@ import android.app.Notification.MessagingStyle.Message;
 import android.app.NotificationChannel;
 import android.app.NotificationManager.Policy;
 import android.app.Person;
+import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.app.RemoteInput;
 import android.content.Context;
 import android.content.pm.ShortcutInfo;
@@ -97,6 +99,10 @@ public final class NotificationEntry extends ListEntry {
     private final String mKey;
     private StatusBarNotification mSbn;
     private Ranking mRanking;
+
+    private boolean mAppOpen;
+    private boolean mIsAppLocked;
+    private boolean mIsAlarmOrCall;
 
     /*
      * Bookkeeping members
@@ -213,6 +219,7 @@ public final class NotificationEntry extends ListEntry {
         mKey = sbn.getKey();
         setSbn(sbn);
         setRanking(ranking);
+        updateIsAlarmOrCall();
 
         mAllowFgsDismissal = allowFgsDismissal;
     }
@@ -420,6 +427,52 @@ public final class NotificationEntry extends ListEntry {
     public ExpandableNotificationRow getRow() {
         return row;
     }
+
+    public void setAppLocked(boolean appLocked) {
+        mIsAppLocked = appLocked;
+    }
+
+    public void onAppStateChanged(boolean open) {
+        if (mAppOpen != open) {
+            mAppOpen = open;
+            if (rowExists()) {
+                row.onAppStateChanged();
+            }
+        }
+    }
+
+    public boolean isAppLocked() {
+        return mIsAppLocked;
+    }
+
+    public boolean secureContent() {
+        return mIsAppLocked && !mAppOpen && !mIsAlarmOrCall;
+    }
+
+    private void updateIsAlarmOrCall() {
+        PendingIntent intent = mSbn.getNotification().contentIntent;
+        if (intent == null) {
+            mIsAlarmOrCall = false;
+            return;
+        }
+
+        ComponentName cmp = intent.getIntent().getComponent();
+        if (cmp != null) {
+            String intentClassName = cmp.getClassName().toLowerCase();
+            mIsAlarmOrCall = intentClassName.contains("callactivity")
+                                || intentClassName.contains("callingactivity")
+                                || intentClassName.contains("voipactivity")
+                                || intentClassName.contains("alarmactivity");
+        } else {
+            intent = mSbn.getNotification().fullScreenIntent;
+            if (intent != null) {
+                mIsAlarmOrCall = true;
+            } else {
+                mIsAlarmOrCall = false;
+            }
+        }
+    }
+
 
     //TODO: This will go away when we have a way to bind an entry to a row
     public void setRow(ExpandableNotificationRow row) {
