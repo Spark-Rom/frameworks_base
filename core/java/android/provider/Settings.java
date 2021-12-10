@@ -4413,6 +4413,12 @@ public final class Settings {
         public static final int SCREEN_BRIGHTNESS_MODE_AUTOMATIC = 1;
 
         /**
+         * APP_LOCK_LOCK_AFTER key for user selected app lock timeout
+         * @hide
+         */
+        public static final String APP_LOCK_LOCK_AFTER = "applock_lock_after";
+
+        /**
          * Control whether to enable adaptive sleep mode.
          * @deprecated Use {@link android.provider.Settings.Secure#ADAPTIVE_SLEEP} instead.
          * @hide
