@@ -292,7 +292,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mNetworkTrafficHolderStart = mStatusBar.findViewById(R.id.network_traffic_holder_start);
         mNetworkTrafficHolderCenter = mStatusBar.findViewById(R.id.network_traffic_holder_center);
         mNetworkTrafficHolderEnd = mStatusBar.findViewById(R.id.network_traffic_holder_end);
-        mClockController = mStatusBar.getClockController();
+        mClockController = new ClockController(getContext(), mStatusBar);
         mOngoingCallChip = mStatusBar.findViewById(R.id.ongoing_call_chip);
         showEndSideContent(false);
         showClock(false);
