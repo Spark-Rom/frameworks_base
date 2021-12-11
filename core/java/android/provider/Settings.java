@@ -5412,6 +5412,12 @@ public final class Settings {
         public static final String STATUS_BAR_QUICK_QS_PULLDOWN = "status_bar_quick_qs_pulldown";
 
         /**
+         * qs clock picker
+         * @hide
+         */
+        public static final String QS_CLOCK_PICKER = "qs_clock_picker";
+
+        /**
          * Show or hide clock
          * 0 - hide
          * 1 - show (default)

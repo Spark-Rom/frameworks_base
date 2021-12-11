@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2017 The Android Open Source Project
-
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
-
-          http://www.apache.org/licenses/LICENSE-2.0
-
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License.
--->
 <LinearLayout
+	xmlns:androidprv="http://schemas.android.com/apk/prv/res/android"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:systemui="http://schemas.android.com/apk/res-auto"
     android:id="@+id/quick_qs_status_icons"
@@ -21,91 +8,82 @@
     android:layout_height="@*android:dimen/quick_qs_offset_height"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:minHeight="48dp"
+    android:minHeight="@*android:dimen/quick_qs_offset_height"
     android:clickable="false"
     android:focusable="true"
     android:theme="@style/QSHeaderTheme">
+<!--
+<LinearLayout android:theme="@style/QSHeaderTheme" android:id="@+id/quick_qs_status_icons" android:focusable="true" android:clickable="false" android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="@*android:dimen/quick_qs_offset_height" android:layout_gravity="top" android:orientation="vertical" android:layout_marginTop="@dimen/qs_panel_padding_top" 
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:androidprv="http://schemas.android.com/apk/prv/res/android" xmlns:systemui="http://schemas.android.com/apk/res-auto"> -->
+  
+<!-- Default QS Style -->
+ <LinearLayout android:orientation="horizontal" android:id="@+id/normclock" android:layout_width="fill_parent" android:layout_height="fill_parent">
+    <com.android.systemui.statusbar.policy.Clock android:id="@+id/clock" android:layout_width="wrap_content" android:layout_height="match_parent" android:minWidth="48dp" android:minHeight="48dp" android:gravity="center_vertical|start" android:paddingStart="@dimen/status_bar_left_clock_starting_padding" android:paddingEnd="@dimen/status_bar_left_clock_end_padding" android:singleLine="true" android:textAppearance="@style/TextAppearance.QS.Status"/>
+    <include layout="@layout/qs_carrier_group" android:id="@+id/carrier_group" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:minHeight="48dp" android:minWidth="48dp" android:layout_marginStart="8dp" android:layout_gravity="end|center_vertical" android:focusable="false"/>
+    <View android:id="@+id/separator" android:layout_width="0dp" android:layout_height="match_parent" android:layout_gravity="center" android:layout_marginStart="8dp" android:layout_marginEnd="8dp" android:visibility="gone"/>
+    <include layout="@layout/quick_qs_notif_icons" android:id="@+id/quick_qs_notif_icons" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:minHeight="48dp" android:minWidth="48dp" android:layout_marginStart="8dp" android:layout_gravity="end|center_vertical" android:focusable="false"/>
+</LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/clock_container"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_gravity="center_vertical|start"
-        android:gravity="center_vertical|start"
-        >
+<!-- MOD QS Style 1 (Vertically) -->
+<LinearLayout android:id="@+id/imgclock" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="42dp">
+	<!-- First Row of QS1 (Date + Clock) Horizontally -->
+	<LinearLayout android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content">
+		<!-- Image View -->
+		<LinearLayout android:layout_gravity="left|center" android:gravity="center" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<ImageView android:layout_gravity="start|center" android:gravity="center" android:layout_width="4dp" android:layout_height="60dp" android:src="@drawable/mountain3"/>
+		</LinearLayout>
+		<!-- Space -->
+		<View android:layout_width="8dp" android:layout_height="0dp"/>
+		<!-- Date -->
+		<LinearLayout android:layout_gravity="start|center" android:gravity="center" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextClock android:layout_gravity="start|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textSize="26.0sp" android:textColor="?android:colorAccent" android:textStyle="bold" android:format12Hour="EEEE" android:format24Hour="EEEE"/>
+			<TextClock android:layout_gravity="start|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textSize="16.0sp" android:textColor="?androidprv:attr/colorAccentSecondaryVariant" android:textStyle="bold" android:format12Hour="MMMM dd, yyyy" android:format24Hour="MMMM dd, yyyy"/>
+		</LinearLayout>
+		<!-- Thie view is required to push layouts left and right-->
+		<View android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="0.10"/>
+		<!-- Clock -->
+		<LinearLayout android:layout_gravity="right|center" android:gravity="center" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/mountain1" android:paddingStart="8dp" android:paddingEnd="8dp">
+			<TextClock android:layout_gravity="center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textSize="26.0sp" android:textColor="?android:colorAccent" android:textStyle="bold" android:format12Hour="hh" android:format24Hour="kk"/>
+			<ImageView android:layout_gravity="center" android:gravity="center" android:layout_width="14dp" android:layout_height="4dp" android:src="@drawable/mountain2"/>
+			<TextClock android:layout_gravity="center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textSize="26.0sp" android:textColor="?android:colorAccent" android:textStyle="bold" android:format12Hour="mm" android:format24Hour="mm"/>
+		</LinearLayout>
+	</LinearLayout>
+	<!-- Second Row of QS1 (QS Status Icons) Horizontally -->
+    <include layout="@layout/quick_qs_notif_icons" android:id="@+id/quick_qs_notif_icons" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:minHeight="48dp" android:minWidth="48dp" android:layout_marginStart="8dp" android:layout_gravity="end|center_vertical" android:focusable="false"/>
+</LinearLayout>
 
-        <com.android.systemui.statusbar.policy.Clock
-            android:id="@+id/clock"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:minHeight="48dp"
-            android:gravity="center_vertical|start"
-            android:paddingStart="@dimen/status_bar_left_clock_starting_padding"
-            android:paddingEnd="@dimen/status_bar_left_clock_end_padding"
-            android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.QS.Status" />
-
-        <com.android.systemui.statusbar.policy.VariableDateView
-            android:id="@+id/date_clock"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/status_bar_left_clock_end_padding"
-            android:gravity="center_vertical|start"
-            android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.QS.Status"
-            systemui:longDatePattern="@string/abbrev_wday_month_day_no_year_alarm"
-            systemui:shortDatePattern="@string/abbrev_month_day_no_year"
-        />
-    </LinearLayout>
-
-    <include layout="@layout/qs_carrier_group"
-        android:id="@+id/carrier_group"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:minHeight="48dp"
-        android:minWidth="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_gravity="end|center_vertical"
-        android:focusable="false"/>
-
-    <View
-        android:id="@+id/separator"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:visibility="gone"
-        />
-
-    <FrameLayout
-        android:id="@+id/rightLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="end"
-        >
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical|end"
-        >
-        <com.android.systemui.statusbar.phone.StatusIconContainer
-            android:id="@+id/statusIcons"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingEnd="@dimen/signal_cluster_battery_padding" />
-
-        <com.android.systemui.BatteryMeterView
-            android:id="@+id/batteryRemainingIcon"
-            android:layout_height="match_parent"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            systemui:textAppearance="@style/TextAppearance.QS.Status"
-            android:paddingEnd="2dp" />
-
-    </LinearLayout>
-    </FrameLayout>
+<!-- MOD QS Style 2 (Vertically) -->
+<LinearLayout android:id="@+id/bigclock" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="42dp">
+	<!-- First Row of QS2 (Clock + Date) Horizontally  -->
+	<LinearLayout android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content">
+		<!-- Clock -->
+		<LinearLayout android:orientation="horizontal" android:layout_gravity="start|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextClock android:layout_gravity="start|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textSize="56.0sp" android:textColor="?android:colorAccent" android:textStyle="normal" android:format12Hour="h" android:format24Hour="k"/>
+			<TextClock android:layout_gravity="start|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textSize="56.0sp" android:textColor="?android:colorAccent" android:textStyle="normal" android:format12Hour=":" android:format24Hour=":" android:paddingBottom="10dp"/>
+			<TextClock android:layout_gravity="start|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textSize="56.0sp" android:textColor="?android:colorAccent" android:textStyle="normal" android:format12Hour="mm" android:format24Hour="mm"/>
+		</LinearLayout>
+		<!-- Space between clock and date -->
+		<View android:layout_width="6dp" android:layout_height="0dp"/>
+		<!-- Date -->
+		<LinearLayout android:orientation="vertical" android:layout_gravity="start|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<View android:layout_width="wrap_content" android:layout_height="2dp"/>
+			<TextClock android:layout_gravity="start|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="20dp" android:minHeight="20dp" android:singleLine="true" android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textColor="?android:colorAccent" android:textSize="12.0sp" android:textStyle="bold" android:format12Hour="EEEE" android:format24Hour="EEEE" android:background="@drawable/mountain5" android:paddingStart="6dp" android:paddingEnd="6dp"/>
+			<View android:layout_width="wrap_content" android:layout_height="2dp"/>
+			<TextClock android:layout_gravity="start|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="20dp" android:minHeight="20dp" android:singleLine="true" android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textColor="?android:colorAccent" android:textSize="12.0sp" android:textStyle="bold" android:format12Hour="MMMM d" android:format24Hour="MMMM d" android:background="@drawable/mountain4" android:paddingStart="6dp" android:paddingEnd="6dp"/>
+		</LinearLayout>
+	</LinearLayout>
+	<!-- Second Row of QS2 (OS Name + QS Status Icons) Horizontally -->
+	<LinearLayout android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content">
+		<!-- OS Name -->
+		<LinearLayout android:orientation="horizontal" android:layout_gravity="start|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="28dp" android:background="@drawable/mountain5" android:paddingStart="4dp" android:paddingEnd="4dp">
+			<TextView android:layout_gravity="start|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="20dp" android:singleLine="true" android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textColor="?android:colorAccent" android:textSize="12.0sp" android:textStyle="bold" android:text="Spark " android:background="@drawable/mountain4" android:paddingStart="6dp" android:paddingEnd="6dp"/>
+			<TextView android:layout_gravity="start|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="20dp" android:singleLine="true" android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textColor="?android:colorAccent" android:textSize="12.0sp" android:textStyle="bold" android:text="OS" android:paddingStart="6dp" android:paddingEnd="6dp"/>
+		</LinearLayout>
+		<!-- Thie view is required to push layouts left and right-->
+		<View android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="0.10" />
+		<!-- QS Status Icons -->
+    <include layout="@layout/quick_qs_notif_icons" android:id="@+id/quick_qs_notif_icons" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:minHeight="48dp" android:minWidth="48dp" android:layout_marginStart="8dp" android:layout_gravity="end|center_vertical" android:focusable="false"/>
+	</LinearLayout>
+</LinearLayout>
 
 </LinearLayout>
