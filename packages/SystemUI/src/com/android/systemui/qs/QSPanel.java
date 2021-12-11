@@ -392,7 +392,9 @@ public class QSPanel extends LinearLayout {
             loadSliderPosition();
             if (!mUsingHorizontalLayout) {
                 switchToParent(mBrightnessView, parent, mTop ? 0 : index);
-                index++;
+                boolean mediaInQS = Settings.Global.getInt(mContext.getContentResolver(),
+                        Settings.Global.SHOW_MEDIA_ON_QUICK_SETTINGS, 1) == 1;
+                if (mediaInQS) index++;
             } else {
                 updateBrightnessSliderPosition();
             }
