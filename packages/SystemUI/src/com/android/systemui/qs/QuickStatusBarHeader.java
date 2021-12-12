@@ -84,6 +84,8 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
             "system:" + Settings.System.QS_SHOW_BATTERY_PERCENT;
     private static final String QS_SHOW_BATTERY_ESTIMATE =
             "system:" + Settings.System.QS_SHOW_BATTERY_ESTIMATE;
+    private static final String SHOW_QS_DATE =
+            "system:" + Settings.System.SHOW_QS_DATE;
 
     private boolean mExpanded;
     private boolean mQsDisabled;
@@ -146,6 +148,7 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
     private boolean mIsSingleCarrier;
 
     private boolean mUseCombinedQSHeader;
+    private boolean mShowDate;
 
     private int mStatusBarBatteryStyle, mQSBatteryStyle, mQSBatteryLocation;
 
@@ -213,7 +216,8 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                 QS_BATTERY_STYLE,
                 QS_BATTERY_LOCATION,
                 QS_SHOW_BATTERY_PERCENT,
-                QS_SHOW_BATTERY_ESTIMATE);
+                QS_SHOW_BATTERY_ESTIMATE,
+                SHOW_QS_DATE);
     }
 
     void onAttach(TintedIconManager iconManager,
@@ -432,8 +436,10 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
 
                     @Override
                     public void onAnimationStarted() {
-                        mClockDateView.setVisibility(View.VISIBLE);
-                        mClockDateView.setFreezeSwitching(true);
+                        if (mShowDate) {
+                            mClockDateView.setVisibility(View.VISIBLE);
+                            mClockDateView.setFreezeSwitching(true);
+                        }
                         setSeparatorVisibility(false);
                         if (!mIsSingleCarrier) {
                             mIconContainer.addIgnoredSlots(mRssiIgnoredSlots);
@@ -443,8 +449,10 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                     @Override
                     public void onAnimationAtStart() {
                         super.onAnimationAtStart();
-                        mClockDateView.setFreezeSwitching(false);
-                        mClockDateView.setVisibility(View.VISIBLE);
+                        if (mShowDate) {
+                            mClockDateView.setFreezeSwitching(false);
+                            mClockDateView.setVisibility(View.VISIBLE);
+                        }
                         setSeparatorVisibility(mShowClockIconsSeparator);
                         // In QQS we never ignore RSSI.
                         mIconContainer.removeIgnoredSlots(mRssiIgnoredSlots);
@@ -731,6 +739,12 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                 mBatteryIcon.setBatteryEstimate(
                         TunerService.parseInteger(newValue, 0));
                 setChipVisibility(mPrivacyChip.getVisibility() == View.VISIBLE);
+                break;
+            case SHOW_QS_DATE:
+                mShowDate =
+                        TunerService.parseIntegerSwitch(newValue, true);
+                mDateContainer.setVisibility(mShowDate ? View.VISIBLE : View.GONE);
+                mClockDateView.setVisibility(mShowDate ? View.VISIBLE : View.GONE);
                 break;
             default:
                 break;
