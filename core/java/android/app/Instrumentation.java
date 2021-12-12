@@ -1195,8 +1195,7 @@ public class Instrumentation {
         app.attach(context);
         GmsHooks.initApplicationBeforeOnCreate(app);
         AttestationHooks.initApplicationBeforeOnCreate(app);
-        String packageName = app.getPackageName();
-        PixelPropsUtils.setProps(packageName);
+        PixelPropsUtils.setProps(app);
         return app;
     }
     
@@ -1216,8 +1215,7 @@ public class Instrumentation {
         app.attach(context);
         GmsHooks.initApplicationBeforeOnCreate(app);
         AttestationHooks.initApplicationBeforeOnCreate(app);
-        String packageName = app.getPackageName();
-        PixelPropsUtils.setProps(packageName);
+        PixelPropsUtils.setProps(app);
         return app;
     }
 
