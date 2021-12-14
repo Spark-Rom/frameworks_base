@@ -20,6 +20,7 @@ import android.annotation.Nullable;
 import android.app.ActivityManager;
 import android.app.ActivityTaskManager;
 import android.app.AlarmManager;
+import android.app.AppLockManager;
 import android.app.IActivityManager;
 import android.app.IActivityTaskManager;
 import android.app.IWallpaperManager;
@@ -429,5 +430,11 @@ public class FrameworkServicesModule {
     @Singleton
     static SmartspaceManager provideSmartspaceManager(Context context) {
         return context.getSystemService(SmartspaceManager.class);
+    }
+
+    @Provides
+    @Singleton
+    static AppLockManager provideAppLockManager(Context context) {
+        return context.getSystemService(AppLockManager.class);
     }
 }

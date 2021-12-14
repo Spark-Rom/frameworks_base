@@ -39,6 +39,9 @@ import android.util.Slog;
 import com.android.server.biometrics.BiometricsProto;
 import com.android.server.biometrics.Utils;
 
+import com.android.server.LocalServices;
+import com.android.server.wm.AppLockService;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -205,7 +208,8 @@ public abstract class AuthenticationClient<T> extends AcquisitionClient<T>
         boolean isBackgroundAuth = false;
         if (!mAllowBackgroundAuthentication && authenticated
                 && !Utils.isKeyguard(getContext(), getOwnerString())
-                && !Utils.isSystem(getContext(), getOwnerString())) {
+                && !Utils.isSystem(getContext(), getOwnerString())
+                && !LocalServices.getService(AppLockService.class).isAppLockAuthenticating()) {
             final List<ActivityManager.RunningTaskInfo> tasks =
                     mActivityTaskManager.getTasks(1);
             if (tasks == null || tasks.isEmpty()) {

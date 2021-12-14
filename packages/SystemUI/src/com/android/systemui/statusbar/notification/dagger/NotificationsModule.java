@@ -17,6 +17,7 @@
 package com.android.systemui.statusbar.notification.dagger;
 
 import android.app.INotificationManager;
+import android.app.AppLockManager;
 import android.content.Context;
 import android.content.pm.LauncherApps;
 import android.content.pm.ShortcutManager;
@@ -102,6 +103,7 @@ public interface NotificationsModule {
     @SysUISingleton
     @Provides
     static NotificationEntryManager provideNotificationEntryManager(
+            AppLockManager appLockManager,
             NotificationEntryManagerLogger logger,
             NotificationGroupManagerLegacy groupManager,
             FeatureFlags featureFlags,
@@ -111,6 +113,7 @@ public interface NotificationsModule {
             ForegroundServiceDismissalFeatureController fgsFeatureController,
             IStatusBarService statusBarService) {
         return new NotificationEntryManager(
+                appLockManager,
                 logger,
                 groupManager,
                 featureFlags,

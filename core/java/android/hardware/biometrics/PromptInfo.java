@@ -38,6 +38,7 @@ public class PromptInfo implements Parcelable {
     @Nullable private CharSequence mDeviceCredentialSubtitle;
     @Nullable private CharSequence mDeviceCredentialDescription;
     @Nullable private CharSequence mNegativeButtonText;
+    @Nullable private CharSequence mApplockPackage;
     private boolean mConfirmationRequested = true; // default to true
     private boolean mDeviceCredentialAllowed;
     private @BiometricManager.Authenticators.Types int mAuthenticators;
@@ -59,6 +60,7 @@ public class PromptInfo implements Parcelable {
         mDeviceCredentialSubtitle = in.readCharSequence();
         mDeviceCredentialDescription = in.readCharSequence();
         mNegativeButtonText = in.readCharSequence();
+        mApplockPackage = in.readCharSequence();
         mConfirmationRequested = in.readBoolean();
         mDeviceCredentialAllowed = in.readBoolean();
         mAuthenticators = in.readInt();
@@ -95,6 +97,7 @@ public class PromptInfo implements Parcelable {
         dest.writeCharSequence(mDeviceCredentialSubtitle);
         dest.writeCharSequence(mDeviceCredentialDescription);
         dest.writeCharSequence(mNegativeButtonText);
+        dest.writeCharSequence(mApplockPackage);
         dest.writeBoolean(mConfirmationRequested);
         dest.writeBoolean(mDeviceCredentialAllowed);
         dest.writeInt(mAuthenticators);
@@ -164,6 +167,10 @@ public class PromptInfo implements Parcelable {
         mNegativeButtonText = negativeButtonText;
     }
 
+    public void setApplockPackage(CharSequence ApplockPackage) {
+        mApplockPackage = ApplockPackage;
+    }
+
     public void setConfirmationRequested(boolean confirmationRequested) {
         mConfirmationRequested = confirmationRequested;
     }
@@ -224,6 +231,10 @@ public class PromptInfo implements Parcelable {
 
     public CharSequence getNegativeButtonText() {
         return mNegativeButtonText;
+    }
+
+    public CharSequence getApplockPackage() {
+        return mApplockPackage;
     }
 
     public boolean isConfirmationRequested() {

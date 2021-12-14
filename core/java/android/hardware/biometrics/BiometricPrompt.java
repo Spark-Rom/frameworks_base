@@ -70,7 +70,17 @@ public class BiometricPrompt implements BiometricAuthenticator, BiometricConstan
      */
     public static final int HIDE_DIALOG_DELAY = 2000; // ms
 
-    /**
+     /**
+     * @hide
+     */
+    public static final String KEY_TITLE = "title";
+
+     /**
+     * @hide
+     */
+    public static final String KEY_DESCRIPTION = "description";
+
+     /**
      * @hide
      */
     public static final int DISMISSED_REASON_BIOMETRIC_CONFIRMED = 1;
@@ -106,6 +116,11 @@ public class BiometricPrompt implements BiometricAuthenticator, BiometricConstan
      * @hide
      */
     public static final int DISMISSED_REASON_SERVER_REQUESTED = 6;
+
+    /**
+     * @hide
+     */
+    public static final String KEY_APPLOCK_PKG = "applock_package_name";
 
     /**
      * @hide
@@ -172,6 +187,18 @@ public class BiometricPrompt implements BiometricAuthenticator, BiometricConstan
         @NonNull
         public Builder setUseDefaultTitle() {
             mPromptInfo.setUseDefaultTitle(true);
+            return this;
+        }
+
+        /**
+         * Optional: Show a special dialog for app locker if KEY_APPLOCK_PKG is set
+         * @param packageName
+         * @return
+         * @hide
+         */
+        @NonNull
+        public Builder setApplockPackage(@NonNull CharSequence ApplockPackage) {
+            mPromptInfo.setApplockPackage(ApplockPackage);
             return this;
         }
 
@@ -419,6 +446,7 @@ public class BiometricPrompt implements BiometricAuthenticator, BiometricConstan
         public BiometricPrompt build() {
             final CharSequence title = mPromptInfo.getTitle();
             final CharSequence negative = mPromptInfo.getNegativeButtonText();
+            final CharSequence ApplockPackage = mPromptInfo.getApplockPackage();
             final boolean useDefaultTitle = mPromptInfo.isUseDefaultTitle();
             final boolean deviceCredentialAllowed = mPromptInfo.isDeviceCredentialAllowed();
             final @Authenticators.Types int authenticators = mPromptInfo.getAuthenticators();
