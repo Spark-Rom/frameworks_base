@@ -58,4 +58,7 @@
 
     <!-- The CPUs to display in CPUInfoService view -->
     <string name="config_displayCpus" translatable="false"></string>
+
+    <!-- SystemUI Google -->
+    <bool name="flag_smartspace">true</bool>
 </resources>
