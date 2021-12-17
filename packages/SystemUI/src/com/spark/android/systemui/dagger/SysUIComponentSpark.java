@@ -9,14 +9,16 @@ import com.android.systemui.dagger.SystemUIModule;
 
 import com.spark.android.systemui.keyguard.KeyguardSliceProviderSpark;
 import com.spark.android.systemui.smartspace.KeyguardSmartspaceController;
+import com.spark.android.systemui.columbus.ColumbusModule;
 
 import dagger.Subcomponent;
 
 @SysUISingleton
 @Subcomponent(modules = {
+        ColumbusModule.class,
         DefaultComponentBinder.class,
         DependencyProvider.class,
-        SystemUIBinder.class,
+        SystemUISparkBinder.class,
         SystemUIModule.class,
         SystemUISparkModule.class})
 public interface SysUIComponentSpark extends SysUIComponent {
