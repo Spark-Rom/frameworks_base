@@ -166,17 +166,6 @@ public class QSContainerImpl extends FrameLayout implements Dumpable {
 
     void updateResources(QSPanelController qsPanelController,
             QuickStatusBarHeaderController quickStatusBarHeaderController) {
-        int qsclock = Settings.System.getIntForUser(getContext().getContentResolver(),
-                Settings.System.QS_CLOCK_PICKER, 0, UserHandle.USER_CURRENT);
-        if (qsclock == 1 || qsclock == 2) {
-        mQSPanelContainer.setPaddingRelative(
-                getPaddingStart(),
-                mContext.getResources().getDimensionPixelSize(
-                com.android.internal.R.dimen.quick_qs_offset_height_imgclock),
-                getPaddingEnd(),
-                getPaddingBottom()
-        );
-        } else {
         mQSPanelContainer.setPaddingRelative(
                 getPaddingStart(),
                 mContext.getResources().getDimensionPixelSize(
@@ -184,7 +173,6 @@ public class QSContainerImpl extends FrameLayout implements Dumpable {
                 getPaddingEnd(),
                 getPaddingBottom()
         );
-        }
         int sideMargins = getResources().getDimensionPixelSize(R.dimen.notification_side_paddings);
         int padding = getResources().getDimensionPixelSize(
                 R.dimen.notification_shade_content_margin_horizontal);

@@ -559,7 +559,7 @@
     <dimen name="qs_tile_margin_top_bottom_negative">-4dp</dimen>
     <dimen name="qs_brightness_margin_top">8dp</dimen>
     <dimen name="qs_brightness_margin_bottom">24dp</dimen>
-    <dimen name="qqs_layout_margin_top">8dp</dimen>
+    <dimen name="qqs_layout_margin_top">0dp</dimen>
     <!-- The height of the qs customize header. Should be
          (qs_panel_padding_top (48dp) +  brightness_mirror_height (48dp) + qs_brightness_margin_top(8dp) + qs_brightness_margin_bottom (24dp)) -
          (Toolbar_minWidth (56dp) + qs_tile_margin_top_bottom (4dp))
@@ -594,7 +594,7 @@
     <dimen name="qs_tile_padding_bottom">16dp</dimen>
     <dimen name="qs_tile_spacing">4dp</dimen>
     <dimen name="qs_panel_padding_bottom">0dp</dimen>
-    <dimen name="qs_panel_padding_top">48dp</dimen>
+    <dimen name="qs_panel_padding_top">@dimen/status_bar_height</dimen>
     <dimen name="qs_detail_header_height">56dp</dimen>
     <dimen name="qs_detail_header_padding">0dp</dimen>
     <dimen name="qs_detail_image_width">56dp</dimen>

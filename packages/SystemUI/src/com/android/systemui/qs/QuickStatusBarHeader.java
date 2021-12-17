@@ -80,9 +80,8 @@ public class QuickStatusBarHeader extends FrameLayout {
     private View mDateContainer;
     private View mPrivacyContainer;
     private final Handler mHandler = new Handler();
-    private LinearLayout mQsClockImg;
-    private LinearLayout mQsClockBig;
-    private LinearLayout mQsClockNorm;
+    private LinearLayout mQsClock1;
+    private LinearLayout mQsClock2;
 
     private BatteryMeterView mBatteryRemainingIcon;
     private StatusIconContainer mIconContainer;
@@ -162,9 +161,8 @@ public class QuickStatusBarHeader extends FrameLayout {
         mDatePrivacySeparator = findViewById(R.id.space);
         // Tint for the battery icons are handled in setupHost()
         mBatteryRemainingIcon = findViewById(R.id.batteryRemainingIcon);
- 	mQsClockImg = findViewById(R.id.imgclock);
-        mQsClockBig = findViewById(R.id.bigclock);
-        mQsClockNorm = findViewById(R.id.normclock);
+ 	mQsClock1 = findViewById(R.id.sparkqs1);
+        mQsClock2 = findViewById(R.id.sparkqs2);
 
         mSettingsObserver.observe();
         updateSettings();
@@ -255,10 +253,6 @@ public class QuickStatusBarHeader extends FrameLayout {
                 R.dimen.rounded_corner_content_padding);
         int qsOffsetHeight = resources.getDimensionPixelSize(
                 com.android.internal.R.dimen.quick_qs_offset_height);
-        if (qsclock == 1 || qsclock == 2) {
-        qsOffsetHeight = resources.getDimensionPixelSize(
-                com.android.internal.R.dimen.quick_qs_offset_height_imgclock);
-        }
         mDatePrivacyView.getLayoutParams().height =
                 Math.max(qsOffsetHeight, mDatePrivacyView.getMinimumHeight());
         mDatePrivacyView.setLayoutParams(mDatePrivacyView.getLayoutParams());
@@ -307,28 +301,18 @@ public class QuickStatusBarHeader extends FrameLayout {
         int qsclock = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.QS_CLOCK_PICKER, 0, UserHandle.USER_CURRENT);
         Resources resources = mContext.getResources();
-        if (qsclock == 1) {
-           mQsClockImg.setVisibility(View.VISIBLE);
-	   mQsClockNorm.setVisibility(View.GONE);
-           mQsClockBig.setVisibility(View.GONE);
+        if (qsclock == 0) {
+           mQsClock1.setVisibility(View.VISIBLE);
+           mQsClock2.setVisibility(View.GONE);
            if (mDatePrivacyView != null) {
            mDatePrivacyView.setVisibility(View.GONE);
            }
-        } else if (qsclock == 2) {
-           mQsClockBig.setVisibility(View.VISIBLE);
-           mQsClockImg.setVisibility(View.GONE);
-           mQsClockNorm.setVisibility(View.GONE);
+        } else if (qsclock == 1) {
+           mQsClock2.setVisibility(View.VISIBLE);
+           mQsClock1.setVisibility(View.GONE);
            if (mDatePrivacyView != null) {
            mDatePrivacyView.setVisibility(View.GONE);
            }
-        } else {
-           mQsClockNorm.setVisibility(View.VISIBLE);
-           mQsClockImg.setVisibility(View.GONE);
-           mQsClockBig.setVisibility(View.GONE);
-           if (mDatePrivacyView != null) {
-           mDatePrivacyView.setVisibility(View.VISIBLE);
-           }
-
        }
     }
 

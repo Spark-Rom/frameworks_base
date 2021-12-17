@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android" xmlns:androidprv="http://schemas.android.com/apk/prv/res/android">
+	<shape>
+		<corners android:radius="64dp" />
+		<solid android:color="?androidprv:colorAccentSecondaryVariant"/>
+	</shape>
+</inset>
