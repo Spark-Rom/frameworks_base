@@ -10,6 +10,7 @@ import com.android.systemui.dagger.SystemUIModule;
 import com.spark.android.systemui.keyguard.KeyguardSliceProviderSpark;
 import com.spark.android.systemui.smartspace.KeyguardSmartspaceController;
 import com.spark.android.systemui.columbus.ColumbusModule;
+import com.spark.android.systemui.elmyra.ElmyraModule;
 
 import dagger.Subcomponent;
 
@@ -19,6 +20,7 @@ import dagger.Subcomponent;
         DefaultComponentBinder.class,
         DependencyProvider.class,
         SystemUISparkBinder.class,
+        ElmyraModule.class,
         SystemUIModule.class,
         SystemUISparkModule.class})
 public interface SysUIComponentSpark extends SysUIComponent {
