@@ -196,4 +196,7 @@
     <java-symbol type="id" name="aerr_copy" />
     <java-symbol type="string" name="url_copy_success" />
     <java-symbol type="string" name="url_copy_failed" />
+
+    <!-- Default UDFPS pressed icon -->
+    <java-symbol type="integer" name="config_udfps_pressed_color" />
 </resources>

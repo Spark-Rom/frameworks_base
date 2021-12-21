@@ -27,8 +27,11 @@ import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.RectF;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.MathUtils;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -78,6 +81,11 @@ public class UdfpsKeyguardView extends UdfpsAnimationView {
 
     private LayoutParams mParams;
 
+    private boolean mCustomUdfpsIcon;
+    private boolean mPackageInstalled;
+    private boolean mCustomFpIconEnabled;
+    private String customIconURI;
+
     public UdfpsKeyguardView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         mFingerprintDrawable = new UdfpsFpDrawable(context);
@@ -86,6 +94,9 @@ public class UdfpsKeyguardView extends UdfpsAnimationView {
             .getDimensionPixelSize(R.dimen.udfps_burn_in_offset_x);
         mMaxBurnInOffsetY = context.getResources()
             .getDimensionPixelSize(R.dimen.udfps_burn_in_offset_y);
+
+        mPackageInstalled = com.android.internal.util.spark.SparkUtils.isPackageInstalled(
+                mContext, "com.spark.udfps.icons");
     }
 
     @Override
@@ -96,6 +107,7 @@ public class UdfpsKeyguardView extends UdfpsAnimationView {
         AsyncLayoutInflater inflater = new AsyncLayoutInflater(mContext);
         inflater.inflate(R.layout.udfps_keyguard_view_internal, this,
                 mLayoutInflaterFinishListener);
+
     }
 
     @Override
@@ -115,6 +127,19 @@ public class UdfpsKeyguardView extends UdfpsAnimationView {
     public boolean dozeTimeTick() {
         updateBurnInOffsets();
         return true;
+    }
+
+    private void updateIcon() {
+        mCustomUdfpsIcon = mPackageInstalled && (Settings.System.getInt(
+                mContext.getContentResolver(), Settings.System.UDFPS_ICON, 0) != 0);
+        mCustomFpIconEnabled = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.OMNI_CUSTOM_FP_ICON_ENABLED, 0) == 1;
+        customIconURI = Settings.System.getStringForUser(getContext().getContentResolver(),
+                Settings.System.OMNI_CUSTOM_FP_ICON,
+                UserHandle.USER_CURRENT);
+        mBgProtection.setImageDrawable(mCustomUdfpsIcon || (!TextUtils.isEmpty(customIconURI) && mCustomFpIconEnabled)
+                ? mFingerprintDrawable :
+                getContext().getDrawable(R.drawable.fingerprint_bg));
     }
 
     private void updateBurnInOffsets() {
@@ -138,12 +163,16 @@ public class UdfpsKeyguardView extends UdfpsAnimationView {
             mLockScreenFp.setTranslationX(mBurnInOffsetX);
             mLockScreenFp.setTranslationY(mBurnInOffsetY);
             mBgProtection.setAlpha(1f - mInterpolatedDarkAmount);
-            mLockScreenFp.setAlpha(1f - mInterpolatedDarkAmount);
+            mLockScreenFp.setAlpha(mCustomUdfpsIcon ||
+                (!TextUtils.isEmpty(customIconURI) && mCustomFpIconEnabled) ? 0.0f
+                : (1f - mInterpolatedDarkAmount));
         } else if (darkAmountForAnimation == 0f) {
             mLockScreenFp.setTranslationX(0);
             mLockScreenFp.setTranslationY(0);
             mBgProtection.setAlpha(mAlpha / 255f);
-            mLockScreenFp.setAlpha(mAlpha / 255f);
+            mLockScreenFp.setAlpha(mCustomUdfpsIcon ||
+                (!TextUtils.isEmpty(customIconURI) && mCustomFpIconEnabled) ? 0.0f
+                : (mAlpha / 255f));
         } else {
             mBgProtection.setAlpha(0f);
             mLockScreenFp.setAlpha(0f);
@@ -178,7 +207,6 @@ public class UdfpsKeyguardView extends UdfpsAnimationView {
 
         mTextColorPrimary = Utils.getColorAttrDefaultColor(mContext,
             android.R.attr.textColorPrimary);
-        mBgProtection.setImageDrawable(getContext().getDrawable(R.drawable.fingerprint_bg));
         mLockScreenFp.invalidate(); // updated with a valueCallback
     }
 
@@ -311,6 +339,7 @@ public class UdfpsKeyguardView extends UdfpsAnimationView {
             updatePadding();
             updateColor();
             updateAlpha();
+            updateIcon();
 
             if (mUseExpandedOverlay) {
                 parent.addView(view, mParams);

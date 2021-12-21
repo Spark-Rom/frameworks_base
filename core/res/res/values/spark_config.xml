@@ -236,4 +236,7 @@
     <string name="config_batterymeterRLandBoltPathStyleB" translatable="false">@string/config_batterymeterLandBoltPathStyleB</string>
     <string name="config_batterymeterRLandPowersavePathStyleB" translatable="false">@string/config_batterymeterRLandPerimeterPathStyleB</string>
     <string name="config_batterymeterRLandErrorPerimeterPathStyleB" translatable="false">@string/config_batterymeterRLandPerimeterPathStyleB</string>
+
+    <!-- Default FOD pressed color -->
+    <integer name="config_udfps_pressed_color">0</integer>
 </resources>

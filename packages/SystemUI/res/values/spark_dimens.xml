@@ -116,4 +116,8 @@
 
     <!-- Volume app icon -->  
     <dimen name="volume_app_icon_max_size">108dp</dimen>
+
+    <!-- Udfps fingerprint animation -->
+    <dimen name="udfps_animation_size">280dp</dimen>
+    <dimen name="udfps_animation_offset">0dp</dimen>
 </resources>
