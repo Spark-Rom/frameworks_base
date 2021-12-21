@@ -51,4 +51,8 @@
 
     <dimen name="ongoing_appops_chip_main_padding">10dp</dimen>
     <dimen name="ongoing_appops_chip_2_width">56dp</dimen>
+
+    <!-- Recognizing fingerprint animation -->
+    <dimen name="udfps_animation_size">280dp</dimen>
+    <dimen name="udfps_animation_offset">0dp</dimen>
 </resources>
