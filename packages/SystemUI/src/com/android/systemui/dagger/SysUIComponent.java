@@ -16,7 +16,6 @@
 
 package com.android.systemui.dagger;
 
-import com.android.keyguard.clock.ClockOptionsProvider;
 import com.android.systemui.BootCompleteCacheImpl;
 import com.android.systemui.Dependency;
 import com.android.systemui.InitController;
@@ -164,11 +163,6 @@ public interface SysUIComponent {
      * Member injection into the supplied argument.
      */
     void inject(KeyguardSliceProviderGoogle keyguardSliceProviderGoogle);
-
-    /**
-     * Member injection into the supplied argument.
-     */
-    void inject(ClockOptionsProvider clockOptionsProvider);
 
     /**
      * Member injection into the supplied argument.
