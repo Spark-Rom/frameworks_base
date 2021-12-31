@@ -133,6 +133,7 @@ import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
 import com.android.keyguard.ViewMediatorCallback;
 import com.android.systemui.ActivityIntentHelper;
+import com.android.systemui.SystemManagerUtils;
 import com.android.systemui.AutoReinflateContainer;
 import com.android.systemui.CoreStartable;
 import com.android.systemui.DejankUtils;
@@ -536,6 +537,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces, Tune
     protected GameSpaceManager mGameSpaceManager;
 
     private final PulseControllerImpl mPulseController;
+    private SystemManagerUtils systemManager;
     private VisualizerView mVisualizerView;
 
     /** Controller for the Shade. */
@@ -909,6 +911,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces, Tune
         mFingerprintManager = fingerprintManager;
         mSysUiState = sysUiState;
         mPulseController = new PulseControllerImpl(mContext, this, mCommandQueue, mUiBgExecutor);
+        systemManager = new SystemManagerUtils(mContext);
 
         mLockscreenShadeTransitionController = lockscreenShadeTransitionController;
         mStartingSurfaceOptional = startingSurfaceOptional;
@@ -3654,6 +3657,8 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces, Tune
             }
 
             DejankUtils.stopDetectingBlockingIpcs(tag);
+            performSystemManagerService(true);
+
         }
 
         @Override
@@ -3723,6 +3728,19 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces, Tune
 
             });
             DejankUtils.stopDetectingBlockingIpcs(tag);
+            performSystemManagerService(false);
+        }
+
+        public void performSystemManagerService(boolean idle) {
+            if (mContext == null) {
+                return;
+            }
+            if (idle) {
+                systemManager.startIdleService();
+                systemManager.killBackgroundProcesses();
+            } else {
+                systemManager.cancelIdleService();
+            }
         }
 
         @Override

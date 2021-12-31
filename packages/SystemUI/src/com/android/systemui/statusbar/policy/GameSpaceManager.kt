@@ -33,6 +33,8 @@ import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.shared.system.TaskStackChangeListener
 import com.android.systemui.shared.system.TaskStackChangeListeners
 
+import com.android.systemui.SystemManagerUtils
+
 import java.util.Arrays
 import javax.inject.Inject
 
@@ -94,6 +96,12 @@ class GameSpaceManager @Inject constructor(
     private fun dispatchForegroundApp() {
         val pm = context.getSystemService(Context.POWER_SERVICE) as PowerManager
         if (!pm.isInteractive && activeGame != null) return
+        val gameBoostLvl = Settings.System.getIntForUser(
+            context.contentResolver,
+            Settings.System.SYSTEM_MANAGER_GAME_BOOST_LEVEL, 0,
+            UserHandle.USER_CURRENT)
+        val systemManagerUtils = SystemManagerUtils(context)
+        systemManagerUtils.boostingServiceHandler(activeGame != null, gameBoostLvl)
         val action = if (activeGame != null) ACTION_GAME_START else ACTION_GAME_STOP
         Intent(action).apply {
             setPackage(GAMESPACE_PACKAGE)

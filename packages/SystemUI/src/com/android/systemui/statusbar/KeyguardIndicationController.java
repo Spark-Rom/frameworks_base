@@ -207,6 +207,7 @@ public class KeyguardIndicationController {
 
     private IBatteryPropertiesRegistrar mBatteryPropertiesRegistrar;
     private boolean mAlternateFastchargeInfoUpdate;
+    private boolean mIsCharging;
 
     private KeyguardUpdateMonitorCallback mUpdateMonitorCallback;
 
@@ -991,6 +992,15 @@ public class KeyguardIndicationController {
                     : R.string.keyguard_plugged_in;
         }
 
+	boolean isAdaptiveCharging = Settings.Secure.getIntForUser(mContext.getContentResolver(),
+            Settings.Secure.SYSTEM_MANAGER_AGGRESSIVE_IDLE_MODE, 0, UserHandle.USER_CURRENT) == 1;
+
+	if (isAdaptiveCharging) {
+            chargingId = hasChargingTime
+                            ? R.string.keyguard_indication_adaptive_charging_time
+                            : R.string.keyguard_plugged_in_adaptive_charging;
+	}
+
         String batteryInfo = "";
         boolean showbatteryInfo = Settings.System.getIntForUser(mContext.getContentResolver(),
             Settings.System.LOCKSCREEN_BATTERY_INFO, 1, UserHandle.USER_CURRENT) == 1;
@@ -1026,6 +1036,10 @@ public class KeyguardIndicationController {
             String chargingText =  mContext.getResources().getString(chargingId, percentage);
             return chargingText + batteryInfo;
         }
+    }
+
+    public boolean isDeviceCharging() {
+        return mIsCharging;
     }
 
     public void setStatusBarKeyguardViewManager(
@@ -1149,6 +1163,7 @@ public class KeyguardIndicationController {
             boolean isChargingOrFull = status.status == BatteryManager.BATTERY_STATUS_CHARGING
                     || status.isCharged();
             boolean wasPluggedIn = mPowerPluggedIn;
+            mIsCharging = status.status == BatteryManager.BATTERY_STATUS_CHARGING;
             mPowerPluggedInWired = status.isPluggedInWired() && isChargingOrFull;
             mPowerPluggedInWireless = status.isPluggedInWireless() && isChargingOrFull;
             mPowerPluggedInDock = status.isPluggedInDock() && isChargingOrFull;
