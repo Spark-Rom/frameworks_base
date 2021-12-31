@@ -5794,6 +5794,13 @@ public final class Settings {
         public static final String LOCK_POWER_MENU_DISABLED = "lockscreen_power_menu_disabled";
 
         /**
+         * Spark Idle Manager
+         * @hide
+         */
+        @Readable
+        public static final String SPARK_IDLE_MANAGER = "spark_idle_manager";
+
+        /**
          * The alpha value of the On-The-Go overlay.
          *
          * @hide
