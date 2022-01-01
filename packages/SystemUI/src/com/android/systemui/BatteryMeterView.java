@@ -92,6 +92,8 @@ public class BatteryMeterView extends LinearLayout implements
     private static final int BATTERY_STYLE_FULL_CIRCLE = 5;
     private static final int BATTERY_STYLE_TEXT = 6; /*hidden icon*/
     private static final int BATTERY_STYLE_HIDDEN = 7;
+    private static final int BATTERY_STYLE_BIG_CIRCLE = 8;
+    private static final int BATTERY_STYLE_BIG_DOTTED_CIRCLE = 9;
 
     private static final int BATTERY_PERCENT_HIDDEN = 0;
     private static final int BATTERY_PERCENT_SHOW_INSIDE = 1;
@@ -544,6 +546,9 @@ public class BatteryMeterView extends LinearLayout implements
                     || mBatteryStyle == BATTERY_STYLE_FULL_CIRCLE){
             batteryHeight = res.getDimensionPixelSize(R.dimen.status_bar_battery_icon_circle_width);
             batteryWidth = res.getDimensionPixelSize(R.dimen.status_bar_battery_icon_circle_width);
+        } else if (mBatteryStyle == BATTERY_STYLE_BIG_CIRCLE || mBatteryStyle == BATTERY_STYLE_BIG_DOTTED_CIRCLE){
+            batteryHeight = res.getDimensionPixelSize(R.dimen.status_bar_battery_bigcircle_icon_width);
+            batteryWidth = res.getDimensionPixelSize(R.dimen.status_bar_battery_bigcircle_icon_width);
         } else {
             batteryWidth = res.getDimensionPixelSize(R.dimen.status_bar_battery_icon_width);
             batteryHeight = res.getDimensionPixelSize(R.dimen.status_bar_battery_icon_height);
