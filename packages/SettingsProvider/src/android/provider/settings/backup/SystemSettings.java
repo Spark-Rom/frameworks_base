@@ -129,5 +129,6 @@ public class SystemSettings {
         Settings.System.GAMING_MODE_NOTIFICATION_SIZE_LANDSCAPE,
         Settings.System.GAMING_MODE_DYNAMIC_NOTIFICATION_FILTER,
         Settings.System.GAMING_MODE_NOTIFICATION_APP_BLACKLIST,
+        Settings.System.GAMING_MODE_DISABLE_ADB,
     };
 }
