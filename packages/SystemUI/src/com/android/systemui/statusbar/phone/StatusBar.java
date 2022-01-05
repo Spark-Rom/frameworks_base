@@ -47,7 +47,7 @@ import static com.android.systemui.statusbar.phone.BarTransitions.MODE_WARNING;
 import static com.android.systemui.statusbar.phone.BarTransitions.TransitionMode;
 import static com.android.wm.shell.bubbles.BubbleController.TASKBAR_CHANGED_BROADCAST;
 import com.android.systemui.tuner.TunerService;
-
+import com.android.systemui.util.settings.SystemSettings;
 import android.annotation.Nullable;
 import android.app.ActivityManager;
 import android.app.ActivityOptions;
@@ -784,7 +784,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     private ActivityIntentHelper mActivityIntentHelper;
     private NotificationStackScrollLayoutController mStackScrollerController;
-
+    private final SystemSettings mSystemSettings;
     /**
      * Public constructor for StatusBar.
      *
@@ -886,7 +886,8 @@ public class StatusBar extends SystemUI implements DemoMode,
             TaskHelper taskHelper,
             FlashlightController flashlightController,
             BurnInProtectionController burnInProtectionController,
-            TunerService tunerService) {
+            TunerService tunerService,
+            SystemSettings systemSettings) {
         super(context);
         mNotificationsController = notificationsController;
         mLightBarController = lightBarController;
@@ -980,7 +981,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         mBurnInProtectionController = burnInProtectionController;
         lockscreenShadeTransitionController.setStatusbar(this);
         mTunerService = tunerService;
-
+        mSystemSettings = systemSettings;
         mExpansionChangedListeners = new ArrayList<>();
 
         mBubbleExpandListener =

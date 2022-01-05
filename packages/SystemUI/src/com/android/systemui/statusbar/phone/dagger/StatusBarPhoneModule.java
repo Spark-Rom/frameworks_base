@@ -115,6 +115,7 @@ import com.android.wm.shell.bubbles.Bubbles;
 import com.android.wm.shell.legacysplitscreen.LegacySplitScreen;
 import com.android.wm.shell.startingsurface.StartingSurface;
 import com.android.systemui.tuner.TunerService;
+import com.android.systemui.util.settings.SystemSettings;
 import java.util.Optional;
 import java.util.concurrent.Executor;
 
@@ -229,7 +230,8 @@ public interface StatusBarPhoneModule {
             TaskHelper taskHelper,
             FlashlightController flashlightController,
             BurnInProtectionController burnInProtectionController,
-            TunerService tunerService) {
+            TunerService tunerService,
+            SystemSettings systemSettings) {
         return new StatusBar(
                 context,
                 notificationsController,
@@ -323,6 +325,7 @@ public interface StatusBarPhoneModule {
                 taskHelper,
                 flashlightController,
                 burnInProtectionController,
-                tunerService);
+                tunerService,
+                systemSettings);
     }
 }
