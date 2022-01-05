@@ -26,6 +26,8 @@
     
     <!-- FPSInfoService FPS node file path -->
     <string name="config_fpsInfoSysNode" translatable="false"></string>
+    <!-- FPS measure interval in milliseconds, default 1000 -->
+    <integer name="config_fpsReadInterval">1000</integer>
 
     <!-- On-The-Go -->
     <integer name="onthego_notification_shade_dialog_short_timeout">3000</integer>

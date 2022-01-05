@@ -77,4 +77,6 @@
     <!-- Dialog margin -->
     <dimen name="rdnt_margin_dialog">12dp</dimen>
 
+    <dimen name="fps_info_text_padding">4dp</dimen>
+
 </resources>
