@@ -6616,6 +6616,12 @@ public final class Settings {
         public static final String NAVBAR_STYLE = "navbar_style";
 
         /**
+         * Whether to Enable wp zoom
+         * @hide
+         */
+        public static final String USE_WP_ZOOM = "use_wp_zoom";
+
+        /**
          * These are all public system settings
          *
          * @hide
