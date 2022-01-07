@@ -6125,6 +6125,16 @@ public final class Settings {
         public static final String LOCKSCREEN_BATTERY_INFO = "lockscreen_battery_info";
 
         /**
+         * @hide
+         */
+        public static final String OMNI_CUSTOM_FP_ICON_ENABLED = "custom_fp_icon_enabled";
+
+        /**
+         * @hide
+         */
+        public static final String OMNI_CUSTOM_FP_ICON = "custom_fingerprint_icon";
+
+        /**
          * Bring back old style mobile data indicators.
          * @hide
          */
