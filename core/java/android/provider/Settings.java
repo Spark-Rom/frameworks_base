@@ -7293,6 +7293,12 @@ public final class Settings {
         public static final String OMNI_QS_TILE_VERTICAL_LAYOUT = "qs_tile_vertical_layout";
 
         /**
+         * @hide
+         */
+        public static final String OMNI_QS_TILE_LABEL_HIDE = "qs_tile_label_hide";
+
+
+        /**
          * SettingsBackupAgent will combine its list with this so we dont need
          * to add new things into SettingsProvider SystemSettings
          * @hide
@@ -7301,6 +7307,7 @@ public final class Settings {
             OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE,
             OMNI_QS_LAYOUT_COLUMNS,
             OMNI_QS_TILE_VERTICAL_LAYOUT,
+            OMNI_QS_TILE_LABEL_HIDE,
         };
 
         /**
@@ -7317,6 +7324,7 @@ public final class Settings {
             OMNI_SETTINGS_VALIDATORS.put(OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE, 1);
             OMNI_SETTINGS_VALIDATORS.put(OMNI_QS_LAYOUT_COLUMNS, 1);
             OMNI_SETTINGS_VALIDATORS.put(OMNI_QS_TILE_VERTICAL_LAYOUT, 0);
+            OMNI_SETTINGS_VALIDATORS.put(OMNI_QS_TILE_LABEL_HIDE, 0);
         }
     }
 
