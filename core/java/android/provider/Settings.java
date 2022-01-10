@@ -6011,6 +6011,11 @@ public final class Settings {
         public static final String STATUSBAR_ICONS_STYLE = "statusbar_icons_style";
 
         /**
+         * @hide
+         */
+        public static final String LOCKSCREEN_SMALL_CLOCK = "lockscreen_small_clock";
+
+        /**
          * Whether to play haptic feedback when touching udfps icon
          * @hide
          */
@@ -6631,6 +6636,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(ALERTSLIDER_MODE_POSITION_MIDDLE);
             PRIVATE_SETTINGS.add(ALERTSLIDER_MODE_POSITION_TOP);
             PRIVATE_SETTINGS.add(COLOR_BUCKET_OVERLAY);
+            PRIVATE_SETTINGS.add(LOCKSCREEN_SMALL_CLOCK);
         }
 
         /**
