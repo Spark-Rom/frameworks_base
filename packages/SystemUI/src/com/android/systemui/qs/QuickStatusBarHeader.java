@@ -38,7 +38,7 @@ import android.widget.Space;
 import android.os.Handler;
 import android.provider.Settings;
 import androidx.annotation.NonNull;
-
+import android.widget.TextView;
 import com.android.settingslib.Utils;
 import com.android.systemui.BatteryMeterView;
 import com.android.systemui.R;
@@ -47,7 +47,7 @@ import com.android.systemui.statusbar.phone.StatusBarIconController.TintedIconMa
 import com.android.systemui.statusbar.phone.StatusBarWindowView;
 import com.android.systemui.statusbar.phone.StatusIconContainer;
 import com.android.systemui.statusbar.policy.Clock;
-
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -56,6 +56,7 @@ import java.util.List;
  */
 public class QuickStatusBarHeader extends FrameLayout {
 
+    TextView mtext1;
     private boolean mExpanded;
     private boolean mQsDisabled;
 
@@ -82,7 +83,9 @@ public class QuickStatusBarHeader extends FrameLayout {
     private final Handler mHandler = new Handler();
     private LinearLayout mQsClock1;
     private LinearLayout mQsClock2;
-
+    private LinearLayout mQsClock3;
+    private LinearLayout mQsClock4;
+    private LinearLayout mQsClock5;
     private BatteryMeterView mBatteryRemainingIcon;
     private StatusIconContainer mIconContainer;
     private View mPrivacyChip;
@@ -163,7 +166,11 @@ public class QuickStatusBarHeader extends FrameLayout {
         mBatteryRemainingIcon = findViewById(R.id.batteryRemainingIcon);
  	mQsClock1 = findViewById(R.id.sparkqs1);
         mQsClock2 = findViewById(R.id.sparkqs2);
-
+        mtext1 = findViewById(R.id.interactiveqs_text_1);
+        mtext1.setOnClickListener(this);
+ 	mQsClock3 = findViewById(R.id.newqs3);
+        mQsClock4 = findViewById(R.id.newqs4);
+        mQsClock5 = findViewById(R.id.interactiveqs_1);
         mSettingsObserver.observe();
         updateSettings();
         mBatteryRemainingIcon.setIsQsHeader(true);
@@ -175,6 +182,7 @@ public class QuickStatusBarHeader extends FrameLayout {
                 .addFloat(mIconContainer, "alpha", 0, 1)
                 .addFloat(mBatteryRemainingIcon, "alpha", 0, 1)
                 .build();
+        updateQsTextView();
     }
 
     void onAttach(TintedIconManager iconManager,
@@ -304,11 +312,44 @@ public class QuickStatusBarHeader extends FrameLayout {
         if (qsclock == 0) {
            mQsClock1.setVisibility(View.VISIBLE);
            mQsClock2.setVisibility(View.GONE);
+           mQsClock3.setVisibility(View.GONE);
+           mQsClock4.setVisibility(View.GONE);
+           mQsClock5.setVisibility(View.GONE);
            if (mDatePrivacyView != null) {
            mDatePrivacyView.setVisibility(View.GONE);
            }
         } else if (qsclock == 1) {
            mQsClock2.setVisibility(View.VISIBLE);
+           mQsClock1.setVisibility(View.GONE);
+           mQsClock3.setVisibility(View.GONE);
+           mQsClock4.setVisibility(View.GONE);
+           mQsClock5.setVisibility(View.GONE);
+           if (mDatePrivacyView != null) {
+           mDatePrivacyView.setVisibility(View.GONE);
+           }
+        } else if (qsclock == 2) {
+           mQsClock3.setVisibility(View.VISIBLE);
+           mQsClock2.setVisibility(View.GONE);
+           mQsClock1.setVisibility(View.GONE);
+           mQsClock4.setVisibility(View.GONE);
+           mQsClock5.setVisibility(View.GONE);
+           if (mDatePrivacyView != null) {
+           mDatePrivacyView.setVisibility(View.GONE);
+           }
+        } else if (qsclock == 3) {
+           mQsClock4.setVisibility(View.VISIBLE);
+           mQsClock3.setVisibility(View.GONE);
+           mQsClock2.setVisibility(View.GONE);
+           mQsClock1.setVisibility(View.GONE);
+           mQsClock5.setVisibility(View.GONE);
+           if (mDatePrivacyView != null) {
+           mDatePrivacyView.setVisibility(View.GONE);
+           }
+           } else if (qsclock == 4) {
+           mQsClock5.setVisibility(View.VISIBLE);
+           mQsClock4.setVisibility(View.GONE);
+           mQsClock3.setVisibility(View.GONE);
+           mQsClock2.setVisibility(View.GONE);
            mQsClock1.setVisibility(View.GONE);
            if (mDatePrivacyView != null) {
            mDatePrivacyView.setVisibility(View.GONE);
@@ -374,6 +415,27 @@ public class QuickStatusBarHeader extends FrameLayout {
             mBatteryRemainingIcon.setAlpha(1);
         }
 
+    }
+
+    private void updateQsTextView() {
+	int qsclock = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.QS_CLOCK_PICKER, 0, UserHandle.USER_CURRENT);
+        Resources resources = mContext.getResources();
+        Calendar c = Calendar.getInstance();
+        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+        if (qsclock == 4) {
+        	if(timeOfDay >= 0 && timeOfDay < 12){
+    	    		mtext1.setText("A good morning to start your day!");
+        	}else if(timeOfDay >= 12 && timeOfDay < 16){
+            		mtext1.setText("Good Afternoon owner.");
+        	}else if(timeOfDay >= 16 && timeOfDay < 21){
+            		mtext1.setText("Maybe you should take some rest?");
+        	}else if(timeOfDay >= 21 && timeOfDay < 24){
+            		mtext1.setText("Sweet dreams!");
+        	}else{
+            		mtext1.setText("are you on earth?");
+            }
+        }
     }
 
     /** */
