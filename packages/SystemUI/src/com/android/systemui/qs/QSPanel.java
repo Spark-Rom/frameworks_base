@@ -323,7 +323,7 @@ public class QSPanel extends LinearLayout {
     }
 
     protected void updatePadding() {
-        int padding = getResources().getDimensionPixelSize(R.dimen.qs_panel_padding_top);
+        int padding = getResources().getDimensionPixelSize(com.android.internal.R.dimen.qs_panel_padding_top);
         setPaddingRelative(getPaddingStart(),
                 padding,
                 getPaddingEnd(),

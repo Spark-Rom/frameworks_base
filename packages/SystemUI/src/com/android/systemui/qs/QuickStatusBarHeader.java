@@ -86,6 +86,8 @@ public class QuickStatusBarHeader extends FrameLayout {
     private LinearLayout mQsClock3;
     private LinearLayout mQsClock4;
     private LinearLayout mQsClock5;
+    private LinearLayout mQsClock6;
+    private LinearLayout mQsClock7;
     private BatteryMeterView mBatteryRemainingIcon;
     private StatusIconContainer mIconContainer;
     private View mPrivacyChip;
@@ -167,10 +169,11 @@ public class QuickStatusBarHeader extends FrameLayout {
  	mQsClock1 = findViewById(R.id.sparkqs1);
         mQsClock2 = findViewById(R.id.sparkqs2);
         mtext1 = findViewById(R.id.interactiveqs_text_1);
-        mtext1.setOnClickListener(this);
- 	mQsClock3 = findViewById(R.id.newqs3);
-        mQsClock4 = findViewById(R.id.newqs4);
+ 	mQsClock3 = findViewById(R.id.sparkqs3);
+        mQsClock4 = findViewById(R.id.clock_oos);
         mQsClock5 = findViewById(R.id.interactiveqs_1);
+        mQsClock6 = findViewById(R.id.defqs);
+        mQsClock7 = findViewById(R.id.clock_coloros);
         mSettingsObserver.observe();
         updateSettings();
         mBatteryRemainingIcon.setIsQsHeader(true);
@@ -292,7 +295,7 @@ public class QuickStatusBarHeader extends FrameLayout {
 
         MarginLayoutParams qqsLP = (MarginLayoutParams) mHeaderQsPanel.getLayoutParams();
         qqsLP.topMargin = mContext.getResources()
-                .getDimensionPixelSize(R.dimen.qqs_layout_margin_top);
+                .getDimensionPixelSize(com.android.internal.R.dimen.qqs_layout_margin_top);
         mHeaderQsPanel.setLayoutParams(qqsLP);
 
         updateBatteryMode();
@@ -315,6 +318,8 @@ public class QuickStatusBarHeader extends FrameLayout {
            mQsClock3.setVisibility(View.GONE);
            mQsClock4.setVisibility(View.GONE);
            mQsClock5.setVisibility(View.GONE);
+           mQsClock6.setVisibility(View.GONE);
+           mQsClock7.setVisibility(View.GONE);
            if (mDatePrivacyView != null) {
            mDatePrivacyView.setVisibility(View.GONE);
            }
@@ -324,6 +329,8 @@ public class QuickStatusBarHeader extends FrameLayout {
            mQsClock3.setVisibility(View.GONE);
            mQsClock4.setVisibility(View.GONE);
            mQsClock5.setVisibility(View.GONE);
+           mQsClock6.setVisibility(View.GONE);
+           mQsClock7.setVisibility(View.GONE);
            if (mDatePrivacyView != null) {
            mDatePrivacyView.setVisibility(View.GONE);
            }
@@ -333,6 +340,8 @@ public class QuickStatusBarHeader extends FrameLayout {
            mQsClock1.setVisibility(View.GONE);
            mQsClock4.setVisibility(View.GONE);
            mQsClock5.setVisibility(View.GONE);
+           mQsClock6.setVisibility(View.GONE);
+           mQsClock7.setVisibility(View.GONE);
            if (mDatePrivacyView != null) {
            mDatePrivacyView.setVisibility(View.GONE);
            }
@@ -342,6 +351,8 @@ public class QuickStatusBarHeader extends FrameLayout {
            mQsClock2.setVisibility(View.GONE);
            mQsClock1.setVisibility(View.GONE);
            mQsClock5.setVisibility(View.GONE);
+           mQsClock6.setVisibility(View.GONE);
+           mQsClock7.setVisibility(View.GONE);
            if (mDatePrivacyView != null) {
            mDatePrivacyView.setVisibility(View.GONE);
            }
@@ -351,6 +362,30 @@ public class QuickStatusBarHeader extends FrameLayout {
            mQsClock3.setVisibility(View.GONE);
            mQsClock2.setVisibility(View.GONE);
            mQsClock1.setVisibility(View.GONE);
+           mQsClock6.setVisibility(View.GONE);
+           mQsClock7.setVisibility(View.GONE);
+           if (mDatePrivacyView != null) {
+           mDatePrivacyView.setVisibility(View.GONE);
+           }
+       } else if (qsclock == 5) {
+           mQsClock6.setVisibility(View.VISIBLE);
+           mQsClock4.setVisibility(View.GONE);
+           mQsClock3.setVisibility(View.GONE);
+           mQsClock2.setVisibility(View.GONE);
+           mQsClock1.setVisibility(View.GONE);
+           mQsClock5.setVisibility(View.GONE);
+           mQsClock7.setVisibility(View.GONE);
+           if (mDatePrivacyView != null) {
+           mDatePrivacyView.setVisibility(View.GONE);
+           }
+       } else if (qsclock == 6) {
+           mQsClock7.setVisibility(View.VISIBLE);
+           mQsClock5.setVisibility(View.GONE);
+           mQsClock4.setVisibility(View.GONE);
+           mQsClock3.setVisibility(View.GONE);
+           mQsClock2.setVisibility(View.GONE);
+           mQsClock1.setVisibility(View.GONE);
+           mQsClock6.setVisibility(View.GONE);
            if (mDatePrivacyView != null) {
            mDatePrivacyView.setVisibility(View.GONE);
            }

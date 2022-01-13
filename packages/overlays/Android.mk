@@ -27,6 +27,8 @@ LOCAL_REQUIRED_MODULES := \
 	DisplayCutoutEmulationWaterfallOverlay \
 	NoCutoutOverlay \
 	AvoidAppsInCutoutOverlay \
+        AospClockStyleOverlay \
+        ColorOsClockStyleOverlay \
 	FontNotoSerifSourceOverlay \
 	IconPackCircularAndroidOverlay \
 	IconPackCircularLauncherOverlay \
