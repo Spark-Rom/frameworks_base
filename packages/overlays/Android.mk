@@ -27,6 +27,8 @@ LOCAL_REQUIRED_MODULES := \
 	DisplayCutoutEmulationWaterfallOverlay \
 	NoCutoutOverlay \
 	AvoidAppsInCutoutOverlay \
+        AospClockStyleOverlay \
+        ColorOsClockStyleOverlay \
 	FontNotoSerifSourceOverlay \
 	IconPackCircularAndroidOverlay \
 	IconPackCircularLauncherOverlay \
@@ -77,7 +79,18 @@ LOCAL_REQUIRED_MODULES := \
 	NavigationBarModeGesturalOverlayWideBack \
 	NavigationBarModeGesturalOverlayExtraWideBack \
 	OneHandedModeGesturalOverlay \
-	preinstalled-packages-platform-overlays.xml
+	preinstalled-packages-platform-overlays.xml \
+        IconShapeCylinderOverlay \
+        IconShapeHeartOverlay \
+        IconShapeHexagonOverlay \
+        IconShapeLeafOverlay \
+        IconShapePebbleOverlay \
+        IconShapeRoundedRectOverlay \
+        IconShapeSquareOverlay \
+        IconShapeSquircleOverlay \
+        IconShapeTaperedRectOverlay \
+        IconShapeTeardropOverlay \
+        IconShapeVesselOverlay 
 
 include $(BUILD_PHONY_PACKAGE)
 include $(CLEAR_VARS)

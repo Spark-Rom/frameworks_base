@@ -107,5 +107,15 @@ public class SystemSettings {
         Settings.System.QS_BRIGHTNESS_POSITION_BOTTOM,
         Settings.System.QS_SHOW_AUTO_BRIGHTNESS_BUTTON,
         Settings.System.SMART_SPACE,
+        Settings.System.ARTWORK_MEDIA_BACKGROUND,
+        Settings.System.ARTWORK_MEDIA_BACKGROUND_ENABLE_BLUR,
+        Settings.System.ARTWORK_MEDIA_BACKGROUND_BLUR_RADIUS,
+        Settings.System.ARTWORK_MEDIA_BACKGROUND_ALPHA,
+        Settings.System.GAMING_MODE_ENABLED,
+        Settings.System.GAMING_MODE_DYNAMIC_ADD,
+        Settings.System.GAMING_MODE_APP_LIST,
+        Settings.System.GAMING_MODE_DISABLE_NOTIFICATION_ALERT,
+        Settings.System.GAMING_MODE_DISABLE_ADB,
+        Settings.System.COLOR_BUCKET_OVERLAY,
     };
 }

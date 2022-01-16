@@ -107,7 +107,7 @@
 
     <!-- Tiles native to System UI. Order should match "quick_settings_tiles_default" -->
     <string name="quick_settings_tiles_stock" translatable="false">
-        internet,wifi,cell,bt,flashlight,dnd,alarm,airplane,controls,wallet,rotation,battery,cast,screenrecord,mictoggle,cameratoggle,location,hotspot,inversion,saver,dark,work,night,reverse,nfc,reduce_brightness,caffeine,ambient_display,usb_tether,heads_up,screenshot,sync,sound,fpsinfo,volume_panel,mono,compass,dataswitch,cpuinfo,reboot,aod
+        internet,wifi,cell,bt,flashlight,dnd,alarm,airplane,controls,wallet,rotation,battery,cast,screenrecord,mictoggle,cameratoggle,location,hotspot,inversion,saver,dark,work,night,reverse,nfc,reduce_brightness,caffeine,ambient_display,usb_tether,heads_up,screenshot,sync,sound,fpsinfo,volume_panel,mono,compass,dataswitch,cpuinfo,reboot,aod,onthego
     </string>
 
     <!-- The tiles to display in QuickSettings -->
@@ -312,6 +312,7 @@
 
     <!-- SystemUI Services: The classes of the stuff to start. -->
     <string-array name="config_systemUIServiceComponents" translatable="false">
+        <item>com.android.systemui.alertslider.AlertSliderUI</item>
         <item>com.android.systemui.util.NotificationChannels</item>
         <item>com.android.systemui.keyguard.KeyguardViewMediator</item>
         <item>com.android.systemui.recents.Recents</item>

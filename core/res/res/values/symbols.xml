@@ -1746,7 +1746,8 @@
   <java-symbol type="dimen" name="display_cutout_touchable_region_size" />
   <java-symbol type="dimen" name="system_gestures_start_threshold" />
   <java-symbol type="dimen" name="quick_qs_offset_height" />
-  <java-symbol type="dimen" name="quick_qs_offset_height_imgclock" />
+  <java-symbol type="dimen" name="qqs_layout_margin_top" />
+  <java-symbol type="dimen" name="qs_panel_padding_top" />
   <java-symbol type="drawable" name="ic_jog_dial_sound_off" />
   <java-symbol type="drawable" name="ic_jog_dial_sound_on" />
   <java-symbol type="drawable" name="ic_jog_dial_unlock" />
@@ -3636,10 +3637,11 @@
   <java-symbol type="string" name="foreground_service_tap_for_details" />
   <java-symbol type="string" name="foreground_service_multiple_separator" />
 
-  <java-symbol type="string" name="foreground_service_gmscompat_group" />
+  <java-symbol type="string" name="gmscompat_channel_group" />
   <java-symbol type="string" name="foreground_service_gmscompat_channel" />
   <java-symbol type="string" name="foreground_service_gmscompat_channel_desc" />
   <java-symbol type="string" name="foreground_service_gmscompat_notif_desc" />
+  <java-symbol type="string" name="gmscompat_notif_channel_action_required" />
 
   <java-symbol type="bool" name="config_enableCredentialFactoryResetProtection" />
 
@@ -4220,6 +4222,7 @@
 
   <!-- The max scale for the wallpaper when it's zoomed in -->
   <java-symbol type="dimen" name="config_wallpaperMaxScale"/>
+  <java-symbol type="dimen" name="config_wallpaperMaxScaleEnabled"/>
 
   <!-- Set to true to enable the user switcher on the keyguard. -->
   <java-symbol type="bool" name="config_keyguardUserSwitcher" />
@@ -4450,9 +4453,12 @@
 
   <java-symbol type="dimen" name="config_wallpaperDimAmount" />
 
-  <java-symbol type="bool" name="config_volumeShowRemoteSessions" />
+  <java-symbol type="bool" name="config_volumeAdjustmentForRemoteGroupSessions" />
 
   <java-symbol type="integer" name="config_customizedMaxCachedProcesses" />
 
   <java-symbol type="color" name="overview_background"/>
+
+  <!-- For dynamic default font styles -->
+  <java-symbol type="string" name="config_bodyFontFamily" />
 </resources>

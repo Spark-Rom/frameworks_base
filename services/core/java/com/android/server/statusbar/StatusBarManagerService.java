@@ -702,6 +702,18 @@ public class StatusBarManagerService extends IStatusBarService.Stub implements D
     }
 
     @Override
+    public void toggleSettingsPanel() {
+        enforceExpandStatusBar();
+
+        if (mBar != null) {
+            try {
+                mBar.toggleSettingsPanel();
+            } catch (RemoteException ex) {
+            }
+        }
+    }
+
+    @Override
     public void expandSettingsPanel(String subPanel) {
         enforceExpandStatusBar();
 
@@ -941,6 +953,17 @@ public class StatusBarManagerService extends IStatusBarService.Stub implements D
             try {
                 mBar.toggleCameraFlash();
             } catch (RemoteException ex) {
+            }
+        }
+    }
+
+    @Override
+    public void setBlockedGesturalNavigation(boolean blocked) {
+        if (mBar != null) {
+            try {
+                mBar.setBlockedGesturalNavigation(blocked);
+            } catch (RemoteException ex) {
+                // do nothing
             }
         }
     }

@@ -47,7 +47,7 @@ import static com.android.systemui.statusbar.phone.BarTransitions.MODE_WARNING;
 import static com.android.systemui.statusbar.phone.BarTransitions.TransitionMode;
 import static com.android.wm.shell.bubbles.BubbleController.TASKBAR_CHANGED_BROADCAST;
 import com.android.systemui.tuner.TunerService;
-
+import com.android.systemui.util.settings.SystemSettings;
 import android.annotation.Nullable;
 import android.app.ActivityManager;
 import android.app.ActivityOptions;
@@ -187,6 +187,7 @@ import com.android.systemui.fragments.ExtensionFragmentListener;
 import com.android.systemui.fragments.FragmentHostManager;
 import com.android.systemui.keyguard.DismissCallbackRegistry;
 import com.android.systemui.keyguard.KeyguardService;
+import com.android.systemui.keyguard.KeyguardSliceProvider;
 import com.android.systemui.keyguard.KeyguardUnlockAnimationController;
 import com.android.systemui.keyguard.KeyguardViewMediator;
 import com.android.systemui.keyguard.ScreenLifecycle;
@@ -783,7 +784,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     private ActivityIntentHelper mActivityIntentHelper;
     private NotificationStackScrollLayoutController mStackScrollerController;
-
+    private final SystemSettings mSystemSettings;
     /**
      * Public constructor for StatusBar.
      *
@@ -885,7 +886,8 @@ public class StatusBar extends SystemUI implements DemoMode,
             TaskHelper taskHelper,
             FlashlightController flashlightController,
             BurnInProtectionController burnInProtectionController,
-            TunerService tunerService) {
+            TunerService tunerService,
+            SystemSettings systemSettings) {
         super(context);
         mNotificationsController = notificationsController;
         mLightBarController = lightBarController;
@@ -979,7 +981,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         mBurnInProtectionController = burnInProtectionController;
         lockscreenShadeTransitionController.setStatusbar(this);
         mTunerService = tunerService;
-
+        mSystemSettings = systemSettings;
         mExpansionChangedListeners = new ArrayList<>();
 
         mBubbleExpandListener =
@@ -1377,8 +1379,21 @@ public class StatusBar extends SystemUI implements DemoMode,
         BackDropView backdrop = mNotificationShadeWindowView.findViewById(R.id.backdrop);
         mMediaManager.setup(backdrop, backdrop.findViewById(R.id.backdrop_front),
                 backdrop.findViewById(R.id.backdrop_back), mScrimController, mLockscreenWallpaper);
-        float maxWallpaperZoom = mContext.getResources().getFloat(
+        boolean mUseWpZoom = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.USE_WP_ZOOM, 0, UserHandle.USER_CURRENT) == 1;
+        final float maxWallpaperZoom = mContext.getResources().getFloat(
                 com.android.internal.R.dimen.config_wallpaperMaxScale);
+        final float maxWallpaperZoomEnabled = mContext.getResources().getFloat(
+                com.android.internal.R.dimen.config_wallpaperMaxScaleEnabled);
+        if (mUseWpZoom) {
+        mNotificationShadeDepthControllerLazy.get().addListener(depth -> {
+            float scale = MathUtils.lerp(maxWallpaperZoomEnabled, 1f, depth);
+            backdrop.setPivotX(backdrop.getWidth() / 2f);
+            backdrop.setPivotY(backdrop.getHeight() / 2f);
+            backdrop.setScaleX(scale);
+            backdrop.setScaleY(scale);
+        });
+        } else {
         mNotificationShadeDepthControllerLazy.get().addListener(depth -> {
             float scale = MathUtils.lerp(maxWallpaperZoom, 1f, depth);
             backdrop.setPivotX(backdrop.getWidth() / 2f);
@@ -1386,7 +1401,8 @@ public class StatusBar extends SystemUI implements DemoMode,
             backdrop.setScaleX(scale);
             backdrop.setScaleY(scale);
         });
-
+        }
+       
         mVisualizerView = (VisualizerView) mNotificationShadeWindowView.findViewById(R.id.visualizerview);
 
         mNotificationPanelViewController.setUserSetupComplete(mUserSetup);
@@ -1679,7 +1695,8 @@ public class StatusBar extends SystemUI implements DemoMode,
                 mKeyguardIndicationController,
                 this /* statusBar */, mShadeController,
                 mLockscreenShadeTransitionController, mCommandQueue, mInitController,
-                mNotificationInterruptStateProvider);
+                mNotificationInterruptStateProvider,
+                mSystemSettings);
 
         mNotificationShelfController.setOnActivatedListener(mPresenter);
         mRemoteInputManager.getController().addCallback(mNotificationShadeWindowController);
@@ -2505,6 +2522,13 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     }
 
+    @Override
+    public void setBlockedGesturalNavigation(boolean blocked) {
+        if (getNavigationBarView() != null) {
+            getNavigationBarView().setBlockedGesturalNavigation(blocked);
+        }
+    }
+
     void makeExpandedVisible(boolean force) {
         if (SPEW) Log.d(TAG, "Make expanded visible: expanded visible=" + mExpandedVisible);
         if (!force && (mExpandedVisible || !mCommandQueue.panelsEnabled())) {
@@ -2541,6 +2565,15 @@ public class StatusBar extends SystemUI implements DemoMode,
             mShadeController.animateCollapsePanels();
         } else {
             animateExpandNotificationsPanel();
+        }
+    }
+
+    @Override
+    public void toggleSettingsPanel() {
+        if (mPanelExpanded) {
+            mShadeController.animateCollapsePanels();
+        } else {
+            animateExpandSettingsPanel(null);
         }
     }
 
@@ -4932,6 +4965,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.HEADS_UP_BLACKLIST_VALUES),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.PULSE_ON_NEW_TRACKS),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -4963,6 +4999,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.HEADS_UP_BLACKLIST_VALUES))) {
                 setHeadsUpBlacklist();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.PULSE_ON_NEW_TRACKS))) {
+                setPulseOnNewTracks();
             }
         }
 
@@ -4976,6 +5015,15 @@ public class StatusBar extends SystemUI implements DemoMode,
             setUseLessBoringHeadsUp();
             setHeadsUpStoplist();
             setHeadsUpBlacklist();
+            setPulseOnNewTracks();
+        }
+    }
+
+    private void setPulseOnNewTracks() {
+        if (KeyguardSliceProvider.getAttachedInstance() != null) {
+            KeyguardSliceProvider.getAttachedInstance().setPulseOnNewTracks(Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.PULSE_ON_NEW_TRACKS, 1,
+                    UserHandle.USER_CURRENT) == 1);
         }
     }
 

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * Copyright (c) 2009, The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="task_helper_app_killed">%1$s si è interrotta</string>
+    <string name="empty_app_killed">App</string>
+    <!-- Caffeine QS Tile -->
+    <string name="quick_settings_caffeine_label">Caffeina</string>
+    <string name="accessibility_quick_settings_caffeine_off">Caffeina off</string>
+    <string name="quick_settings_caffeine_label_off">Off</string>
+    <string name="accessibility_quick_settings_caffeine_on">Caffeina on</string>
+    <!-- Ambient display QS tile -->
+    <string name="quick_settings_ambient_display_label">Ambient display</string>
+    <string name="accessibility_quick_settings_ambient_display_off">Ambient display off.</string>
+    <string name="accessibility_quick_settings_ambient_display_on">Ambient display on.</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_off">Ambient display spento.</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_on">Ambient display acceso.</string>
+    <!-- USB tethering QS tile -->
+    <string name="quick_settings_usb_tether_label">Tethering USB</string>
+    <!-- Heads Up QS Tile -->
+    <string name="quick_settings_heads_up_label">Heads up</string>
+    <string name="accessibility_quick_settings_heads_up_off">Heads up off.</string>
+    <string name="accessibility_quick_settings_heads_up_on">Heads up on.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_off">Heads up spento.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_on">Heads up acceso.</string>
+    <!-- Label for UI element which allows deleting the screenshot [CHAR LIMIT=30] -->
+    <string name="screenshot_delete_label">Elimina</string>
+    <!-- Content description indicating that tapping the element will allow deleting the screenshot [CHAR LIMIT=NONE] -->
+    <string name="screenshot_delete_description">Elimina screenshot</string>
+    <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">Screenshot</string>
+    <string name="quick_settings_region_screenshot_label">Screenshot parziale</string>
+    <!-- Sync QS Tile -->
+    <string name="quick_settings_sync_label">Sincronizazione</string>
+    <string name="accessibility_quick_settings_sync_off">Sincronizzazione off</string>
+    <string name="accessibility_quick_settings_sync_on">Sincronizzazione on</string>
+    <string name="accessibility_quick_settings_sync_changed_off">Sincronizzazione spenta</string>
+    <string name="accessibility_quick_settings_sync_changed_on">Sincronizzazione accesa</string>
+    <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">Suoni</string>
+    <string name="quick_settings_sound_ring">Suoneria</string>
+    <string name="quick_settings_sound_vibrate">Vibrazione</string>
+    <string name="quick_settings_sound_dnd">Non disturbare</string>
+    <!-- SystemUI Tuner -->
+    <string name="statusbar_items_title">Icona della barra di stato</string>
+    <string name="lockscreen_default">Predefinito</string>
+    <string name="lockscreen_hidden">Nessuno</string>
+    <!-- Shows when people have clicked on the custom lockscreen shortcut [CHAR LIMIT=60] -->
+    <string name="custom_hint">Scorri dall\'icona per avviare</string>
+    <!-- VPN -->
+    <string name="status_bar_vpn">VPN</string>
+    <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Le notifiche a comparsa sono sospese per 1 minuto.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%1$s</xliff:g> - Le notifiche a comparsa sono sospese per <xliff:g id="number">%2$d</xliff:g> minuti.</string>
+    <!-- Running service button -->
+    <string name="accessibility_quick_settings_running_services">Apri la schermata dei Servizi in esecuzione.</string>
+    <!-- FPS Info tile -->
+    <string name="quick_settings_fpsinfo_label">Informazioni FPS</string>
+    <string name="accessibility_quick_settings_fpsinfo_off">Informazioni FPS off</string>
+    <string name="accessibility_quick_settings_fpsinfo_on">Informazioni FPS on</string>
+    <!-- Volume panel QS tile -->
+    <string name="quick_settings_volume_panel_label">Pannelo del volume</string>
+    <!-- Mono QS Tile -->
+    <string name="quick_settings_monotoggle_tile">Modalità audio</string>
+    <string name="quick_settings_monotoggle_tile_mono">Audio mono</string>
+    <string name="quick_settings_monotoggle_tile_stereo">Audio stereo</string>
+    <!-- Compass QS Tile -->
+    <string name="quick_settings_compass_label">Bussola</string>
+    <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
+    <string name="quick_settings_compass_init">Inizializzazione\u2026</string>
+    <string name="accessibility_quick_settings_compass_off">Bussola off</string>
+    <string name="accessibility_quick_settings_compass_on">Bussola on</string>
+    <string name="accessibility_quick_settings_compass_changed_off">Bussola spenta</string>
+    <string name="accessibility_quick_settings_compass_changed_on">Bussola accesa</string>
+    <string name="quick_settings_compass_N">N</string>
+    <string name="quick_settings_compass_NE">NE</string>
+    <string name="quick_settings_compass_E">E</string>
+    <string name="quick_settings_compass_SE">SE</string>
+    <string name="quick_settings_compass_S">S</string>
+    <string name="quick_settings_compass_SW">SW</string>
+    <string name="quick_settings_compass_W">W</string>
+    <string name="quick_settings_compass_NW">NW</string>
+    <!-- DataSwitch Tile -->
+    <string name="qs_data_switch_label">Cambia SIM dati</string>
+    <string name="qs_data_switch_toast_0">Attualmente non è inserita nessuna SIM</string>
+    <string name="qs_data_switch_toast_1">Attualmente è inserita una sola SIM</string>
+    <string name="qs_data_switch_changed_1">Utilizza SIM 1 per i dati mobili</string>
+    <string name="qs_data_switch_changed_2">Utilizza SIM 2 per i dati mobili</string>
+    <!-- CPUInfo tile -->
+    <string name="quick_settings_cpuinfo_label">Informazioni CPU</string>
+    <string name="accessibility_quick_settings_cpuinfo_off">Informazioni CPU off</string>
+    <string name="accessibility_quick_settings_cpuinfo_on">Informazioni CPU on</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_off">Informazioni CPU spento</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_on">Informazioni CPU acceso</string>
+    <!-- Poweroff/Reboot/Recovery QS tile -->
+    <string name="quick_settings_poweroff_label">Spegni</string>
+    <string name="quick_settings_reboot_label">Riavvia</string>
+    <string name="quick_settings_reboot_recovery_label">Recovery</string>
+    <!-- AOD QS tile -->
+    <string name="quick_settings_aod_label">AOD</string>
+    <string name="quick_settings_aod_on_charge_label">AOD durante la ricarica</string>
+    <string name="quick_settings_aod_off_label">AOD off</string>
+    <!-- Kill button in notification guts -->
+    <string name="force_stop_dlg_title">Forzare l\'arresto?</string>
+    <string name="force_stop_dlg_text">Se forzi l\'interruzione di un\'app, potrebbe non funzionare correttamente.</string>
+    <string name="dlg_ok">@android:string/ok</string>
+    <string name="dlg_cancel">@android:string/cancel</string>
+    <string name="guts_force_close_app">Chiudi app</string>
+    <!-- Name of the nfc status bar icon. -->
+    <string name="status_bar_nfc">NFC</string>
+    <!-- Accessibility label for nfc icon (not shown on screen) [CHAR LIMIT=NONE] -->
+    <string name="accessibility_status_bar_nfc">Nfc</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time" formatted="false"><xliff:g id="percentage">%2$s</xliff:g> • Dash Charging (<xliff:g id="charging_time_left" example="4 ore e 2 minuti">%s</xliff:g> al completamento)</string>
+    <string name="keyguard_plugged_in_dash_charging">Dash Charging</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with a warp charger. Should match keyguard_plugged_in_warp_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_warp_charging_time" formatted="false"><xliff:g id="percentage">%2$s</xliff:g> • Warp Charging (<xliff:g id="charging_time_left" example="4 ore e 2 minuti">%s</xliff:g> al completamento)</string>
+    <string name="keyguard_plugged_in_warp_charging">Warp Charging</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with a VOOC charger. Should match keyguard_plugged_in_vooc_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_vooc_charging_time" formatted="false"><xliff:g id="percentage">%2$s</xliff:g> • VOOC Charging (<xliff:g id="charging_time_left" example="4 ore e 2 minuti">%1$s</xliff:g> al completamento)</string>
+    <string name="keyguard_plugged_in_vooc_charging">VOOC Charging</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with a SuperDart charger. Should match keyguard_plugged_in_superdart_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_superdart_charging_time" formatted="false"><xliff:g id="percentage">%2$s</xliff:g> • SuperDart Charging (<xliff:g id="charging_time_left" example="4 ore e 2 minuti">%1$s</xliff:g> al completamento)</string>
+    <string name="keyguard_plugged_in_superdart_charging">SuperDart Charging</string>
+    <!-- Advanced Reboot -->
+    <string name="global_action_restart_advanced">Avanzate</string>
+    <string name="global_action_restart_recovery">Recovery</string>
+    <string name="global_action_restart_bootloader">Bootloader</string>
+    <string name="global_action_restart_ui">SystemUI</string>
+    <!-- On The Go -->
+    <string name="onthego_notif_ticker">On-The-Go activated</string>
+    <string name="onthego_notif_title">On-The-Go is active</string>
+    <string name="onthego_notif_stop">Stop</string>
+    <string name="onthego_notif_options">Options</string>
+    <string name="onthego_notif_error">Unable to start On-The-Go</string>
+    <string name="onthego_notif_restart">Restart On-The-Go</string>
+    <string name="onthego_notif_camera_changed">Camera mode changed</string>
+    <string name="onthego_transparency">Transparency</string>
+    <string name="onthego_front_camera">Use front camera</string>
+    <string name="onthego_service_toggle">Automatically restart service</string>
+    <string name="onthego_channel_name">Main</string>
+    <string name="global_action_onthego">On-The-Go</string>
+    <!-- OnTheGo Tile -->
+    <string name="quick_settings_onthego_label">On-The-Go</string>
+    <string name="accessibility_quick_settings_onthego_off">On-The-Go off</string>
+    <string name="accessibility_quick_settings_onthego_on">On-The-Go on</string>
+    <!-- AlertSlider -->
+    <string name="alert_slider_mode_priority_text">Priority</string>
+    <string name="alert_slider_mode_dnd_text">DND</string>
+    <string name="app_picker_dialog_title">Select an app</string>
+    <string name="active_edge_app_select_title">Select app</string>
+    <string name="active_edge_activity_select_title">Select activity</string>
+</resources>

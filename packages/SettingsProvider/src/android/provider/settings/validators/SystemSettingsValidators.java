@@ -20,6 +20,7 @@ import static android.provider.settings.validators.SettingsValidators.ANY_INTEGE
 import static android.provider.settings.validators.SettingsValidators.ANY_STRING_VALIDATOR;
 import static android.provider.settings.validators.SettingsValidators.BOOLEAN_VALIDATOR;
 import static android.provider.settings.validators.SettingsValidators.COMPONENT_NAME_VALIDATOR;
+import static android.provider.settings.validators.SettingsValidators.GAMING_MODE_PACKAGE_LIST_VALIDATOR;
 import static android.provider.settings.validators.SettingsValidators.LENIENT_IP_ADDRESS_VALIDATOR;
 import static android.provider.settings.validators.SettingsValidators.NON_NEGATIVE_INTEGER_VALIDATOR;
 import static android.provider.settings.validators.SettingsValidators.URI_VALIDATOR;
@@ -243,5 +244,29 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.QS_BRIGHTNESS_POSITION_BOTTOM, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.QS_SHOW_AUTO_BRIGHTNESS_BUTTON, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.SMART_SPACE, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.ARTWORK_MEDIA_BACKGROUND, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.ARTWORK_MEDIA_BACKGROUND_ENABLE_BLUR, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.ARTWORK_MEDIA_BACKGROUND_BLUR_RADIUS, new InclusiveFloatRangeValidator(1f, 25f));
+        VALIDATORS.put(System.ARTWORK_MEDIA_BACKGROUND_ALPHA, new InclusiveIntegerRangeValidator(0, 255));
+        VALIDATORS.put(System.ALERTSLIDER_MODE_POSITION_BOTTOM, ANY_STRING_VALIDATOR);
+        VALIDATORS.put(System.ALERTSLIDER_MODE_POSITION_MIDDLE, ANY_STRING_VALIDATOR);
+        VALIDATORS.put(System.ALERTSLIDER_MODE_POSITION_TOP, ANY_STRING_VALIDATOR);
+        VALIDATORS.put(System.GAMING_MODE_ENABLED, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.GAMING_MODE_ACTIVE, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.GAMING_MODE_DYNAMIC_ADD, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.GAMING_MODE_APP_LIST, GAMING_MODE_PACKAGE_LIST_VALIDATOR);
+        VALIDATORS.put(System.GAMING_MODE_DISABLE_NOTIFICATION_ALERT, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.GAMING_MODE_DISABLE_ADB, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(
+                System.COLOR_BUCKET_OVERLAY,
+                new Validator() {
+                    @Override
+                    public boolean validate(String value) {
+                        if (value == null && value.isEmpty()) {
+                            return false;
+                        }
+                        return true;
+                    }
+                });
     }
 }

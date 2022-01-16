@@ -323,7 +323,7 @@ public class QSPanel extends LinearLayout {
     }
 
     protected void updatePadding() {
-        int padding = getResources().getDimensionPixelSize(R.dimen.qs_panel_padding_top);
+        int padding = getResources().getDimensionPixelSize(com.android.internal.R.dimen.qs_panel_padding_top);
         setPaddingRelative(getPaddingStart(),
                 padding,
                 getPaddingEnd(),
@@ -392,7 +392,9 @@ public class QSPanel extends LinearLayout {
             loadSliderPosition();
             if (!mUsingHorizontalLayout) {
                 switchToParent(mBrightnessView, parent, mTop ? 0 : index);
-                index++;
+                boolean mediaInQS = Settings.Global.getInt(mContext.getContentResolver(),
+                        Settings.Global.SHOW_MEDIA_ON_QUICK_SETTINGS, 1) == 1;
+                if (mediaInQS) index++;
             } else {
                 updateBrightnessSliderPosition();
             }
@@ -720,6 +722,7 @@ public class QSPanel extends LinearLayout {
                 mTileLayout.setMaxColumns(horizontal ? 2 : 4);
             }
             updateMargins(mediaHostView);
+            if (mHorizontalLinearLayout == null) return;
             mHorizontalLinearLayout.setVisibility(horizontal ? View.VISIBLE : View.GONE);
         }
     }

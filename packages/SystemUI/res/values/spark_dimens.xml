@@ -15,6 +15,18 @@
 -->
 <resources>
 
+    <!-- AlertSlider -->
+    <!-- Absolute distance of the top position of alert slider from the top of the display -->
+    <integer name="alert_slider_top_y">0</integer>
+
+    <!-- Absolute width of the alert slider -->
+    <integer name="alertslider_width">0</integer>
+
+    <dimen name="alertslider_dialog_minradius">24dp</dimen>
+    <dimen name="alertslider_dialog_minheight">48dp</dimen>
+    <dimen name="alertslider_dialog_minwidth">108dp</dimen>
+    <dimen name="alertslider_padding">15dp</dimen>
+
     <!-- StatusBar burn-in protection -->
     <dimen name="horizontal_max_shift">3.0dp</dimen>
     <dimen name="vertical_max_shift">2.0dp</dimen>
@@ -28,15 +40,21 @@
     <!-- QQS Brightness slider -->
     <dimen name="quick_qs_brightness_margin_top">24dp</dimen>
 
+    <!-- Width of the battery icon in the status bar when set to circle style. -->
     <dimen name="status_bar_battery_icon_circle_width">13.5dp</dimen>
+
+    <!-- Height of the big battery circle icon in the status bar. -->
+    <dimen name="status_bar_battery_bigcircle_icon_height">20.5dp</dimen>
+    <!-- Width of the big battery circle icon in the status bar. -->
+    <dimen name="status_bar_battery_bigcircle_icon_width">20.5dp</dimen>
 
     <!-- Additional gesture navbar lengths -->
     <dimen name="navigation_home_handle_width_medium">110dp</dimen>
     <dimen name="navigation_home_handle_width_long">140dp</dimen>
 
     <!-- Height of the battery icon in the status bar. -->
-    <dimen name="status_bar_battery_icon_height_landscape">12.5dp</dimen>
-    <dimen name="status_bar_battery_icon_width_landscape">24dp</dimen>
+    <dimen name="status_bar_battery_icon_height_landscape">10.5dp</dimen>
+    <dimen name="status_bar_battery_icon_width_landscape">20dp</dimen>
 
     <!-- Bottom margin size when fingerprint in display is active -->
     <dimen name="keyguard_indication_margin_bottom_fingerprint_in_display">@dimen/keyguard_indication_margin_bottom</dimen>
@@ -48,5 +66,12 @@
     <dimen name="dismiss_all_button_margin_top">30dp</dimen>
     <dimen name="dismiss_all_button_width">55dp</dimen>
     <dimen name="dismiss_all_fab_src_size">24dp</dimen>
+
+    <dimen name="ongoing_appops_chip_main_padding">10dp</dimen>
+    <dimen name="ongoing_appops_chip_2_width">56dp</dimen>
+
+    <!-- Recognizing fingerprint animation -->
+    <dimen name="udfps_animation_size">280dp</dimen>
+    <dimen name="udfps_animation_offset">0dp</dimen>
 
 </resources>
