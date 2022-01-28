@@ -31,6 +31,8 @@ import android.content.om.OverlayInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.Intent;
+import android.view.WindowManagerGlobal;
 import android.content.res.Resources;
 import android.os.PowerManager;
 import android.graphics.Point;
@@ -42,6 +44,7 @@ import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
 import android.hardware.input.InputManager;
 import android.hardware.fingerprint.FingerprintManager;
+import android.view.IWindowManager;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -314,6 +317,35 @@ public class SparkUtils {
         }, 20);
     }
 
+    public static void sendSystemKeyToStatusBar(int keyCode) {
+        FireActions.sendSystemKeyToStatusBar(keyCode);
+    }
+
+    // Launch Power Menu dialog
+    public static void showPowerMenu() {
+        final IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
+        try {
+            wm.showGlobalActions();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void takeScreenshot(boolean full) {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ie) {
+            // Do nothing
+        }
+        IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
+        try {
+            wm.sendCustomAction(new Intent(full? INTENT_SCREENSHOT : INTENT_REGION_SCREENSHOT));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Keep FireAction methods below this point.
      * Place calls to methods above this point.
@@ -335,6 +367,17 @@ public class SparkUtils {
             if (service != null) {
                 try {
                     service.killForegroundApp();
+                } catch (RemoteException e) {
+                    // do nothing.
+                }
+            }
+        }
+
+        public static void sendSystemKeyToStatusBar(int keyCode) {
+            IStatusBarService service = getStatusBarService();
+            if (service != null) {
+                try {
+                    service.handleSystemKey(keyCode);
                 } catch (RemoteException e) {
                     // do nothing.
                 }

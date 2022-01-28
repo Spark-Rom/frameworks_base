@@ -1027,7 +1027,7 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
                 ActionUtils.switchScreenOff(mContext);
                 break;
             case 7: // Screenshot
-                ActionUtils.takeScreenshot(true);
+                SparkUtils.takeScreenshot(true);
                 break;
             case 8: // Notification panel
                 ActionUtils.toggleNotifications();
@@ -1046,6 +1046,21 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
                 break;
             case 13: // Switch recent app
                 ActionUtils.switchToLastApp(mContext);
+                break;
+            case 14: // Skip song
+                SparkUtils.sendSystemKeyToStatusBar(KeyEvent.KEYCODE_MEDIA_NEXT);
+                break;
+            case 15: // Previous song
+                SparkUtils.sendSystemKeyToStatusBar(KeyEvent.KEYCODE_MEDIA_PREVIOUS);
+                break;
+            case 16: // Powermenu
+                SparkUtils.showPowerMenu();
+                break;
+            case 17: // Partial Screenshot
+                SparkUtils.takeScreenshot(false);
+                break;
+            case 18: // Hush Mute
+                ActionUtils.triggerHushMute(mContext);
                 break;
         }
     }
