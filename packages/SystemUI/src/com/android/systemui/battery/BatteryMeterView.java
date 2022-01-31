@@ -345,7 +345,8 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
             // to load its emoji colored variant with the uFE0E flag
             String bolt = "\u26A1\uFE0E";
             CharSequence mChargeIndicator = mCharging && (mBatteryStyle == BATTERY_STYLE_HIDDEN ||
-                mBatteryStyle == BATTERY_STYLE_TEXT) ? (bolt + " ") : "";
+                mBatteryStyle == BATTERY_STYLE_TEXT || mBatteryStyle == BATTERY_STYLE_FULL_CIRCLE)
+                ? (bolt + " ") : "";
             mBatteryPercentView.setText(mChargeIndicator + text);
             setContentDescription(
                     getContext().getString(mCharging ? R.string.accessibility_battery_level_charging
