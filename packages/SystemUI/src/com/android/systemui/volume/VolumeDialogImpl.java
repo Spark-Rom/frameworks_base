@@ -1473,9 +1473,7 @@ public class VolumeDialogImpl implements VolumeDialog,
             final boolean isActive = row == activeRow;
             final boolean shouldBeVisible = shouldBeVisibleH(row, activeRow);
 
-            if (isExpandableRow(row)) {
-                row.view.setVisibility((mExpanded || row.defaultStream || mDefaultRow == row) ? View.VISIBLE : View.INVISIBLE);
-            } else {
+            if (!isExpandableRow(row) && !(row.defaultStream || mDefaultRow == row)) {
                 Util.setVisOrGone(row.view, shouldBeVisible);
             }
 
@@ -1524,6 +1522,34 @@ public class VolumeDialogImpl implements VolumeDialog,
                 linearLayoutParams.setMarginStart(0);
                 linearLayoutParams.setMarginEnd(0);
                 lastVisibleChild.setBackgroundColor(Color.TRANSPARENT);
+            }
+
+            // Increase the elevation of the rightmost row so that other rows animate behind it.
+            lastVisibleChild.setElevation(0.1f);
+
+            int [] lastVisibleChildLocation = new int[2];
+            lastVisibleChild.getLocationInWindow(lastVisibleChildLocation);
+
+            // Animate the expandable rows
+            for (final VolumeRow row : mRows) {
+                if (!isExpandableRow(row) || row.defaultStream || mDefaultRow == row) continue;
+
+                if (mExpanded) {
+                    row.view.animate()
+                            .alpha(1)
+                            .translationX(0)
+                            .setDuration(DRAWER_ANIMATION_DURATION)
+                            .setInterpolator(new SystemUIInterpolators.LogDecelerateInterpolator());
+                } else {
+                    int[] locInWindow = new int[2];
+                    row.view.getLocationInWindow(locInWindow);
+                    float distance = lastVisibleChildLocation[0] - locInWindow[0];
+                    row.view.animate()
+                            .alpha(0)
+                            .translationX(distance)
+                            .setDuration(DRAWER_ANIMATION_DURATION)
+                            .setInterpolator(new SystemUIInterpolators.LogAccelerateInterpolator());
+                }
             }
         }
 
