@@ -20188,6 +20188,12 @@ public final class Settings {
                 "android.settings.panel.action.MOBILE_DATA";
 
         /**
+         * @hide
+         */
+        public static final String ACTION_APP_VOLUME =
+                "android.settings.panel.action.APP_VOLUME";
+
+        /**
          * Activity Action: Show a settings dialog containing controls for Bluetooth.
          * <p>
          * Input: Nothing.
