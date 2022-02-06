@@ -202,4 +202,9 @@
     <string name="active_edge_app_select_title">Select app</string>
     <string name="active_edge_activity_select_title">Select activity</string>
 
+    <string name="screenrecord_skip_time_label">Reduce 3 second wait to 100ms</string>
+
+    <!-- Google Lens Screenshot string -->
+    <string name="lensss">Lens</string>
+
 </resources>
