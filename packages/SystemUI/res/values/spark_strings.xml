@@ -204,4 +204,6 @@
 
     <string name="screenrecord_skip_time_label">Reduce 3 second wait to 100ms</string>
 
+    <!-- Google Lens Screenshot string -->
+    <string name="lensss">Lens</string>
 </resources>
