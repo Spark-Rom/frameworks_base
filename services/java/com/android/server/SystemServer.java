@@ -218,6 +218,7 @@ import com.android.server.wm.WindowManagerService;
 
 import dalvik.system.VMRuntime;
 
+import ink.kaleidoscope.server.GmsManagerService;
 import ink.kaleidoscope.server.ParallelSpaceManagerService;
 
 import java.io.File;
@@ -411,6 +412,8 @@ public final class SystemServer implements Dumpable {
             "com.android.server.compat.overrides.AppCompatOverridesService$Lifecycle";
     private static final String FACE_UNLOCK_SERVICE_CLASS =
             "com.android.server.libremobileos.FaceUnlockService";
+    private static final String GMS_MANAGER_SERVICE_SERVICE_CLASS =
+            "ink.kaleidoscope.server.GmsManagerService";
     private static final String PARALLEL_SPACE_SERVICE_CLASS =
             "ink.kaleidoscope.server.ParallelSpaceManagerService";
 
@@ -2820,6 +2823,10 @@ public final class SystemServer implements Dumpable {
 
         t.traceBegin("StartFaceUnlockService");
         mSystemServiceManager.startService(FACE_UNLOCK_SERVICE_CLASS);
+        t.traceEnd();
+
+        t.traceBegin("StartGmsManagerService");
+        mSystemServiceManager.startService(GMS_MANAGER_SERVICE_SERVICE_CLASS);
         t.traceEnd();
 
         t.traceBegin("StartParallelSpaceManagerService");
