@@ -123,6 +123,7 @@ android_library {
         "dagger2",
         "jsr330",
         "lottie",
+        "faceunlock_framework",
         "vendor.lineage.powershare-V1.0-java",
         "colorkt",
         "themelib",
