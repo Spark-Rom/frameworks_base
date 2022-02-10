@@ -129,7 +129,7 @@
     <string name="keyguard_indication_dash_charging_time" formatted="false"><xliff:g id="percentage">%2$s</xliff:g> • 正在快速充电 (还需 <xliff:g id="charging_time_left">%s</xliff:g>充满)</string>
     <string name="keyguard_plugged_in_dash_charging">Dash 闪充</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a warp charger. Should match keyguard_plugged_in_warp_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_warp_charging_time" formatted="false"><xliff:g id="percentage">%2$s</xliff:g> • Warp闪充中 (还需<xliff:g id="charging_time_left" >%s</xliff:g> 充满)</string>
+    <string name="keyguard_indication_warp_charging_time" formatted="false"><xliff:g id="percentage">%2$s</xliff:g> • Warp闪充中 (还需<xliff:g id="charging_time_left">%s</xliff:g> 充满)</string>
     <string name="keyguard_plugged_in_warp_charging">Warp 闪充</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a VOOC charger. Should match keyguard_plugged_in_vooc_charging [CHAR LIMIT=40]-->
     <string name="keyguard_indication_vooc_charging_time" formatted="false"><xliff:g id="percentage">%2$s</xliff:g> • Vooc 闪充（还需 <xliff:g id="charging_time_left">%1$s</xliff:g>充满）</string>
@@ -143,26 +143,26 @@
     <string name="global_action_restart_bootloader">引导模式</string>
     <string name="global_action_restart_ui">系统界面</string>
     <!-- On The Go -->
-    <string name="onthego_notif_ticker">On-The-Go activated</string>
-    <string name="onthego_notif_title">On-The-Go is active</string>
-    <string name="onthego_notif_stop">Stop</string>
-    <string name="onthego_notif_options">Options</string>
-    <string name="onthego_notif_error">Unable to start On-The-Go</string>
-    <string name="onthego_notif_restart">Restart On-The-Go</string>
-    <string name="onthego_notif_camera_changed">Camera mode changed</string>
-    <string name="onthego_transparency">Transparency</string>
-    <string name="onthego_front_camera">Use front camera</string>
-    <string name="onthego_service_toggle">Automatically restart service</string>
-    <string name="onthego_channel_name">Main</string>
-    <string name="global_action_onthego">On-The-Go</string>
+    <string name="onthego_notif_ticker">行走模式已激活</string>
+    <string name="onthego_notif_title">行走模式正在运行</string>
+    <string name="onthego_notif_stop">停止</string>
+    <string name="onthego_notif_options">选项</string>
+    <string name="onthego_notif_error">无法启用行走模式</string>
+    <string name="onthego_notif_restart">重新启用行走模式</string>
+    <string name="onthego_notif_camera_changed">相机模式已更改</string>
+    <string name="onthego_transparency">透明度</string>
+    <string name="onthego_front_camera">使用前置摄像头</string>
+    <string name="onthego_service_toggle">自动重启服务</string>
+    <string name="onthego_channel_name">主要</string>
+    <string name="global_action_onthego">行走模式</string>
     <!-- OnTheGo Tile -->
-    <string name="quick_settings_onthego_label">On-The-Go</string>
-    <string name="accessibility_quick_settings_onthego_off">On-The-Go off</string>
-    <string name="accessibility_quick_settings_onthego_on">On-The-Go on</string>
+    <string name="quick_settings_onthego_label">行走模式</string>
+    <string name="accessibility_quick_settings_onthego_off">行走模式关闭</string>
+    <string name="accessibility_quick_settings_onthego_on">行走模式开启</string>
     <!-- AlertSlider -->
-    <string name="alert_slider_mode_priority_text">Priority</string>
-    <string name="alert_slider_mode_dnd_text">DND</string>
-    <string name="app_picker_dialog_title">Select an app</string>
-    <string name="active_edge_app_select_title">Select app</string>
-    <string name="active_edge_activity_select_title">Select activity</string>
+    <string name="alert_slider_mode_priority_text">优先级</string>
+    <string name="alert_slider_mode_dnd_text">免打扰</string>
+    <string name="app_picker_dialog_title">选择一个应用</string>
+    <string name="active_edge_app_select_title">选择应用</string>
+    <string name="active_edge_activity_select_title">选择活动</string>
 </resources>

@@ -16,22 +16,22 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Button that copies the url to the log of a crashed application -->
-    <string name="aerr_copy">Copy crash log URL</string>
-    <string name="url_copy_success">URL copied successfully</string>
-    <string name="url_copy_failed">An error occured while uploading the log to Memochō</string>
+    <string name="aerr_copy">Copier l\'URL du rapport d\'erreur</string>
+    <string name="url_copy_success">URL copiée avec succès</string>
+    <string name="url_copy_failed">Une erreur s\'est produite lors du téléchargement du journal d\'erreurs</string>
     <!-- Vendor mismatch fingerprint warning [CHAR LIMIT=NONE] -->
-    <string name="system_error_vendorprint">Your vendor image does not match the system. Please flash the <xliff:g id="string">%s</xliff:g> vendor image for your device</string>
+    <string name="system_error_vendorprint">Votre image vendeur ne correspond pas au système. Merci de flasher l\'image vendeur <xliff:g id="string">%s</xliff:g> sur votre dispositif</string>
     <!-- Cycle through ringer modes -->
-    <string name="volume_dialog_ringer_guidance_normal">Calls and notifications will ring</string>
+    <string name="volume_dialog_ringer_guidance_normal">Vibreur activé pour les appels et les notifications</string>
     <!-- Pocket Lock -->
-    <string name="pocket_lock_message_long_press">Press and hold power button to unlock</string>
+    <string name="pocket_lock_message_long_press">Appuyez et maintenez le bouton marche/arrêt pour déverrouiller</string>
     <!-- Pocket Lock -->
-    <string name="pocket_view_title">Pocket mode is on</string>
-    <string name="pocket_view_title_cancel">To use your phone:</string>
-    <string name="pocket_view_top_tag_cancel">Check if the blue area of your phone is clear of any obstructions, and clean off any dirt or dust.</string>
-    <string name="pocket_view_top_tag_cancel2">Long press the power button to force quit pocket mode.</string>
+    <string name="pocket_view_title">Le Mode Poche est activé</string>
+    <string name="pocket_view_title_cancel">Pour utiliser votre téléphone :</string>
+    <string name="pocket_view_top_tag_cancel">Vérifiez si la zone de détection de votre téléphone est exempte de toutes obstructions et nettoyez toute saleté ou poussière.</string>
+    <string name="pocket_view_top_tag_cancel2">Appuyez longuement sur le bouton d\'alimentation pour quitter le mode poche.</string>
     <!-- Advenced reboot -->
-    <string name="reboot_title">Reboot</string>
-    <string name="reboot_message">Rebooting system</string>
+    <string name="reboot_title">Redémarrage</string>
+    <string name="reboot_message">Redémarrage du système</string>
     <!-- AlertSlider modes -->
 </resources>
