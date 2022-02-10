@@ -31,6 +31,9 @@ import com.google.android.systemui.columbus.ColumbusServiceWrapper;
 import com.google.android.systemui.elmyra.ElmyraContext;
 import com.google.android.systemui.elmyra.ElmyraService;
 import com.google.android.systemui.elmyra.ServiceConfigurationGoogle;
+import com.google.android.systemui.face.FaceNotificationService;
+
+import com.android.internal.util.custom.faceunlock.FaceUnlockUtils;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -64,6 +67,10 @@ public class SparkServices extends VendorServices {
         }
         if (new ColumbusContext(mContext).isAvailable()) {
             addService(mColumbusServiceLazy.get());
+        }
+        if (!FaceUnlockUtils.isFaceUnlockSupported() &&
+                mContext.getPackageManager().hasSystemFeature("android.hardware.biometrics.face")) {
+            addService(new FaceNotificationService(mContext));
         }
     }
 
