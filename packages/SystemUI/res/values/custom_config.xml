@@ -30,4 +30,6 @@
     <!--The number of columns in the QSPanel -->
     <integer name="qs_panel_num_columns">5</integer>
 
+    <!-- If true, recorder will use AVCLevel42 for encoding-->
+    <bool name="config_screenrecord_codec_profile_avc42">false</bool>
 </resources>
