@@ -14,17 +14,21 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License
   -->
-<FrameLayout
+<com.zhenxiang.blur.WindowBlurFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:theme="@style/Theme.SystemUI.QuickSettings"
     android:id="@+id/brightness_mirror_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/brightness_mirror_background"
     android:layout_gravity="center_vertical"
     android:layout_margin="8dp"
     android:padding="@dimen/rounded_slider_background_padding"
     android:gravity="center"
-    android:visibility="invisible">
+    android:visibility="invisible"
+    app:backgroundColour="?attr/underSurfaceColor"
+    app:cornerRadius="@dimen/rounded_slider_background_rounded_corner"
+    app:blurRadius="@integer/background_blur_radius"
+    app:blurBackgroundColourOpacity="@dimen/background_blur_colour_opacity">
 
-</FrameLayout>
+</com.zhenxiang.blur.WindowBlurFrameLayout>
