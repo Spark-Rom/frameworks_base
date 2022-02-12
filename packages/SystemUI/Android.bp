@@ -62,6 +62,7 @@ android_library {
         "res-keyguard",
         "res",
         "res-hwkeys",
+        "res-blur",
     ],
     static_libs: [
         "WindowManager-Shell",
@@ -100,6 +101,7 @@ android_library {
         "tensorflowlite_java",
         "colorkt",
         "themelib",
+        "AndroidSystemBlur",
     ],
     manifest: "AndroidManifest.xml",
 
