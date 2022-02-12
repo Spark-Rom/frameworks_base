@@ -40,11 +40,11 @@ public class AmbientIndicationContainer extends AutoReinflateContainer implement
 
     //private final int mFODmargin;
     //private boolean mHasInDisplayFingerprint;
-    private View mAmbientIndication;
     private boolean mDozing;
     private boolean mKeyguard;
     private StatusBar mStatusBar;
     private TextView mText;
+    private ImageView mIcon;
     private Context mContext;
 
     private String mMediaTitle;
@@ -74,8 +74,8 @@ public class AmbientIndicationContainer extends AutoReinflateContainer implement
     }
 
     public void updateAmbientIndicationView(View view) {
-        mAmbientIndication = findViewById(R.id.ambient_indication);
         mText = (TextView)findViewById(R.id.ambient_indication_text);
+        mIcon = (ImageView)findViewById(R.id.ambient_indication_icon);
     }
 
     /*private void updatePosition() {
@@ -103,7 +103,8 @@ public class AmbientIndicationContainer extends AutoReinflateContainer implement
     private void setVisibility(boolean shouldShow) {
         if (mVisible != shouldShow) {
             mVisible = shouldShow;
-            mAmbientIndication.setVisibility(shouldShow ? View.VISIBLE : View.GONE);
+            mText.setVisibility(shouldShow ? View.VISIBLE : View.GONE);
+            mIcon.setVisibility(shouldShow ? View.VISIBLE : View.GONE);
             /*if (mHasInDisplayFingerprint && shouldShow) {
                 updatePosition();
             }*/
