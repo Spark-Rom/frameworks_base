@@ -942,8 +942,7 @@
         <service android:name=".FPSInfoService"
                 android:exported="false" />
 
-        <!-- Spark additions start -->
-        <service android:name=".CPUInfoService"
+        <service android:name="com.android.systemui.CPUInfoService"
                 android:exported="true" />
 
         <receiver android:name=".BootReceiver" android:exported="true">
