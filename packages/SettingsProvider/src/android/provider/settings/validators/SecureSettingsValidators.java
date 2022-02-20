@@ -318,6 +318,7 @@ public class SecureSettingsValidators {
         VALIDATORS.put(Secure.VOLUME_LINK_NOTIFICATION, BOOLEAN_VALIDATOR);
         VALIDATORS.put(Secure.MONET_ENGINE_ACCURATE_SHADES, new InclusiveIntegerRangeValidator(0, 1));
         VALIDATORS.put(Secure.MONET_ENGINE_COLOR_OVERRIDE, HEX_COLOR_VALIDATOR);
+        VALIDATORS.put(Secure.MONET_ENGINE_CUSTOM_COLOR, HEX_COLOR_VALIDATOR);
         VALIDATORS.put(Secure.MONET_ENGINE_CHROMA_FACTOR, ANY_FLOAT_VALIDATOR);
         VALIDATORS.put(Secure.MONET_ENGINE_LINEAR_LIGHTNESS, new InclusiveIntegerRangeValidator(0, 1));
         VALIDATORS.put(Secure.MONET_ENGINE_WHITE_LUMINANCE, new InclusiveIntegerRangeValidator(0, 1000));
