@@ -109,6 +109,7 @@ android_library {
         "backgesture-google",
         "columbus-sysui-google",
         "elmyra-sysui-google",
+        "face-sysui-google",
         "smartspace-google",
         "tensorflowlite_java",
         "vendor-pixelatoms-java",
