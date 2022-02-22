@@ -2417,7 +2417,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                 && !mKeyguardGoingAway && biometricEnabledForUser && !mLockIconPressed
                 && strongAuthAllowsScanning && mIsPrimaryUser
                 && (!mSecureCameraLaunched || mOccludingAppRequestingFace)
-                && !faceAuthenticated;
+                && !faceAuthenticated && !mIsDeviceInPocket;
 
         if (shouldListen && mFaceUnlockBehavior == FACE_UNLOCK_BEHAVIOR_SWIPE && !mBouncerFullyShown){
             shouldListen = false;
