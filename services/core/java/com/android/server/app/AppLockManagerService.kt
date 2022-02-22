@@ -19,6 +19,7 @@ package com.android.server.app
 import android.Manifest
 import android.annotation.RequiresPermission
 import android.app.ActivityManager
+import android.app.ActivityManagerInternal
 import android.app.ActivityTaskManager
 import android.app.AlarmManager
 import android.app.AppLockManager
@@ -72,7 +73,9 @@ class AppLockManagerService(private val context: Context) :
     private val alsInternal = LocalService()
     private val serviceScope = CoroutineScope(Dispatchers.Default)
 
-    private var currentUserId = UserHandle.USER_NULL
+    private val currentUserId: Int
+        get() = activityManagerInternal.currentUserId
+
     private var isDeviceSecure = false
 
     private val mutex = Mutex()
@@ -87,23 +90,33 @@ class AppLockManagerService(private val context: Context) :
     private val unlockedPackages = ArraySet<String>()
 
     private val biometricUnlocker = BiometricUnlocker(context)
+
     private val activityTaskManager: IActivityTaskManager by lazy {
         ActivityTaskManager.getService()
     }
+
     private val atmInternal: ActivityTaskManagerInternal by lazy {
         LocalServices.getService(ActivityTaskManagerInternal::class.java)
     }
+
     private val notificationManagerInternal: NotificationManagerInternal by lazy {
         LocalServices.getService(NotificationManagerInternal::class.java)
     }
+
     private val keyguardManager: KeyguardManager by lazy {
         context.getSystemService(KeyguardManager::class.java)
     }
+
     private val alarmManager: AlarmManager by lazy {
         context.getSystemService(AlarmManager::class.java)
     }
+
     private val userManager: UserManager by lazy {
         context.getSystemService(UserManager::class.java)
+    }
+
+    private val activityManagerInternal: ActivityManagerInternal by lazy {
+        LocalServices.getService(ActivityManagerInternal::class.java)
     }
 
     private val alarmsMutex = Mutex()
@@ -113,6 +126,13 @@ class AppLockManagerService(private val context: Context) :
 
     private val whiteListedSystemApps = context.resources.getStringArray(
         R.array.config_appLockAllowedSystemApps)
+
+    // Sometimes onTaskStackChanged is called multiple times
+    // during app switches and [unlockInternal] might be called
+    // more than once for a locked package in [checkAndUnlockPackage].
+    // Cache the queued package name to prevent duplicate prompts.
+    @GuardedBy("mutex")
+    private var unlockScheduledPackage: String? = null
 
     private val packageManager: PackageManager by lazy {
         context.packageManager
@@ -216,7 +236,7 @@ class AppLockManagerService(private val context: Context) :
                     }
                     unlockedPackages.remove(packageName)
                     notificationManagerInternal.updateSecureNotifications(
-                        packageName, true, ActivityManager.getCurrentUser())
+                        packageName, true, currentUserId)
                 }
                 alarmsMutex.withLock {
                     scheduledAlarms.remove(packageName)
@@ -235,6 +255,11 @@ class AppLockManagerService(private val context: Context) :
                     return@launch
                 }
                 if (!config.appLockPackages.contains(pkg)) return@launch
+                if (unlockScheduledPackage == pkg) {
+                    logD("Unlock already scheduled for $pkg, skipping")
+                    return@launch
+                }
+                unlockScheduledPackage = pkg
             }
             logD("$pkg is locked out, asking user to unlock")
             unlockInternal(pkg, currentUserId,
@@ -242,10 +267,16 @@ class AppLockManagerService(private val context: Context) :
                     serviceScope.launch {
                         mutex.withLock {
                             unlockedPackages.add(pkg)
+                            unlockScheduledPackage = null
                         }
                     }
                 },
                 onCancel = {
+                    serviceScope.launch {
+                        mutex.withLock {
+                            unlockScheduledPackage = null
+                        }
+                    }
                     // Send user to home on cancel
                     context.mainExecutor.execute {
                         atmInternal.startHomeActivity(currentUserId,
@@ -618,20 +649,18 @@ class AppLockManagerService(private val context: Context) :
 
     private fun onUserStarting(userId: Int) {
         Slog.i(TAG, "onUserStarting: userId = $userId")
-        currentUserId = userId
         isDeviceSecure = keyguardManager.isDeviceSecure(userId)
         logD("isDeviceSecure = $isDeviceSecure")
         serviceScope.launch {
             mutex.withLock {
-                if (!userConfigMap.containsKey(userId)) {
-                    withContext(Dispatchers.IO) {
-                        val config = AppLockConfig(
-                            Environment.getDataSystemDeDirectory(userId))
-                        userConfigMap[userId] = config
-                        config.read()
-                        biometricUnlocker.biometricsAllowed =
-                            config.biometricsAllowed
-                    }
+                if (userConfigMap.containsKey(userId)) return@withLock
+                withContext(Dispatchers.IO) {
+                    val config = AppLockConfig(
+                        Environment.getDataSystemDeDirectory(userId))
+                    userConfigMap[userId] = config
+                    config.read()
+                    biometricUnlocker.biometricsAllowed =
+                        config.biometricsAllowed
                 }
             }
         }
@@ -642,7 +671,7 @@ class AppLockManagerService(private val context: Context) :
         return serviceScope.launch {
             mutex.withLock {
                 unlockedPackages.clear()
-                userConfigMap.remove(userId)?.let {
+                userConfigMap[userId]?.let {
                     withContext(Dispatchers.IO) {
                         it.write()
                     }
@@ -745,12 +774,14 @@ class AppLockManagerService(private val context: Context) :
                             "that is not in list")
                         return@withLock
                     }
+                    unlockScheduledPackage = packageName
                     unlockInternal(packageName, actualUserId,
                         onSuccess = {
                             logD("Unlock successfull")
                             serviceScope.launch {
                                 mutex.withLock {
                                     unlockedPackages.add(packageName)
+                                    unlockScheduledPackage = null
                                 }
                                 unlockCallback?.onUnlocked(packageName)
                                 notificationManagerInternal.updateSecureNotifications(
@@ -760,6 +791,9 @@ class AppLockManagerService(private val context: Context) :
                         onCancel = {
                             logD("Unlock cancelled")
                             serviceScope.launch {
+                                mutex.withLock {
+                                    unlockScheduledPackage = null
+                                }
                                 cancelCallback?.onCancelled(packageName)
                             }
                         }
