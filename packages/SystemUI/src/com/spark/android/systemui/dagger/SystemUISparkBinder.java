@@ -46,6 +46,7 @@ import com.android.systemui.util.leak.GarbageMonitor;
 import com.android.systemui.volume.VolumeUI;
 import com.android.systemui.wmshell.WMShell;
 import com.android.systemui.dagger.SysUISingleton;
+import com.android.systemui.alertslider.AlertSliderUI;
 
 import com.google.android.systemui.columbus.ColumbusTargetRequestService;
 
@@ -74,6 +75,12 @@ public abstract class SystemUISparkBinder {
     @IntoMap
     @ClassKey(SparkServices.class)
     public abstract SystemUI bindSparkServices(SparkServices sysui);
+
+    /** Inject into AlertSliderUI. */
+    @Binds
+    @IntoMap
+    @ClassKey(AlertSliderUI.class)
+    public abstract SystemUI bindAlertSliderUI(AlertSliderUI sysui);
 
     /**
      * Inject into ColumbusTargetRequestService.
