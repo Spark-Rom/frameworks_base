@@ -6475,6 +6475,12 @@ public final class Settings {
         public static final String USE_WP_ZOOM = "use_wp_zoom";
 
         /**
+         * Settings Dashboard Style
+         * @hide
+         */
+        public static final String SETTINGS_DASHBOARD_STYLE = "settings_dashboard_style";
+
+        /**
          * These are all public system settings
          *
          * @hide
