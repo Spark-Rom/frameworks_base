@@ -142,27 +142,39 @@
     <string name="global_action_restart_recovery">Recovery</string>
     <string name="global_action_restart_bootloader">Bootloader</string>
     <string name="global_action_restart_ui">SystemUI</string>
+    <string name="global_action_onthego">On-The-Go</string>
     <!-- On The Go -->
-    <string name="onthego_notif_ticker">On-The-Go activado</string>
-    <string name="onthego_notif_title">On-The-Go está activo</string>
-    <string name="onthego_notif_stop">Detener</string>
-    <string name="onthego_notif_options">Opciones</string>
-    <string name="onthego_notif_error">No se pudo iniciar On-The-Go</string>
-    <string name="onthego_notif_restart">Reiniciar On-The-Go</string>
-    <string name="onthego_notif_camera_changed">Modo de cámara cambiado</string>
-    <string name="onthego_transparency">Transparencia</string>
+    <string name="onthego_notification_ticker">On-The-Go activado</string>
+    <string name="onthego_notification_title">On-The-Go está activo</string>
+    <string name="onthego_notification_stop">Detener</string>
+    <string name="onthego_notification_options">Opciones</string>
+    <string name="onthego_notification_error">No se pudo iniciar On-The-Go</string>
+    <string name="onthego_notification_restart">Reiniciar On-The-Go</string>
+    <string name="onthego_notification_camera_changed">Modo de cámara cambiado</string>
+    <string name="onthego_transparency">Transparencia On-The-Go</string>
     <string name="onthego_front_camera">Usar la cámara frontal</string>
     <string name="onthego_service_toggle">Reiniciar servicio automáticamente</string>
-    <string name="onthego_channel_name">Principal</string>
-    <string name="global_action_onthego">On-The-Go (USB)</string>
+    <string name="onthego_channel_name">On-The-Go</string>
     <!-- OnTheGo Tile -->
-    <string name="quick_settings_onthego_label">On-The-Go (USB)</string>
+    <string name="quick_settings_onthego_label">On-The-Go</string>
     <string name="accessibility_quick_settings_onthego_off">On-The-Go desactivado</string>
     <string name="accessibility_quick_settings_onthego_on">On-The-Go activado</string>
+    <string name="accessibility_quick_settings_onthego_changed_off">On-The-Go desactivado</string>
+    <string name="accessibility_quick_settings_onthego_changed_on">On-The-Go encendido</string>
     <!-- AlertSlider -->
     <string name="alert_slider_mode_priority_text">Prioridad</string>
     <string name="alert_slider_mode_dnd_text">No Molestar</string>
     <string name="app_picker_dialog_title">Seleccionar una aplicación</string>
     <string name="active_edge_app_select_title">Seleccionar aplicación</string>
     <string name="active_edge_activity_select_title">Seleccionar actividad</string>
+    <string name="screenrecord_skip_time_label">Reduce la espera de 3 segundos a 100ms</string>
+    <!-- Google Lens Screenshot string -->
+    <string name="lensss">Lens</string>
+    <!-- Gaming mode -->
+    <string name="gaming_mode_not_enabled">El modo Juego está deshabilitado en los ajustes</string>
+    <string name="quick_settings_gaming_mode_label">Modo Juego</string>
+    <!-- FPS view text placeholder -->
+    <string name="fps_text_placeholder">FPS: <xliff:g id="fps" example="90">%1$d</xliff:g></string>
+    <!-- Face Unlock -->
+    <string name="face_unlock_recognizing">Reconociendo cara...</string>
 </resources>
