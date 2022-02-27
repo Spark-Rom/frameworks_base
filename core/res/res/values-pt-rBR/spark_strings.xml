@@ -34,4 +34,8 @@
     <string name="reboot_title">Reiniciar</string>
     <string name="reboot_message">Reiniciando...</string>
     <!-- AlertSlider modes -->
+    <!-- App lock -->
+    <string name="unlock_application">Desbloquear <xliff:g id="label" example="Telegram">%1$s</xliff:g></string>
+    <!-- Face unlock -->
+    <string name="face_unlock_disabled_idle">Desbloqueio facial desativado devido à inatividade</string>
 </resources>
