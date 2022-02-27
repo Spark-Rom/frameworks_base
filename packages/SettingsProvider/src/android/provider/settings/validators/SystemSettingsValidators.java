@@ -268,5 +268,6 @@ public class SystemSettingsValidators {
                         return true;
                     }
                 });
+        VALIDATORS.put(System.TOAST_ANIMATION, ANY_INTEGER_VALIDATOR);
     }
 }

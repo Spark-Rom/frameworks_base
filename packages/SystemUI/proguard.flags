@@ -60,4 +60,9 @@
 -keep class com.android.systemui.tv.Dagger** { *; }
 
 # Custom rules
--keep class com.google.android.systemui.** { *; }
+-keep class com.spark.** { *; }
+
+# Google rules
+-keep class android.hardware.** { *; }
+-keep class com.google.** { *; }
+-keep class vendor.** { *; }

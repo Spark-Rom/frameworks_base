@@ -58,10 +58,14 @@ android_library {
         "src/**/I*.aidl",
     ],
     resource_dirs: [
+        "res",
+        "res-assist",
+        "res-columbus",
         "res-product",
         "res-keyguard",
-        "res",
+        "res-smartspace",
         "res-hwkeys",
+        "res-blur",
     ],
     static_libs: [
         "WindowManager-Shell",
@@ -97,9 +101,18 @@ android_library {
         "dagger2",
         "jsr330",
         "lottie",
-        "tensorflowlite_java",
         "colorkt",
         "themelib",
+        "AndroidSystemBlur",
+        "faceunlock_framework",
+        "assistmanager-google",
+        "backgesture-google",
+        "columbus-sysui-google",
+        "elmyra-sysui-google",
+        "face-sysui-google",
+        "smartspace-google",
+        "tensorflowlite_java",
+        "vendor-pixelatoms-java",
     ],
     manifest: "AndroidManifest.xml",
 
@@ -211,7 +224,9 @@ android_app {
     static_libs: [
         "SystemUI-core",
     ],
-    jni_libs: ["libtensorflowlite_jni"],
+    jni_libs: [
+        "libtensorflowlite_jni",
+    ],
     use_embedded_native_libs: true,
     resource_dirs: [],
 

@@ -34,4 +34,8 @@
     <string name="reboot_title">再起動</string>
     <string name="reboot_message">再起動しています…</string>
     <!-- AlertSlider modes -->
+    <!-- App lock -->
+    <string name="unlock_application"><xliff:g id="label" example="Telegram">%1$s</xliff:g>をロック解除</string>
+    <!-- Face unlock -->
+    <string name="face_unlock_disabled_idle">顔認証によるロック解除は無効中です</string>
 </resources>

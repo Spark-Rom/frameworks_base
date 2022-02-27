@@ -133,4 +133,34 @@
     <!-- Light / Regular style fonts -->
     <java-symbol type="string" name="config_lightFontFamily" />
     <java-symbol type="string" name="config_regularFontFamily" />
+
+    <!-- App lock -->
+    <java-symbol type="string" name="unlock_application" />
+    <java-symbol type="array" name="config_appLockAllowedSystemApps" />
+
+    <!-- Enable face auth only when swiping security view -->
+    <java-symbol type="bool" name="config_faceAuthOnlyOnSecurityView" />
+
+    <!-- Whether to cancel fingerprint operation if not idle -->
+    <java-symbol type="bool" name="config_fpCancelIfNotIdle" />
+
+    <!-- Settings Restart -->
+    <java-symbol type="string" name="settings_restart_title" />
+    <java-symbol type="string" name="settings_restart_message" />
+
+    <!-- Toast Animation -->
+    <java-symbol type="style" name="Animation.Toast.Fade" />
+    <java-symbol type="style" name="Animation.Toast.SlideRight" />
+    <java-symbol type="style" name="Animation.Toast.SlideLeft" />
+    <java-symbol type="style" name="Animation.Toast.Xylon" />
+    <java-symbol type="style" name="Animation.Toast.Toko" />
+    <java-symbol type="style" name="Animation.Toast.Tn" />
+    <java-symbol type="style" name="Animation.Toast.Honami" />
+    <java-symbol type="style" name="Animation.Toast.FastFade" />
+    <java-symbol type="style" name="Animation.Toast.GrowFade" />
+    <java-symbol type="style" name="Animation.Toast.GrowFadeCenter" />
+    <java-symbol type="style" name="Animation.Toast.GrowFadeBottom" />
+    <java-symbol type="style" name="Animation.Toast.Translucent" />
+    <java-symbol type="style" name="Animation.Toast.SlideRightLeft" />
+    <java-symbol type="style" name="Animation.Toast.SlideLeftRight" />
 </resources>

@@ -1011,6 +1011,32 @@ public class AudioManager {
         }
     }
 
+    /** @hide */
+    @UnsupportedAppUsage
+    @RequiresPermission(android.Manifest.permission.MODIFY_AUDIO_ROUTING)
+    public int setAppVolume(String packageName, float volume) {
+        return AudioSystem.setAppVolume(packageName, volume);
+    }
+
+    /** @hide */
+    @UnsupportedAppUsage
+    @RequiresPermission(android.Manifest.permission.MODIFY_AUDIO_ROUTING)
+    public int setAppMute(String packageName, boolean mute) {
+        return AudioSystem.setAppMute(packageName, mute);
+    }
+
+    /** @hide */
+    @UnsupportedAppUsage
+    @RequiresPermission(android.Manifest.permission.MODIFY_AUDIO_ROUTING)
+    public ArrayList<AppVolume> listAppVolumes() {
+        ArrayList<AppVolume> volumes = new ArrayList<AppVolume>();
+        int status = AudioSystem.listAppVolumes(volumes);
+        if (status != AudioManager.SUCCESS) {
+            return new ArrayList<AppVolume>();
+        }
+        return volumes;
+    }
+
     /**
      * Returns the current ringtone mode.
      *
@@ -5884,6 +5910,38 @@ public class AudioManager {
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
+    }
+
+     /**
+     * Indicate A2DP source or sink active device change and eventually suppress
+     * the {@link AudioManager.ACTION_AUDIO_BECOMING_NOISY} intent.
+     * This operation is asynchronous but its execution will still be sequentially scheduled
+     * relative to calls to {@link #setBluetoothHearingAidDeviceConnectionState(BluetoothDevice,
+     * int, boolean, int)} and
+     * {@link #handleBluetoothA2dpDeviceConfigChange(BluetoothDevice)}.
+     * @param device Bluetooth device connected/disconnected
+     * @param state  new connection state (BluetoothProfile.STATE_xxx)
+     * @param profile profile for the A2DP device
+     * (either {@link android.bluetooth.BluetoothProfile.A2DP} or
+     * {@link android.bluetooth.BluetoothProfile.A2DP_SINK})
+     * @param a2dpVolume New volume for the connecting device. Does nothing if
+     * disconnecting. Pass value -1 in case you want this field to be ignored
+     * @param suppressNoisyIntent if true the
+     * {@link AudioManager.ACTION_AUDIO_BECOMING_NOISY} intent will not be sent.
+     * @return a delay in ms that the caller should wait before broadcasting
+     * BluetoothA2dp.ACTION_CONNECTION_STATE_CHANGED intent.
+     * {@hide}
+     */
+    public void handleBluetoothA2dpActiveDeviceChange(
+                BluetoothDevice device, int state, int profile,
+                boolean suppressNoisyIntent, int a2dpVolume) {
+         final IAudioService service = getService();
+         try {
+             service.handleBluetoothA2dpActiveDeviceChange(device,
+                   state, profile, suppressNoisyIntent, a2dpVolume);
+         } catch (RemoteException e) {
+             throw e.rethrowFromSystemServer();
+         }
     }
 
     /** {@hide} */

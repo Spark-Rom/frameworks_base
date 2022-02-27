@@ -169,6 +169,7 @@ class SaveImageInBackgroundTask extends AsyncTask<String, Void, Void> {
             mImageData.shareTransition = createShareAction(mContext, mContext.getResources(), uri);
             mImageData.editTransition = createEditAction(mContext, mContext.getResources(), uri);
             mImageData.deleteAction = createDeleteAction(mContext, mContext.getResources(), uri);
+            mImageData.lensAction = createLensAction(mContext, mContext.getResources(), uri);
             mImageData.quickShareAction = createQuickShareAction(mContext,
                     mQuickShareData.quickShareAction, uri);
 
@@ -238,7 +239,7 @@ class SaveImageInBackgroundTask extends AsyncTask<String, Void, Void> {
             String subjectDate = DateFormat.getDateTimeInstance().format(new Date(mImageTime));
             String subject = String.format(SCREENSHOT_SHARE_SUBJECT_TEMPLATE, subjectDate);
             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-            sharingIntent.setType("image/png");
+            sharingIntent.setDataAndType(uri, "image/png");
             sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);
             // Include URI in ClipData also, so that grantPermission picks it up.
             // We don't use setData here because some apps interpret this as "to:".
@@ -356,6 +357,29 @@ class SaveImageInBackgroundTask extends AsyncTask<String, Void, Void> {
                 r.getString(com.android.internal.R.string.delete), deleteAction);
 
         return deleteActionBuilder.build();
+    }
+
+    Notification.Action createLensAction(Context context, Resources r, Uri uri) {
+        // Make sure pending intents for the system user are still unique across users
+        // by setting the (otherwise unused) request code to the current user id.
+        int requestCode = mContext.getUserId();
+
+        // Create a lens action for the notification
+        PendingIntent lensAction = PendingIntent.getBroadcast(context, requestCode,
+                new Intent(context, LensScreenshotReceiver.class)
+                        .putExtra(ScreenshotController.SCREENSHOT_URI_ID, uri.toString())
+                        .putExtra(ScreenshotController.EXTRA_ID, mScreenshotId)
+                        .putExtra(ScreenshotController.EXTRA_SMART_ACTIONS_ENABLED,
+                                mSmartActionsEnabled)
+                        .addFlags(Intent.FLAG_RECEIVER_FOREGROUND),
+                PendingIntent.FLAG_CANCEL_CURRENT
+                        | PendingIntent.FLAG_ONE_SHOT
+                        | PendingIntent.FLAG_IMMUTABLE);
+        Notification.Action.Builder lensActionBuilder = new Notification.Action.Builder(
+                Icon.createWithResource(r, R.drawable.ic_screenshot_lensss),
+                r.getString(R.string.lensss), lensAction);
+
+        return lensActionBuilder.build();
     }
 
     private UserHandle getUserHandleOfForegroundApplication(Context context) {

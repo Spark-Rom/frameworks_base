@@ -213,6 +213,9 @@ interface IAudioService {
 
     void handleBluetoothA2dpDeviceConfigChange(in BluetoothDevice device);
 
+    void handleBluetoothA2dpActiveDeviceChange(in BluetoothDevice device,
+            int state, int profile, boolean suppressNoisyIntent, int a2dpVolume);
+
     @UnsupportedAppUsage
     AudioRoutesInfo startWatchingRoutes(in IAudioRoutesObserver observer);
 
@@ -394,4 +397,11 @@ interface IAudioService {
     void registerModeDispatcher(IAudioModeDispatcher dispatcher);
 
     oneway void unregisterModeDispatcher(IAudioModeDispatcher dispatcher);
+
+    /**
+     * Internal api to protect Pulse
+     * @hide
+     */
+    void setVisualizerLocked(boolean doLock);
+    boolean isVisualizerLocked(String callingPackage);
 }

@@ -132,6 +132,7 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.PrintWriterPrinter;
 import android.util.Slog;
 import android.util.SparseArray;
@@ -899,10 +900,59 @@ public class DisplayPolicy {
                 attrs.hideTimeoutMilliseconds = mAccessibilityManager.getRecommendedTimeoutMillis(
                         (int) attrs.hideTimeoutMilliseconds,
                         AccessibilityManager.FLAG_CONTENT_TEXT);
-                // Toasts can't be clickable
-                attrs.flags |= WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
-                break;
 
+                switch(Settings.System.getIntForUser(mContext.getContentResolver(),
+                        Settings.System.TOAST_ANIMATION, 1, UserHandle.USER_CURRENT)) {
+                    case 0:
+                        attrs.windowAnimations = -1;
+                        break;
+                    case 1:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast;
+                        break;
+                    case 2:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_Fade;
+                        break;
+                    case 3:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_SlideRight;
+                        break;
+                    case 4:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_SlideLeft;
+                        break;
+                    case 5:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_Xylon;
+                        break;
+                    case 6:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_Toko;
+                        break;
+                    case 7:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_Tn;
+                        break;
+                    case 8:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_Honami;
+                        break;
+                    case 9:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_FastFade;
+                        break;
+                    case 10:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_GrowFade;
+                        break;
+                    case 11:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_GrowFadeCenter;
+                        break;
+                    case 12:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_GrowFadeBottom;
+                        break;
+                    case 13:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_Translucent;
+                        break;
+                    case 14:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_SlideLeftRight;
+                        break;
+                    case 15:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_SlideRightLeft;
+                        break;
+                }
+                break;
             case TYPE_BASE_APPLICATION:
 
                 // A non-translucent main app window isn't allowed to fit insets, as it would create
@@ -1510,6 +1560,15 @@ public class DisplayPolicy {
         contentFrame.set(sTmpRect);
     }
 
+    private void notifyLeftInLandscapeChanged(boolean isOnLeft) {
+        mHandler.post(() -> {
+            StatusBarManagerInternal statusBar = getStatusBarManagerInternal();
+            if (statusBar != null) {
+                statusBar.leftInLandscapeChanged(isOnLeft);
+            }
+        });
+    }
+
     private int layoutNavigationBar(DisplayFrames displayFrames, Rect contentFrame) {
         if (mNavigationBar == null) {
             return NAV_BAR_INVALID;
@@ -1523,9 +1582,16 @@ public class DisplayPolicy {
         final int rotation = displayFrames.mRotation;
         final int displayHeight = displayFrames.mDisplayHeight;
         final int displayWidth = displayFrames.mDisplayWidth;
+        final int lastNavbarPosition = mNavigationBarPosition;
         final int navBarPosition = navigationBarPosition(displayWidth, displayHeight, rotation);
 
         getRotatedWindowBounds(displayFrames, mNavigationBar, navigationFrame);
+
+        if (lastNavbarPosition == NAV_BAR_LEFT && navBarPosition != NAV_BAR_LEFT) {
+            notifyLeftInLandscapeChanged(false);
+        } else if (lastNavbarPosition != NAV_BAR_LEFT && navBarPosition == NAV_BAR_LEFT) {
+            notifyLeftInLandscapeChanged(true);
+        }
 
         final Rect cutoutSafeUnrestricted = sTmpRect;
         cutoutSafeUnrestricted.set(displayFrames.mUnrestricted);
@@ -1624,7 +1690,7 @@ public class DisplayPolicy {
             pf.set((fl & FLAG_LAYOUT_IN_SCREEN) == 0 ? attached.getFrame() : df);
         }
 
-        final int cutoutMode = LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
+        final int cutoutMode = attrs.layoutInDisplayCutoutMode;
         // Ensure that windows with a DEFAULT or NEVER display cutout mode are laid out in
         // the cutout safe zone.
         if (cutoutMode != LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS) {

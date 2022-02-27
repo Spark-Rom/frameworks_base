@@ -20,10 +20,6 @@
     <string name="screen_zoom_summary_smallest">Smallest</string>
 
     <string name="status_deep_sleep">(Deep sleep: %1$d%2$s)</string>
-
-    <!-- On-The-Go -->
-    <integer name="quick_settings_onthego_dialog_short_timeout">3000</integer>
-    <integer name="quick_settings_onthego_dialog_long_timeout">6000</integer>
     
     <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
     <string name="permlab_fakePackageSignature">Spoof package signature</string>

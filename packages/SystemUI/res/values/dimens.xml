@@ -1409,7 +1409,7 @@
     <dimen name="controls_dialog_control_width">200dp</dimen>
 
     <!-- Screen record dialog -->
-    <dimen name="screenrecord_option_padding">18dp</dimen>
+    <dimen name="screenrecord_option_padding">15dp</dimen>
     <dimen name="screenrecord_logo_size">26dp</dimen>
     <dimen name="screenrecord_option_icon_size">24dp</dimen>
     <!-- Screen record status bar icon -->
@@ -1433,7 +1433,7 @@
     <!-- Output switcher panel related dimensions -->
     <dimen name="media_output_dialog_list_margin">12dp</dimen>
     <dimen name="media_output_dialog_list_max_height">364dp</dimen>
-    <dimen name="media_output_dialog_header_album_icon_size">52dp</dimen>
+    <dimen name="media_output_dialog_header_album_icon_size">72dp</dimen>
     <dimen name="media_output_dialog_header_back_icon_size">36dp</dimen>
     <dimen name="media_output_dialog_header_icon_padding">16dp</dimen>
     <dimen name="media_output_dialog_icon_corner_radius">16dp</dimen>
