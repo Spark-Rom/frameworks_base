@@ -280,6 +280,7 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.MEDIA_ARTWORK_BLUR_RADIUS, new InclusiveFloatRangeValidator(1f, 25f));
         VALIDATORS.put(System.VOLUME_BUTTON_MUSIC_CONTROL, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.QS_SYSTEM_INFO, ANY_INTEGER_VALIDATOR);
+        VALIDATORS.put(System.HEADS_UP_NOTIFICATIONS_THRESHOLD, ANY_INTEGER_VALIDATOR);
         VALIDATORS.put(System.RINGTONE_VIBRATION_PATTERN, new InclusiveIntegerRangeValidator(0, 5));
         VALIDATORS.put(System.CUSTOM_RINGTONE_VIBRATION_PATTERN,
                  new ListValidator(",") {
