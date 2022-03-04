@@ -31,6 +31,8 @@
     <!-- Name of the VPN status bar icon. -->
     <string name="status_bar_vpn">VPN</string>
 
+    <string name="status_bar_firewall">Firewall</string>
+
     <!-- Sb Data Saver icon -->
     <string name="status_bar_data_saver">Data saver</string>
 
@@ -291,4 +293,5 @@
 
     <!-- Screenshot Tile -->
     <string name="screenshot_long_press">Long press - selected region</string>
+
 </resources>
