@@ -84,7 +84,11 @@ public final class PixelPropsUtils {
         "com.google.android.soundpicker",
         "com.google.intelligence.sense",
         "com.google.pixel.dynamicwallpapers",
-        "com.google.pixel.livewallpaper"
+        "com.google.pixel.livewallpaper",
+        "com.amazon.avod.thirdpartyclient",
+        "com.disney.disneyplus",
+        "com.netflix.mediaclient",
+        "in.startv.hotstar"
     );
 
     private static final List<String> packagesToChangePixelXL = List.of(
