@@ -31,6 +31,9 @@
     <!-- Sb Data Saver icon -->
     <string name="status_bar_data_saver">Data saver</string>
 
+    <!-- Sb Call Strength icon -->
+    <string name="status_bar_call_strength">Call strength</string>
+
     <!-- Alert slider extras -->
     <string name="volume_ringer_priority_only">Priority</string>
     <string name="volume_ringer_alarms_only">Alarms</string>
