@@ -80,7 +80,7 @@ class ControlsComponent @Inject constructor(
     /**
      * @return true if controls are feature-enabled and the user has the setting enabled
      */
-    fun isEnabled() = featureEnabled
+    fun isEnabled() = featureEnabled && lazyControlsController.get().available
 
     /**
      * Returns one of 3 states:
