@@ -19,7 +19,6 @@ package com.android.systemui.statusbar.policy
 import android.content.ComponentName
 import android.content.Context
 import android.content.SharedPreferences
-import android.provider.Settings
 import android.util.Log
 
 import com.android.systemui.R
@@ -29,7 +28,6 @@ import com.android.systemui.controls.management.ControlsListingController
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.settings.UserContextProvider
 import com.android.systemui.statusbar.policy.DeviceControlsController.Callback
-import com.android.systemui.util.settings.SecureSettings
 
 import javax.inject.Inject
 
@@ -46,8 +44,7 @@ import javax.inject.Inject
 public class DeviceControlsControllerImpl @Inject constructor(
     private val context: Context,
     private val controlsComponent: ControlsComponent,
-    private val userContextProvider: UserContextProvider,
-    private val secureSettings: SecureSettings
+    private val userContextProvider: UserContextProvider
 ) : DeviceControlsController {
 
     private var callback: Callback? = null
@@ -76,7 +73,6 @@ public class DeviceControlsControllerImpl @Inject constructor(
         controlsComponent.getControlsController().ifPresent {
             if (!it.getFavorites().isEmpty()) {
                 position = QS_PRIORITY_POSITION
-                fireControlsUpdate()
             }
         }
     }
@@ -84,22 +80,20 @@ public class DeviceControlsControllerImpl @Inject constructor(
     /**
      * This migration logic assumes that something like [AutoTileManager] is tracking state
      * externally, and won't call this method after receiving a response via
-     * [Callback#onControlsUpdate], once per user. Otherwise the calculated position may be
+     * [Callback#onControlsAvailable], once per user. Otherwise the calculated position may be
      * incorrect.
      */
     override fun setCallback(callback: Callback) {
         // Treat any additional call as a reset before recalculating
         removeCallback()
-        this.callback = callback
 
-        if (secureSettings.getInt(Settings.Secure.CONTROLS_ENABLED, 1) == 0) {
-            fireControlsUpdate()
-        } else {
-            checkMigrationToQs()
-            controlsComponent.getControlsListingController().ifPresent {
-                it.addCallback(listingCallback)
-            }
+        checkMigrationToQs()
+        controlsComponent.getControlsListingController().ifPresent {
+            it.addCallback(listingCallback)
         }
+
+        this.callback = callback
+        fireControlsAvailable()
     }
 
     override fun removeCallback() {
@@ -110,9 +104,11 @@ public class DeviceControlsControllerImpl @Inject constructor(
         }
     }
 
-    private fun fireControlsUpdate() {
-        Log.i(TAG, "Setting DeviceControlsTile position: $position")
-        callback?.onControlsUpdate(position)
+    private fun fireControlsAvailable() {
+        position?.let {
+            Log.i(TAG, "Setting DeviceControlsTile position: $it")
+            callback?.onControlsAvailable(it)
+        }
     }
 
     /**
@@ -159,7 +155,7 @@ public class DeviceControlsControllerImpl @Inject constructor(
                         if (position == null) {
                             position = QS_DEFAULT_POSITION
                         }
-                        fireControlsUpdate()
+                        fireControlsAvailable()
 
                         controlsComponent.getControlsListingController().ifPresent {
                             it.removeCallback(listingCallback)

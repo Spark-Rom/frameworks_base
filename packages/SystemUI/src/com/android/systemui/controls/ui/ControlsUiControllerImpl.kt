@@ -127,6 +127,9 @@ class ControlsUiControllerImpl @Inject constructor (
             reload(parent)
     }
 
+    override val available: Boolean
+        get() = controlsController.get().available
+
     private lateinit var activityContext: Context
     private lateinit var listingCallback: ControlsListingController.ControlsListingCallback
 
