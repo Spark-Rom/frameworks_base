@@ -964,4 +964,5 @@
     <string name="dream_date_complication_date_format" msgid="8191225366513860104">"DDD, d. MMM"</string>
     <string name="dream_time_complication_12_hr_time_format" msgid="4691197486690291529">"s:min"</string>
     <string name="dream_time_complication_24_hr_time_format" msgid="6248280719733640813">"č:min"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Dodajte kontrole za povezane uređaje"</string>
 </resources>

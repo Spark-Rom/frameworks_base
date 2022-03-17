@@ -2609,4 +2609,5 @@
 
     <!-- Time format for the Dream Time Complication for 24-hour time format [CHAR LIMIT=NONE] -->
     <string name="dream_time_complication_24_hr_time_format">kk:mm</string>
+    <string name="quick_controls_subtitle">Add controls for your connected devices</string>
 </resources>

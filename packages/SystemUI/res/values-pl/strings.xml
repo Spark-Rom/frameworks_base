@@ -964,4 +964,5 @@
     <string name="dream_date_complication_date_format" msgid="8191225366513860104">"EEE, d MMM"</string>
     <string name="dream_time_complication_12_hr_time_format" msgid="4691197486690291529">"h:mm"</string>
     <string name="dream_time_complication_24_hr_time_format" msgid="6248280719733640813">"kk:mm"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Dodaj elementy sterujące do połączonych urządzeń"</string>
 </resources>

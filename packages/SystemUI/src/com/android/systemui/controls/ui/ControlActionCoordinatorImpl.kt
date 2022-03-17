@@ -42,6 +42,7 @@ import com.android.systemui.broadcast.BroadcastSender
 import com.android.systemui.controls.ControlsMetricsLogger
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Main
+import com.android.systemui.globalactions.GlobalActionsComponent
 import com.android.systemui.plugins.ActivityStarter
 import com.android.systemui.settings.UserContextProvider
 import com.android.systemui.statusbar.VibratorHelper
@@ -68,9 +69,11 @@ class ControlActionCoordinatorImpl @Inject constructor(
     private val vibrator: VibratorHelper,
     private val secureSettings: SecureSettings,
     private val userContextProvider: UserContextProvider,
+    private val globalActionsComponent: GlobalActionsComponent,
     @Main mainHandler: Handler
 ) : ControlActionCoordinator {
     private var dialog: Dialog? = null
+    private var pendingAction: Action? = null
     private var actionsInProgress = mutableSetOf<String>()
     private val isLocked: Boolean
         get() = !keyguardStateController.isUnlocked()
@@ -78,7 +81,7 @@ class ControlActionCoordinatorImpl @Inject constructor(
             Secure.LOCKSCREEN_ALLOW_TRIVIAL_CONTROLS, 0, UserHandle.USER_CURRENT) != 0
     private var mShowDeviceControlsInLockscreen: Boolean = secureSettings.getIntForUser(
             Secure.LOCKSCREEN_SHOW_CONTROLS, 0, UserHandle.USER_CURRENT) != 0
-    override lateinit var activityContext: Context
+    override var activityContext: Context? = null
 
     companion object {
         private const val RESPONSE_TIMEOUT_IN_MILLIS = 3000L
@@ -196,6 +199,15 @@ class ControlActionCoordinatorImpl @Inject constructor(
         )
     }
 
+    override fun runPendingAction(controlId: String) {
+        if (isLocked) return
+        if (pendingAction?.controlId == controlId) {
+            showSettingsDialogIfNeeded(pendingAction!!)
+            pendingAction?.invoke()
+            pendingAction = null
+        }
+    }
+
     @MainThread
     override fun enableActionOnTouch(controlId: String) {
         actionsInProgress.remove(controlId)
@@ -217,11 +229,21 @@ class ControlActionCoordinatorImpl @Inject constructor(
         val authRequired = action.authIsRequired || !mAllowTrivialControls
 
         if (keyguardStateController.isShowing() && authRequired) {
+            if (activityContext == null) {
+                broadcastSender.closeSystemDialogs()
+
+                // pending actions will only run after the control state has been refreshed
+                pendingAction = action
+            }
             activityStarter.dismissKeyguardThenExecute({
                 Log.d(ControlsUiController.TAG, "Device unlocked, invoking controls action")
-                action.invoke()
+                if (activityContext == null) {
+                    globalActionsComponent.handleShowGlobalActionsMenu()
+                } else {
+                    action.invoke()
+                }
                 true
-            }, null, true /* afterKeyguardGone */)
+            }, { pendingAction = null }, true /* afterKeyguardGone */)
         } else {
             showSettingsDialogIfNeeded(action)
             action.invoke()
@@ -242,9 +264,21 @@ class ControlActionCoordinatorImpl @Inject constructor(
             uiExecutor.execute {
                 // make sure the intent is valid before attempting to open the dialog
                 if (activities.isNotEmpty() && taskViewFactory.isPresent) {
+                    if (activityContext == null) { // activityContext == null means we are in global actions
+                        broadcastSender.closeSystemDialogs()
+                        if (keyguardStateController.isShowing()) {
+                            activityStarter.dismissKeyguardThenExecute({
+                                pendingIntent.send()
+                                true
+                            }, {}, true /* afterKeyguardGone */)
+                        } else {
+                            pendingIntent.send()
+                        }
+                        return@execute
+                    }
                     taskViewFactory.get().create(context, uiExecutor, {
                         dialog = DetailDialog(
-                            activityContext, broadcastSender,
+                            activityContext!!, broadcastSender,
                             it, pendingIntent, cvh, keyguardStateController, activityStarter
                         ).also {
                             it.setOnDismissListener { _ -> dialog = null }
@@ -259,7 +293,7 @@ class ControlActionCoordinatorImpl @Inject constructor(
     }
 
     private fun showSettingsDialogIfNeeded(action: Action) {
-        if (action.authIsRequired) {
+        if (action.authIsRequired || activityContext == null) {
             return
         }
         val prefs = userContextProvider.userContext.getSharedPreferences(
