@@ -659,6 +659,13 @@ public interface WindowManagerPolicy extends WindowManagerPolicyConstants {
     public boolean isKeyguardHostWindow(WindowManager.LayoutParams attrs);
 
     /**
+     * Set or clear a window which can behave as the keyguard.
+     *
+     * @param win The window which can behave as the keyguard.
+     */
+    void setKeyguardCandidateLw(@Nullable WindowState win);
+
+    /**
      * Create and return an animation to re-display a window that was force hidden by Keyguard.
      */
     public Animation createHiddenByKeyguardExit(boolean onWallpaper,
