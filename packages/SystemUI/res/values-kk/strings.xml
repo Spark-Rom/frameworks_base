@@ -1050,4 +1050,5 @@
     <string name="camera_and_microphone_blocked_dream_overlay_content_description" msgid="7891078093416249764">"Камера мен микрофон бөгелген."</string>
     <string name="microphone_blocked_dream_overlay_content_description" msgid="5466897982130007033">"Микрофон бөгелген."</string>
     <string name="priority_mode_dream_overlay_content_description" msgid="6044561000253314632">"\"Маңызды\" режимі қосулы."</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Жалғанған құрылғыларға басқару элементтерін енгізу"</string>
 </resources>

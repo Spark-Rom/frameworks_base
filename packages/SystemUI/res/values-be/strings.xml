@@ -1050,4 +1050,5 @@
     <string name="camera_and_microphone_blocked_dream_overlay_content_description" msgid="7891078093416249764">"Камера і мікрафон заблакіраваны"</string>
     <string name="microphone_blocked_dream_overlay_content_description" msgid="5466897982130007033">"Мікрафон заблакіраваны"</string>
     <string name="priority_mode_dream_overlay_content_description" msgid="6044561000253314632">"Прыярытэтны рэжым уключаны"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Дадайце элементы кіравання для падключаных прылад"</string>
 </resources>

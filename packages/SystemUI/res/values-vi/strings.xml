@@ -1050,4 +1050,5 @@
     <string name="camera_and_microphone_blocked_dream_overlay_content_description" msgid="7891078093416249764">"Máy ảnh và micrô bị chặn"</string>
     <string name="microphone_blocked_dream_overlay_content_description" msgid="5466897982130007033">"Micrô bị chặn"</string>
     <string name="priority_mode_dream_overlay_content_description" msgid="6044561000253314632">"Chế độ ưu tiên đang bật"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Thêm các tùy chọn điều khiển cho các thiết bị đã kết nối của bạn"</string>
 </resources>

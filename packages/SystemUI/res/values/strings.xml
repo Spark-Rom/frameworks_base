@@ -2865,4 +2865,6 @@
 
     <!-- Content description for priority mode icon on dream [CHAR LIMIT=NONE] -->
     <string name="priority_mode_dream_overlay_content_description">Priority mode on</string>
+
+    <string name="quick_controls_subtitle">Add controls for your connected devices</string>
 </resources>

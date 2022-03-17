@@ -1050,4 +1050,5 @@
     <string name="camera_and_microphone_blocked_dream_overlay_content_description" msgid="7891078093416249764">"La càmera i el micròfon estan bloquejats"</string>
     <string name="microphone_blocked_dream_overlay_content_description" msgid="5466897982130007033">"El micròfon està bloquejat"</string>
     <string name="priority_mode_dream_overlay_content_description" msgid="6044561000253314632">"El mode Prioritat està activat"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Afegeix controls per als teus dispositius connectats"</string>
 </resources>
