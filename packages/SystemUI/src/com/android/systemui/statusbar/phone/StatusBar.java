@@ -210,6 +210,7 @@ import com.android.systemui.statusbar.PowerButtonReveal;
 import com.android.systemui.statusbar.PulseExpansionHandler;
 import com.android.systemui.statusbar.StatusBarState;
 import com.android.systemui.statusbar.SysuiStatusBarStateController;
+import com.android.systemui.statusbar.charging.WiredChargingRippleController;
 import com.android.systemui.statusbar.connectivity.NetworkController;
 import com.android.systemui.statusbar.events.SystemStatusAnimationScheduler;
 import com.android.systemui.statusbar.notification.DynamicPrivacyController;
@@ -725,6 +726,7 @@ public class StatusBar extends SystemUI implements
             (extractor, which) -> updateTheme();
 
     private final BurnInProtectionController mBurnInProtectionController;
+    private final WiredChargingRippleController mWiredChargingRippleController;
 
     /**
      * Public constructor for StatusBar.
@@ -837,6 +839,7 @@ public class StatusBar extends SystemUI implements
             DumpManager dumpManager,
             ActivityLaunchAnimator activityLaunchAnimator,
             BurnInProtectionController burnInProtectionController,
+            WiredChargingRippleController wiredChargingRippleController,
             TaskHelper taskHelper) {
         super(context);
         mNotificationsController = notificationsController;
@@ -938,6 +941,7 @@ public class StatusBar extends SystemUI implements
         mLockscreenShadeTransitionController = lockscreenShadeTransitionController;
         mStartingSurfaceOptional = startingSurfaceOptional;
         mBurnInProtectionController = burnInProtectionController;
+        mWiredChargingRippleController = wiredChargingRippleController;
         lockscreenShadeTransitionController.setStatusbar(this);
 
         mPanelExpansionStateManager.addExpansionListener(this::onPanelExpansionChanged);
