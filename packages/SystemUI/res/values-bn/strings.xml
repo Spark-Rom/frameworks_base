@@ -1016,4 +1016,5 @@
     <string name="rear_display_accessibility_folded_animation" msgid="1538121649587978179">"ফোল্ড করা যায় এমন ডিভাইস খোলা হচ্ছে"</string>
     <string name="rear_display_accessibility_unfolded_animation" msgid="1946153682258289040">"ফোল্ড করা যায় এমন ডিভাইস উল্টানো হচ্ছে"</string>
     <string name="stylus_battery_low" msgid="7134370101603167096">"স্টাইলাস ব্যাটারিতে চার্জ কম আছে"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"আপনার কানেক্ট করা ডিভাইসের জন্য কন্ট্রোল যোগ করুন"</string>
 </resources>

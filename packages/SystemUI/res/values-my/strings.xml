@@ -1016,4 +1016,5 @@
     <string name="rear_display_accessibility_folded_animation" msgid="1538121649587978179">"ခေါက်နိုင်သောစက်ကို ဖြန့်လိုက်သည်"</string>
     <string name="rear_display_accessibility_unfolded_animation" msgid="1946153682258289040">"ခေါက်နိုင်သောစက်ကို တစ်ဘက်သို့ လှန်လိုက်သည်"</string>
     <string name="stylus_battery_low" msgid="7134370101603167096">"စတိုင်လပ်စ် ဘက်ထရီ အားနည်းနေသည်"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"သင့်ချိတ်ဆက်ထားသော စက်များအတွက် ထိန်းချုပ်မှုများ ထည့်ပါ"</string>
 </resources>

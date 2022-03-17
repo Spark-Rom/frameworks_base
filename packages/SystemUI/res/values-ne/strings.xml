@@ -1016,4 +1016,5 @@
     <string name="rear_display_accessibility_folded_animation" msgid="1538121649587978179">"फोल्ड गर्न मिल्ने डिभाइस अनफोल्ड गरेको देखाइएको एनिमेसन"</string>
     <string name="rear_display_accessibility_unfolded_animation" msgid="1946153682258289040">"फोल्ड गर्न मिल्ने डिभाइस यताउता पल्टाएर देखाइएको एनिमेसन"</string>
     <string name="stylus_battery_low" msgid="7134370101603167096">"स्टाइलसको ब्याट्री लो छ"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"आफ्ना जोडिएका यन्त्रहरूका लागि नियन्त्रण सुविधाहरू थप्नुहोस्"</string>
 </resources>

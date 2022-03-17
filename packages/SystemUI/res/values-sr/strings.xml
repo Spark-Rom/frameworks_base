@@ -1016,4 +1016,5 @@
     <string name="rear_display_accessibility_folded_animation" msgid="1538121649587978179">"Уређај на преклоп се отвара"</string>
     <string name="rear_display_accessibility_unfolded_animation" msgid="1946153682258289040">"Уређај на преклоп се обрће"</string>
     <string name="stylus_battery_low" msgid="7134370101603167096">"Низак ниво батерије писаљке"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Додајте контроле за повезане уређаје"</string>
 </resources>

@@ -1016,4 +1016,5 @@
     <string name="rear_display_accessibility_folded_animation" msgid="1538121649587978179">"Dispositivo pregable abríndose"</string>
     <string name="rear_display_accessibility_unfolded_animation" msgid="1946153682258289040">"Dispositivo pregable xirando"</string>
     <string name="stylus_battery_low" msgid="7134370101603167096">"O lapis óptico ten pouca batería"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Engade controis para os dispositivos conectados"</string>
 </resources>

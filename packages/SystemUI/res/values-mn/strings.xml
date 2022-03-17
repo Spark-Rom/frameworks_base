@@ -1016,4 +1016,5 @@
     <string name="rear_display_accessibility_folded_animation" msgid="1538121649587978179">"Эвхэгддэг төхөөрөмжийг дэлгэж байна"</string>
     <string name="rear_display_accessibility_unfolded_animation" msgid="1946153682258289040">"Эвхэгддэг төхөөрөмжийг хөнтөрч байна"</string>
     <string name="stylus_battery_low" msgid="7134370101603167096">"Мэдрэгч үзэгний батарей бага байна"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Холбогдсон төхөөрөмжүүд дээрээ хяналт нэмэх"</string>
 </resources>

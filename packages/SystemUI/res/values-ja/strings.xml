@@ -1016,4 +1016,5 @@
     <string name="rear_display_accessibility_folded_animation" msgid="1538121649587978179">"折りたたみ式デバイスが広げられている"</string>
     <string name="rear_display_accessibility_unfolded_animation" msgid="1946153682258289040">"折りたたみ式デバイスがひっくり返されている"</string>
     <string name="stylus_battery_low" msgid="7134370101603167096">"タッチペンのバッテリー残量が少なくなっています"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"接続済みデバイスのコントロールを追加します"</string>
 </resources>

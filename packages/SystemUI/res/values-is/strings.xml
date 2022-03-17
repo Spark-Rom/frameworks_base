@@ -1016,4 +1016,5 @@
     <string name="rear_display_accessibility_folded_animation" msgid="1538121649587978179">"Samanbrjótanlegt tæki opnað"</string>
     <string name="rear_display_accessibility_unfolded_animation" msgid="1946153682258289040">"Samanbrjótanlegu tæki snúið við"</string>
     <string name="stylus_battery_low" msgid="7134370101603167096">"Rafhlaða pennans er að tæmast"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Bæta við stýringum fyrir tengd tæki"</string>
 </resources>

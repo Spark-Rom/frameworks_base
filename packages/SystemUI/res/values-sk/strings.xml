@@ -1016,4 +1016,5 @@
     <string name="rear_display_accessibility_folded_animation" msgid="1538121649587978179">"Rozloženie skladacieho zariadenia"</string>
     <string name="rear_display_accessibility_unfolded_animation" msgid="1946153682258289040">"Prevrátenie skladacieho zariadenia"</string>
     <string name="stylus_battery_low" msgid="7134370101603167096">"Stav batérie dotykového pera je nízky"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Pridajte ovládacie prvky pre svoje pripojené zariadenia"</string>
 </resources>

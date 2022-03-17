@@ -1016,4 +1016,5 @@
     <string name="rear_display_accessibility_folded_animation" msgid="1538121649587978179">"மடக்கத்தக்க சாதனம் திறக்கப்படுகிறது"</string>
     <string name="rear_display_accessibility_unfolded_animation" msgid="1946153682258289040">"மடக்கத்தக்க சாதனம் ஃபிளிப் செய்யப்பட்டு திருப்பப்படுகிறது"</string>
     <string name="stylus_battery_low" msgid="7134370101603167096">"ஸ்டைலஸின் பேட்டரி குறைவாக உள்ளது"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"இணைக்கப்பட்ட சாதனங்களில் கட்டுப்பாடுகளைச் சேர்க்கலாம்"</string>
 </resources>

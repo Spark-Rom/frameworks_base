@@ -1016,4 +1016,5 @@
     <string name="rear_display_accessibility_folded_animation" msgid="1538121649587978179">"ಫೋಲ್ಡ್ ಮಾಡಬಹುದಾದ ಸಾಧನವನ್ನು ಅನ್‌ಫೋಲ್ಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ"</string>
     <string name="rear_display_accessibility_unfolded_animation" msgid="1946153682258289040">"ಫೋಲ್ಡ್ ಮಾಡಬಹುದಾದ ಸಾಧನವನ್ನು ಸುತ್ತಲೂ ತಿರುಗಿಸಲಾಗುತ್ತಿದೆ"</string>
     <string name="stylus_battery_low" msgid="7134370101603167096">"ಸ್ಟೈಲಸ್ ಬ್ಯಾಟರಿ ಕಡಿಮೆಯಿದೆ"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"ನಿಮ್ಮ ಸಂಪರ್ಕಿತ ಸಾಧನಗಳಿಗೆ ನಿಯಂತ್ರಣಗಳನ್ನು ಸೇರಿಸಿ"</string>
 </resources>

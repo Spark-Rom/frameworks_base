@@ -1016,4 +1016,5 @@
     <string name="rear_display_accessibility_folded_animation" msgid="1538121649587978179">"Appareil pliable en cours de dépliage"</string>
     <string name="rear_display_accessibility_unfolded_animation" msgid="1946153682258289040">"Appareil pliable en train d\'être retourné"</string>
     <string name="stylus_battery_low" msgid="7134370101603167096">"Pile du stylet faible"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Ajoutez des commandes pour vos appareils connectés"</string>
 </resources>

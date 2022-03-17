@@ -1016,4 +1016,5 @@
     <string name="rear_display_accessibility_folded_animation" msgid="1538121649587978179">"ഫോൾഡ് ചെയ്യാവുന്ന ഉപകരണം അൺഫോൾഡ് ആകുന്നു"</string>
     <string name="rear_display_accessibility_unfolded_animation" msgid="1946153682258289040">"ഫോൾഡ് ചെയ്യാവുന്ന ഉപകരണം, കറങ്ങുന്ന വിധത്തിൽ ഫ്ലിപ്പ് ആകുന്നു"</string>
     <string name="stylus_battery_low" msgid="7134370101603167096">"സ്റ്റൈലസിന്റെ ബാറ്ററി ചാർജ് കുറവാണ്"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"നിങ്ങളുടെ കണക്റ്റ് ചെയ്ത ഉപകരണങ്ങൾക്ക് നിയന്ത്രണങ്ങൾ ചേർക്കുക"</string>
 </resources>

@@ -1016,4 +1016,5 @@
     <string name="rear_display_accessibility_folded_animation" msgid="1538121649587978179">"ફોલ્ડ કરી શકાય એવું ડિવાઇસ અનફોલ્ડ કરવામાં આવી રહ્યું છે"</string>
     <string name="rear_display_accessibility_unfolded_animation" msgid="1946153682258289040">"ફોલ્ડ કરી શકાય એવું ડિવાઇસ ફ્લિપ કરવામાં આવી રહ્યું છે"</string>
     <string name="stylus_battery_low" msgid="7134370101603167096">"સ્ટાઇલસની બૅટરીમાં ચાર્જ ઓછો છે"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"તમારા કનેક્ટ કરેલા ડિવાઇસ માટે નિયંત્રણો ઉમેરો"</string>
 </resources>

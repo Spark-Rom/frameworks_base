@@ -1016,4 +1016,5 @@
     <string name="rear_display_accessibility_folded_animation" msgid="1538121649587978179">"폴더블 기기를 펼치는 모습"</string>
     <string name="rear_display_accessibility_unfolded_animation" msgid="1946153682258289040">"폴더블 기기를 뒤집는 모습"</string>
     <string name="stylus_battery_low" msgid="7134370101603167096">"스타일러스 배터리 부족"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"연결된 기기의 컨트롤을 추가합니다."</string>
 </resources>

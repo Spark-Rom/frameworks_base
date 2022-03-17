@@ -1016,4 +1016,5 @@
     <string name="rear_display_accessibility_folded_animation" msgid="1538121649587978179">"正在展開的折疊式裝置"</string>
     <string name="rear_display_accessibility_unfolded_animation" msgid="1946153682258289040">"正在翻轉折疊式裝置"</string>
     <string name="stylus_battery_low" msgid="7134370101603167096">"觸控筆電力不足"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"新增已連結裝置的控制項"</string>
 </resources>

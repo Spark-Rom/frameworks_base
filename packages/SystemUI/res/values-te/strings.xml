@@ -1016,4 +1016,5 @@
     <string name="rear_display_accessibility_folded_animation" msgid="1538121649587978179">"మడవగల పరికరం విప్పబడుతోంది"</string>
     <string name="rear_display_accessibility_unfolded_animation" msgid="1946153682258289040">"మడవగల పరికరం చుట్టూ తిప్పబడుతోంది"</string>
     <string name="stylus_battery_low" msgid="7134370101603167096">"తక్కువ స్టైలస్ బ్యాటరీ"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"మీ కనెక్ట్ అయిన పరికరాలకు నియంత్రణలను జోడించండి"</string>
 </resources>

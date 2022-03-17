@@ -1016,4 +1016,5 @@
     <string name="rear_display_accessibility_folded_animation" msgid="1538121649587978179">"ອຸປະກອນທີ່ພັບໄດ້ກຳລັງກາງອອກ"</string>
     <string name="rear_display_accessibility_unfolded_animation" msgid="1946153682258289040">"ອຸປະກອນທີ່ພັກໄດ້ກຳລັງປີ້ນໄປມາ"</string>
     <string name="stylus_battery_low" msgid="7134370101603167096">"ແບັດເຕີຣີປາກກາເຫຼືອໜ້ອຍ"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"ເພີ່ມການຄວບຄຸມສຳລັບອຸປະກອນທີ່ເຊື່ອມຕໍ່ແລ້ວຂອງທ່ານ"</string>
 </resources>

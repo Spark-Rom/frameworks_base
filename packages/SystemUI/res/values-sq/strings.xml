@@ -1016,4 +1016,5 @@
     <string name="rear_display_accessibility_folded_animation" msgid="1538121649587978179">"Pajisja e palosshme duke u hapur"</string>
     <string name="rear_display_accessibility_unfolded_animation" msgid="1946153682258289040">"Pajisja e palosshme duke u rrotulluar"</string>
     <string name="stylus_battery_low" msgid="7134370101603167096">"Bateria e stilolapsit në nivel të ulët"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Shto kontrolle për pajisjet e tua të lidhura"</string>
 </resources>

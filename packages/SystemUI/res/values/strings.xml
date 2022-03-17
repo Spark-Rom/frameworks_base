@@ -2768,4 +2768,5 @@
 
     <!-- Title for notification of low stylus battery. [CHAR_LIMIT=NONE] -->
     <string name="stylus_battery_low">Stylus battery low</string>
+    <string name="quick_controls_subtitle">Add controls for your connected devices</string>
 </resources>
