@@ -24,6 +24,11 @@
     <!-- Bottom margin size when fingerprint in display is active -->
     <dimen name="keyguard_indication_margin_bottom_fingerprint_in_display">@dimen/keyguard_indication_margin_bottom</dimen>
 
+    <!-- Additional gesture navbar radiuses -->
+    <dimen name="navigation_handle_radius_medium">2dp</dimen>
+    <dimen name="navigation_handle_radius_big">3dp</dimen>
+    <dimen name="navigation_handle_radius_large">4dp</dimen>
+
     <!-- Additional gesture navbar lengths -->
     <dimen name="navigation_home_handle_width_medium">110dp</dimen>
     <dimen name="navigation_home_handle_width_long">140dp</dimen>

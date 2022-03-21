@@ -103,6 +103,7 @@ public class NavigationBarInflaterView extends FrameLayout
     private int mNavBarMode = NAV_BAR_MODE_3BUTTON;
 
     private int mHomeHandleWidthMode = 0;
+    private int mHomeHandleRadiusMode = 0;
 
     public NavigationBarInflaterView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -111,6 +112,7 @@ public class NavigationBarInflaterView extends FrameLayout
         final NavigationModeController controller = Dependency.get(NavigationModeController.class);
         mNavBarMode = controller.addListener(this);
         mHomeHandleWidthMode = controller.getNavigationHandleWidthMode();
+        mHomeHandleRadiusMode = controller.getNavigationHandleRadiusMode();
     }
 
     @VisibleForTesting
@@ -159,6 +161,17 @@ public class NavigationBarInflaterView extends FrameLayout
     public void onNavigationHandleWidthModeChanged(int mode) {
         if (mHomeHandleWidthMode != mode) {
             mHomeHandleWidthMode = mode;
+            if (QuickStepContract.isGesturalMode(mNavBarMode)) {
+                clearViews();
+                inflateLayout(getDefaultLayout());
+            }
+        }
+    }
+
+    @Override
+    public void onNavigationHandleRadiusModeChanged(int mode) {
+        if (mHomeHandleRadiusMode != mode) {
+            mHomeHandleRadiusMode = mode;
             if (QuickStepContract.isGesturalMode(mNavBarMode)) {
                 clearViews();
                 inflateLayout(getDefaultLayout());

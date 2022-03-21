@@ -35,7 +35,7 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.provider.Settings.Secure;
 import android.util.Log;
-
+import android.net.Uri;
 import com.android.systemui.Dumpable;
 import com.android.systemui.dagger.SysUISingleton;
 import com.android.systemui.dagger.qualifiers.Main;
@@ -65,6 +65,7 @@ public class NavigationModeController implements Dumpable {
     public interface ModeChangedListener {
         void onNavigationModeChanged(int mode);
         default void onNavigationHandleWidthModeChanged(int mode) {}
+        default void onNavigationHandleRadiusModeChanged(int mode) {}
     }
 
     private final Context mContext;
@@ -146,6 +147,16 @@ public class NavigationModeController implements Dumpable {
                             getNavigationHandleWidthMode()));
                 }
             }, UserHandle.USER_ALL);
+        mSecureSettings.registerContentObserverForUser(
+            Settings.Secure.GESTURE_NAVBAR_RADIUS,
+            new ContentObserver(mainHandler) {
+                @Override
+                public void onChange(boolean selfChange, Uri uri) {
+                    mListeners.forEach(listener ->
+                        listener.onNavigationHandleRadiusModeChanged(
+                            getNavigationHandleRadiusMode()));
+                }
+            }, UserHandle.USER_ALL);
 
         updateCurrentInteractionMode(false /* notify */);
     }
@@ -207,6 +218,11 @@ public class NavigationModeController implements Dumpable {
 
     public int getNavigationHandleWidthMode() {
         return mSecureSettings.getIntForUser(Settings.Secure.GESTURE_NAVBAR_LENGTH_MODE,
+            0, UserHandle.USER_CURRENT);
+    }
+
+    public int getNavigationHandleRadiusMode() {
+        return mSecureSettings.getIntForUser(Settings.Secure.GESTURE_NAVBAR_RADIUS,
             0, UserHandle.USER_CURRENT);
     }
 

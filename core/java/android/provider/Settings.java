@@ -3399,6 +3399,14 @@ public final class Settings {
             MOVED_TO_SECURE.add(Secure.VOLUME_LINK_NOTIFICATION);
         }
 
+        /**
+         * Gesture navbar length mode.
+         * Supported modes: 0 for normal length, 1 for medium and 2 for long.
+         * Default 0.
+         * @hide
+         */
+        public static final String GESTURE_NAVBAR_RADIUS = "gesture_navbar_radius";
+
         @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
         private static final HashSet<String> MOVED_TO_GLOBAL;
         @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
