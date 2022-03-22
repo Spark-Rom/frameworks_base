@@ -149,18 +149,18 @@ public class NavigationModeController implements Dumpable {
                             getNavigationHandleWidthMode()));
                 }
             }, UserHandle.USER_ALL);
-        mSecureSettings.registerContentObserverForUser(
-            Settings.Secure.GESTURE_NAVBAR_RADIUS,
+        mSystemSettings = systemSettings;
+        mSystemSettings.registerContentObserverForUser(
+            Settings.System.GESTURE_NAVBAR_RADIUS,
             new ContentObserver(mainHandler) {
                 @Override
-                public void onChange(boolean selfChange, Uri uri) {
+                public void onChange(boolean selfChange) {
                     mListeners.forEach(listener ->
                         listener.onNavigationHandleRadiusModeChanged(
                             getNavigationHandleRadiusMode()));
                 }
             }, UserHandle.USER_ALL);
 
-        mSystemSettings = systemSettings;
         mSystemSettings.registerContentObserverForUser(
             Settings.System.NAVIGATION_BAR_INVERSE,
             new ContentObserver(mainHandler) {
@@ -236,7 +236,7 @@ public class NavigationModeController implements Dumpable {
     }
 
     public int getNavigationHandleRadiusMode() {
-        return mSecureSettings.getIntForUser(Settings.Secure.GESTURE_NAVBAR_RADIUS,
+        return mSystemSettings.getIntForUser(Settings.System.GESTURE_NAVBAR_RADIUS,
             0, UserHandle.USER_CURRENT);
     }
 
