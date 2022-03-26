@@ -116,19 +116,21 @@ public class SystemUIDialog extends AlertDialog implements ViewRootImpl.ConfigCh
         mLastConfigurationHeightDp = config.screenHeightDp;
         updateWindowSize();
 
-        final Resources resources = getContext().getResources();
-        final TypedArray ta = getContext().obtainStyledAttributes(
-                new int[] {
-                        com.android.internal.R.attr.colorSurface,
-                        android.R.attr.dialogCornerRadius});
-
-        blurController = new SystemBlurController(
-            findViewById(android.R.id.content),
-            ta.getColor(0, Color.WHITE),
-            getFloat(resources, R.dimen.background_blur_colour_opacity),
-            resources.getInteger(R.integer.background_blur_radius),
-            CornersRadius.Companion.all(ta.getDimensionPixelSize(1, 0))
-        );
+        if (useBackgroundBlur()) {
+            final Resources resources = getContext().getResources();
+            final TypedArray ta = getContext().obtainStyledAttributes(
+                    new int[] {
+                            com.android.internal.R.attr.colorSurface,
+                            android.R.attr.dialogCornerRadius});
+    
+            blurController = new SystemBlurController(
+                findViewById(android.R.id.content),
+                ta.getColor(0, Color.WHITE),
+                getFloat(resources, R.dimen.background_blur_colour_opacity),
+                resources.getInteger(R.integer.background_blur_radius),
+                CornersRadius.Companion.all(ta.getDimensionPixelSize(1, 0))
+            );
+        }
     }
 
     private void updateWindowSize() {
@@ -226,6 +228,10 @@ public class SystemUIDialog extends AlertDialog implements ViewRootImpl.ConfigCh
 
     public void setNeutralButton(int resId, OnClickListener onClick) {
         setButton(BUTTON_NEUTRAL, mContext.getString(resId), onClick);
+    }
+
+    public boolean useBackgroundBlur() {
+        return true;
     }
 
     public static void setShowForAllUsers(Dialog dialog, boolean show) {
