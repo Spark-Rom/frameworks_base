@@ -2558,6 +2558,11 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
             return mGestureDetector.onTouchEvent(event) || super.onTouchEvent(event);
         }
 
+        @Override
+        public boolean useBackgroundBlur() {
+            return false;
+        }
+
         private void openShadeAndDismiss() {
             mUiEventLogger.log(GlobalActionsEvent.GA_CLOSE_TAP_OUTSIDE);
             if (mStatusBarOptional.map(StatusBar::isKeyguardShowing).orElse(false)) {
