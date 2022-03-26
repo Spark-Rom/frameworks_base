@@ -99,7 +99,7 @@ public class ScreenRecordTile extends QSTileImpl<QSTile.BooleanState>
         } else if (mController.isRecording()) {
             stopRecording();
         } else {
-            mUiHandler.post(() -> showPrompt(view));
+            mUiHandler.post(() -> showPrompt(null));
         }
         refreshState();
     }
