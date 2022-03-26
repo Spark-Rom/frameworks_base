@@ -358,7 +358,7 @@
         <item name="android:buttonBarPositiveButtonStyle">@style/Widget.Dialog.Button</item>
         <item name="android:buttonBarNegativeButtonStyle">@style/Widget.Dialog.Button.BorderButton</item>
         <item name="android:buttonBarNeutralButtonStyle">@style/Widget.Dialog.Button.BorderButton</item>
-        <item name="android:colorBackground">?androidprv:attr/colorSurface</item>
+        <item name="android:colorBackground">@android:color/transparent</item>
         <item name="android:alertDialogStyle">@style/AlertDialogStyle</item>
     </style>
 
