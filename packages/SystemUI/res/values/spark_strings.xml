@@ -27,4 +27,7 @@
 
     <!-- Name of the VPN status bar icon. -->
     <string name="status_bar_vpn">VPN</string>
+
+    <!-- Sb Data Saver icon -->
+    <string name="status_bar_data_saver">Data saver</string>
 </resources>
