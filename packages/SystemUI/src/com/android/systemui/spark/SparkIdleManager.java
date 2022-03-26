@@ -49,12 +49,6 @@ public class SparkIdleManager {
     static List<String> killablePackages;
     static final long IDLE_TIME_NEEDED = 4000000;
     static int ultraSaverStatus;
-    static final String[] LOG_MSGS = { "just ran ",
-                                       "rStateTwo Immediate!",
-                                       "rStateTwo",
-                                       "rStateThree",
-                                       "alarmTime ",
-                                       "realTime " };
 
     public static void initManager(Context mContext) {
         imContext = mContext;
@@ -79,41 +73,33 @@ public class SparkIdleManager {
         RunningServices = localActivityManager.getRunningAppProcesses();
 
         if (IDLE_TIME_NEEDED > msTillAlarm(imContext) && msTillAlarm(imContext) != 0) {
-            IdleManLog(TAG_SUBCLASS + LOG_MSGS[1]);
             h.postDelayed(rStateTwo,100);
         } else {
-            IdleManLog(TAG_SUBCLASS + LOG_MSGS[2]);
             h.postDelayed(rStateTwo,IDLE_TIME_NEEDED /*1hr*/);
         }
         if (msTillAlarm(imContext) != 0) {
-            IdleManLog(TAG_SUBCLASS + LOG_MSGS[3]);
             h.postDelayed(rStateThree,(msTillAlarm(imContext) - 900000));
         }
     }
 
     public static void haltManager() {
         String TAG_SUBCLASS = "haltManager";
-        IdleManLog(LOG_MSGS[0] + TAG_SUBCLASS);
         h.removeCallbacks(rStateTwo);
         theAwakening();
     }
 
     public static void theAwakening() {
         String TAG_SUBCLASS = "theAwakening";
-        IdleManLog(LOG_MSGS[0] + TAG_SUBCLASS);
         h.removeCallbacks(rStateThree);
     }
 
     public static long msTillAlarm(Context imContext) {
         String TAG_SUBCLASS = "msTillAlarm";
-        IdleManLog(LOG_MSGS[0] + TAG_SUBCLASS);
         AlarmManager.AlarmClockInfo info =
                 ((AlarmManager)imContext.getSystemService(Context.ALARM_SERVICE)).getNextAlarmClock();
         if (info != null) {
             long alarmTime = info.getTriggerTime();
-            IdleManLog(TAG_SUBCLASS + LOG_MSGS[4] + Long.toString(alarmTime));
             long realTime = alarmTime - System.currentTimeMillis();
-            IdleManLog(TAG_SUBCLASS + LOG_MSGS[5] + Long.toString(realTime));
             return realTime;
         } else {
             return 0;
@@ -122,13 +108,11 @@ public class SparkIdleManager {
 
     public static void servicesKiller() {
         String TAG_SUBCLASS = "servicesKiller";
-        IdleManLog(LOG_MSGS[0] + TAG_SUBCLASS);
         localActivityManager = (ActivityManager) imContext.getSystemService(Context.ACTIVITY_SERVICE);
         RunningServices = localActivityManager.getRunningAppProcesses();
         for (int i=0; i < RunningServices.size(); i++) {
           if (!RunningServices.get(i).pkgList[0].toString().contains("com.android.") &&
                 !RunningServices.get(i).pkgList[0].toString().equals("android") &&
-                !RunningServices.get(i).pkgList[0].toString().contains("google") &&
                 !RunningServices.get(i).pkgList[0].toString().equals("google") &&
                 !RunningServices.get(i).pkgList[0].toString().contains("instagram") &&
                 !RunningServices.get(i).pkgList[0].toString().contains("facebook") &&
@@ -140,10 +124,5 @@ public class SparkIdleManager {
                     localActivityManager.killBackgroundProcesses(RunningServices.get(i).pkgList[0].toString());
             }
         }
-    }
-
-    private static void IdleManLog(String msg) {
-        if (SystemProperties.getBoolean("spark.debug", false))
-            Log.d(TAG, msg);
     }
 }
