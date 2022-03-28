@@ -102,6 +102,8 @@ public class ThemeOverlayController extends SystemUI implements Dumpable {
     protected static final int NEUTRAL = 0;
     protected static final int ACCENT = 1;
 
+    protected static String SYSTEM_BLACK_THEME = "system_black_theme";
+
     private final ThemeOverlayApplier mThemeManager;
     private final UserManager mUserManager;
     private final BroadcastDispatcher mBroadcastDispatcher;
@@ -340,8 +342,8 @@ public class ThemeOverlayController extends SystemUI implements Dumpable {
             @Background Handler bgHandler, @Main Executor mainExecutor,
             @Background Executor bgExecutor, ThemeOverlayApplier themeOverlayApplier,
             SecureSettings secureSettings, WallpaperManager wallpaperManager,
-            UserManager userManager, DeviceProvisionedController deviceProvisionedController,
-            UserTracker userTracker, DumpManager dumpManager, FeatureFlags featureFlags,
+            UserManager userManager, DumpManager dumpManager, DeviceProvisionedController deviceProvisionedController,
+            UserTracker userTracker, FeatureFlags featureFlags,
             WakefulnessLifecycle wakefulnessLifecycle) {
         super(context);
 
@@ -621,6 +623,11 @@ public class ThemeOverlayController extends SystemUI implements Dumpable {
                     .map(key -> key + " -> " + categoryToPackage.get(key)).collect(
                             Collectors.joining(", ")));
         }
+
+        boolean isBlackTheme = mSecureSettings.getInt(SYSTEM_BLACK_THEME, 0) == 1;
+
+        mThemeManager.setIsBlackTheme(isBlackTheme);
+
         if (mNeedsOverlayCreation) {
             mNeedsOverlayCreation = false;
             mThemeManager.applyCurrentUserOverlays(categoryToPackage, new FabricatedOverlay[] {
@@ -630,6 +637,8 @@ public class ThemeOverlayController extends SystemUI implements Dumpable {
             mThemeManager.applyCurrentUserOverlays(categoryToPackage, null, currentUser,
                     managedProfiles);
         }
+
+        mThemeManager.applyBlackTheme(isBlackTheme);
     }
 
     @Override

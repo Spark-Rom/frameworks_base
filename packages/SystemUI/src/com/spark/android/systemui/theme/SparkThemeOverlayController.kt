@@ -60,7 +60,7 @@ import kotlin.math.log10
 import kotlin.math.pow
 
 @SysUISingleton
-class ThemeOverlayControllerEvolution @Inject constructor(
+class SparkThemeOverlayController @Inject constructor(
     private val context: Context,
     broadcastDispatcher: BroadcastDispatcher,
     @Background bgHandler: Handler,
@@ -194,7 +194,7 @@ class ThemeOverlayControllerEvolution @Inject constructor(
     }
 
     companion object {
-        private const val TAG = "ThemeOverlayControllerEvolution"
+        private const val TAG = "SparkThemeOverlayController"
         private const val DEBUG = false
 
         private const val PREF_PREFIX = "monet_engine"
