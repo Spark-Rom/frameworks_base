@@ -515,7 +515,7 @@ public class AuthContainerView extends LinearLayout
             mContainerState = STATE_ANIMATING_IN;
             // The background panel and content are different views since we need to be able to
             // animate them separately in other places.
-            mPanelView.setY(mTranslationY);
+            mPanelView.setTranslationY(mTranslationY);
             mBiometricScrollView.setY(mTranslationY);
 
             setAlpha(0f);
