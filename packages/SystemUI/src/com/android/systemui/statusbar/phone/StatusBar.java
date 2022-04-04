@@ -100,6 +100,7 @@ import android.util.DisplayMetrics;
 import android.util.EventLog;
 import android.util.Log;
 import android.util.MathUtils;
+
 import android.util.Slog;
 import android.view.Display;
 import android.view.IRemoteAnimationRunner;
@@ -118,7 +119,8 @@ import android.widget.DateTimeView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
@@ -279,6 +281,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.Executor;
+import java.util.Random;
 
 import javax.inject.Named;
 
@@ -308,6 +311,10 @@ public class StatusBar extends SystemUI implements
             "system:" + Settings.System.FORCE_SHOW_NAVBAR;
     private static final String NOTIFICATION_MATERIAL_DISMISS =
             "system:" + Settings.System.NOTIFICATION_MATERIAL_DISMISS;
+    private static final String NOTIFICATION_MATERIAL_DISMISS_BGSTYLE =
+            "system:" + Settings.System.NOTIFICATION_MATERIAL_DISMISS_BGSTYLE;
+    private static final String NOTIFICATION_MATERIAL_DISMISS_STYLE =
+            "system:" + Settings.System.NOTIFICATION_MATERIAL_DISMISS_STYLE;
 
     private static final String BANNER_ACTION_CANCEL =
             "com.android.systemui.statusbar.banner_action_cancel";
@@ -622,6 +629,9 @@ public class StatusBar extends SystemUI implements
     private final MetricsLogger mMetricsLogger;
 
     private ImageButton mDismissAllButton;
+    private int mClearAllBgColorStyle;
+    private int mClearAllBgStyle;
+    private int mClearAllButtonStyle;
     private boolean mClearableNotifications = true;
     private boolean mShowDimissButton;
 
@@ -1006,7 +1016,7 @@ public class StatusBar extends SystemUI implements
         mStatusBarStateController.addCallback(mStateListener,
                 SysuiStatusBarStateController.RANK_STATUS_BAR);
         mTunerService.addTunable(this, NOTIFICATION_MATERIAL_DISMISS);
-
+        mTunerService.addTunable(this, NOTIFICATION_MATERIAL_DISMISS_STYLE, NOTIFICATION_MATERIAL_DISMISS_BGSTYLE);
         mTunerService.addTunable(this, FORCE_SHOW_NAVBAR);
         mTunerService.addTunable(this, GAMING_MODE_ACTIVE);
         mTunerService.addTunable(this, GAMING_MODE_DISABLE_NOTIFICATION_ALERT);
@@ -1523,15 +1533,53 @@ public class StatusBar extends SystemUI implements
             int round = Math.round(mNotificationPanelViewController.getExpandedFraction() * 255.0f);
             mDismissAllButton.setAlpha(round);
             mDismissAllButton.getBackground().setAlpha(round);
-            mDismissAllButton.setElevation(mContext.getResources().getDimension(R.dimen.dismiss_all_button_elevation));
+            updateDismissAllButton();
+            updateDismissAllButtonIconAndBackground();
+        }
+    }
+
+    public void updateDismissAllButtonIconAndBackground() {
+        int i = mClearAllButtonStyle;
+        if (i == 1) {
+            mDismissAllButton.setImageResource(R.drawable.dismiss_all_icon1);
+        } else if (i == 2) {
+            mDismissAllButton.setImageResource(R.drawable.dismiss_all_icon2);
+        } else if (i == 3) {
+            mDismissAllButton.setImageResource(R.drawable.dismiss_all_icon3);
+        } else if (i == 4) {
+            mDismissAllButton.setImageResource(R.drawable.dismiss_all_icon4);
+        } else if (i == 5) {
+            mDismissAllButton.setImageResource(R.drawable.dismiss_all_icon5);
+        } else if (i == 6) {
+            mDismissAllButton.setImageResource(R.drawable.dismiss_all_icon6);
+        } else if (i == 7) {
+            mDismissAllButton.setImageResource(R.drawable.dismiss_all_icon7);
+        } else if (i == 8) {
+            mDismissAllButton.setImageResource(R.drawable.dismiss_all_icon8);
+        } else if (i == 9) {
+            mDismissAllButton.setImageResource(R.drawable.dismiss_all_icon9);
+        } else {
+            mDismissAllButton.setImageResource(R.drawable.dismiss_all_icon);
+        }
+        int i2 = mClearAllBgStyle;
+        if (i2 == 1) {
+            mDismissAllButton.setBackgroundResource(R.drawable.dismiss_all_background1);
+        } else if (i2 == 2) {
+            mDismissAllButton.setBackgroundResource(R.drawable.dismiss_all_background2);
+        } else if (i2 == 3) {
+            mDismissAllButton.setBackgroundResource(R.drawable.dismiss_all_background3);
+        } else if (i2 == 4) {
+            mDismissAllButton.setBackgroundResource(R.drawable.dismiss_all_background4);
+        } else {
+            mDismissAllButton.setBackgroundResource(R.drawable.dismiss_all_background);
         }
     }
 
 
     public void updateDismissAllButton(int iconcolor) {
         if (mDismissAllButton != null) {
-            mDismissAllButton.setColorFilter(iconcolor);
-            mDismissAllButton.setBackground(mContext.getResources().getDrawable(R.drawable.dismiss_all_background));
+            mDismissAllButton.setElevation(mContext.getResources().getDimension(R.dimen.dismiss_all_button_elevation));
+            mDismissAllButton.setColorFilter(color);
         }
     }
 
@@ -4467,9 +4515,39 @@ public class StatusBar extends SystemUI implements
                 if (sliceProvider != null)
                     sliceProvider.setPulseOnNewTracks(showPulseOnNewTracks);
                 break;
+            case NOTIFICATION_MATERIAL_DISMISS_STYLE:
+                mClearAllButtonStyle =
+                        TunerService.parseInteger(newValue, 0);
+                updateDismissAllVisibility(true);
+                break;
+            case NOTIFICATION_MATERIAL_DISMISS_BGSTYLE:
+                mClearAllBgStyle =
+                        TunerService.parseInteger(newValue, 0);
+                updateDismissAllVisibility(true);
+                break;
+            case NOTIFICATION_MATERIAL_DISMISS_TINT_STYLE:
+                mClearAllButtonTintStyle =
+                        TunerService.parseInteger(newValue, 0);
+                updateDismissAllVisibility(true);
+                break;
+            case NOTIFICATION_MATERIAL_DISMISS_TINT_BGSTYLE:
+                mClearAllBgTintStyle =
+                        TunerService.parseInteger(newValue, 0);
+                updateDismissAllVisibility(true);
+                break;
+            case NOTIFICATION_MATERIAL_DISMISS_COLOR_STYLE:
+                mClearAllButtonColorStyle =
+                        TunerService.parseInteger(newValue, 0);
+                updateDismissAllVisibility(true);
+                break;
             case NOTIFICATION_MATERIAL_DISMISS:
                 mShowDimissButton =
                         TunerService.parseIntegerSwitch(newValue, false);
+                updateDismissAllVisibility(true);
+                break;
+            case NOTIFICATION_MATERIAL_DISMISS_COLOR_BGSTYLE:
+                mClearAllBgColorStyle =
+                        TunerService.parseInteger(newValue, 0);
                 updateDismissAllVisibility(true);
                 break;
             default:
