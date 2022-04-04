@@ -3034,7 +3034,9 @@ public class NotificationPanelViewController extends PanelViewController {
         }
         mNotificationStackScrollLayoutController.setAlpha(alpha);
         mStatusBar.getPulseController().setQSShowing(mBarState != StatusBarState.KEYGUARD && !isFullyCollapsed());
+        if (mBarState != StatusBarState.KEYGUARD && !isFullyCollapsed()) {
         mStatusBar.updateDismissAllVisibility(true);
+        }
     }
 
     private float getFadeoutAlpha() {
