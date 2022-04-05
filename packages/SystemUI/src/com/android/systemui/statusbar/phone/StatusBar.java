@@ -1533,7 +1533,6 @@ public class StatusBar extends SystemUI implements
             int round = Math.round(mNotificationPanelViewController.getExpandedFraction() * 255.0f);
             mDismissAllButton.setAlpha(round);
             mDismissAllButton.getBackground().setAlpha(round);
-            updateDismissAllButton();
             updateDismissAllButtonIconAndBackground();
         }
     }
@@ -1579,7 +1578,7 @@ public class StatusBar extends SystemUI implements
     public void updateDismissAllButton(int iconcolor) {
         if (mDismissAllButton != null) {
             mDismissAllButton.setElevation(mContext.getResources().getDimension(R.dimen.dismiss_all_button_elevation));
-            mDismissAllButton.setColorFilter(color);
+            mDismissAllButton.setColorFilter(iconcolor);
         }
     }
 
