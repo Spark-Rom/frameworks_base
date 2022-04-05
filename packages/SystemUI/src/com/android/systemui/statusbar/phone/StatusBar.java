@@ -4525,29 +4525,9 @@ public class StatusBar extends SystemUI implements
                         TunerService.parseInteger(newValue, 0);
                 updateDismissAllVisibility(true);
                 break;
-            case NOTIFICATION_MATERIAL_DISMISS_TINT_STYLE:
-                mClearAllButtonTintStyle =
-                        TunerService.parseInteger(newValue, 0);
-                updateDismissAllVisibility(true);
-                break;
-            case NOTIFICATION_MATERIAL_DISMISS_TINT_BGSTYLE:
-                mClearAllBgTintStyle =
-                        TunerService.parseInteger(newValue, 0);
-                updateDismissAllVisibility(true);
-                break;
-            case NOTIFICATION_MATERIAL_DISMISS_COLOR_STYLE:
-                mClearAllButtonColorStyle =
-                        TunerService.parseInteger(newValue, 0);
-                updateDismissAllVisibility(true);
-                break;
             case NOTIFICATION_MATERIAL_DISMISS:
                 mShowDimissButton =
                         TunerService.parseIntegerSwitch(newValue, false);
-                updateDismissAllVisibility(true);
-                break;
-            case NOTIFICATION_MATERIAL_DISMISS_COLOR_BGSTYLE:
-                mClearAllBgColorStyle =
-                        TunerService.parseInteger(newValue, 0);
                 updateDismissAllVisibility(true);
                 break;
             default:
