@@ -38,4 +38,8 @@
     <string name="screen_zoom_summary_smaller">Smaller</string>
     <!-- Description for the screen zoom level that makes interface elements smallest. [CHAR LIMIT=24] -->
     <string name="screen_zoom_summary_smallest">Smallest</string>
+
+    <!-- NR Types -->
+    <string name="data_connection_5g_nsa" translatable="false">5G NSA</string>
+    <string name="data_connection_5g_sa" translatable="false">5G SA</string>
 </resources>
