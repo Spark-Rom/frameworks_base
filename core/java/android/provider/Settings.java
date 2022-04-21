@@ -6662,6 +6662,12 @@ public final class Settings {
         public static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
 
         /**
+         * Whether to show data usage in qs footer
+         * @hide
+         */
+        public static final String QS_FOOTER_DATA_USAGE = "qs_footer_data_usage";
+
+        /**
          * Settings Dashboard Style
          * @hide
          */
