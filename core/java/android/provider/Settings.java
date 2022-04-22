@@ -6658,11 +6658,16 @@ public final class Settings {
         public static final String SETTINGS_DASHBOARD_STYLE = "settings_dashboard_style";
 
         /**
-         * Settings Layout
+         * Settings Base Layout
          * @hide
          */
         public static final String ALT_SETTINGS_LAYOUT = "alt_settings_layout";
 
+        /**
+         * Settings Homepage Layout
+         * @hide
+         */
+        public static final String USE_STOCK_LAYOUT = "use_stock_layout";
 
         /**
          * These are all public system settings
