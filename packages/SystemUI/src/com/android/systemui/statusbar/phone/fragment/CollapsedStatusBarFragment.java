@@ -38,6 +38,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.widget.ImageSwitcher;
 import android.widget.LinearLayout;
 
 import com.android.systemui.Dependency;
@@ -65,11 +66,13 @@ import com.android.systemui.statusbar.phone.ClockController;
 import com.android.systemui.statusbar.phone.NotificationIconAreaController;
 import com.android.systemui.statusbar.phone.NotificationPanelViewController;
 import com.android.systemui.statusbar.phone.PhoneStatusBarView;
+import com.android.systemui.statusbar.phone.StatusBar;
 import com.android.systemui.statusbar.phone.StatusBarHideIconsForBouncerManager;
 import com.android.systemui.statusbar.phone.StatusBarIconController;
 import com.android.systemui.statusbar.phone.StatusBarIconController.DarkIconManager;
 import com.android.systemui.statusbar.phone.StatusBarLocationPublisher;
 import com.android.systemui.statusbar.phone.StatusIconContainer;
+import com.android.systemui.statusbar.phone.TickerView;
 import com.android.systemui.statusbar.phone.fragment.dagger.StatusBarFragmentComponent;
 import com.android.systemui.statusbar.phone.ongoingcall.OngoingCallController;
 import com.android.systemui.statusbar.phone.ongoingcall.OngoingCallListener;
@@ -78,10 +81,13 @@ import com.android.systemui.statusbar.policy.EncryptionHelper;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.util.settings.SecureSettings;
 
+import dagger.Lazy;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
@@ -116,6 +122,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private int mDisabled1;
     private int mDisabled2;
     private DarkIconManager mDarkIconManager;
+    private final Optional<StatusBar> mStatusBarOptional;
     private final StatusBarFragmentComponent.Factory mStatusBarFragmentComponentFactory;
     private final CommandQueue mCommandQueue;
     private final CollapsedStatusBarFragmentLogger mCollapsedStatusBarFragmentLogger;
@@ -134,6 +141,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private int mSignalClusterEndPadding = 0;
     private final SecureSettings mSecureSettings;
     private final Executor mMainExecutor;
+
+    private View mTickerViewFromStub;
+    private View mTickerViewContainer;
 
     private List<String> mBlockedIcons = new ArrayList<>();
 
@@ -173,6 +183,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             NotificationIconAreaController notificationIconAreaController,
             PanelExpansionStateManager panelExpansionStateManager,
             FeatureFlags featureFlags,
+            Lazy<Optional<StatusBar>> statusBarOptionalLazy,
             StatusBarIconController statusBarIconController,
             StatusBarHideIconsForBouncerManager statusBarHideIconsForBouncerManager,
             KeyguardStateController keyguardStateController,
@@ -192,6 +203,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mNotificationIconAreaController = notificationIconAreaController;
         mPanelExpansionStateManager = panelExpansionStateManager;
         mFeatureFlags = featureFlags;
+        mStatusBarOptional = statusBarOptionalLazy.get();
         mStatusBarIconController = statusBarIconController;
         mStatusBarHideIconsForBouncerManager = statusBarHideIconsForBouncerManager;
         mKeyguardStateController = keyguardStateController;
@@ -250,6 +262,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         initEmergencyCryptkeeperText();
         initOperatorName();
         initNotificationIconArea();
+        initTickerView();
         mAnimationScheduler.addCallback(this);
     }
 
@@ -378,9 +391,11 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             if ((state1 & DISABLE_SYSTEM_INFO) != 0 || ((state2 & DISABLE2_SYSTEM_ICONS) != 0)) {
                 hideSystemIconArea(animate);
                 hideOperatorName(animate);
+                hideTicker(animate);
             } else {
                 showSystemIconArea(animate);
                 showOperatorName(animate);
+                showTicker(animate);
             }
         }
 
@@ -559,6 +574,18 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         }
     }
 
+    public void showTicker(boolean animate) {
+        if (mTickerViewContainer != null) {
+            animateShow(mTickerViewContainer, animate);
+        }
+    }
+
+    public void hideTicker(boolean animate) {
+        if (mTickerViewContainer != null) {
+            animateHide(mTickerViewContainer, animate);
+        }
+    }
+
     /**
      * Animate a view to INVISIBLE or GONE
      */
@@ -711,4 +738,17 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
                     updateStatusBarLocation(left, right);
                 }
             };
+
+    private void initTickerView() {
+        mTickerViewContainer = mStatusBar.findViewById(R.id.ticker_container);
+        View tickerStub = mStatusBar.findViewById(R.id.ticker_stub);
+        if (mTickerViewFromStub == null && tickerStub != null) {
+            mTickerViewFromStub = ((ViewStub) tickerStub).inflate();
+        }
+        TickerView tickerView = (TickerView) mStatusBar.findViewById(R.id.tickerText);
+        ImageSwitcher tickerIcon = (ImageSwitcher) mStatusBar.findViewById(R.id.tickerIcon);
+        mStatusBarOptional.ifPresent(
+                statusBar -> statusBar.createTicker(
+                getContext(), mStatusBar, tickerView, tickerIcon, mTickerViewFromStub));
+    }
 }
