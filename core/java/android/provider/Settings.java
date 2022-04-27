@@ -6670,6 +6670,12 @@ public final class Settings {
         public static final String USE_STOCK_LAYOUT = "use_stock_layout";
 
         /**
+         * Settings UserCard
+         * @hide
+         */
+        public static final String DISABLE_USERCARD = "disable_usercard";
+
+        /**
          * These are all public system settings
          *
          * @hide
