@@ -1702,6 +1702,7 @@ public class VolumeDialogImpl implements VolumeDialog,
     private boolean isExpandableRowH(VolumeRow row) {
         return row != null && row != mDefaultRow && !row.defaultStream
                 && (row.stream == STREAM_RING
+                        || row.stream == STREAM_NOTIFICATION
                         || row.stream == STREAM_ALARM
                         || row.stream == STREAM_MUSIC);
     }
