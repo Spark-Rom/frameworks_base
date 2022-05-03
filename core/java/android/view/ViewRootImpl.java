@@ -6449,7 +6449,6 @@ public final class ViewRootImpl implements ViewParent,
 
             if (event.getPointerCount() == 3 && isSwipeToScreenshotGestureActive()) {
                 event.setAction(MotionEvent.ACTION_CANCEL);
-                if (DBG) Log.d(TAG, "canceling motionEvent because of threeGesture detecting");
             }
 
             mAttachInfo.mUnbufferedDispatchRequested = false;
@@ -10647,7 +10646,7 @@ public final class ViewRootImpl implements ViewParent,
        }
        mBLASTDrawConsumer = consume;
        return true;
-   }
+    }
 
     private boolean isSwipeToScreenshotGestureActive() {
         try {
