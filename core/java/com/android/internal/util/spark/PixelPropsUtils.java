@@ -33,6 +33,7 @@ public class PixelPropsUtils {
 
     public static final String PACKAGE_GMS = "com.google.android.gms";
     private static final String DEVICE = "ro.spark.device";
+    public static final String PACKAGE_NETFLIX = "com.netflix.mediaclient";
     private static final String TAG = PixelPropsUtils.class.getSimpleName();
     private static final boolean DEBUG = false;
 
@@ -128,6 +129,11 @@ public class PixelPropsUtils {
             "com.google.ar.core"
     };
 
+    // Codename for Xiaomi Mi 11
+    private static final String[] venusCodename = {
+            "venus"
+    };
+
     // Codenames for currently supported Pixels by Google
     private static final String[] pixelCodenames = {
             "oriole",
@@ -209,12 +215,19 @@ public class PixelPropsUtils {
         if (packageName.startsWith("com.google.")) {
 
             boolean isPixelDevice = Arrays.asList(pixelCodenames).contains(SystemProperties.get(DEVICE));
+            boolean isVenus = Arrays.asList(venusCodename).contains(SystemProperties.get(DEVICE));
 
             if (Arrays.asList(streamingPackagesToChange).contains(packageName)) {
                 if (SystemProperties.getBoolean("persist.sys.pixelprops.streaming", true)) {
+                    if (packageName.equals(PACKAGE_NETFLIX) && (isVenus)) {
+                        propsToChange.putAll(propsToChangeMI11);
+                    }
                     propsToChange.putAll(propsToChangePixel6);
                 } else {
                     if (isPixelDevice) return;
+                    if (packageName.equals(PACKAGE_NETFLIX) && (isVenus)) {
+                        propsToChange.putAll(propsToChangeMI11);
+                    }
                     propsToChange.putAll(propsToChangePixel5);
                 }
             }
