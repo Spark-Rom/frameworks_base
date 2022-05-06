@@ -6782,6 +6782,12 @@ public final class Settings {
         public static final String SWIPE_TO_SCREENSHOT = "swipe_to_screenshot";
 
         /**
+         * Whether to enable taskbar.
+         * @hide
+         */
+        public static final String ENABLE_TASKBAR = "enable_taskbar";
+
+        /**
          * Whether to enable Smart Pixels
          * @hide
          */
