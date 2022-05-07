@@ -178,12 +178,12 @@ open class LandscapeBatteryDrawable(private val context: Context, frameColor: In
 
         val res = context.resources
         val levels = if(setCustomBatteryLevelTint)
-            res.obtainTypedArray(R.array.custom_batterymeter_color_levels)
+            res.obtainTypedArray(R.array.spark_batterymeter_color_levels)
         else
             res.obtainTypedArray(R.array.batterymeter_color_levels)
 
         val colors = if(setCustomBatteryLevelTint)
-            res.obtainTypedArray(R.array.custom_batterymeter_color_values)
+            res.obtainTypedArray(R.array.spark_batterymeter_color_values)
         else
             res.obtainTypedArray(R.array.batterymeter_color_values)
 
