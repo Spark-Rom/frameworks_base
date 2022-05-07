@@ -196,16 +196,22 @@ open class ThemedBatteryDrawable(private val context: Context, frameColor: Int) 
             res.obtainTypedArray(R.array.spark_batterymeter_color_values)
         else
             res.obtainTypedArray(R.array.batterymeter_color_values)
+
             
+        val L:Int
+        L = if(setCustomBatteryLevelTint)
+            7
+            else
+            2
         val N = levels.length()
-        colorLevels = IntArray(2 * N)
+        colorLevels = IntArray(L * N)
         for (i in 0 until N) {
-            colorLevels[2 * i] = levels.getInt(i, 0)
+            colorLevels[L * i] = levels.getInt(i, 0)
             if (colors.getType(i) == TypedValue.TYPE_ATTRIBUTE) {
-                colorLevels[2 * i + 1] = Utils.getColorAttrDefaultColor(context,
+                colorLevels[L * i + 1] = Utils.getColorAttrDefaultColor(context,
                         colors.getThemeAttributeId(i, 0))
             } else {
-                colorLevels[2 * i + 1] = colors.getColor(i, 0)
+                colorLevels[L * i + 1] = colors.getColor(i, 0)
             }
         }
         levels.recycle()
