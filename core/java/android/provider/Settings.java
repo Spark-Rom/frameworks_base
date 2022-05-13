@@ -6810,6 +6810,18 @@ public final class Settings {
         public static final String SMART_PIXELS_ON_POWER_SAVE = "smart_pixels_on_power_save";
 
         /**
+         * Whether to add left padding on statusbar
+         * @hide
+         */
+        public static final String LEFT_PADDING = "statusbar_left_padding";
+
+        /**
+         * Whether to add right padding on statusbar
+         * @hide
+         */
+        public static final String RIGHT_PADDING = "statusbar_right_padding";
+
+        /**
          * These are all public system settings
          *
          * @hide
