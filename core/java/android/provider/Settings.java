@@ -6636,6 +6636,22 @@ public final class Settings {
          */
         public static final String SMART_5G = "smart_5g";
 
+        /**
+         * Whether to add left padding on statusbar
+         * @hide
+         */
+        public static final String STATUSBAR_LEFT_PADDING = "statusbar_left_padding";
+        /**
+         * Whether to add right padding on statusbar
+         * @hide
+         */
+        public static final String STATUSBAR_RIGHT_PADDING = "statusbar_right_padding";
+        /**
+         * Whether to add top padding on statusbar
+         * @hide
+         */
+        public static final String STATUSBAR_TOP_PADDING = "statusbar_top_padding";
+
        /**
          * These are all public system settings
          *
@@ -6754,6 +6770,9 @@ public final class Settings {
             PRIVATE_SETTINGS.add(AMBIENT_TEXT_TYPE_COLOR);
             PRIVATE_SETTINGS.add(PREVENT_POINTER_ACCELERATION);
             PRIVATE_SETTINGS.add(FORCE_MOUSE_AS_TOUCH);
+            PRIVATE_SETTINGS.add(STATUSBAR_LEFT_PADDING);
+            PRIVATE_SETTINGS.add(STATUSBAR_RIGHT_PADDING);
+            PRIVATE_SETTINGS.add(STATUSBAR_TOP_PADDING);
         }
 
         /**
