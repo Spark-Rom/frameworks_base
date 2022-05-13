@@ -251,4 +251,9 @@
     <!-- Smart cutoff temperature -->
     <java-symbol type="integer" name="config_smartCutoffTemperature" />
     <java-symbol type="integer" name="config_smartCutoffResumeTemperature" />
+
+    <!-- Status bar paddings -->
+    <java-symbol type="dimen" name="status_bar_padding_start" />
+    <java-symbol type="dimen" name="status_bar_padding_end" />
+    <java-symbol type="dimen" name="status_bar_padding_top" />
 </resources>
