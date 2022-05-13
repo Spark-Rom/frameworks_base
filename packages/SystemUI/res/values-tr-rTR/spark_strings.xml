@@ -95,7 +95,7 @@
     <string name="global_action_restart_recovery">Kurtarma</string>
     <string name="global_action_restart_bootloader">ÖnYükleyici (Bootloader)</string>
     <string name="global_action_restart_ui">Sistem Arayüzü (SystemUI)</string>
-    <string name="global_action_onthego">On-The-Go</string>
+    <string name="global_action_onthego">Yürüyüş Modu</string>
     <!-- On The Go -->
     <string name="onthego_notification_ticker">Yürüyüş Modu etkinleştirildi</string>
     <string name="onthego_notification_title">Yürüyüş Modu aktif</string>
@@ -104,12 +104,12 @@
     <string name="onthego_notification_error">Yürüyüş Modu başlatılamıyor</string>
     <string name="onthego_notification_restart">Yürüyüş Modunu yeniden başlat</string>
     <string name="onthego_notification_camera_changed">Kamera Modu değiştirildi</string>
-    <string name="onthego_transparency">Transparency</string>
+    <string name="onthego_transparency">Yürüyüş Modu Şeffaflığı</string>
     <string name="onthego_front_camera">Ön Kamerayı kullan</string>
     <string name="onthego_service_toggle">Hizmeti otomatik olarak yeniden başlat</string>
-    <string name="onthego_channel_name">Main</string>
+    <string name="onthego_channel_name">Yürüyüş Modu</string>
     <!-- OnTheGo Tile -->
-    <string name="quick_settings_onthego_label">Main</string>
+    <string name="quick_settings_onthego_label">Yürüyüş Modu</string>
     <string name="accessibility_quick_settings_onthego_off">Yürüyüş Modu kapalı</string>
     <string name="accessibility_quick_settings_onthego_on">Yürüyüş Modu açık</string>
     <string name="accessibility_quick_settings_onthego_changed_off">Yürüyüş Modu kapatıldı</string>

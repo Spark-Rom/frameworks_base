@@ -9,7 +9,7 @@
     <string name="alert_slider_mode_dnd_text">Nu deranjaţi</string>
     <!-- Screen record -->
     <!-- Label for notification action to delete a screen recording file [CHAR LIMIT=35] -->
-    <string name="screenrecord_delete_label">Ștergeți</string>
+    <string name="screenrecord_delete_label">Ștergere</string>
     <!-- A toast message shown after successfully deleting a screen recording [CHAR LIMIT=NONE] -->
     <string name="screenrecord_delete_description">Screen recording deleted</string>
     <string name="screenrecord_stopdot_label">Show stop dot\nLongpress to move it</string>

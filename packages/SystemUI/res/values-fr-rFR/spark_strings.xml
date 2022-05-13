@@ -9,7 +9,7 @@
     <string name="alert_slider_mode_dnd_text">NPD</string>
     <!-- Screen record -->
     <!-- Label for notification action to delete a screen recording file [CHAR LIMIT=35] -->
-    <string name="screenrecord_delete_label">Supprimer</string>
+    <string name="screenrecord_delete_label">Effacer</string>
     <!-- A toast message shown after successfully deleting a screen recording [CHAR LIMIT=NONE] -->
     <string name="screenrecord_delete_description">Screen recording deleted</string>
     <string name="screenrecord_stopdot_label">Show stop dot\nLongpress to move it</string>
@@ -109,7 +109,7 @@
     <string name="onthego_service_toggle">Redémarrer automatiquement le service</string>
     <string name="onthego_channel_name">Menu Principal</string>
     <!-- OnTheGo Tile -->
-    <string name="quick_settings_onthego_label">On-The-Go</string>
+    <string name="quick_settings_onthego_label">Menu Principal</string>
     <string name="accessibility_quick_settings_onthego_off">On-The-Go désactivé</string>
     <string name="accessibility_quick_settings_onthego_on">On-The-Go activé</string>
     <string name="accessibility_quick_settings_onthego_changed_off">On-The-Go turned off</string>

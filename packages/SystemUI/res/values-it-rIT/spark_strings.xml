@@ -9,7 +9,7 @@
     <string name="alert_slider_mode_dnd_text">Non disturbare</string>
     <!-- Screen record -->
     <!-- Label for notification action to delete a screen recording file [CHAR LIMIT=35] -->
-    <string name="screenrecord_delete_label">Cancella</string>
+    <string name="screenrecord_delete_label">Elimina</string>
     <!-- A toast message shown after successfully deleting a screen recording [CHAR LIMIT=NONE] -->
     <string name="screenrecord_delete_description">Screen recording deleted</string>
     <string name="screenrecord_stopdot_label">Show stop dot\nLongpress to move it</string>
@@ -109,7 +109,7 @@
     <string name="onthego_service_toggle">Riavvia automaticamente il servizio</string>
     <string name="onthego_channel_name">Principale</string>
     <!-- OnTheGo Tile -->
-    <string name="quick_settings_onthego_label">On-The-Go</string>
+    <string name="quick_settings_onthego_label">Principale</string>
     <string name="accessibility_quick_settings_onthego_off">On-The-Go disattivato</string>
     <string name="accessibility_quick_settings_onthego_on">On-The-Go attivo</string>
     <string name="accessibility_quick_settings_onthego_changed_off">On-The-Go disattivato</string>
