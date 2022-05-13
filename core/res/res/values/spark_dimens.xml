@@ -21,4 +21,13 @@
     <dimen name="navigation_bar_frame_height_hide_ime">16dp</dimen>
     <!-- Height of the bottom navigation bar frame in landscape when hide ime space -->
     <dimen name="navigation_bar_frame_height_landscape_hide_ime">@dimen/navigation_bar_frame_height_hide_ime</dimen>
+
+    <!-- the padding on the start of the statusbar -->
+    <dimen name="status_bar_padding_start">8dp</dimen>
+
+    <!-- the padding on the end of the statusbar -->
+    <dimen name="status_bar_padding_end">8dp</dimen>
+
+    <!-- the padding on the top of the statusbar (usually 0) -->
+    <dimen name="status_bar_padding_top">0dp</dimen>
 </resources>
