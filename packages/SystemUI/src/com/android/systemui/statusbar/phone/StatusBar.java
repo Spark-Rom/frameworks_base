@@ -619,6 +619,7 @@ public class StatusBar extends SystemUI implements
     private boolean mBrightnessControl;
     private boolean mBrightnessChanged;
     private boolean mJustPeeked;
+    private float mCurrentBrightness;
 
     // Flags for disabling the status bar
     // Two variables becaseu the first one evidently ran out of room for new flags.
@@ -2343,6 +2344,7 @@ public class StatusBar extends SystemUI implements
         final float val = convertGammaToLinearFloat(
                 Math.round(value * GAMMA_SPACE_MAX),
                 mMinimumBacklight, mMaximumBacklight);
+        mCurrentBrightness = val;
         mDisplayManager.setTemporaryBrightness(mDisplayId, val);
         AsyncTask.execute(new Runnable() {
             @Override
@@ -2451,6 +2453,7 @@ public class StatusBar extends SystemUI implements
             if (mJustPeeked && mExpandedVisible) {
                 mNotificationPanelViewController.fling(10, false);
             }
+            mDisplayManager.setBrightness(mDisplayId, mCurrentBrightness);
         }
     }
 
