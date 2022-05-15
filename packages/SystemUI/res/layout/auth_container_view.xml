@@ -15,6 +15,7 @@
   -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -26,12 +27,15 @@
         android:background="@color/biometric_dialog_dim_color"
         android:contentDescription="@string/biometric_dialog_empty_space_description"/>
 
-    <View
+    <com.zhenxiang.blur.WindowBlurFrameLayout
         android:id="@+id/panel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?android:attr/colorBackgroundFloating"
-        android:elevation="@dimen/biometric_dialog_elevation"/>
+        android:elevation="@dimen/biometric_dialog_elevation"
+        app:backgroundColour="?android:attr/colorBackgroundFloating"
+        app:cornerRadius="?android:attr/dialogCornerRadius"
+        app:blurRadius="@integer/background_blur_radius"
+        app:blurBackgroundColourOpacity="@dimen/background_blur_colour_opacity"/>
 
     <ScrollView
         android:id="@+id/biometric_scrollview"

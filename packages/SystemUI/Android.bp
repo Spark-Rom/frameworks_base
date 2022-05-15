@@ -86,6 +86,7 @@ android_library {
         "res",
         "res-pixel",
         "res-hwkeys",
+        "res-blur",
     ],
     static_libs: [
         "WindowManager-Shell",
@@ -129,6 +130,7 @@ android_library {
         "SystemUIGoogle-lib",
         "android.frameworks.stats-V1-java",
         "vendor-pixelatoms-java",
+        "AndroidSystemBlur-platform",
     ],
     manifest: "AndroidManifest.xml",
     additional_manifests: ["SystemUIGoogle-Manifest.xml"],

@@ -130,7 +130,7 @@ class FooterActionsController @Inject constructor(
             }
         } else if (v === powerMenuLite) {
             uiEventLogger.log(GlobalActionsDialogLite.GlobalActionsEvent.GA_OPEN_QS)
-            globalActionsDialog.showOrHideDialog(false, true, v)
+            globalActionsDialog.showOrHideDialog(false, true, null)
         } else if (v === runningServicesButton) {
             if (!deviceProvisionedController.isCurrentUserSetup) {
                 // If user isn't setup just unlock the device and dump them back at SUW.
