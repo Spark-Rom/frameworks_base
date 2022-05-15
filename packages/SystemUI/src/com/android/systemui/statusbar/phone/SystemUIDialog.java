@@ -23,6 +23,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -42,6 +45,9 @@ import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.broadcast.BroadcastDispatcher;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
+
+import com.zhenxiang.blur.SystemBlurController;
+import com.zhenxiang.blur.model.CornersRadius;
 
 /**
  * Base class for dialogs that should appear over panels and keyguard.
@@ -66,6 +72,8 @@ public class SystemUIDialog extends AlertDialog implements ViewRootImpl.ConfigCh
     private int mLastHeight = Integer.MIN_VALUE;
     private int mLastConfigurationWidthDp = -1;
     private int mLastConfigurationHeightDp = -1;
+
+    private SystemBlurController blurController;
 
     public SystemUIDialog(Context context) {
         this(context, R.style.Theme_SystemUI_Dialog);
@@ -107,6 +115,20 @@ public class SystemUIDialog extends AlertDialog implements ViewRootImpl.ConfigCh
         mLastConfigurationWidthDp = config.screenWidthDp;
         mLastConfigurationHeightDp = config.screenHeightDp;
         updateWindowSize();
+
+        final Resources resources = getContext().getResources();
+        final TypedArray ta = getContext().obtainStyledAttributes(
+                new int[] {
+                        com.android.internal.R.attr.colorSurface,
+                        android.R.attr.dialogCornerRadius});
+
+        blurController = new SystemBlurController(
+            findViewById(android.R.id.content),
+            ta.getColor(0, Color.WHITE),
+            getFloat(resources, R.dimen.background_blur_colour_opacity),
+            resources.getInteger(R.integer.background_blur_radius),
+            CornersRadius.Companion.all(ta.getDimensionPixelSize(1, 0))
+        );
     }
 
     private void updateWindowSize() {
@@ -306,6 +328,15 @@ public class SystemUIDialog extends AlertDialog implements ViewRootImpl.ConfigCh
 
     private static int getDefaultDialogHeight() {
         return ViewGroup.LayoutParams.WRAP_CONTENT;
+    }
+
+    private static float getFloat(Resources resources, int id) {
+        TypedValue value = new TypedValue();
+        resources.getValue(id, value, true /* resolveRefs */);
+        if (value.type != TypedValue.TYPE_FLOAT) {
+            return Float.NaN;
+        }
+        return value.getFloat();
     }
 
     private static class DismissReceiver extends BroadcastReceiver {
