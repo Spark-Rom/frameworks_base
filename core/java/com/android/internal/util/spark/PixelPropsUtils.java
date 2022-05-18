@@ -17,7 +17,6 @@
  */
 package com.android.internal.util.spark;
 
-import android.app.Application;
 import android.os.Build;
 import android.os.SystemProperties;
 import android.util.Log;
@@ -33,7 +32,8 @@ public class PixelPropsUtils {
 
     public static final String PACKAGE_GMS = "com.google.android.gms";
     public static final String PACKAGE_NETFLIX = "com.netflix.mediaclient";
-    private static final String DEVICE = "ro.product.device";
+    public static final String PACKAGE_SETTINGS_SERVICES = "com.google.android.settings.intelligence";
+    private static final String DEVICE = "com.spark.device";
     private static final String TAG = PixelPropsUtils.class.getSimpleName();
     private static final boolean DEBUG = false;
 
@@ -48,14 +48,6 @@ public class PixelPropsUtils {
     private static final Map<String, ArrayList<String>> propsToKeep;
 
     private static final String[] packagesToChangePixel6 = {
-            "com.google.android.apps.customization.pixel",
-            "com.google.android.apps.nexuslauncher",
-            "com.google.android.apps.subscriptions.red",
-            "com.google.android.apps.wallpaper",
-            "com.google.android.apps.wallpaper.pixel",
-            "com.google.android.settings.intelligence",
-            "com.google.pixel.dynamicwallpapers",
-            "com.google.pixel.livewallpaper",
             PACKAGE_GMS
     };
 
@@ -74,7 +66,6 @@ public class PixelPropsUtils {
 
     private static final String[] extraPackagesToChange = {
             "com.android.chrome",
-            "com.android.vending",
             "com.breel.wallpapers20",
             "com.nhs.online.nhsonline"
     };
@@ -121,6 +112,12 @@ public class PixelPropsUtils {
     };
 
     private static final String[] packagesToChangeOP8P = {
+            "com.tencent.ig",
+            "com.pubg.imobile",
+            "com.pubg.krmobile",
+            "com.vng.pubgmobile",
+            "com.rekoo.pubgm",
+            "com.tencent.tmgp.pubgmhd",
             "com.riotgames.league.wildrift",
             "com.riotgames.league.wildrifttw",
             "com.riotgames.league.wildriftvn",
@@ -129,12 +126,6 @@ public class PixelPropsUtils {
 
     private static final String[] packagesToChangeMI11 = {
             "com.mobile.legends",
-            "com.tencent.ig",
-            "com.pubg.imobile",
-            "com.pubg.krmobile",
-            "com.vng.pubgmobile",
-            "com.rekoo.pubgm",
-            "com.tencent.tmgp.pubgmhd",
             "com.tencent.tmgp.sgame"
     };
 
@@ -161,7 +152,7 @@ public class PixelPropsUtils {
 
     static {
         propsToKeep = new HashMap<>();
-        propsToKeep.put("com.google.android.settings.intelligence", new ArrayList<>(Collections.singletonList("FINGERPRINT")));
+        propsToKeep.put(PACKAGE_SETTINGS_SERVICES, new ArrayList<>(Collections.singletonList("FINGERPRINT")));
         propsToChange = new HashMap<>();
         propsToChangePixel6 = new HashMap<>();
         propsToChangePixel6.put("BRAND", "google");
@@ -200,25 +191,12 @@ public class PixelPropsUtils {
         propsToChangeMI11.put("MODEL", "M2102K1G");
     }
 
-    public static void setProps(Application app) {
-        String packageName = app.getPackageName();
+    public static void setProps(String packageName) {
         if (packageName == null) {
             return;
         }
         if (Arrays.asList(packagesToKeep).contains(packageName)) {
             return;
-        }
-        if (Arrays.asList(pixelCodenames).contains(SystemProperties.get(DEVICE))) {
-            if (packageName.equals(PACKAGE_GMS) && app.getProcessName().equals("com.google.android.gms.unstable")) {
-                setPropValue("MODEL", SystemProperties.get("ro.product.model") + " ");
-                setPropValue("PRODUCT", SystemProperties.get(DEVICE));
-                sIsGms = true;
-            }
-            return;
-        }
-        if (packageName.equals(PACKAGE_GMS) && app.getProcessName().equals("com.google.android.gms.unstable")) {
-            setPropValue("MODEL", "Pixel 5" + " ");
-            sIsGms = true;
         }
         if (packageName.startsWith("com.google.")
                 || Arrays.asList(extraPackagesToChange).contains(packageName)) {
@@ -255,8 +233,11 @@ public class PixelPropsUtils {
                 if (DEBUG) Log.d(TAG, "Defining " + key + " prop for: " + packageName);
                 setPropValue(key, value);
             }
+            if (packageName.equals(PACKAGE_GMS)) {
+                sIsGms = true;
+            }
             // Set proper indexing fingerprint
-            if (packageName.equals("com.google.android.settings.intelligence")) {
+            if (packageName.equals(PACKAGE_SETTINGS_SERVICES)) {
                 setPropValue("FINGERPRINT", Build.DATE);
             }
         } else {

@@ -41,7 +41,6 @@ import com.android.systemui.qs.tiles.DeviceControlsTile;
 import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.qs.tiles.FPSInfoTile;
 import com.android.systemui.qs.tiles.FlashlightTile;
-import com.android.systemui.qs.tiles.GamingModeTile;
 import com.android.systemui.qs.tiles.LiveDisplayTile;
 import com.android.systemui.qs.tiles.HeadsUpTile;
 import com.android.systemui.qs.tiles.HotspotTile;
@@ -128,7 +127,6 @@ public class QSFactoryImplGoogle extends QSFactoryImpl {
             Provider<SoundTile> soundTileProvider,
             Provider<ScreenshotTile> screenshotTileProvider,
             Provider<HeadsUpTile> headsUpTileProvider,
-            Provider<GamingModeTile> gamingModeTileProvider,
             Provider<RebootTile> rebootTileProvider,
             Provider<OnTheGoTile> onTheGoTileProvider,
             Provider<VolumeTile> volumeTileProvider,
@@ -179,7 +177,6 @@ public class QSFactoryImplGoogle extends QSFactoryImpl {
                 soundTileProvider,
                 screenshotTileProvider,
                 headsUpTileProvider,
-                gamingModeTileProvider,
                 rebootTileProvider,
                 onTheGoTileProvider,
                 volumeTileProvider,
