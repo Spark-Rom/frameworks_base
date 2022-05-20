@@ -108,8 +108,8 @@ public class TriStateUiControllerImpl implements TriStateUiController,
     private static final int TRI_STATE_UI_POSITION_LEFT = 0;
     private static final int TRI_STATE_UI_POSITION_RIGHT = 1;
 
-    private static final long DIALOG_TIMEOUT = 2000;
-    private static final long DIALOG_DELAY = 300;
+    private static final long DIALOG_TIMEOUT = 1500;
+    private static final long DIALOG_DELAY = 150;
 
     private Context mContext;
     private final VolumeDialogController mVolumeDialogController;
