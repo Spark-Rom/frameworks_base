@@ -100,7 +100,6 @@ public class SystemSettings {
         Settings.System.STATUS_BAR_LOGO_STYLE,
         Settings.System.STATUS_BAR_LOGO_COLOR_ACCENT,
         Settings.System.NOTIFICATION_HEADERS,
-        Settings.System.ARTWORK_MEDIA_BACKGROUND,
         Settings.System.ARTWORK_MEDIA_BACKGROUND_ALPHA,
         Settings.System.NOTIFICATION_PULSE,
         Settings.System.AOD_NOTIFICATION_PULSE,
