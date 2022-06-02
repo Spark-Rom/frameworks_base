@@ -5863,6 +5863,12 @@ public final class Settings {
         public static final String GAMESPACE_GAME_LIST = "gamespace_game_list";
 
         /**
+         * Current status of whether gestures are locked
+         * @hide
+         */
+        public static final String LOCK_GESTURE_STATUS = "lock_gesture_status";
+
+        /**
          * GameSpace: Whether fullscreen intent will be suppressed while in game session
          * @hide
          */
