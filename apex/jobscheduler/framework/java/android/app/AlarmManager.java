@@ -26,6 +26,7 @@ import android.annotation.SdkConstant.SdkConstantType;
 import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.annotation.TestApi;
+import android.app.compat.gms.GmsCompat;
 import android.compat.annotation.ChangeId;
 import android.compat.annotation.Disabled;
 import android.compat.annotation.EnabledSince;
@@ -941,6 +942,14 @@ public class AlarmManager {
             if (windowMillis == WINDOW_EXACT && !canScheduleExactAlarms()) {
                 windowMillis = WINDOW_HEURISTIC;
             }
+        }
+
+        if (GmsCompat.isEnabled()) {
+            if (windowMillis == WINDOW_EXACT && !canScheduleExactAlarms()) {
+                windowMillis = WINDOW_HEURISTIC;
+            }
+            // non-null WorkSource requires privileged UPDATE_DEVICE_STATS permission
+            workSource = null;
         }
 
         if (triggerAtMillis < 0) {
