@@ -82,6 +82,14 @@ public class Clock extends TextView implements
             "system:" + Settings.System.STATUS_BAR_CLOCK_DATE_POSITION;
     public static final String STATUS_BAR_CLOCK_DATE_FORMAT =
             "system:" + Settings.System.STATUS_BAR_CLOCK_DATE_FORMAT;
+    public static final String STATUS_BAR_CLOCK_SIZE =
+            "system:" + Settings.System.STATUS_BAR_CLOCK_SIZE;
+    public static final String QS_HEADER_CLOCK_SIZE =
+            "system:" + Settings.System.QS_HEADER_CLOCK_SIZE;
+
+    public static final int DEFAULT_CLOCK_SIZE = 14;
+    private int mClockSize;
+    private int mClockSizeQsHeader;
     private static final String CLOCK_SUPER_PARCELABLE = "clock_super_parcelable";
     private static final String CURRENT_USER_ID = "current_user_id";
     private static final String VISIBLE_BY_POLICY = "visible_by_policy";
@@ -225,7 +233,9 @@ public class Clock extends TextView implements
                     STATUS_BAR_CLOCK_DATE_DISPLAY,
                     STATUS_BAR_CLOCK_DATE_STYLE,
                     STATUS_BAR_CLOCK_DATE_POSITION,
-                    STATUS_BAR_CLOCK_DATE_FORMAT);
+                    STATUS_BAR_CLOCK_DATE_FORMAT,
+                    STATUS_BAR_CLOCK_SIZE,
+                    QS_HEADER_CLOCK_SIZE);
             mCommandQueue.addCallback(this);
             if (mShowDark) {
                 Dependency.get(DarkIconDispatcher.class).addDarkReceiver(this);
@@ -244,6 +254,7 @@ public class Clock extends TextView implements
         updateClockVisibility();
         updateShowSeconds();
         updateClockVisibility();
+        updateClockSize();
     }
 
     @Override
@@ -371,12 +382,21 @@ public class Clock extends TextView implements
             case STATUS_BAR_CLOCK_DATE_FORMAT:
                 mClockDateFormat = newValue;
                 break;
+            case STATUS_BAR_CLOCK_SIZE:
+                mClockSize =
+                        TunerService.parseInteger(newValue, DEFAULT_CLOCK_SIZE);
+                break;
+            case QS_HEADER_CLOCK_SIZE:
+                 mClockSizeQsHeader =
+                        TunerService.parseInteger(newValue, DEFAULT_CLOCK_SIZE);
+                break;
             default:
                 break;
         }
         mClockFormatString = ""; // force refresh
         updateClock();
         updateClockVisibility();
+        updateClockSize();
     }
 
     @Override
@@ -616,5 +636,14 @@ public class Clock extends TextView implements
             mSecondsHandler.postAtTime(this, SystemClock.uptimeMillis() / 1000 * 1000 + 1000);
         }
     };
+
+    public void updateClockSize() {
+	if(mQsHeader) {
+            setTextSize(mClockSizeQsHeader);
+        } else {
+            setTextSize(mClockSize);
+        }
+            updateClock();
+    }
 }
 
