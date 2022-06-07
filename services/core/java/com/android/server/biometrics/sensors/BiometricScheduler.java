@@ -58,9 +58,6 @@ import java.util.Locale;
 public class BiometricScheduler {
 
     private static final String BASE_TAG = "BiometricScheduler";
-
-    private boolean mCancel;
-
     // Number of recent operations to keep in our logs for dumpsys
     protected static final int LOG_NUM_RECENT_OPERATIONS = 50;
 
@@ -364,15 +361,12 @@ public class BiometricScheduler {
      * @param gestureAvailabilityDispatcher may be null if the sensor does not support gestures
      *                                      (such as fingerprint swipe).
      */
-    public BiometricScheduler(Context context, @NonNull String tag,
+    public BiometricScheduler(@NonNull String tag,
             @SensorType int sensorType,
             @Nullable GestureAvailabilityDispatcher gestureAvailabilityDispatcher) {
         this(tag, sensorType, gestureAvailabilityDispatcher, IBiometricService.Stub.asInterface(
                 ServiceManager.getService(Context.BIOMETRIC_SERVICE)), LOG_NUM_RECENT_OPERATIONS,
                 CoexCoordinator.getInstance());
-
-        mCancel = context.getResources().getBoolean(
-                com.android.internal.R.bool.config_fpCancelIfNotIdle);
     }
 
     /**
@@ -389,13 +383,8 @@ public class BiometricScheduler {
 
     protected void startNextOperationIfIdle() {
         if (mCurrentOperation != null) {
-            if(mCancel) {
-               Slog.v(getTag(), "Not idle, cancelling current operation: " + mCurrentOperation);
-               cancelInternal(mCurrentOperation);
-            } else {
-               Slog.v(getTag(), "Not idle, current operation: " + mCurrentOperation);
-               return;
-            }
+            Slog.v(getTag(), "Not idle, current operation: " + mCurrentOperation);
+            return;
         }
         if (mPendingOperations.isEmpty()) {
             Slog.d(getTag(), "No operations, returning to idle");
