@@ -205,6 +205,8 @@ public class SecureSettings {
         Settings.Secure.MONET_ENGINE_LINEAR_LIGHTNESS,
         Settings.Secure.MONET_ENGINE_WHITE_LUMINANCE,
         Settings.Secure.TETHERING_ALLOW_VPN_UPSTREAMS,
-        Settings.Secure.STATUS_BAR_SHOW_VIBRATE_ICON
+        Settings.Secure.STATUS_BAR_SHOW_VIBRATE_ICON,
+        Settings.Secure.STATUS_BAR_SHOW_ALARM_ICON
+
     };
 }

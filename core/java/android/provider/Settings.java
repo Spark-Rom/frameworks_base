@@ -11249,6 +11249,13 @@ public final class Settings {
         public static final String STATUS_BAR_SHOW_VIBRATE_ICON = "status_bar_show_vibrate_icon";
 
         /**
+         * Whether to show the alarm icon in the Status Bar (default off)
+         *
+         * @hide
+         */
+        public static final String STATUS_BAR_SHOW_ALARM_ICON = "status_bar_show_alarm_icon";
+
+        /**
          * Specifies whether the web action API is enabled.
          *
          * @hide

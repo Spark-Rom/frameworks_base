@@ -260,7 +260,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         if (mSecureSettings.getInt(Settings.Secure.STATUS_BAR_SHOW_VIBRATE_ICON, 0) == 0) {
             mBlockedIcons.add(getString(com.android.internal.R.string.status_bar_volume));
         }
+        if (mSecureSettings.getInt(Settings.Secure.STATUS_BAR_SHOW_ALARM_ICON, 0) == 0) {
         mBlockedIcons.add(getString(com.android.internal.R.string.status_bar_alarm_clock));
+        }
+
         mBlockedIcons.add(getString(com.android.internal.R.string.status_bar_call_strength));
 
         mMainExecutor.execute(() -> mDarkIconManager.setBlockList(mBlockedIcons));
@@ -288,6 +291,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 
         mSecureSettings.registerContentObserver(
                 Settings.Secure.getUriFor(Settings.Secure.STATUS_BAR_SHOW_VIBRATE_ICON),
+                false,
+                mVolumeSettingObserver);
+        mSecureSettings.registerContentObserver(
+                Settings.Secure.getUriFor(Settings.Secure.STATUS_BAR_SHOW_ALARM_ICON),
                 false,
                 mVolumeSettingObserver);
     }
