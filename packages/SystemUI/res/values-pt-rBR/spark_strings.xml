@@ -12,9 +12,14 @@
     <string name="screenrecord_delete_label">Excluir</string>
     <!-- A toast message shown after successfully deleting a screen recording [CHAR LIMIT=NONE] -->
     <string name="screenrecord_delete_description">Gravação de tela excluída</string>
-    <string name="screenrecord_stopdot_label">Mostrar ponto de parada\nPressione longamente para movê-lo</string>
-    <string name="screenrecord_lowquality_label">Qualidade inferior para arquivo menor</string>
-    <string name="screenrecord_longer_timeout_switch_label">Limite maior para arquivo\nLimitar o tamanho de gravação para 15Gb</string>
+    <string name="screenrecord_stopdot_label">Mostrar ponto de parada</string>
+    <string name="screenrecord_stopdot_summary">Pressione e segure para mover</string>
+    <string name="screenrecord_lowquality_label">Qualidade mais baixa</string>
+    <string name="screenrecord_lowquality_summary">Para gerar arquivos menores</string>
+    <string name="screenrecord_longer_timeout_switch_label">Arquivos maiores</string>
+    <string name="screenrecord_longer_timeout_switch_summary">Limitar o tamanho de gravação para 15 GB</string>
+    <string name="screenrecord_skip_time_label">Início rápido</string>
+    <string name="screenrecord_skip_time_summary">Remover espera de 3 segundos</string>
     <!-- Screenshot delete action -->
     <!-- Label for UI element which allows deleting the screenshot [CHAR LIMIT=30] -->
     <string name="screenshot_delete_label">Excluir</string>
@@ -83,9 +88,6 @@
     <string name="accessibility_quick_settings_heads_up_on">Notificações flutuantes ativadas.</string>
     <string name="accessibility_quick_settings_heads_up_changed_off">As notificações flutuantes foram desativadas.</string>
     <string name="accessibility_quick_settings_heads_up_changed_on">As notificações flutuantes foram ativadas.</string>
-    <!-- Gaming mode -->
-    <string name="gaming_mode_not_enabled">O modo de jogo está desativado nas configurações</string>
-    <string name="quick_settings_gaming_mode_label">Modo gamer</string>
     <!-- Poweroff/Reboot/Recovery QS tile -->
     <string name="quick_settings_poweroff_label">Desligar</string>
     <string name="quick_settings_reboot_label">Reiniciar</string>
@@ -173,4 +175,10 @@
     <!-- SoundSearch Tile -->
     <string name="quick_settings_sound_search">Pesquisa de som</string>
     <string name="quick_settings_sound_search_no_app">Desculpe, mas isso não funciona se você não tiver um aplicativo de pesquisa de som.</string>
+    <!-- Google Lens Screenshot string -->
+    <string name="lensss">Lens</string>
+    <!-- Data usage info in QS footer -->
+    <string name="usage_data">usado hoje</string>
+    <string name="usage_data_default_suffix">Dados</string>
+    <string name="usage_wifi_default_suffix">Wi-Fi</string>
 </resources>

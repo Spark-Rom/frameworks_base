@@ -12,9 +12,14 @@
     <string name="screenrecord_delete_label">削除</string>
     <!-- A toast message shown after successfully deleting a screen recording [CHAR LIMIT=NONE] -->
     <string name="screenrecord_delete_description">画面録画を削除しました</string>
-    <string name="screenrecord_stopdot_label">停止ドットを表示\n長押しして移動</string>
-    <string name="screenrecord_lowquality_label">低品質にしてファイルサイズ縮小</string>
-    <string name="screenrecord_longer_timeout_switch_label">ファイルサイズ制限です\n録画サイズを15 GiBに制限します</string>
+    <string name="screenrecord_stopdot_label">Show stop dot</string>
+    <string name="screenrecord_stopdot_summary">Longpress to move it</string>
+    <string name="screenrecord_lowquality_label">Lower quality</string>
+    <string name="screenrecord_lowquality_summary">For smaller file size</string>
+    <string name="screenrecord_longer_timeout_switch_label">Bigger file size limit</string>
+    <string name="screenrecord_longer_timeout_switch_summary">Limit recording size to 15 GB</string>
+    <string name="screenrecord_skip_time_label">Skip timer</string>
+    <string name="screenrecord_skip_time_summary">Remove 3 second wait</string>
     <!-- Screenshot delete action -->
     <!-- Label for UI element which allows deleting the screenshot [CHAR LIMIT=30] -->
     <string name="screenshot_delete_label">削除</string>
@@ -83,9 +88,6 @@
     <string name="accessibility_quick_settings_heads_up_on">Heads Up ON</string>
     <string name="accessibility_quick_settings_heads_up_changed_off">Heads Up を OFF にしました</string>
     <string name="accessibility_quick_settings_heads_up_changed_on">Heads Up を ON にしました</string>
-    <!-- Gaming mode -->
-    <string name="gaming_mode_not_enabled">ゲームモードが設定で無効になっています</string>
-    <string name="quick_settings_gaming_mode_label">ゲームモード</string>
     <!-- Poweroff/Reboot/Recovery QS tile -->
     <string name="quick_settings_poweroff_label">電源を切る</string>
     <string name="quick_settings_reboot_label">再起動</string>
@@ -173,4 +175,10 @@
     <!-- SoundSearch Tile -->
     <string name="quick_settings_sound_search">音声検索</string>
     <string name="quick_settings_sound_search_no_app">申し訳ありませんが、音楽検索アプリがインストールされていない場合は動作しません。</string>
+    <!-- Google Lens Screenshot string -->
+    <string name="lensss">Lens</string>
+    <!-- Data usage info in QS footer -->
+    <string name="usage_data">used today</string>
+    <string name="usage_data_default_suffix">Data</string>
+    <string name="usage_wifi_default_suffix">Wi-Fi</string>
 </resources>
