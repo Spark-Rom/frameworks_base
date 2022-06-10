@@ -12,9 +12,14 @@
     <string name="screenrecord_delete_label">Sil</string>
     <!-- A toast message shown after successfully deleting a screen recording [CHAR LIMIT=NONE] -->
     <string name="screenrecord_delete_description">Ekran kaydı silindi</string>
-    <string name="screenrecord_stopdot_label">Durma noktasını göster\nTaşımak için uzun basın</string>
-    <string name="screenrecord_lowquality_label">Daha küçük dosya boyutu için daha düşük kalite</string>
-    <string name="screenrecord_longer_timeout_switch_label">Daha büyük dosya boyutu sınırı\nKayıt boyutunu 15 Gb ile sınırlayın</string>
+    <string name="screenrecord_stopdot_label">Show stop dot</string>
+    <string name="screenrecord_stopdot_summary">Longpress to move it</string>
+    <string name="screenrecord_lowquality_label">Lower quality</string>
+    <string name="screenrecord_lowquality_summary">For smaller file size</string>
+    <string name="screenrecord_longer_timeout_switch_label">Bigger file size limit</string>
+    <string name="screenrecord_longer_timeout_switch_summary">Limit recording size to 15 GB</string>
+    <string name="screenrecord_skip_time_label">Skip timer</string>
+    <string name="screenrecord_skip_time_summary">Remove 3 second wait</string>
     <!-- Screenshot delete action -->
     <!-- Label for UI element which allows deleting the screenshot [CHAR LIMIT=30] -->
     <string name="screenshot_delete_label">Sil</string>
@@ -27,10 +32,10 @@
     <string name="accessibility_quick_settings_reading_mode_changed_on">Okuma modu açıldı.</string>
     <string name="accessibility_quick_settings_reading_mode_changed_off">Okuma modu kapatıldı.</string>
     <!-- Refresh Rate Tile -->
-    <string name="refresh_rate_tile_label">Yenileme hızı</string>
+    <string name="refresh_rate_tile_label">Yenileme Hızı</string>
     <string name="refresh_rate_auto_mode_placeholder">        Otomatik (<xliff:g id="min_refresh_rate" example="60">%1$d</xliff:g> - <xliff:g id="max_refresh_rate" example="60">%2$d</xliff:g> Hz)
     </string>
-    <string name="refresh_rate_forced_mode_placeholder">&lt;xliff:g id="refresh_rate" example="60"&gt; Hz</string>
+    <string name="refresh_rate_forced_mode_placeholder"><xliff:g id="refresh_rate" example="60">%1$d</xliff:g> Hz</string>
     <!-- Name of the nfc status bar icon. -->
     <string name="status_bar_nfc">NFC</string>
     <!-- Accessibility label for nfc icon (not shown on screen) [CHAR LIMIT=NONE] -->
@@ -83,16 +88,13 @@
     <string name="accessibility_quick_settings_heads_up_on">Bildirim pencereleri açık.</string>
     <string name="accessibility_quick_settings_heads_up_changed_off">Bildirim pencereleri kapatıldı.</string>
     <string name="accessibility_quick_settings_heads_up_changed_on">Bildirim pencereleri açıldı.</string>
-    <!-- Gaming mode -->
-    <string name="gaming_mode_not_enabled">Oyun Modu ayarlardan devre dışı bırakıldı</string>
-    <string name="quick_settings_gaming_mode_label">Oyun Modu</string>
     <!-- Poweroff/Reboot/Recovery QS tile -->
     <string name="quick_settings_poweroff_label">Cihazı Kapat</string>
     <string name="quick_settings_reboot_label">Yeniden başlat</string>
     <string name="quick_settings_reboot_recovery_label">Kurtarma</string>
     <!-- Advanced Reboot -->
     <string name="global_action_restart_advanced">Gelişmiş</string>
-    <string name="global_action_restart_recovery">Kurtarma</string>
+    <string name="global_action_restart_recovery">Kurtarma(Recovery)</string>
     <string name="global_action_restart_bootloader">ÖnYükleyici (Bootloader)</string>
     <string name="global_action_restart_ui">Sistem Arayüzü (SystemUI)</string>
     <string name="global_action_onthego">Yürüyüş Modu</string>
@@ -173,4 +175,10 @@
     <!-- SoundSearch Tile -->
     <string name="quick_settings_sound_search">Sesli arama</string>
     <string name="quick_settings_sound_search_no_app">Üzgünüz, eğer bir Sesli arama uygulamanız yoksa bu çalışmaz.</string>
+    <!-- Google Lens Screenshot string -->
+    <string name="lensss">Lens</string>
+    <!-- Data usage info in QS footer -->
+    <string name="usage_data">used today</string>
+    <string name="usage_data_default_suffix">Data</string>
+    <string name="usage_wifi_default_suffix">Wi-Fi</string>
 </resources>

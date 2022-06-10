@@ -12,9 +12,14 @@
     <string name="screenrecord_delete_label">Hapus</string>
     <!-- A toast message shown after successfully deleting a screen recording [CHAR LIMIT=NONE] -->
     <string name="screenrecord_delete_description">Rekaman layar dihapus</string>
-    <string name="screenrecord_stopdot_label">Tampilkan titik berhenti\nTekan lama untuk memindahkannya</string>
-    <string name="screenrecord_lowquality_label">Kualitas lebih rendah untuk ukuran file yang lebih kecil</string>
-    <string name="screenrecord_longer_timeout_switch_label">Batas ukuran file lebih besar\nBatasi ukuran perekaman hingga 15GB</string>
+    <string name="screenrecord_stopdot_label">Tampilkan titik berhenti</string>
+    <string name="screenrecord_stopdot_summary">Tekan lama untuk memindahkannya</string>
+    <string name="screenrecord_lowquality_label">Kualitas rendah</string>
+    <string name="screenrecord_lowquality_summary">Untuk ukuran file yang lebih kecil</string>
+    <string name="screenrecord_longer_timeout_switch_label">Batas ukuran file lebih besar</string>
+    <string name="screenrecord_longer_timeout_switch_summary">Batasi ukuran perekaman hingga 15 GB</string>
+    <string name="screenrecord_skip_time_label">Lewati penghitung waktu</string>
+    <string name="screenrecord_skip_time_summary">Hapus 3 detik menunggu</string>
     <!-- Screenshot delete action -->
     <!-- Label for UI element which allows deleting the screenshot [CHAR LIMIT=30] -->
     <string name="screenshot_delete_label">Hapus</string>
@@ -83,9 +88,6 @@
     <string name="accessibility_quick_settings_heads_up_on">Notifikasi mengambang aktif.</string>
     <string name="accessibility_quick_settings_heads_up_changed_off">Notifikasi mengambang dinonaktifkan.</string>
     <string name="accessibility_quick_settings_heads_up_changed_on">Notifikasi mengambang diaktifkan.</string>
-    <!-- Gaming mode -->
-    <string name="gaming_mode_not_enabled">Mode Permainan dinonaktifkan di setelan</string>
-    <string name="quick_settings_gaming_mode_label">Mode Permainan</string>
     <!-- Poweroff/Reboot/Recovery QS tile -->
     <string name="quick_settings_poweroff_label">Matikan daya</string>
     <string name="quick_settings_reboot_label">Mulai ulang</string>
@@ -173,4 +175,10 @@
     <!-- SoundSearch Tile -->
     <string name="quick_settings_sound_search">Pencarian suara</string>
     <string name="quick_settings_sound_search_no_app">Maaf, tapi ini tidak akan berfungsi jika tidak ada aplikasi pencarian suara.</string>
+    <!-- Google Lens Screenshot string -->
+    <string name="lensss">Lens</string>
+    <!-- Data usage info in QS footer -->
+    <string name="usage_data">digunakan hari ini</string>
+    <string name="usage_data_default_suffix">Data</string>
+    <string name="usage_wifi_default_suffix">Wi-Fi</string>
 </resources>
