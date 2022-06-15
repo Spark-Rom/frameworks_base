@@ -297,6 +297,8 @@ public class CentralSurfacesImpl extends CoreStartable implements
             "system:" + Settings.System.NOTIFICATION_MATERIAL_DISMISS_STYLE;
     private static final String NOTIFICATION_MATERIAL_DISMISS_BGSTYLE =
             "system:" + Settings.System.NOTIFICATION_MATERIAL_DISMISS_BGSTYLE;
+    private static final String QS_TRANSPARENCY =
+            "system:" + Settings.System.QS_TRANSPARENCY;
 
     private static final String BANNER_ACTION_CANCEL =
             "com.android.systemui.statusbar.banner_action_cancel";
@@ -980,6 +982,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
         mTunerService.addTunable(this, NOTIFICATION_MATERIAL_DISMISS);
         mTunerService.addTunable(this, NOTIFICATION_MATERIAL_DISMISS_STYLE);
         mTunerService.addTunable(this, NOTIFICATION_MATERIAL_DISMISS_BGSTYLE);
+        mTunerService.addTunable(this, QS_TRANSPARENCY);
 
         mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
 
@@ -4546,6 +4549,10 @@ public class CentralSurfacesImpl extends CoreStartable implements
                 mClearAllBgStyle =
                         TunerService.parseInteger(newValue, 0);
                 updateDismissAllButton();
+                break;
+            case QS_TRANSPARENCY:
+                mScrimController.setCustomScrimAlpha(
+                        TunerService.parseInteger(newValue, 100));
                 break;
             default:
                 break;
