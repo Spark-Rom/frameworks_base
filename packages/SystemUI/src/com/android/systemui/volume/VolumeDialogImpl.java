@@ -1228,6 +1228,10 @@ public class VolumeDialogImpl implements VolumeDialog,
         return localController;
     }
 
+    private boolean isMediaControllerAvailable(MediaController mediaController) {
+        return mediaController != null && !TextUtils.isEmpty(mediaController.getPackageName());
+    }
+
     private boolean isBluetoothA2dpConnected() {
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         return mBluetoothAdapter != null && mBluetoothAdapter.isEnabled()
@@ -1238,23 +1242,23 @@ public class VolumeDialogImpl implements VolumeDialog,
     private void initSettingsH(int lockTaskModeState) {
         if (mSettingsView != null) {
             mSettingsView.setVisibility(mDeviceProvisionedController.isCurrentUserSetup()
-                    && mActivityManager.getLockTaskModeState() == LOCK_TASK_MODE_NONE
-                    && isBluetoothA2dpConnected()
+                    && lockTaskModeState == LOCK_TASK_MODE_NONE
+                    && (isMediaControllerAvailable(getActiveLocalMediaController())
+                            || isBluetoothA2dpConnected())
                     ? VISIBLE : GONE);
             mSettingsViewSpacer.setVisibility(mDeviceProvisionedController.isCurrentUserSetup()
                     && lockTaskModeState == LOCK_TASK_MODE_NONE
-                    && isBluetoothA2dpConnected()
+                    && (isMediaControllerAvailable(getActiveLocalMediaController())
+                            || isBluetoothA2dpConnected())
                     ? VISIBLE : GONE);
         }
         if (mSettingsIcon != null) {
             mSettingsIcon.setOnClickListener(v -> {
                 Events.writeEvent(Events.EVENT_SETTINGS_CLICK);
-               final MediaController mediaController = getActiveLocalMediaController();
-                String packageName =
-                        mediaController != null
-                                && !TextUtils.isEmpty(mediaController.getPackageName())
-                                ? mediaController.getPackageName()
-                                : "";
+                final MediaController mediaController = getActiveLocalMediaController();
+                String packageName = isMediaControllerAvailable(mediaController)
+                        ? mediaController.getPackageName()
+                        : "";
                 mMediaOutputDialogFactory.create(packageName, false, mDialogView); 
                 dismissH(DISMISS_REASON_SETTINGS_CLICKED);
                 mMediaOutputDialogFactory.dismiss();
