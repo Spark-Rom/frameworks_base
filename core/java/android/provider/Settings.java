@@ -6975,6 +6975,11 @@ public final class Settings {
         /**
          * @hide
          */
+        public static final String QS_PANEL_STYLE = "qs_panel_style";
+
+        /**
+         * @hide
+         */
         @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
         public static final Set<String> PUBLIC_SETTINGS = new ArraySet<>();
         static {
