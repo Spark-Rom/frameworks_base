@@ -229,7 +229,8 @@ public class DozeSensors {
                         true /* touchscreen */,
                         false /* ignoresSetting */,
                         dozeParameters.longPressUsesProx() /* requiresProx */,
-                        true /* immediatelyReRegister */),
+                        true /* immediatelyReRegister */,
+                        !dozeParameters.longPressNeedsProximityCheck() /* performsProxCheck */),
                 new TriggerSensor(
                         findSensor(config.udfpsLongPressSensorType()),
                         "doze_pulse_on_auth",
@@ -240,7 +241,8 @@ public class DozeSensors {
                         true /* touchscreen */,
                         false /* ignoresSetting */,
                         dozeParameters.longPressUsesProx(),
-                        false /* immediatelyReRegister */),
+                        false /* immediatelyReRegister */,
+                        !dozeParameters.longPressNeedsProximityCheck() /* performsProxCheck */),
                 new PluginSensor(
                         new SensorManagerPlugin.Sensor(TYPE_WAKE_DISPLAY),
                         Settings.Secure.DOZE_WAKE_DISPLAY_GESTURE,
