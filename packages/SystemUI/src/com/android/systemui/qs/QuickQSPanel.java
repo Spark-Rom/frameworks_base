@@ -38,7 +38,7 @@ public class QuickQSPanel extends QSPanel {
     public static final int TUNER_MAX_TILES_FALLBACK = 6;
 
     // Tile Columns on normal conditions
-    public int mMaxColumnsPortrait = 5;
+    public int mMaxColumnsPortrait = 4;
     public int mMaxColumnsLandscape = 6;
     // Tile Columns when media player is visible
     public int mMaxColumnsMediaPlayer = 4;
@@ -66,18 +66,6 @@ public class QuickQSPanel extends QSPanel {
     @Override
     public TileLayout getOrCreateTileLayout() {
         return new QQSSideLabelTileLayout(mContext);
-    }
-
-    @Override
-    protected void setBrightnessViewMargin() {
-        if (mBrightnessView == null) return;
-        final MarginLayoutParams lp = (MarginLayoutParams) mBrightnessView.getLayoutParams();
-        lp.topMargin = mContext.getResources()
-            .getDimensionPixelSize(R.dimen.qs_brightness_margin_top);
-        lp.bottomMargin = (mSliderAtTop || isLandscape() || !mUsingMediaPlayer)
-            ? mContext.getResources().getDimensionPixelSize(R.dimen.qs_brightness_margin_bottom)
-            : 0;
-        mBrightnessView.setLayoutParams(lp);
     }
 
     @Override

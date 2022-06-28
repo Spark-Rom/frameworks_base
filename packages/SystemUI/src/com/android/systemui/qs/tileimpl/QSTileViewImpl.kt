@@ -34,6 +34,8 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.os.UserHandle
+import android.provider.Settings
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.ImageView
@@ -163,10 +165,23 @@ open class QSTileViewImpl @JvmOverloads constructor(
         clipToPadding = false
         isFocusable = true
         background = null
-
+        val enableQsMorphing = Settings.System.getIntForUser(
+            context.contentResolver,
+            Settings.System.QS_ENABLE_MORPHING, 1,
+            UserHandle.USER_CURRENT) == 1
+        val invertQsMorphing = Settings.System.getIntForUser(
+            context.contentResolver,
+            Settings.System.QS_INVERT_MORPHING, 0,
+            UserHandle.USER_CURRENT) == 1
         val iconContainerSize = context.resources.getDimensionPixelSize(R.dimen.qs_quick_tile_size)
         radiusActive = iconContainerSize / 2f
+        radiusInactive = iconContainerSize / 4f
+        if (!enableQsMorphing || invertQsMorphing) {
         radiusInactive = iconContainerSize / 2f
+        }
+        if (invertQsMorphing) {
+        radiusActive = iconContainerSize / 4f
+        }
         iconContainer = LinearLayout(context)
         iconContainer.layoutParams = LayoutParams(iconContainerSize, iconContainerSize)
         iconContainer.clipChildren = false
