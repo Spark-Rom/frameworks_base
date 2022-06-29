@@ -294,5 +294,6 @@ public class SystemSettingsValidators {
                     }
                 });
         VALIDATORS.put(System.QS_DATA_USAGE_PANEL, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.FINGERPRINT_WAKE_UNLOCK, NON_NEGATIVE_INTEGER_VALIDATOR);
     }
 }
