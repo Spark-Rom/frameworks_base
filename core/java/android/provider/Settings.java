@@ -5979,6 +5979,12 @@ public final class Settings {
         public static final String ON_THE_GO_CAMERA = "on_the_go_camera";
 
         /**
+         * Whether to enable fingerprint wake-and-unlock.
+         * @hide
+         */
+        public static final String FINGERPRINT_WAKE_UNLOCK = "fingerprint_wake_unlock";
+
+        /**
          * Allow users to pull down the status bar quickly
          * @hide
          */
