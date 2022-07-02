@@ -53,19 +53,19 @@ public class QuickQSPanel extends QSPanel {
 
     public QuickQSPanel(Context context, AttributeSet attrs) {
         super(context, attrs);
-    	boolean isPortrait = getResources().getConfiguration().orientation
-                == Configuration.ORIENTATION_PORTRAIT;
+    	boolean isLandscape = getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_LANDSCAPE;
 	int portraitValue = Math.max(2, getResources().getInteger(R.integer.quick_settings_num_columns));
 	    portraitValue = OmniUtils.getQuickQSColumnsPortrait(mContext, portraitValue);
-        if (isPortrait && portraitValue == 2) {
+        if (!isLandscape && portraitValue == 2) {
             mMaxTiles = Math.max(DEFAULT_MIN_TILES, getResources().getInteger(R.integer.quick_qs_panel_max_tiles));
 	} else {
             mMaxTiles = Math.max(DEFAULT_MIN_TILES_TWO, getResources().getInteger(R.integer.quick_qs_panel_max_tiles));
        }
 	mMaxColumnsPortrait = Math.max(2, getResources().getInteger(R.integer.quick_qs_panel_num_columns));
 	mMaxColumnsPortrait = OmniUtils.getQuickQSColumnsPortrait(mContext, mMaxColumnsPortrait);
-	mMaxColumnsLandscape = Math.max(2, getResources().getInteger(R.integer.quick_qs_panel_num_columns_landscape));
-	mMaxColumnsLandscape = OmniUtils.getQuickQSColumnsPortrait(mContext, mMaxColumnsLandscape);
+	mMaxColumnsLandscape = Math.max(4, getResources().getInteger(R.integer.quick_qs_panel_num_columns_landscape));
+	mMaxColumnsLandscape = OmniUtils.getQuickQSColumnsLandscape(mContext, mMaxColumnsLandscape);
         mMaxColumnsMediaPlayer = getResources().getInteger(R.integer.quick_qs_panel_num_columns_media);
     }
 
@@ -147,11 +147,11 @@ public class QuickQSPanel extends QSPanel {
     }
     
     public void setMaxTiles(int maxTiles) {
-    	boolean isPortrait = getResources().getConfiguration().orientation
-                == Configuration.ORIENTATION_PORTRAIT;
+    	boolean isLandscape = getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_LANDSCAPE;
 	int portraitValue = Math.max(2, getResources().getInteger(R.integer.quick_settings_num_columns));
 	    portraitValue = OmniUtils.getQuickQSColumnsPortrait(mContext, portraitValue);
-        if (isPortrait && portraitValue == 2) {
+        if (!isLandscape && portraitValue == 2) {
             mMaxTiles = Math.max(DEFAULT_MIN_TILES, maxTiles);
 	} else {
 	    mMaxTiles = Math.max(DEFAULT_MIN_TILES_TWO, maxTiles);
@@ -231,12 +231,12 @@ public class QuickQSPanel extends QSPanel {
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
                     LayoutParams.WRAP_CONTENT);
             setLayoutParams(lp);
-            boolean isPortrait = getResources().getConfiguration().orientation
-                == Configuration.ORIENTATION_PORTRAIT;
-            if (isPortrait) {
-            setMaxColumns(getResourceColumnsPortrait());
-            } else {
+            boolean isLandscape = getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_LANDSCAPE;
+            if (isLandscape) {
             setMaxColumns(getResourceColumnsLand());
+            } else {
+            setMaxColumns(getResourceColumnsPortrait());
             }
         }
 
@@ -252,6 +252,12 @@ public class QuickQSPanel extends QSPanel {
         protected void onConfigurationChanged(Configuration newConfig) {
             super.onConfigurationChanged(newConfig);
             updateResources();
+            boolean isLandscape = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE;
+             if (isLandscape) {
+            	mQSPanel.setMaxTiles(getResourceColumnsLand());
+             } else {
+                mQSPanel.setMaxTiles(getResourceColumnsPortrait());
+             }
         }
 
         @Override
@@ -314,14 +320,14 @@ public class QuickQSPanel extends QSPanel {
 
         @Override
         public void updateSettings() {
-    	boolean isPortrait = getResources().getConfiguration().orientation
-                == Configuration.ORIENTATION_PORTRAIT;
-        if (isPortrait) {
-            mQSPanel.setMaxTiles(getResourceColumnsPortrait());
-        } else {
+    	boolean isLandscape = getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_LANDSCAPE;
+        if (isLandscape) {
             mQSPanel.setMaxTiles(getResourceColumnsLand());
+        } else {
+            mQSPanel.setMaxTiles(getResourceColumnsPortrait());
         }
-            super.updateSettings();
+        super.updateSettings();
         }
     }
 }
