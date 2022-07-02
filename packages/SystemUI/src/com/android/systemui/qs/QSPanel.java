@@ -756,10 +756,10 @@ public class QSPanel extends LinearLayout {
             switchAllContentToParent(newParent, mTileLayout);
             reAttachMediaHost(mediaHostView, horizontal);
             if (needsDynamicRowsAndColumns()) {
-            	boolean isPortrait = mContext.getResources().getConfiguration().orientation
-                == Configuration.ORIENTATION_PORTRAIT;
+            	boolean isLandscape = mContext.getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_LANDSCAPE;
                 // even though there is already an exisiting horizontal check, lets make sure that 2 rows is only forced on portrait
-                if (isPortrait && mTileLayout.getResourceColumnsPortrait() == 2) {
+                if (!isLandScape && mTileLayout.getResourceColumnsPortrait() == 2) {
                     mTileLayout.setMinRows(horizontal ? 2 : 1);
                 } else {
                    mTileLayout.setMinRows(horizontal ? 1 : 1);
