@@ -99,9 +99,9 @@ class AutoBrightnessController internal constructor(
 
     private fun getIconResId() =
         if (isAutoBrightnessEnabled())
-            R.drawable.auto_brightness_icon_on
+            R.drawable.ic_qs_brightness_auto_on_new
         else
-            R.drawable.ic_brightness_full
+            R.drawable.ic_qs_brightness_auto_off_new
 
     fun registerCallbacks() {
         if (callbacksRegistered) return
