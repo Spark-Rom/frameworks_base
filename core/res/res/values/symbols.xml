@@ -4502,9 +4502,8 @@
   <java-symbol type="array" name="config_roundedCornerBottomRadiusAdjustmentArray" />
   <java-symbol type="bool" name="config_secondaryBuiltInDisplayIsRound" />
   <java-symbol type="array" name="config_builtInDisplayIsRoundArray" />
-
   <!-- For dynamic default font styles -->
   <java-symbol type="string" name="config_bodyFontFamily" />
-
+  <java-symbol type="array" name="config_serviceStateLocationAllowedPackages" />
   <java-symbol type="dimen" name="status_bar_height_default" />
 </resources>
