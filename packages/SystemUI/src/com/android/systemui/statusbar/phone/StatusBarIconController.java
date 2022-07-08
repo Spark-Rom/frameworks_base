@@ -269,6 +269,9 @@ public interface StatusBarIconController {
 
         private static final String USE_OLD_MOBILETYPE =
             "system:" + Settings.System.USE_OLD_MOBILETYPE;
+        private boolean mShowWifiStandard;
+
+        private static final String SHOW_WIFI_STANDARD_ICON = Settings.Secure.SHOW_WIFI_STANDARD_ICON;
 
         public IconManager(ViewGroup group, FeatureFlags featureFlags) {
             mFeatureFlags = featureFlags;
@@ -360,6 +363,7 @@ public interface StatusBarIconController {
             StatusBarWifiView view = onCreateStatusBarWifiView(slot);
             view.applyWifiState(state);
             mGroup.addView(view, index, onCreateLayoutParams());
+            Dependency.get(TunerService.class).addTunable(this, SHOW_WIFI_STANDARD_ICON);
 
             if (mIsInDemoMode) {
                 mDemoStatusIcons.addDemoWifiView(state);
@@ -545,8 +549,23 @@ public interface StatusBarIconController {
                         TunerService.parseIntegerSwitch(newValue, mConfigUseOldMobileType);
                     updateOldStyleMobileDataIcons();
                     break;
+                case SHOW_WIFI_STANDARD_ICON:
+                    mShowWifiStandard =
+                        TunerService.parseIntegerSwitch(newValue, false);
+                    updateShowWifiStandard();
+                    break;
                 default:
                     break;
+            }
+        }
+
+        private void updateShowWifiStandard() {
+            for (int i = 0; i < mGroup.getChildCount(); i++) {
+                View child = mGroup.getChildAt(i);
+                if (child instanceof StatusBarWifiView) {
+                    ((StatusBarWifiView) child).updateWifiState(mShowWifiStandard);
+                    return;
+                }
             }
         }
 

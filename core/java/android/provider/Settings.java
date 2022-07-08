@@ -12119,6 +12119,12 @@ public final class Settings {
                 "device_state_rotation_lock";
 
         /**
+         * Whether to show Wi-Fi standard icon
+         * @hide
+         */
+        public static final String SHOW_WIFI_STANDARD_ICON = "show_wifi_standard_icon";
+
+        /**
          * Gesture navbar length mode.
          * Supported modes: 0 for normal length, 1 for medium and 2 for long.
          * Default 0.
