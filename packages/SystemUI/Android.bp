@@ -131,6 +131,8 @@ android_library {
         "colorkt",
         "themelib",
         "AndroidSystemBlur-platform",
+        "android.hardware.power.stats-V1-java",
+        "android.hardware.power-V3-java",
     ],
     manifest: "AndroidManifest.xml",
 
@@ -240,6 +242,8 @@ android_library {
         "WindowManager-Shell",
         "LowLightDreamLib",
         "vendor.lineage.powershare-V1.0-java",
+        "android.hardware.power.stats-V1-java",
+        "android.hardware.power-V3-java",
     ],
     libs: [
         "android.test.runner",
