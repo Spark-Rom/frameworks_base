@@ -3922,6 +3922,12 @@ public class Intent implements Parcelable, Cloneable {
      * that has been started.  This is sent as a foreground
      * broadcast, since it is part of a visible user interaction; be as quick
      * as possible when handling it.
+     *
+     * <p>
+     * <b>Note:</b> The user's actual state might have changed by the time the broadcast is
+     * received. For example, the user could have been removed, started or stopped already,
+     * regardless of which broadcast you receive. Because of that, receivers should always check
+     * the current state of the user.
      * @hide
      */
     public static final String ACTION_USER_STARTED =
@@ -3939,6 +3945,12 @@ public class Intent implements Parcelable, Cloneable {
      * {@link #ACTION_USER_STOPPING}.  It is <b>not</b> generally safe to use with
      * other user state broadcasts since those are foreground broadcasts so can
      * execute in a different order.
+     *
+     * <p>
+     * <b>Note:</b> The user's actual state might have changed by the time the broadcast is
+     * received. For example, the user could have been removed, started or stopped already,
+     * regardless of which broadcast you receive. Because of that, receivers should always check
+     * the current state of the user.
      * @hide
      */
     public static final String ACTION_USER_STARTING =
@@ -3957,6 +3969,11 @@ public class Intent implements Parcelable, Cloneable {
      * {@link #ACTION_USER_STARTING}.  It is <b>not</b> generally safe to use with
      * other user state broadcasts since those are foreground broadcasts so can
      * execute in a different order.
+     * <p>
+     * <b>Note:</b> The user's actual state might have changed by the time the broadcast is
+     * received. For example, the user could have been removed, started or stopped already,
+     * regardless of which broadcast you receive. Because of that, receivers should always check
+     * the current state of the user.
      * @hide
      */
     public static final String ACTION_USER_STOPPING =
@@ -3969,6 +3986,12 @@ public class Intent implements Parcelable, Cloneable {
      * specific package.  This is only sent to registered receivers, not manifest
      * receivers.  It is sent to all running users <em>except</em> the one that
      * has just been stopped (which is no longer running).
+     *
+     * <p>
+     * <b>Note:</b> The user's actual state might have changed by the time the broadcast is
+     * received. For example, the user could have been removed, started or stopped already,
+     * regardless of which broadcast you receive. Because of that, receivers should always check
+     * the current state of the user.
      * @hide
      */
     @TestApi
@@ -4001,6 +4024,12 @@ public class Intent implements Parcelable, Cloneable {
      * It is sent to all running users.
      * You must hold
      * {@link android.Manifest.permission#MANAGE_USERS} to receive this broadcast.
+     *
+     * <p>
+     * <b>Note:</b> The user's actual state might have changed by the time the broadcast is
+     * received. For example, the user could have been removed, started or stopped already,
+     * regardless of which broadcast you receive. Because of that, receivers should always check
+     * the current state of the user.
      * @hide
      */
     @SystemApi
@@ -4011,6 +4040,12 @@ public class Intent implements Parcelable, Cloneable {
      * Broadcast Action: Sent when the credential-encrypted private storage has
      * become unlocked for the target user. This is only sent to registered
      * receivers, not manifest receivers.
+     *
+     * <p>
+     * <b>Note:</b> The user's actual state might have changed by the time the broadcast is
+     * received. For example, the user could have been removed, started or stopped already,
+     * regardless of which broadcast you receive. Because of that, receivers should always check
+     * the current state of the user.
      */
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
     public static final String ACTION_USER_UNLOCKED = "android.intent.action.USER_UNLOCKED";
