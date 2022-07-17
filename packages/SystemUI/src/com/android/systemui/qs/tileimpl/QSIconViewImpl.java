@@ -27,6 +27,8 @@ import android.content.res.Resources;
 import android.graphics.drawable.Animatable2;
 import android.graphics.drawable.Animatable2.AnimationCallback;
 import android.graphics.drawable.Drawable;
+import android.os.UserHandle;
+import android.provider.Settings.System;
 import android.service.quicksettings.Tile;
 import android.util.Log;
 import android.view.View;
@@ -39,6 +41,8 @@ import com.android.systemui.plugins.qs.QSIconView;
 import com.android.systemui.plugins.qs.QSTile;
 import com.android.systemui.plugins.qs.QSTile.State;
 import com.android.systemui.qs.AlphaControlledSignalTileView.AlphaControlledSlashImageView;
+
+import android.provider.Settings.System;
 
 import java.util.Objects;
 
@@ -237,12 +241,19 @@ public class QSIconViewImpl extends QSIconView {
      * Color to tint the tile icon based on state
      */
     private static int getIconColorForState(Context context, QSTile.State state) {
+        int qsPanelStyle = System.getIntForUser(context.getContentResolver(),
+                     System.QS_PANEL_STYLE, 0, UserHandle.USER_CURRENT);
+
         if (state.disabledByPolicy || state.state == Tile.STATE_UNAVAILABLE) {
             return Utils.getColorAttrDefaultColor(
                     context, com.android.internal.R.attr.textColorTertiary);
         } else if (state.state == Tile.STATE_INACTIVE) {
             return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary);
         } else if (state.state == Tile.STATE_ACTIVE) {
+                if(qsPanelStyle == 3)
+                return Utils.getColorAttrDefaultColor(context,
+                        android.R.attr.colorAccent);
+                else
             return Utils.getColorAttrDefaultColor(context,
                    android.R.attr.textColorPrimaryInverse);
         } else {
