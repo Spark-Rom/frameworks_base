@@ -17,8 +17,8 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="@dimen/mobiledata_type_size"
     android:height="@dimen/mobiledata_type_size"
-    android:viewportWidth="1559"
-    android:viewportHeight="1559">
+    android:viewportWidth="779.5"
+    android:viewportHeight="779.5">
   <group>
     <clip-path
         android:pathData="M0,0h1559v1559h-1559z"/>
@@ -32,3 +32,4 @@
         android:fillType="evenOdd"/>
   </group>
 </vector>
+
