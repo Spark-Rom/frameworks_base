@@ -45,6 +45,7 @@ import com.android.systemui.qs.AlphaControlledSignalTileView.AlphaControlledSlas
 import android.provider.Settings.System;
 
 import java.util.Objects;
+import java.util.Random;
 
 public class QSIconViewImpl extends QSIconView {
 
@@ -247,6 +248,12 @@ public class QSIconViewImpl extends QSIconView {
         int qsPanelStyle = System.getIntForUser(context.getContentResolver(),
                      System.QS_PANEL_STYLE, 0, UserHandle.USER_CURRENT);
 
+        Random mRandomColor = new Random();
+        int mRandomTint = Color.rgb((float) 
+        (mRandomColor.nextInt(256) / 2f + 0.5),
+         mRandomColor.nextInt(256),
+         mRandomColor.nextInt(256));
+
         switch (state) {
             case Tile.STATE_UNAVAILABLE:
                 return Utils.applyAlpha(QSTileViewImpl.UNAVAILABLE_ALPHA,
@@ -257,6 +264,8 @@ public class QSIconViewImpl extends QSIconView {
                 if(qsPanelStyle == 3)
                 return Utils.getColorAttrDefaultColor(context,
                         android.R.attr.colorAccent);
+                else if (qsPanelStyle == 4)
+                return mRandomTint;
                 else
                 return Utils.getColorAttrDefaultColor(context,
                         android.R.attr.textColorPrimaryInverse);

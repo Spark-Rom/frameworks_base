@@ -26,6 +26,7 @@ import android.content.res.Resources.ID_NULL
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.RippleDrawable
 import android.os.Trace
+import android.graphics.Color
 import android.os.UserHandle
 import android.service.quicksettings.Tile
 import android.text.TextUtils
@@ -42,6 +43,7 @@ import android.widget.LinearLayout
 import android.widget.Switch
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
+import android.annotation.SuppressLint;
 import com.android.settingslib.Utils
 import com.android.systemui.R
 import com.android.systemui.animation.LaunchableView
@@ -52,6 +54,8 @@ import com.android.systemui.plugins.qs.QSTileView
 import com.android.systemui.qs.TileUtils
 import com.android.systemui.qs.tileimpl.QSIconViewImpl.QS_ANIM_LENGTH
 import java.util.Objects
+import java.util.Random
+
 
 import android.provider.Settings.System
 
@@ -123,6 +127,20 @@ open class QSTileViewImpl @JvmOverloads constructor(
     private val colorInactiveAlpha = Utils.applyAlpha(INACTIVE_ALPHA, Utils.getColorAttrDefaultColor(context, R.attr.offStateColor))
     private val colorLabelActiveAccent = Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent)
     private val colorSecondaryLabelActiveAccent = Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent)
+
+    // QS Style 4
+    private var randomColor: Random = Random()
+    
+    @SuppressLint("NewApi")
+    private var randomTint: Int = Color.rgb(
+        (randomColor.nextInt(256) / 2f + 0.5).toFloat(),
+        randomColor.nextInt(256).toFloat(),
+        randomColor.nextInt(256).toFloat()
+    )
+
+    private val colorActiveRandom = Utils.applyAlpha(TILE_ALPHA, randomTint)
+    private val colorLabelActiveRandom = randomTint
+    private val colorSecondaryLabelActiveRandom = randomTint
 
     private lateinit var label: TextView
     protected lateinit var secondaryLabel: TextView
@@ -637,8 +655,13 @@ open class QSTileViewImpl @JvmOverloads constructor(
 
     private fun getBackgroundColorForState(state: Int): Int {
         return when (state) {
-            Tile.STATE_ACTIVE -> if(qsPanelStyle == 3) colorActiveAlpha else colorActive
-            Tile.STATE_INACTIVE -> if(qsPanelStyle == 3) colorInactiveAlpha else colorInactive
+            Tile.STATE_ACTIVE -> 
+                if(qsPanelStyle == 3) 
+                    colorActiveAlpha 
+                else if(qsPanelStyle == 4) 
+                    colorActiveRandom 
+                else colorActive
+            Tile.STATE_INACTIVE -> if(qsPanelStyle == 3 || qsPanelStyle ==4) colorInactiveAlpha else colorInactive
             Tile.STATE_UNAVAILABLE -> colorUnavailable
             else -> {
                 Log.e(TAG, "Invalid state $state")
@@ -649,7 +672,12 @@ open class QSTileViewImpl @JvmOverloads constructor(
 
     private fun getLabelColorForState(state: Int): Int {
         return when (state) {
-            Tile.STATE_ACTIVE -> if(qsPanelStyle == 3) colorLabelActiveAccent else colorLabelActive
+            Tile.STATE_ACTIVE -> 
+                if(qsPanelStyle == 3) 
+                    colorLabelActiveAccent
+                else if(qsPanelStyle == 4) 
+                    colorLabelActiveRandom
+                else colorLabelActive
             Tile.STATE_INACTIVE -> colorLabelInactive
             Tile.STATE_UNAVAILABLE -> colorLabelUnavailable
             else -> {
@@ -661,7 +689,12 @@ open class QSTileViewImpl @JvmOverloads constructor(
 
     private fun getSecondaryLabelColorForState(state: Int): Int {
         return when (state) {
-            Tile.STATE_ACTIVE -> if(qsPanelStyle == 3) colorSecondaryLabelActiveAccent else colorSecondaryLabelActive
+            Tile.STATE_ACTIVE -> 
+                if(qsPanelStyle == 3) 
+                    colorSecondaryLabelActiveAccent
+                else if(qsPanelStyle == 4) 
+                    colorSecondaryLabelActiveRandom
+                else colorSecondaryLabelActive
             Tile.STATE_INACTIVE -> colorSecondaryLabelInactive
             Tile.STATE_UNAVAILABLE -> colorSecondaryLabelUnavailable
             else -> {
