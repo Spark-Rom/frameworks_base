@@ -759,8 +759,8 @@ public class QSPanel extends LinearLayout {
             switchAllContentToParent(newParent, mTileLayout);
             reAttachMediaHost(mediaHostView, horizontal);
             if (needsDynamicRowsAndColumns()) {
-                mTileLayout.setMinRows(horizontal ? 2 : 1);
-                mTileLayout.setMaxColumns(horizontal ? 4 : mMaxColumnsPortrait);
+                mTileLayout.setMinRows(horizontal ? 6 : 1);
+                mTileLayout.setMaxColumns(horizontal ? 6 : mMaxColumnsPortrait);
             }
             updateMargins(mediaHostView);
             if (mHorizontalLinearLayout == null) return;
