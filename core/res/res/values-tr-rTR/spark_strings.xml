@@ -25,7 +25,7 @@
   <string name="accessibility_quick_settings_live_display_changed_auto">LiveDisplay Otomatik moda geçti.</string>
   <string name="accessibility_quick_settings_live_display_changed_day">LiveDisplay Gündüz moduna geçti.</string>
   <string name="accessibility_quick_settings_live_display_changed_night">LiveDisplay Gece moduna geçti.</string>
-  <string name="accessibility_quick_settings_live_display_changed_outdoor">LiveDisplay Açık hava moduna geçti.</string>
+  <string name="accessibility_quick_settings_live_display_changed_outdoor">LiveDisplay Açık alan moduna geçti.</string>
   <!-- AlertSlider modes -->
   <!-- SystemUI Restart -->
   <string name="systemui_restart_title">Sistem arayüzünü yeniden başlatma gerekli</string>
@@ -33,15 +33,15 @@
   <!-- Button that copies the url to the log of a crashed application -->
   <string name="aerr_copy">Çökme günlüğü URL\' sini kopyala</string>
   <string name="url_copy_success">URL başarıyla kopyalandı</string>
-  <string name="url_copy_failed">An error occured while uploading the log to Memochō</string>
+  <string name="url_copy_failed">Günlük Hastebin\'e yüklenirken bir hata oluştu</string>
   <!-- Cycle through ringer modes -->
-  <string name="volume_dialog_ringer_guidance_normal">Çağrılar ve bildirimler için zil sesi</string>
+  <string name="volume_dialog_ringer_guidance_normal">Aramalar ve bildirimler çalacak</string>
   <!-- App lock -->
   <string name="unlock_application">Kilidi aç <xliff:g id="label" example="Telegram">%1$s</xliff:g></string>
   <!-- Advanced reboot -->
   <string name="reboot_to_recovery_title">Kurtarma</string>
   <string name="reboot_to_recovery_message">Kurtarma modunda başlatılıyor</string>
-  <string name="reboot_to_bootloader_title">ÖnYükleyici (Bootloader)</string>
+  <string name="reboot_to_bootloader_title">Ön yükleyici</string>
   <string name="reboot_to_bootloader_message">Ön yükleyici modunda başlatılıyor</string>
   <string name="reboot_title">Yeniden başlat</string>
   <string name="reboot_message">Sistem yeniden başlatılıyor</string>
