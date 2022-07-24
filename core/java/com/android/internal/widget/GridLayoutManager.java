@@ -542,7 +542,11 @@ public class GridLayoutManager extends LinearLayoutManager {
         while (count < mSpanCount && layoutState.hasMore(state) && remainingSpan > 0) {
             int pos = layoutState.mCurrentPosition;
             final int spanSize = getSpanSize(recycler, state, pos);
-            if (spanSize > mSpanCount) return;
+            if (spanSize > mSpanCount) {
+                throw new IllegalArgumentException("Item at position " + pos + " requires "
+                        + spanSize + " spans but GridLayoutManager has only " + mSpanCount
+                        + " spans.");
+            }
             remainingSpan -= spanSize;
             if (remainingSpan < 0) {
                 break; // item did not fit into this row or column
