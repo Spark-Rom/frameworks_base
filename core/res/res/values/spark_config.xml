@@ -216,6 +216,9 @@
         <item>com.facebook.katana.LoginActivity</item>
     </string-array>
 
+    <!-- Paths to OP warp charging status file -->
+    <string name="config_opWarpChargerStatusPaths" translatable="false"></string>
+
     <!-- Whether device has dash charging support -->
     <bool name="config_hasDashCharger">false</bool>
 
