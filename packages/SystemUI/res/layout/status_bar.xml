@@ -66,6 +66,10 @@
                 android:layout_height="wrap_content"
                 android:clipChildren="false">
 
+            <include layout="@layout/status_bar_lyric" />
+
+            <include layout="@layout/heads_up_status_bar_layout" />
+
                 <include layout="@layout/heads_up_status_bar_layout" />
 
 <<<<<<< HEAD

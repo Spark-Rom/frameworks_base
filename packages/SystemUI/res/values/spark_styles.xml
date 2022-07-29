@@ -30,4 +30,10 @@
     <style name="Theme.DeviceDefault.SystemUI" parent="@*android:Theme.DeviceDefault.SystemUI">
         <item name="colorSurfaceHeader">?androidprv:attr/colorSurfaceHeader</item>
     </style>
+
+    <!-- Lyric -->
+    <style name="TextApperance.StatusBar.Lyric" parent="@*android:style/TextAppearance.StatusBar">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@*android:string/config_bodyFontFamily</item>
+    </style>
 </resources>
