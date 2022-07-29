@@ -116,6 +116,8 @@ public class HeadsUpAppearanceController extends ViewController<HeadsUpStatusBar
                 statusBarView.findViewById(R.id.centered_icon_area));
     }
 
+    private LyricViewController mLyricViewController;
+
     @VisibleForTesting
     public HeadsUpAppearanceController(
             NotificationIconAreaController notificationIconAreaController,
@@ -233,6 +235,10 @@ public class HeadsUpAppearanceController extends ViewController<HeadsUpStatusBar
         }
     }
 
+    public void setLyricViewController(LyricViewController controller) {
+        mLyricViewController = controller;
+    }
+
     private void setShown(boolean isShown) {
         if (mShown != isShown) {
             mShown = isShown;
@@ -249,6 +255,9 @@ public class HeadsUpAppearanceController extends ViewController<HeadsUpStatusBar
                 if (mOperatorNameView != null) {
                     hide(mOperatorNameView, View.INVISIBLE);
                 }
+                if (mLyricViewController != null) {
+                    mLyricViewController.hideLyricView(mAnimationsEnabled);
+                }
             } else {
                 if (mCustomIconArea.getVisibility() != View.GONE) {
                     show(mCustomIconArea);
@@ -262,6 +271,9 @@ public class HeadsUpAppearanceController extends ViewController<HeadsUpStatusBar
                 hide(mView, View.GONE, () -> {
                     updateParentClipping(true /* shouldClip */);
                 });
+                if (mLyricViewController != null) {
+                    mLyricViewController.showLyricView(mAnimationsEnabled);
+                }
             }
             // Show the status bar icons when the view gets shown / hidden
             if (mStatusBarStateController.getState() != StatusBarState.SHADE) {
