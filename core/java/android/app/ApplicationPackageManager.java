@@ -49,6 +49,7 @@ import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApkChecksum;
+import android.content.pm.AppPermissionUtils;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.ChangedPackages;
 import android.content.pm.Checksum;
@@ -871,18 +872,15 @@ public class ApplicationPackageManager extends PackageManager {
     @Override
     public int checkPermission(String permName, String pkgName) {
         int res = PermissionManager.checkPackageNamePermission(permName, pkgName, getUserId());
+
         if (res != PERMISSION_GRANTED) {
-            // some Microsoft apps crash when INTERNET permission check fails, see
-            // com.microsoft.aad.adal.AuthenticationContext.checkInternetPermission() and
-            // com.microsoft.identity.client.PublicClientApplication.checkInternetPermission()
-            if (Manifest.permission.INTERNET.equals(permName)
-                    // don't rely on Context.getPackageName(), may be different from process package name
-                    && pkgName.equals(ActivityThread.currentPackageName())
-                    && pkgName.startsWith("com.microsoft"))
+            if (pkgName.equals(ActivityThread.currentPackageName())
+                    && AppPermissionUtils.shouldSpoofSelfCheck(permName))
             {
                 return PERMISSION_GRANTED;
             }
         }
+
         return res;
     }
 
