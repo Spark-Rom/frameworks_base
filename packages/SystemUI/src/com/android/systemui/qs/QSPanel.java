@@ -107,9 +107,7 @@ public class QSPanel extends LinearLayout {
     private PageIndicator mFooterPageIndicator;
     private int mContentMarginStart;
     private int mContentMarginEnd;
-    private int mMaxColumnsPortrait;
-    private int mMaxColumnsLandscape;
-    protected boolean mUsingHorizontalLayout;
+    private boolean mUsingHorizontalLayout;
 
     private Record mDetailRecord;
 
@@ -129,8 +127,6 @@ public class QSPanel extends LinearLayout {
                 R.dimen.quick_settings_bottom_margin_media);
         mMediaTopMargin = getResources().getDimensionPixelSize(
                 R.dimen.qs_tile_margin_vertical);
-        mMaxColumnsPortrait = getResources().getInteger(R.integer.qs_panel_num_columns);
-        mMaxColumnsLandscape = getResources().getInteger(R.integer.qs_panel_num_columns_landscape);
         mContext = context;
 
         setOrientation(VERTICAL);
@@ -209,7 +205,8 @@ public class QSPanel extends LinearLayout {
     protected void setBrightnessViewMargin() {
         if (mBrightnessView == null) return;
         final MarginLayoutParams lp = (MarginLayoutParams) mBrightnessView.getLayoutParams();
-        lp.topMargin = 0;
+        lp.topMargin = mSliderAtTop ? mContext.getResources()
+            .getDimensionPixelSize(R.dimen.qs_brightness_margin_top) : 0;
         lp.bottomMargin = mContext.getResources()
             .getDimensionPixelSize(R.dimen.qs_brightness_margin_bottom);
         mBrightnessView.setLayoutParams(lp);
@@ -759,8 +756,8 @@ public class QSPanel extends LinearLayout {
             switchAllContentToParent(newParent, mTileLayout);
             reAttachMediaHost(mediaHostView, horizontal);
             if (needsDynamicRowsAndColumns()) {
-                mTileLayout.setMinRows(horizontal ? 6 : 1);
-                mTileLayout.setMaxColumns(horizontal ? 6 : mMaxColumnsPortrait);
+                mTileLayout.setMinRows(horizontal ? 2 : 1);
+                mTileLayout.setMaxColumns(horizontal ? 2 : 4);
             }
             updateMargins(mediaHostView);
             if (mHorizontalLinearLayout == null) return;

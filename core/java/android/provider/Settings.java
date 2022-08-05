@@ -5962,20 +5962,6 @@ public final class Settings {
          */
         public static final String BRIGHTNESS_SLIDER_POSITION = "brightness_slider_position";
 
-
-        /**
-         * Enable Morphing for qs
-         * @hide
-         */
-        public static final String QS_ENABLE_MORPHING = "qs_enable_morphing";
-
-        /**
-         * Invert Morphing for qs
-         * @hide
-         */
-        public static final String QS_INVERT_MORPHING = "qs_invert_morphing";
-
-
         /**
          * Gestures nav: left long back swipe action
          * @hide

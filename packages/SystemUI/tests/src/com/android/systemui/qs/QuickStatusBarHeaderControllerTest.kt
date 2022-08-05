@@ -156,7 +156,7 @@ class QuickStatusBarHeaderControllerTest : SysuiTestCase() {
         `when`(qsCarrierGroupController.isSingleCarrier).thenReturn(true)
         controller.init()
 
-	verify(view).setIsSingleCarrier(true)
+        verify(view).setIsSingleCarrier(true)
     }
 
     @Test
@@ -195,15 +195,15 @@ class QuickStatusBarHeaderControllerTest : SysuiTestCase() {
         verify(qsCarrierGroupController).setOnSingleCarrierChangedListener(capture(captor))
 
         captor.value.onSingleCarrierChanged(true)
-	verify(view).setIsSingleCarrier(true)
+        verify(view).setIsSingleCarrier(true)
 
         captor.value.onSingleCarrierChanged(false)
-	verify(view).setIsSingleCarrier(false)
+        verify(view).setIsSingleCarrier(false)
     }
 
     private fun stubViews() {
         `when`(view.findViewById<View>(anyInt())).thenReturn(mockView)
-	`when`(view.findViewById<QSCarrierGroup>(R.id.carrier_group)).thenReturn(qsCarrierGroup)
+        `when`(view.findViewById<QSCarrierGroup>(R.id.carrier_group)).thenReturn(qsCarrierGroup)
         `when`(view.findViewById<StatusIconContainer>(R.id.statusIcons)).thenReturn(iconContainer)
         `when`(view.findViewById<Clock>(R.id.clock)).thenReturn(clock)
         `when`(view.requireViewById<VariableDateView>(R.id.date)).thenReturn(variableDateView)

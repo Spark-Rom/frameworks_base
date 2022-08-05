@@ -324,8 +324,8 @@ public class QSAnimator implements Callback, PageListener, Listener, OnLayoutCha
 
                     // Icons
                     translateContent(
-                            quickTileView.getIconWithBackground(),
-                            tileView.getIconWithBackground(),
+                            quickTileView.getIcon(),
+                            tileView.getIcon(),
                             view,
                             xOffset,
                             yOffset,
@@ -358,11 +358,11 @@ public class QSAnimator implements Callback, PageListener, Listener, OnLayoutCha
                             translationYBuilder
                     );
 
-                    firstPageBuilder.addFloat(quickTileView.getLabelContainer(), "alpha", 0, 1);
+                    firstPageBuilder.addFloat(quickTileView.getSecondaryLabel(), "alpha", 0, 1);
 
                     mAnimatedQsViews.add(tileView);
                     mAllViews.add(quickTileView);
-                    mAllViews.add(quickTileView.getLabelContainer());
+                    mAllViews.add(quickTileView.getSecondaryLabel());
                 } else if (mFullRows && isIconInAnimatedRow(count)) {
 
                     firstPageBuilder.addFloat(tileView, "translationY", -heightDiff, 0);
@@ -385,8 +385,13 @@ public class QSAnimator implements Callback, PageListener, Listener, OnLayoutCha
                     mOtherTilesExpandAnimator.addView(tileView);
                     tileView.setClipChildren(true);
                     tileView.setClipToPadding(true);
-                    firstPageBuilder.addFloat(tileView.getLabelContainer(), "alpha", 0, 1);
-                    mAllViews.add(tileView.getLabelContainer());
+                    firstPageBuilder.addFloat(tileView.getSecondaryLabel(), "alpha", 0, 1);
+                    mAllViews.add(tileView.getSecondaryLabel());
+                }
+
+                QSTileView quickTileView = mQuickQSPanelController.getTileView(tile);
+                if (quickTileView != null) {
+                    quickTileView.getSecondaryLabel().setAlpha(0f);
                 }
 
                 mAllViews.add(tileView);
