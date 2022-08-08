@@ -67,4 +67,8 @@
 
     <!-- Aerr strings -->
     <string name="aerr_disable">Disable app</string>
+
+    <!-- Button that opens the screen with details of an application error -->
+    <string name="aerr_show_details">Show details</string>
+
 </resources>
