@@ -187,4 +187,7 @@
 
     <!-- Whether to handle audio direction changes between major call states -->
     <java-symbol type="bool" name="config_handleAudioDirectionChangesBetweenCallStateChanges" />
+
+    <!-- Button that opens the screen with details of an application error -->
+    <java-symbol type="string" name="aerr_show_details" />
 </resources>
