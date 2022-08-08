@@ -5946,6 +5946,11 @@ public final class Settings {
         public static final String LS_MEDIA_ARTWORK_FADE_PERCENT = "ls_media_artwork_fade_percent";
 
         /**
+         * @hide
+         */
+        public static final String QS_DATA_USAGE_PANEL = "qs_data_usage_panel";
+
+        /**
          * Gesture navbar length mode.
          * Supported modes: 0 for short length, 1 for normal and 2 for long.
          * @hide

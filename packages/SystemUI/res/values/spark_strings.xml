@@ -173,4 +173,10 @@
     <!-- Refresh Rate Tile -->
     <string name="refresh_rate_tile_label">Refresh rate</string>
     <string name="auto_mode_label">Auto</string>
+
+    <!-- Data usage panel -->
+    <string name="total_internet_usage">Total internet usage (Since boot)</string>
+    <string name="cellular_usage">Mobile data usage</string>
+    <string name="wifi_usage">Wifi data usage</string>
+
 </resources>
