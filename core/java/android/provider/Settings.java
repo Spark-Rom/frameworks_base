@@ -7053,6 +7053,11 @@ public final class Settings {
         public static final String TEXT_CHARGING_SYMBOL = "text_charging_symbol";
 
         /**
+         * @hide
+         */
+        public static final String QS_DATA_USAGE_PANEL = "qs_data_usage_panel";
+
+        /**
          * Whether to display set of animations when prompting the power menu
          *
          * @hide
