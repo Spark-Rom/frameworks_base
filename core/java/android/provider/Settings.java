@@ -7008,6 +7008,11 @@ public final class Settings {
         public static final String LS_MEDIA_FILTER_BLUR_RADIUS = "ls_media_filter_blur_radius";
 
         /**
+         * @hide
+         */
+        public static final String QS_DATA_USAGE_PANEL = "qs_data_usage_panel";
+
+        /**
          * Whether to display set of animations when prompting the power menu
          *
          * @hide

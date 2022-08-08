@@ -293,5 +293,6 @@ public class SystemSettingsValidators {
                         return new InclusiveIntegerRangeValidator(0, 1000).validate(item);
                     }
                 });
+        VALIDATORS.put(System.QS_DATA_USAGE_PANEL, BOOLEAN_VALIDATOR);
     }
 }
