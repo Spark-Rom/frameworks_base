@@ -26,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 /**
  * This class provides both interface for validation and common validators
