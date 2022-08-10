@@ -207,7 +207,7 @@ public class SecureSettings {
         Settings.Secure.TETHERING_ALLOW_VPN_UPSTREAMS,
         Settings.Secure.STATUS_BAR_SHOW_VIBRATE_ICON,
         Settings.Secure.STATUS_BAR_SHOW_ALARM_ICON,
-        Settings.Secure.SHOW_BACK_ARROW_GESTURE
-        Settings.Secure.SHOW_WIFI_STANDARD_ICON,
+        Settings.Secure.SHOW_BACK_ARROW_GESTURE,
+        Settings.Secure.SHOW_WIFI_STANDARD_ICON
     };
 }
