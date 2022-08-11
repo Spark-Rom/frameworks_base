@@ -395,6 +395,14 @@ public class QSPanel extends LinearLayout {
         super.onConfigurationChanged(newConfig);
         mOnConfigurationChangedListeners.forEach(
                 listener -> listener.onConfigurationChange(newConfig));
+	if (mTileLayout != null) {
+            boolean isLandscape = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE;
+            if (isLandscape) {
+               mTileLayout.setMaxColumns(mTileLayout.getResourceColumnsLand());
+            } else {
+               mTileLayout.setMaxColumns(mTileLayout.getResourceColumnsPortrait());
+            }
+        }
     }
 
     @Override
