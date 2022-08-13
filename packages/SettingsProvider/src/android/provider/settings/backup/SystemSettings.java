@@ -107,5 +107,6 @@ public class SystemSettings {
         Settings.System.AOD_NOTIFICATION_PULSE_TIMEOUT,
         Settings.System.NOTIFICATION_PULSE_DURATION,
         Settings.System.SENSOR_BLOCK,
+        Settings.System.QS_PANEL_STYLE,
     };
 }
