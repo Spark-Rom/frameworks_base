@@ -101,7 +101,7 @@ open class QSTileViewImpl @JvmOverloads constructor(
 
     private val qsPanelStyle: Int = System.getIntForUser(
             context.contentResolver,
-            System.QS_PANEL_STYLE, UserHandle.USER_CURRENT
+            System.QS_PANEL_STYLE, 0, UserHandle.USER_CURRENT
         )
 
     private val colorActive = Utils.getColorAttrDefaultColor(context,

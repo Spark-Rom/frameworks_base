@@ -114,5 +114,6 @@ public class SystemSettings {
         Settings.System.OMNIJAWS_WEATHER_ICON_PACK,
         Settings.System.OMNI_LOCKSCREEN_WEATHER_ENABLED,
         Settings.System.LOCKSCREEN_WEATHER_STYLE,
+        Settings.System.QS_PANEL_STYLE,
     };
 }
