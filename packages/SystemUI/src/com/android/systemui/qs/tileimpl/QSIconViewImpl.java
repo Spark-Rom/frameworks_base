@@ -19,6 +19,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ArgbEvaluator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
+import android.graphics.Color;
 import android.annotation.Nullable;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -261,7 +262,7 @@ public class QSIconViewImpl extends QSIconView {
             case Tile.STATE_INACTIVE:
                 return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary);
             case Tile.STATE_ACTIVE:
-                if(qsPanelStyle == 3)
+                if(qsPanelStyle == 2 || qsPanelStyle == 3)
                 return Utils.getColorAttrDefaultColor(context,
                         android.R.attr.colorAccent);
                 else if (qsPanelStyle == 4)
