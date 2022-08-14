@@ -20,7 +20,7 @@ import static android.app.ActivityManager.INTENT_SENDER_ACTIVITY;
 import static android.app.ActivityManager.INTENT_SENDER_BROADCAST;
 import static android.app.ActivityManager.INTENT_SENDER_FOREGROUND_SERVICE;
 import static android.app.ActivityManager.INTENT_SENDER_SERVICE;
-
+import android.util.Log;
 import android.Manifest.permission;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
