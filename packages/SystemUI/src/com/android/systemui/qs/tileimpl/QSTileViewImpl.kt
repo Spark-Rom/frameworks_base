@@ -128,8 +128,6 @@ open class QSTileViewImpl @JvmOverloads constructor(
     // QS Style 3
     private val colorActiveAlpha = Utils.applyAlpha(TILE_ALPHA, Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent))
     private val colorInactiveAlpha = Utils.applyAlpha(INACTIVE_ALPHA, Utils.getColorAttrDefaultColor(context, R.attr.offStateColor))
-    private val colorLabelActiveAccent = Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent)
-    private val colorSecondaryLabelActiveAccent = Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent)
 
     // QS Style 4
     private var randomColor: Random = Random()
@@ -681,8 +679,9 @@ open class QSTileViewImpl @JvmOverloads constructor(
     private fun getLabelColorForState(state: Int, disabledByPolicy: Boolean = false): Int {
         return when {
             state == Tile.STATE_UNAVAILABLE || disabledByPolicy -> colorLabelUnavailable
-            state == Tile.STATE_ACTIVE -> if(qsPanelStyle == 3) 
-                    colorLabelActiveAccent
+            state == Tile.STATE_ACTIVE ->
+                if(qsPanelStyle == 2 || qsPanelStyle ==3)
+                    colorActive
                 else if(qsPanelStyle == 4) 
                     colorLabelActiveRandom
                 else colorLabelActive
@@ -697,8 +696,9 @@ open class QSTileViewImpl @JvmOverloads constructor(
     private fun getSecondaryLabelColorForState(state: Int, disabledByPolicy: Boolean = false): Int {
         return when {
             state == Tile.STATE_UNAVAILABLE || disabledByPolicy -> colorSecondaryLabelUnavailable
-            state == Tile.STATE_ACTIVE -> if(qsPanelStyle == 3) 
-                    colorSecondaryLabelActiveAccent
+            state == Tile.STATE_ACTIVE ->
+               if(qsPanelStyle == 2 || qsPanelStyle == 3) 
+                    colorActive
                 else if(qsPanelStyle == 4) 
                     colorSecondaryLabelActiveRandom
                 else colorSecondaryLabelActive
