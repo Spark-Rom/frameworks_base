@@ -119,5 +119,6 @@ public class SystemSettings {
         Settings.System.HEADS_UP_NOTIFICATIONS_THRESHOLD,
         Settings.System.KEYGUARD_QUICK_TOGGLES,
         Settings.System.NOTIFICATION_HEADERS,
+        Settings.System.MAX_VISIBLE_NOTIFICATION_ICONS,
     };
 }
