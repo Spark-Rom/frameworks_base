@@ -3532,9 +3532,6 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
             mContentResolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.FACE_UNLOCK_METHOD), false, this,
                     UserHandle.USER_ALL);
-            mContentResolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.FINGERPRINT_WAKE_UNLOCK), false, this,
-                    UserHandle.USER_ALL);
             updateSettings();
         }
 
