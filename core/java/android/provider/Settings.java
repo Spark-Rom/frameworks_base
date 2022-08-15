@@ -6659,8 +6659,8 @@ public final class Settings {
 
         /**
          * Statusbar clock background
-         * 0 - hide accented chip
-         * 1 - show accented chip (default)
+         * 0 - hide accented chip (default)
+         * 1 - show accented chip
          * @hide
          */
         public static final String STATUSBAR_CLOCK_CHIP ="statusbar_clock_chip";
