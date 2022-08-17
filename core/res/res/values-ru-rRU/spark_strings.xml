@@ -14,7 +14,7 @@
   <string name="live_display_night">Ночь</string>
   <string name="live_display_night_summary">Использовать только ночные настройки</string>
   <string name="live_display_outdoor">На улице (яркое солнце)</string>
-  <string name="live_display_outdoor_summary">Только режим \"При ярком солнце\"</string>
+  <string name="live_display_outdoor_summary">Только режим «При ярком солнце»</string>
   <string name="live_display_hint">LiveDisplay может помочь уменьшить напряжение глаз. Нажмите здесь, чтобы попробовать!</string>
   <string name="accessibility_quick_settings_live_display_off">LiveDisplay выкл.</string>
   <string name="accessibility_quick_settings_live_display_auto">LiveDisplay: автоматический режим.</string>
@@ -51,7 +51,7 @@
   <string name="pocket_lock_message_long_press">Нажмите и удерживайте кнопку питания, чтобы разблокировать</string>
   <string name="pocket_view_title">Карманный режим включен</string>
   <string name="pocket_view_title_cancel">Чтобы использовать телефон:</string>
-  <string name="pocket_view_top_tag_cancel">Убедитесь, что синяя область вашего телефона свободна от каких-либо препятствий, и очистите ее от грязи или пыли.</string>
+  <string name="pocket_view_top_tag_cancel">Убедитесь, что синяя область вашего телефона свободна от каких-либо препятствий, и очистите её от грязи или пыли.</string>
   <string name="pocket_view_top_tag_cancel2">Нажмите и удерживайте кнопку питания, чтобы принудительно выйти из карманного режима.</string>
   <string name="pocket_view_top_tag_number1">1.\u0020</string>
   <string name="pocket_view_top_tag_number2">2.\u0020</string>

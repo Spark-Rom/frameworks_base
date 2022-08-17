@@ -5,185 +5,185 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- AlertSlider -->
-    <string name="alert_slider_mode_priority_text">Priority</string>
-    <string name="alert_slider_mode_dnd_text">DND</string>
+    <string name="alert_slider_mode_priority_text">الأولوية</string>
+    <string name="alert_slider_mode_dnd_text">وضع عدم الإزعاج</string>
     <!-- Screen record -->
     <!-- Label for notification action to delete a screen recording file [CHAR LIMIT=35] -->
     <string name="screenrecord_delete_label">حذف</string>
     <!-- A toast message shown after successfully deleting a screen recording [CHAR LIMIT=NONE] -->
-    <string name="screenrecord_delete_description">Screen recording deleted</string>
-    <string name="screenrecord_stopdot_label">Show stop dot</string>
-    <string name="screenrecord_stopdot_summary">Longpress to move it</string>
-    <string name="screenrecord_lowquality_label">Lower quality</string>
-    <string name="screenrecord_lowquality_summary">For smaller file size</string>
-    <string name="screenrecord_longer_timeout_switch_label">Bigger file size limit</string>
-    <string name="screenrecord_longer_timeout_switch_summary">Limit recording size to 15 GB</string>
-    <string name="screenrecord_skip_time_label">Skip timer</string>
-    <string name="screenrecord_skip_time_summary">Remove 3 second wait</string>
+    <string name="screenrecord_delete_description">تم حذف تسجيل الشاشة</string>
+    <string name="screenrecord_stopdot_label">إظهار نقطة الإيقاف</string>
+    <string name="screenrecord_stopdot_summary">اضغط مطوﻻ لتحريكها</string>
+    <string name="screenrecord_lowquality_label">جودة أقل لحجم ملف أصغر</string>
+    <string name="screenrecord_lowquality_summary">لحجم ملف أصغر</string>
+    <string name="screenrecord_longer_timeout_switch_label">الحد الأقصى لحجم الملف\nحد حجم التسجيل إلى 15جيجابايت</string>
+    <string name="screenrecord_longer_timeout_switch_summary">حد حجم التسجيل إلى 15جيجابايت</string>
+    <string name="screenrecord_skip_time_label">تخطي المؤقت</string>
+    <string name="screenrecord_skip_time_summary">إزالة 3 ثانية انتظار</string>
     <!-- Screenshot delete action -->
     <!-- Label for UI element which allows deleting the screenshot [CHAR LIMIT=30] -->
     <string name="screenshot_delete_label">حذف</string>
     <!-- Content description indicating that tapping the element will allow deleting the screenshot [CHAR LIMIT=NONE] -->
-    <string name="screenshot_delete_description">Delete screenshot</string>
+    <string name="screenshot_delete_description">حذف لقطة الشاشة</string>
     <!-- Reader mode QS tile -->
-    <string name="quick_settings_reading_mode">Reading mode</string>
-    <string name="accessibility_quick_settings_reading_mode_on">Reading mode on.</string>
-    <string name="accessibility_quick_settings_reading_mode_off">Reading mode off.</string>
-    <string name="accessibility_quick_settings_reading_mode_changed_on">Reading mode turned on.</string>
-    <string name="accessibility_quick_settings_reading_mode_changed_off">Reading mode turned off.</string>
+    <string name="quick_settings_reading_mode">وضع القراءة</string>
+    <string name="accessibility_quick_settings_reading_mode_on">وضع القراءة مفعل.</string>
+    <string name="accessibility_quick_settings_reading_mode_off">وضع القراءة معطل.</string>
+    <string name="accessibility_quick_settings_reading_mode_changed_on">تم تشغيل وضع القراءة.</string>
+    <string name="accessibility_quick_settings_reading_mode_changed_off">وضع القراءة قيد الإيقاف.</string>
     <!-- Refresh Rate Tile -->
-    <string name="refresh_rate_tile_label">Refresh rate</string>
-    <string name="refresh_rate_auto_mode_placeholder">        Auto (<xliff:g id="min_refresh_rate" example="60">%1$d</xliff:g> - <xliff:g id="max_refresh_rate" example="60">%2$d</xliff:g> Hz)
+    <string name="refresh_rate_tile_label"> معدل التحديث</string>
+    <string name="refresh_rate_auto_mode_placeholder">تلقائي (<xliff:g id="min_refresh_rate" example="60">%1$d</xliff:g> - <xliff:g id="max_refresh_rate" example="60">%2$d</xliff:g> هرتز)
     </string>
-    <string name="refresh_rate_forced_mode_placeholder"><xliff:g id="refresh_rate" example="60">%1$d</xliff:g> Hz</string>
+    <string name="refresh_rate_forced_mode_placeholder"><xliff:g id="refresh_rate" example="60">%1$d</xliff:g> هرتز</string>
     <!-- Name of the nfc status bar icon. -->
-    <string name="status_bar_nfc">NFC</string>
+    <string name="status_bar_nfc">‏الاتصالات القريبة المدى (NFC)</string>
     <!-- Accessibility label for nfc icon (not shown on screen) [CHAR LIMIT=NONE] -->
-    <string name="accessibility_status_bar_nfc">Nfc</string>
+    <string name="accessibility_status_bar_nfc">‏الاتصالات قصيرة المدى</string>
     <!-- Anti flicker QS tile -->
-    <string name="quick_settings_anti_flicker">Anti flicker</string>
+    <string name="quick_settings_anti_flicker">مضاد رعش الشاشة</string>
     <!-- PowerShare QS tile -->
-    <string name="quick_settings_powershare_label">Wireless PowerShare</string>
-    <string name="quick_settings_powershare_off_powersave_label">Wireless PowerShare off\nBattery saver</string>
-    <string name="quick_settings_powershare_off_low_battery_label">Wireless PowerShare off\nBattery too low</string>
-    <string name="quick_settings_powershare_enabled_label">Wireless PowerShare is enabled</string>
+    <string name="quick_settings_powershare_label">الشحن اللاسلكي العكسي</string>
+    <string name="quick_settings_powershare_off_powersave_label">ايقاف مشاركة الشحن اللاسلكي العكسي\nموفر البطارية</string>
+    <string name="quick_settings_powershare_off_low_battery_label">ايقاف مشاركة الشحن اللاسلكية\nالبطارية منخفضة جداً</string>
+    <string name="quick_settings_powershare_enabled_label">مشاركة الشحن لاسلكياً مفعلة</string>
     <!-- Caffeine tile -->
-    <string name="quick_settings_caffeine_label">Caffeine</string>
-    <string name="accessibility_quick_settings_caffeine_off">Caffeine off</string>
-    <string name="accessibility_quick_settings_caffeine_on">Caffeine on</string>
+    <string name="quick_settings_caffeine_label">الكافيين</string>
+    <string name="accessibility_quick_settings_caffeine_off">كافيين معطل</string>
+    <string name="accessibility_quick_settings_caffeine_on">كافيين مفعل</string>
     <!-- Ambient display QS tile -->
-    <string name="quick_settings_ambient_display_label">Ambient display</string>
-    <string name="accessibility_quick_settings_ambient_display_off">Ambient display off.</string>
-    <string name="accessibility_quick_settings_ambient_display_on">Ambient display on.</string>
-    <string name="accessibility_quick_settings_ambient_display_changed_off">Ambient display turned off.</string>
-    <string name="accessibility_quick_settings_ambient_display_changed_on">Ambient display turned on.</string>
+    <string name="quick_settings_ambient_display_label">العرض على الشاشة</string>
+    <string name="accessibility_quick_settings_ambient_display_off">العرض المحيطي لا يعمل.</string>
+    <string name="accessibility_quick_settings_ambient_display_on">تفعيل عرض المحيط.</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_off">تم تعطيل العرض المحيط.</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_on">تم تفعيل اضاءة الاشعارات.</string>
     <!-- USB tethering QS tile -->
-    <string name="quick_settings_usb_tether_label">USB tethering</string>
+    <string name="quick_settings_usb_tether_label">‏التوصيل عبر USB</string>
     <!-- Sync QS Tile -->
-    <string name="quick_settings_sync_label">Sync</string>
-    <string name="accessibility_quick_settings_sync_off">Sync off</string>
-    <string name="accessibility_quick_settings_sync_on">Sync on</string>
-    <string name="accessibility_quick_settings_sync_changed_off">Sync turned off</string>
-    <string name="accessibility_quick_settings_sync_changed_on">Sync turned on</string>
+    <string name="quick_settings_sync_label">مزامنة</string>
+    <string name="accessibility_quick_settings_sync_off">المزامنة متوقفة</string>
+    <string name="accessibility_quick_settings_sync_on">المزامنة تعمل</string>
+    <string name="accessibility_quick_settings_sync_changed_off">تم إيقاف المزامنة</string>
+    <string name="accessibility_quick_settings_sync_changed_on">تم تشغيل المزامنة</string>
     <!-- Sound QS Tile -->
-    <string name="quick_settings_sound_label">Sound</string>
-    <string name="quick_settings_sound_ring">Ring</string>
-    <string name="quick_settings_sound_vibrate">Vibrate</string>
-    <string name="quick_settings_sound_mute">Mute</string>
+    <string name="quick_settings_sound_label">صوت</string>
+    <string name="quick_settings_sound_ring">رنين</string>
+    <string name="quick_settings_sound_vibrate">الاهتزاز</string>
+    <string name="quick_settings_sound_mute">كتم الصوت</string>
     <!-- Screenshot QS tile -->
-    <string name="quick_settings_full_screenshot_label">Full</string>
+    <string name="quick_settings_full_screenshot_label">ممتلئة</string>
     <string name="quick_settings_screenshot_label">لقطة الشاشة</string>
     <string name="quick_settings_region_screenshot_label">Partial screenshot</string>
     <!-- Screenshot Delete Toast -->
-    <string name="delete_screenshot_toast">Screenshot deleted</string>
+    <string name="delete_screenshot_toast">تم حذف لقطة الشاشة</string>
     <!-- Statusbar tuner -->
     <string name="statusbar_items_title">Statusbar icon</string>
     <!-- Name of status bar icons. -->
-    <string name="status_bar_call_strength">Call strength</string>
-    <string name="status_bar_data_saver">Data saver</string>
-    <string name="status_bar_vpn">VPN</string>
+    <string name="status_bar_call_strength">قوة الاتصال</string>
+    <string name="status_bar_data_saver">توفير البيانات</string>
+    <string name="status_bar_vpn">الشبكة الافتراضية الخاصة</string>
     <!-- Heads Up QS Tile -->
     <string name="quick_settings_heads_up_label">التنبيهات العلوية</string>
-    <string name="accessibility_quick_settings_heads_up_off">Heads up off.</string>
-    <string name="accessibility_quick_settings_heads_up_on">Heads up on.</string>
-    <string name="accessibility_quick_settings_heads_up_changed_off">Heads up turned off.</string>
-    <string name="accessibility_quick_settings_heads_up_changed_on">Heads up turned on.</string>
+    <string name="accessibility_quick_settings_heads_up_off">إيقاف التنبيهات العلوية.</string>
+    <string name="accessibility_quick_settings_heads_up_on">التنبيهات العلوية تعمل.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_off">تم إيقاف التنبيهات العلوية.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_on">تم تفعيل التنبيهات العلوية.</string>
     <!-- Poweroff/Reboot/Recovery QS tile -->
-    <string name="quick_settings_poweroff_label">Power off</string>
+    <string name="quick_settings_poweroff_label">إيقاف التشغيل</string>
     <string name="quick_settings_reboot_label">إعادة التشغيل</string>
     <string name="quick_settings_reboot_recovery_label">الإسترداد</string>
     <!-- Advanced Reboot -->
-    <string name="global_action_restart_advanced">Advanced</string>
+    <string name="global_action_restart_advanced">إعدادات متقدمة</string>
     <string name="global_action_restart_recovery">الإسترداد</string>
     <string name="global_action_restart_bootloader">محمل الاقلاع</string>
-    <string name="global_action_restart_ui">SystemUI</string>
+    <string name="global_action_restart_ui">واجهة النظام</string>
     <string name="global_action_onthego">On-The-Go</string>
     <!-- On The Go -->
-    <string name="onthego_notification_ticker">On-The-Go activated</string>
-    <string name="onthego_notification_title">On-The-Go is active</string>
-    <string name="onthego_notification_stop">Stop</string>
-    <string name="onthego_notification_options">Options</string>
-    <string name="onthego_notification_error">Unable to start On-The-Go</string>
-    <string name="onthego_notification_restart">Restart On-The-Go</string>
-    <string name="onthego_notification_camera_changed">Camera mode changed</string>
+    <string name="onthego_notification_ticker">وضع المشي مفعل</string>
+    <string name="onthego_notification_title">تم تفعيل وضع المشي</string>
+    <string name="onthego_notification_stop">إيقاف</string>
+    <string name="onthego_notification_options">الخيارات</string>
+    <string name="onthego_notification_error">غير قادر على بدء وضع المشي</string>
+    <string name="onthego_notification_restart">إعادة تشغيل وضع المشي</string>
+    <string name="onthego_notification_camera_changed">تم تغيير وضع الكاميرا</string>
     <string name="onthego_transparency">Transparency</string>
-    <string name="onthego_front_camera">Use front camera</string>
-    <string name="onthego_service_toggle">Automatically restart service</string>
+    <string name="onthego_front_camera">استخدام الكاميرا الأمامية</string>
+    <string name="onthego_service_toggle">إعادة تشغيل الخدمة تلقائيا</string>
     <string name="onthego_channel_name">Main</string>
     <!-- OnTheGo Tile -->
     <string name="quick_settings_onthego_label">Main</string>
-    <string name="accessibility_quick_settings_onthego_off">On-The-Go off</string>
-    <string name="accessibility_quick_settings_onthego_on">On-The-Go on</string>
-    <string name="accessibility_quick_settings_onthego_changed_off">On-The-Go turned off</string>
-    <string name="accessibility_quick_settings_onthego_changed_on">On-The-Go turned on</string>
+    <string name="accessibility_quick_settings_onthego_off">تعطيل وضع المشي</string>
+    <string name="accessibility_quick_settings_onthego_on">تفعيل وضع المشي</string>
+    <string name="accessibility_quick_settings_onthego_changed_off">تم إيقاف تشغيل وضع المشى</string>
+    <string name="accessibility_quick_settings_onthego_changed_on">تم تشغيل وضع المشى</string>
     <!-- Text to use when the number in a notification info is too large -->
     <!-- Face Unlock -->
-    <string name="face_unlock_recognizing">Recognizing face...</string>
+    <string name="face_unlock_recognizing">يتم التعرف على الوجه...</string>
     <!-- Name of the clock in status bar [CHAR LIMIT=30] -->
     <string name="clock">الساعة</string>
     <!-- Kill button in notification guts -->
-    <string name="force_stop_dlg_title">Force stop?</string>
-    <string name="force_stop_dlg_text">If you force stop an app, it may misbehave.</string>
-    <string name="guts_force_close_app">Close App</string>
+    <string name="force_stop_dlg_title">هل تريد فرض الإيقاف؟</string>
+    <string name="force_stop_dlg_text">في حالة فرض إيقاف التطبيق، ربما لا يعمل بشكل صحيح.</string>
+    <string name="guts_force_close_app">إغلاق التطبيق</string>
     <!-- Volume panel QS tile -->
-    <string name="quick_settings_volume_panel_label">Volume panel</string>
+    <string name="quick_settings_volume_panel_label">لوحة التحكم بالصوت</string>
     <!-- AOD QS tile -->
-    <string name="quick_settings_aod_label">AOD</string>
-    <string name="quick_settings_aod_on_charge_label">AOD on charge</string>
-    <string name="quick_settings_aod_off_label">AOD off</string>
-    <string name="quick_settings_aod_off_powersave_label">AOD off\nBattery saver</string>
+    <string name="quick_settings_aod_label">الشاشة الدائمة</string>
+    <string name="quick_settings_aod_on_charge_label">الشاشة الدائمة AOD عند الشحن</string>
+    <string name="quick_settings_aod_off_label">ايقاف الشاشة الدائمة</string>
+    <string name="quick_settings_aod_off_powersave_label">إيقاف\n الشاشة العرض الدائمة عند تفعيل وضع توفير البطارية</string>
     <!-- DataSwitch Tile -->
-    <string name="qs_data_switch_label">Switch data card</string>
-    <string name="qs_data_switch_toast_0">Currently no SIM card is inserted</string>
-    <string name="qs_data_switch_toast_1">Currently only one SIM card is inserted</string>
+    <string name="qs_data_switch_label">تبديل بطاقة البيانات</string>
+    <string name="qs_data_switch_toast_0">لا توجد شريحة SIM حاليا</string>
+    <string name="qs_data_switch_toast_1">فقط شريحة SIM واحدة مُدخلة</string>
     <string name="qs_data_switch_changed_1">Using SIM 1 for Mobile data</string>
     <string name="qs_data_switch_changed_2">Using SIM 2 for Mobile data</string>
     <!-- FPS Info tile -->
-    <string name="quick_settings_fpsinfo_label">FPS Info</string>
-    <string name="accessibility_quick_settings_fpsinfo_off">FPS Info off</string>
-    <string name="accessibility_quick_settings_fpsinfo_on">FPS Info on</string>
+    <string name="quick_settings_fpsinfo_label">معلومات معدَّل العرضFPS</string>
+    <string name="accessibility_quick_settings_fpsinfo_off">معلومات معدَّل العرض موقفة</string>
+    <string name="accessibility_quick_settings_fpsinfo_on">معلومات معدَّل العرض مفعلة</string>
     <!-- FPS view text placeholder -->
-    <string name="fps_text_placeholder">FPS: <xliff:g id="fps" example="90">%1$d</xliff:g></string>
+    <string name="fps_text_placeholder"><xliff:g id="fps" example="90">%1$d</xliff:g></string>
     <!-- Navigation bar dpad -->
-    <string name="accessibility_dpad_left">Cursor left</string>
-    <string name="accessibility_dpad_right">Cursor right</string>
+    <string name="accessibility_dpad_left">المؤشر إلى اليسار</string>
+    <string name="accessibility_dpad_right">المؤشر الى اليمين</string>
     <!-- Kill foreground app -->
-    <string name="task_helper_app_killed">%1$s force stopped</string>
-    <string name="empty_app_killed">App</string>
+    <string name="task_helper_app_killed">تم إيقاف %1$s</string>
+    <string name="empty_app_killed">التطبيق</string>
     <!-- Advanced nav gestures -->
-    <string name="app_picker_dialog_title">Select an app</string>
-    <string name="active_edge_app_select_title">Select app</string>
-    <string name="active_edge_activity_select_title">Select activity</string>
+    <string name="app_picker_dialog_title">اختر التطبيق</string>
+    <string name="active_edge_app_select_title">تحديد تطبيق</string>
+    <string name="active_edge_activity_select_title">إختر نشاطاً</string>
     <!-- Compass QS Tile -->
-    <string name="quick_settings_compass_label">Compass</string>
+    <string name="quick_settings_compass_label">بوصلة</string>
     <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
-    <string name="quick_settings_compass_init">Initializing\u2026</string>
-    <string name="accessibility_quick_settings_compass_off">Compass off</string>
-    <string name="accessibility_quick_settings_compass_on">Compass on</string>
-    <string name="accessibility_quick_settings_compass_changed_off">Compass turned off</string>
-    <string name="accessibility_quick_settings_compass_changed_on">Compass turned on</string>
-    <string name="quick_settings_compass_N">N</string>
-    <string name="quick_settings_compass_NE">NE</string>
-    <string name="quick_settings_compass_E">E</string>
-    <string name="quick_settings_compass_SE">SE</string>
-    <string name="quick_settings_compass_S">S</string>
-    <string name="quick_settings_compass_SW">SW</string>
-    <string name="quick_settings_compass_W">W</string>
-    <string name="quick_settings_compass_NW">NW</string>
+    <string name="quick_settings_compass_init">تهيئة</string>
+    <string name="accessibility_quick_settings_compass_off">بوصلة مغلقة</string>
+    <string name="accessibility_quick_settings_compass_on">البوصلة تعمل</string>
+    <string name="accessibility_quick_settings_compass_changed_off">تم ايقاف البوصلة</string>
+    <string name="accessibility_quick_settings_compass_changed_on">تم تشغيل البوصلة</string>
+    <string name="quick_settings_compass_N">شمال</string>
+    <string name="quick_settings_compass_NE">ش. شرق</string>
+    <string name="quick_settings_compass_E">شرق</string>
+    <string name="quick_settings_compass_SE">جنوب شرق</string>
+    <string name="quick_settings_compass_S">جنوب</string>
+    <string name="quick_settings_compass_SW">ج. غرب</string>
+    <string name="quick_settings_compass_W">الغرب</string>
+    <string name="quick_settings_compass_NW">ش غرب</string>
     <!-- CPUInfo tile -->
-    <string name="quick_settings_cpuinfo_label">CPU Info</string>
+    <string name="quick_settings_cpuinfo_label">معلومات المعالج</string>
     <!-- SoundSearch Tile -->
-    <string name="quick_settings_sound_search">Sound search</string>
-    <string name="quick_settings_sound_search_no_app">Sorry, but this doesn\'t work if you don\'t have a Sound search app.</string>
+    <string name="quick_settings_sound_search">البحث الصوتي</string>
+    <string name="quick_settings_sound_search_no_app">عذراً، ولكن هذا لا يعمل إذا لم يكن لديك تطبيق بحث صوتي.</string>
     <!-- Google Lens Screenshot string -->
-    <string name="lensss">Lens</string>
+    <string name="lensss">العدسة</string>
     <!-- Data usage info in QS footer -->
-    <string name="usage_data">used today</string>
-    <string name="usage_data_default_suffix">Data</string>
-    <string name="usage_wifi_default_suffix">Wi-Fi</string>
+    <string name="usage_data">المستخدم اليوم</string>
+    <string name="usage_data_default_suffix">البيانات</string>
+    <string name="usage_wifi_default_suffix">واي-فاي</string>
     <!-- Smart Pixels QS Tile -->
-    <string name="quick_settings_smart_pixels">Smart Pixels</string>
-    <string name="quick_settings_smart_pixels_on_power_save">Auto-enabled Smart Pixels</string>
+    <string name="quick_settings_smart_pixels">البكسلات الذكية</string>
+    <string name="quick_settings_smart_pixels_on_power_save">تمكين البكسلات الذكية تلقائياً</string>
     <!-- 5G toggle in internet dialog -->
-    <string name="enable_fiveg">Enable 5G</string>
+    <string name="enable_fiveg">تفعيل الجيل الخامس</string>
 </resources>

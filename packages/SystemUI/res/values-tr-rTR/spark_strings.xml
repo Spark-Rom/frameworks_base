@@ -143,7 +143,7 @@
     <string name="accessibility_quick_settings_fpsinfo_off">FPS bilgisi kapalı</string>
     <string name="accessibility_quick_settings_fpsinfo_on">FPS bilgisi açık</string>
     <!-- FPS view text placeholder -->
-    <string name="fps_text_placeholder">FPS: <xliff:g id="fps" example="90">%1$d</xliff:g></string>
+    <string name="fps_text_placeholder"><xliff:g id="fps" example="90">%1$d</xliff:g></string>
     <!-- Navigation bar dpad -->
     <string name="accessibility_dpad_left">Sol imleç</string>
     <string name="accessibility_dpad_right">Sağ imleç</string>
