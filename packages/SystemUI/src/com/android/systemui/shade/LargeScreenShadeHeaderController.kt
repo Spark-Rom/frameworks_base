@@ -323,6 +323,7 @@ class LargeScreenShadeHeaderController @Inject constructor(
 
     fun updateQsClock() {
         clock.setClockVisibleByUser(showqsclock)
+        clock.updateClockSize()
     }
 
 
