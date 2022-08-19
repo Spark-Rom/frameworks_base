@@ -237,6 +237,7 @@ public class OomAdjuster {
     int mBServiceAppThreshold = 5;
     // Enable B-service aging propagation on memory pressure.
     boolean mEnableBServicePropagation = false;
+    public static boolean mIsTopAppRenderThreadBoostEnabled = false;
     
     private final int mNumSlots;
     private final ArrayList<ProcessRecord> mTmpProcessList = new ArrayList<ProcessRecord>();
@@ -298,6 +299,7 @@ public class OomAdjuster {
         mMinBServiceAgingTime = Integer.valueOf(SystemProperties.get("persist.sys.fw.bservice_age", "5000"));
         mBServiceAppThreshold = Integer.valueOf(SystemProperties.get("persist.sys.fw.bservice_limit", "5"));
         mEnableBServicePropagation = Boolean.parseBoolean(SystemProperties.get("persist.sys.fw.bservice_enable", "false"));
+        mIsTopAppRenderThreadBoostEnabled = Boolean.parseBoolean(SystemProperties.get("persist.sys.perf.topAppRenderThreadBoost.enable", "false"));
             
         mProcessGroupHandler = new Handler(adjusterThread.getLooper(), msg -> {
             final int pid = msg.arg1;
@@ -2708,7 +2710,7 @@ public class OomAdjuster {
                             } else {
                                 // Boost priority for top app UI and render threads
                                 setThreadPriority(app.getPid(), THREAD_PRIORITY_TOP_APP_BOOST);
-                                if (renderThreadTid != 0) {
+                                if (mIsTopAppRenderThreadBoostEnabled && renderThreadTid != 0) {
                                     try {
                                         setThreadPriority(renderThreadTid,
                                                 THREAD_PRIORITY_TOP_APP_BOOST);
