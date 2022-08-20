@@ -71,4 +71,6 @@
     <!-- Button that opens the screen with details of an application error -->
     <string name="aerr_show_details">Show details</string>
 
+    <!-- Parallel space badge -->
+    <string name="parallel_space_badge_label">%1$s</string>
 </resources>
