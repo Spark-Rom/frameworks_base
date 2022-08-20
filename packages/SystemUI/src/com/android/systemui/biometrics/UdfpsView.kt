@@ -159,19 +159,17 @@ class UdfpsView(
     private fun doIlluminate(onIlluminatedRunnable: Runnable?) {
         // TODO(b/231335067): enableHbm with halControlsIllumination=true shouldn't make sense.
         // This only makes sense now because vendor code may rely on the side effects of enableHbm.
-        if (hbmProvider != null) {
-            hbmProvider?.enableHbm(halControlsIllumination) {
-                if (onIlluminatedRunnable != null) {
-                    if (halControlsIllumination) {
-                        onIlluminatedRunnable.run()
-                    } else {
-                        // No framework API can reliably tell when a frame reaches the panel. A timeout
-                        // is the safest solution.
-                        postDelayed(onIlluminatedRunnable, onIlluminatedDelayMs)
-                    }
+        hbmProvider?.enableHbm(halControlsIllumination) {
+            if (onIlluminatedRunnable != null) {
+                if (halControlsIllumination) {
+                    onIlluminatedRunnable.run()
                 } else {
-                    Log.w(TAG, "doIlluminate | onIlluminatedRunnable is null")
+                    // No framework API can reliably tell when a frame reaches the panel. A timeout
+                    // is the safest solution.
+                    postDelayed(onIlluminatedRunnable, onIlluminatedDelayMs)
                 }
+            } else {
+                Log.w(TAG, "doIlluminate | onIlluminatedRunnable is null")
             }
         }
     }
@@ -179,8 +177,6 @@ class UdfpsView(
     override fun stopIllumination() {
         isIlluminationRequested = false
         animationViewController?.onIlluminationStopped()
-        if (hbmProvider != null) {
-            hbmProvider?.disableHbm(null /* onHbmDisabled */)
-        }
+        hbmProvider?.disableHbm(null /* onHbmDisabled */)
     }
 }
