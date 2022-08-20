@@ -16,21 +16,14 @@
 -->
 <resources>
 
-    <!-- Pocket Mode -->
-    <style name="pocket_view_title">
-        <item name="android:fontFamily">@string/config_headlineFontFamily</item>
-        <item name="android:textSize">@dimen/pocket_view_title_size</item>
-        <item name="android:textColor">#ffffff</item>
-        <item name="android:alpha">0.87</item>
-    </style>
-    <style name="pocket_view_title_cancel">
-        <item name="android:textSize">@dimen/pocket_view_title_cancel_size</item>
-        <item name="android:textColor">#ffffff</item>
-        <item name="android:alpha">0.54</item>
-    </style>
-    <style name="pocket_view_top_tag">
-        <item name="android:textSize">@dimen/pocket_view_top_tag_size</item>
-        <item name="android:textColor">#ffffff</item>
-        <item name="android:alpha">0.54</item>
-    </style>
+    <!-- Parallel space badge colors -->
+    <color name="parallel_badge_1">#025fee</color>
+    <color name="parallel_badge_2">#ee9002</color>
+    <color name="parallel_badge_3">#02d6ee</color>
+    <color name="parallel_badge_4">#9002ee</color>
+    <color name="parallel_badge_5">#ee0260</color>
+    <color name="parallel_badge_6">#00b200</color>
+    <color name="parallel_badge_7">#7200b6</color>
+    <color name="parallel_badge_8">#006f72</color>
+    <color name="parallel_badge_9">#eed315</color>
 </resources>
