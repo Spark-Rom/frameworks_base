@@ -8300,6 +8300,10 @@ public class AudioManager {
     @SystemApi
     @RequiresPermission(android.Manifest.permission.MODIFY_AUDIO_ROUTING)
     public @Nullable AudioDeviceAttributes getMutingExpectedDevice() {
+        if (GmsCompat.isEnabled()) {
+            return null;
+        }
+
         try {
             return getService().getMutingExpectedDevice();
         } catch (RemoteException e) {
@@ -8428,6 +8432,9 @@ public class AudioManager {
     @RequiresPermission(android.Manifest.permission.MODIFY_AUDIO_ROUTING)
     public void unregisterMuteAwaitConnectionCallback(
             @NonNull MuteAwaitConnectionCallback callback) {
+        if (GmsCompat.isEnabled()) {
+            return;
+        }
         synchronized (mMuteAwaitConnectionListenerLock) {
             final Pair<ArrayList<ListenerInfo<MuteAwaitConnectionCallback>>,
                     MuteAwaitConnectionDispatcherStub> res =
