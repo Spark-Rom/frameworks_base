@@ -64,6 +64,7 @@ import android.os.RemoteException;
 import android.os.SystemClock;
 import android.view.Display;
 import android.view.Surface;
+import android.util.Log;
 import android.view.SurfaceControl;
 import android.window.TaskOrganizer;
 import android.window.TaskSnapshot;
