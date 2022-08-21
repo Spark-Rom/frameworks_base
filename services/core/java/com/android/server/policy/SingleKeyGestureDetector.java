@@ -330,12 +330,16 @@ public final class SingleKeyGestureDetector {
                 Message msg = mHandler.obtainMessage(MSG_KEY_DELAYED_PRESS, mActiveRule.mKeyCode,
                         mKeyPressCounter, mActiveRule);
                 msg.setAsynchronous(true);
-             mHandler.sendMessageDelayed(msg, Settings.System.getIntForUser(
+                mHandler.sendMessageDelayed(msg, MULTI_PRESS_TIMEOUT);
+            }
+                Message msg = mHandler.obtainMessage(MSG_KEY_DELAYED_PRESS, mActiveRule.mKeyCode,
+                        mKeyPressCounter, mActiveRule);
+                msg.setAsynchronous(true);
+                mHandler.sendMessageDelayed(msg, Settings.System.getIntForUser(
                     mContext.getContentResolver(),
                     Settings.System.TORCH_POWER_BUTTON_GESTURE,
                     0, UserHandle.USER_CURRENT) == 1 ? TORCH_DOUBLE_TAP_DELAY
                     : MULTI_PRESS_TIMEOUT);
-            }
             return true;
         }
         reset();
