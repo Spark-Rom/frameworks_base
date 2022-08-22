@@ -107,16 +107,4 @@ class OnTheGoTile @Inject constructor(
     override fun getMetricsCategory(): Int {
         return MetricsEvent.SPARK_QS_TILES
     }
-
-    override fun composeChangeAnnouncement(): String {
-        return if (state.value) {
-            mContext.getString(
-                R.string.accessibility_quick_settings_onthego_on
-            )
-        } else {
-            mContext.getString(
-                R.string.accessibility_quick_settings_onthego_off
-            )
-        }
-    }
 }
