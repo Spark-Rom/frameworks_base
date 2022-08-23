@@ -754,7 +754,7 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
         }
     }
 
-    ActivityInfo resolveActivity(Intent intent, String resolvedType, int startFlags,
+    public ActivityInfo resolveActivity(Intent intent, String resolvedType, int startFlags,
             ProfilerInfo profilerInfo, int userId, int filterCallingUid) {
         final ResolveInfo rInfo = resolveIntent(intent, resolvedType, userId, 0, filterCallingUid);
         return resolveActivity(intent, rInfo, startFlags, profilerInfo);
@@ -1843,6 +1843,10 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
         return timedout;
     }
 
+    public ActivityRecord getTopResumedActivity() {
+        return mTopResumedActivity;
+    }
+
     void comeOutOfSleepIfNeededLocked() {
         removeSleepTimeouts();
         if (mGoingToSleepWakeLock.isHeld()) {
@@ -2654,4 +2658,5 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
             mResult.dump(pw, prefix + "    ");
         }
     }
+
 }
