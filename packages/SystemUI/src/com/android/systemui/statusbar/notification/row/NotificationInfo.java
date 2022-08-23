@@ -67,7 +67,7 @@ import com.android.internal.logging.UiEventLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.systemui.Dependency;
 import com.android.settingslib.Utils;
-import com.android.systemui.statusbar.phone.StatusBar;
+import com.android.systemui.statusbar.phone.CentralSurfaces;
 import com.android.systemui.statusbar.phone.SystemUIDialog;
 import com.android.systemui.R;
 import com.android.systemui.statusbar.notification.AssistantFeedbackController;
@@ -479,7 +479,7 @@ public class NotificationInfo extends LinearLayout implements NotificationGuts.G
     private boolean isThisASystemPackage(String packageName) {
         try {
             final UserHandle userHandle = mSbn.getUser();
-            PackageManager pm = StatusBar.getPackageManagerForUser(mContext,
+            PackageManager pm = CentralSurfaces.getPackageManagerForUser(mContext,
                     userHandle.getIdentifier());
             PackageInfo packageInfo = pm.getPackageInfo(packageName,
                     PackageManager.GET_SIGNATURES);
