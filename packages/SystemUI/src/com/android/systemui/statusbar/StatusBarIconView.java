@@ -53,7 +53,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.animation.Interpolator;
 
 import androidx.core.graphics.ColorUtils;
-
+import android.graphics.Typeface;
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.internal.util.ContrastColorUtil;
 import com.android.systemui.Dependency;
