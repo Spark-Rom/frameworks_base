@@ -27,6 +27,7 @@ import android.util.Log;
 import android.view.ViewGroup;
 
 import com.android.internal.statusbar.StatusBarIcon;
+import com.android.systemui.Dependency;
 import com.android.systemui.Dumpable;
 import com.android.systemui.R;
 import com.android.systemui.dagger.SysUISingleton;
@@ -72,19 +73,17 @@ public class StatusBarIconControllerImpl extends StatusBarIconList implements Tu
             Context context,
             CommandQueue commandQueue,
             DemoModeController demoModeController,
-            ConfigurationController configurationController,
-            TunerService tunerService,
             DumpManager dumpManager) {
         super(context.getResources().getStringArray(
                 com.android.internal.R.array.config_statusBarIcons));
-        configurationController.addCallback(this);
+        Dependency.get(ConfigurationController.class).addCallback(this);
 
         mContext = context;
 
         loadDimens();
 
         commandQueue.addCallback(this);
-        tunerService.addTunable(this, ICON_HIDE_LIST);
+        Dependency.get(TunerService.class).addTunable(this, ICON_HIDE_LIST);
         demoModeController.addCallback(this);
         dumpManager.registerDumpable(getClass().getSimpleName(), this);
     }
