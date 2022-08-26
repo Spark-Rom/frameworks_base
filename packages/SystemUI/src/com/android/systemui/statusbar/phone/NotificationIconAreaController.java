@@ -308,7 +308,7 @@ public class NotificationIconAreaController implements
             mIconTint = iconTint;
         }
 
-        if (DarkIconDispatcher.isInArea(tintArea, mCenteredIconArea)) {
+        if (DarkIconDispatcher.isInAreas(tintAreas, mCenteredIconArea)) {
             mCenteredIconTint = iconTint;
         }
 
