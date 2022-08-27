@@ -172,7 +172,7 @@ class AuthRippleController @Inject constructor(
         if (!isRippleEnabled) {
             // reset and hide the scrim so it doesn't appears on
             // the next notification shade usage
-            statusBar.lightRevealScrim?.revealAmount = 1f
+            centralSurfaces.lightRevealScrim?.revealAmount = 1f
             startLightRevealScrimOnKeyguardFadingAway = false
             return
         }
