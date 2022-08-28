@@ -67,6 +67,7 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.content.Intent;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Rect;
@@ -1055,6 +1056,8 @@ public interface WindowManagerPolicy extends WindowManagerPolicyConstants {
      * Specifies whether there is an on-screen navigation bar separate from the status bar.
      */
     public boolean hasNavigationBar();
+
+    public void sendCustomAction(Intent intent);
 
     /**
      * Lock the device now.

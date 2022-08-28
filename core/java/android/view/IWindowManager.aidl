@@ -29,6 +29,7 @@ import android.graphics.GraphicBuffer;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Region;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.IRemoteCallback;
 import android.os.ParcelFileDescriptor;
@@ -397,6 +398,11 @@ interface IWindowManager
      * Called by System UI to notify Window Manager to hide transient bars.
      */
     oneway void hideTransientBars(int displayId);
+
+    /**
+     * Send some ActionHandler Commands to WindowManager
+     */
+    void sendCustomAction(in Intent intent);
 
     /**
      * Called by System UI to notify of changes to the visibility of Recents.
