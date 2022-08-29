@@ -42,6 +42,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.provider.Settings;
+import com.android.systemui.Dependency;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseArray;
@@ -147,7 +148,7 @@ public class NavigationBarView extends FrameLayout implements
     private boolean mInCarMode = false;
     private boolean mDockedStackExists;
     private boolean mScreenOn = true;
-
+    private boolean mImeVisible;
     private final SparseArray<ButtonDispatcher> mButtonDispatchers = new SparseArray<>();
     private final ContextualButtonGroup mContextualButtonGroup;
     private Configuration mConfiguration;
@@ -598,6 +599,7 @@ public class NavigationBarView extends FrameLayout implements
         if (!visible) {
             mTransitionListener.onBackAltCleared();
         }
+        mImeVisible = visible;
         mRotationButtonController.getRotationButton().setCanShowRotationButton(!visible);
         mEdgeBackGestureHandler.setImeVisible(visible);
     }
