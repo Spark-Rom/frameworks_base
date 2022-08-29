@@ -188,15 +188,6 @@ public class CompassTile extends QSTileImpl<BooleanState> implements SensorEvent
     }
 
     @Override
-    protected String composeChangeAnnouncement() {
-        if (mState.value) {
-            return mContext.getString(R.string.accessibility_quick_settings_compass_changed_on);
-        } else {
-            return mContext.getString(R.string.accessibility_quick_settings_compass_changed_off);
-        }
-    }
-
-    @Override
     public void handleSetListening(boolean listening) {
         if (!listening) {
             setListeningSensors(false);
