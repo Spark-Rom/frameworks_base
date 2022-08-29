@@ -194,6 +194,14 @@ public interface WindowManagerPolicy extends WindowManagerPolicyConstants {
         String getOwningPackage();
 
         /**
+         * Retrieve the current LayoutParams of the window.
+         *
+         * @return WindowManager.LayoutParams The window's internal LayoutParams
+         *         instance.
+         */
+        public WindowManager.LayoutParams getAttrs();
+
+        /**
          * Retrieve the type of the top-level window.
          *
          * @return the base type of the parent window if attached or its own type otherwise

@@ -6979,13 +6979,7 @@ public final class PowerManagerService extends SystemService
     }
 
     private void updateButtonLight(boolean timeoutEvent) {
-        for (final int groupId : mDisplayGroupPowerStateMapper.getDisplayGroupIdsLocked()) {
-            final DisplayPowerRequest displayPowerRequest =
-                   mDisplayGroupPowerStateMapper.getPowerRequestLocked(groupId);
-            if (displayPowerRequest == null){
-                return;
-            }
-
+        for (int idx = 0; idx < mPowerGroups.size(); idx++) {
             if (!mButtonBacklightEnable){
                 mCurrentButtonBrightness = 0;
                 mLightsManager.getLight(LightsManager.LIGHT_ID_BUTTONS).setBrightness(brightnessIntToFloat(mCurrentButtonBrightness));
@@ -7000,9 +6994,9 @@ public final class PowerManagerService extends SystemService
                 mLightsManager.getLight(LightsManager.LIGHT_ID_BUTTONS).setBrightness(brightnessIntToFloat(mCurrentButtonBrightness));
                 return;
             }
-
+            final PowerGroup powerGroup = mPowerGroups.valueAt(idx);
             final boolean buttonPressed = mEvent == PowerManager.USER_ACTIVITY_EVENT_BUTTON;
-            boolean buttonlight_on =  displayPowerRequest.policy == DisplayPowerRequest.POLICY_BRIGHT;
+            boolean buttonlight_on = powerGroup.isPolicyBrightLocked();
             int currentButtonBrightness = 0;
 
             if (buttonlight_on){

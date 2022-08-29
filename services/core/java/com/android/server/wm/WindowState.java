@@ -1477,7 +1477,8 @@ class WindowState extends WindowContainer<WindowState> implements WindowManagerP
         return mWindowFrames.mCompatFrame;
     }
 
-    WindowManager.LayoutParams getAttrs() {
+    @Override
+    public WindowManager.LayoutParams getAttrs() {
         return mAttrs;
     }
 
