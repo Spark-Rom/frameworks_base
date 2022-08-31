@@ -6255,12 +6255,6 @@ public final class Settings {
         public static final String STATUS_BAR_LOGO = "status_bar_logo";
 
         /**
-         * Statusbar logo color setting
-         * @hide
-         */
-        public static final String STATUS_BAR_LOGO_COLOR = "status_bar_logo_color";
-
-        /**
          * Position of Status bar logo
          * 0 - Left (default)
          * 1 - Right
@@ -6273,12 +6267,6 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_LOGO_STYLE = "status_bar_logo_style";
-
-        /**
-         * Statusbar logo accent color setting
-         * @hide
-         */
-        public static final String STATUS_BAR_LOGO_COLOR_ACCENT = "status_bar_logo_color_accent";
 
         /**
          * QS battery style
@@ -6655,10 +6643,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(FLASHLIGHT_ON_CALL_RATE);
             PRIVATE_SETTINGS.add(BACK_GESTURE_HAPTIC);
             PRIVATE_SETTINGS.add(STATUS_BAR_LOGO);
-            PRIVATE_SETTINGS.add(STATUS_BAR_LOGO_COLOR);
             PRIVATE_SETTINGS.add(STATUS_BAR_LOGO_POSITION);
             PRIVATE_SETTINGS.add(STATUS_BAR_LOGO_STYLE);
-            PRIVATE_SETTINGS.add(STATUS_BAR_LOGO_COLOR_ACCENT);
         }
 
         /**
