@@ -206,6 +206,12 @@ public interface CentralSurfaces extends Dumpable, ActivityStarter, LifecycleOwn
     @Override
     Lifecycle getLifecycle();
 
+    void updateDismissAllButton();
+
+    void updateDismissAllVisibility(boolean visible);
+
+    View getDismissAllButton();
+
     void wakeUpIfDozing(long time, View where, String why);
 
     NotificationShadeWindowView getNotificationShadeWindowView();
