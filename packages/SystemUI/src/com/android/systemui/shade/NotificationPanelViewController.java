@@ -75,7 +75,6 @@ import android.os.PowerManager;
 import android.os.Process;
 import android.os.Trace;
 import android.os.UserHandle;
-import android.os.SystemClock;
 import android.os.UserManager;
 import android.os.VibrationEffect;
 import android.provider.Settings;
@@ -5461,7 +5460,7 @@ public final class NotificationPanelViewController extends PanelViewController i
                     // we want that in one step to prevent flicker - usage of GO_TO_SLEEP_FLAG_FORCE
                     // since this will end doze we will enter setDozing(false) which
                     // will basically call this again
-                    mPowerManager.goToSleep(SystemClock.uptimeMillis(),
+                    mPowerManager.goToSleep(mSystemClock.uptimeMillis(),
                             PowerManager.GO_TO_SLEEP_REASON_APPLICATION,
                             PowerManager.GO_TO_SLEEP_FLAG_NO_DOZE|PowerManager.GO_TO_SLEEP_FLAG_FORCE);
                 }
