@@ -1473,6 +1473,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
         mBroadcastDispatcher.registerReceiver(mBroadcastReceiver, filter, null, UserHandle.ALL);
     }
 
+    @Override
     public void updateDismissAllVisibility(boolean visible) {
         if (mDismissAllButton == null) return;
         if (!mShowDimissButton || !mStackScrollerController.hasActiveClearableNotifications(ROWS_ALL)
@@ -1488,6 +1489,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
         }
     }
 
+    @Override
     public void updateDismissAllButton() {
         if (mDismissAllButton == null) return;
         switch (mClearAllButtonStyle) {
@@ -1543,6 +1545,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
         }
     }
 
+    @Override
     public View getDismissAllButton() {
         return mDismissAllButton;
     }

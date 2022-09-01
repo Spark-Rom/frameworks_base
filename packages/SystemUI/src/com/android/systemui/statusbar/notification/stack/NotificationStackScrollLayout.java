@@ -105,7 +105,6 @@ import com.android.systemui.statusbar.notification.row.ExpandableView;
 import com.android.systemui.statusbar.notification.row.FooterView;
 import com.android.systemui.statusbar.notification.row.StackScrollerDecorView;
 import com.android.systemui.statusbar.phone.CentralSurfaces;
-import com.android.systemui.statusbar.phone.CentralSurfacesImpl;
 import com.android.systemui.statusbar.phone.HeadsUpAppearanceController;
 import com.android.systemui.statusbar.phone.HeadsUpTouchHelper;
 import com.android.systemui.statusbar.phone.ScreenOffAnimationController;
@@ -316,7 +315,6 @@ public class NotificationStackScrollLayout extends ViewGroup implements Dumpable
     };
     private NotificationStackScrollLogger mLogger;
     private CentralSurfaces mCentralSurfaces;
-    private CentralSurfacesImpl mCentralSurfacesImpl;
     private int[] mTempInt2 = new int[2];
     private boolean mGenerateChildOrderChangedEvent;
     private HashSet<Runnable> mAnimationFinishedRunnables = new HashSet<>();
@@ -695,7 +693,7 @@ public class NotificationStackScrollLayout extends ViewGroup implements Dumpable
         inflateEmptyShadeView();
         updateFooter();
         mSectionsManager.reinflateViews();
-        mCentralSurfacesImpl.updateDismissAllButton();
+        mCentralSurfaces.updateDismissAllButton();
     }
 
     public void setIsRemoteInputActive(boolean isActive) {
@@ -769,7 +767,7 @@ public class NotificationStackScrollLayout extends ViewGroup implements Dumpable
     @Override
     @ShadeViewRefactor(RefactorComponent.SHADE_VIEW)
     public void onUiModeChanged() {
-        mCentralSurfacesImpl.updateDismissAllButton();
+        mCentralSurfaces.updateDismissAllButton();
     }
 
     @ShadeViewRefactor(RefactorComponent.DECORATOR)
@@ -5314,8 +5312,8 @@ public class NotificationStackScrollLayout extends ViewGroup implements Dumpable
             footerView.setSecondaryVisible(false /* visible */, true /* animate */);
         });
         setFooterView(footerView);
-        if (mCentralSurfacesImpl != null && mCentralSurfacesImpl.getDismissAllButton() != null) {
-            mCentralSurfacesImpl.getDismissAllButton().setOnClickListener(v -> {
+        if (mCentralSurfaces != null && mCentralSurfaces.getDismissAllButton() != null) {
+            mCentralSurfaces.getDismissAllButton().setOnClickListener(v -> {
                 if (mShowDimissButton) {
                     clearNotifications(ROWS_ALL, true /* closeShade */);
                 }
