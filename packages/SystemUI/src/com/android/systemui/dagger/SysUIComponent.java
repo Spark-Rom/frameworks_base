@@ -71,7 +71,7 @@ import dagger.Subcomponent;
         DependencyProvider.class,
         SystemUIBinder.class,
         SystemUIModule.class,
-        SystemUICoreStartableModule.class,
+        SparkSystemUICoreStartableModule.class,
         ReferenceSystemUIModule.class})
 public interface SysUIComponent {
 
