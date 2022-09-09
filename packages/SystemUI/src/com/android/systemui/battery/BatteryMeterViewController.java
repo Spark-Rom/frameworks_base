@@ -42,6 +42,8 @@ public class BatteryMeterViewController extends ViewController<BatteryMeterView>
             "system:" + Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT;
     public static final String STATUS_BAR_BATTERY_TEXT_CHARGING =
             "system:" + Settings.System.STATUS_BAR_BATTERY_TEXT_CHARGING;
+    public static final String TEXT_CHARGING_SYMBOL =
+            "system:" + Settings.System.TEXT_CHARGING_SYMBOL;
 
     private final ConfigurationController mConfigurationController;
     private final TunerService mTunerService;
@@ -76,6 +78,11 @@ public class BatteryMeterViewController extends ViewController<BatteryMeterView>
                     boolean batteryPercentCharging =
                             TunerService.parseIntegerSwitch(newValue, true);
                     mView.setBatteryPercentCharging(batteryPercentCharging);
+                    break;
+                case TEXT_CHARGING_SYMBOL:
+                    int textChargingSymbol =
+                            TunerService.parseInteger(newValue, 1);
+                    mView.updateTextChargingSymbol(textChargingSymbol);
                     break;
                 default:
                     break;
@@ -162,6 +169,7 @@ public class BatteryMeterViewController extends ViewController<BatteryMeterView>
         mTunerService.addTunable(mTunable, STATUS_BAR_BATTERY_STYLE);
         mTunerService.addTunable(mTunable, STATUS_BAR_SHOW_BATTERY_PERCENT);
         mTunerService.addTunable(mTunable, STATUS_BAR_BATTERY_TEXT_CHARGING);
+        mTunerService.addTunable(mTunable, TEXT_CHARGING_SYMBOL);
         mIsSubscribedForTunerUpdates = true;
     }
 
