@@ -285,5 +285,6 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.QS_PANEL_STYLE, NON_NEGATIVE_INTEGER_VALIDATOR);
         VALIDATORS.put(System.MEDIA_ARTWORK_BLUR_ENABLED, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.MEDIA_ARTWORK_BLUR_RADIUS, new InclusiveFloatRangeValidator(1f, 25f));
+        VALIDATORS.put(System.VOLUME_BUTTON_MUSIC_CONTROL, BOOLEAN_VALIDATOR);
     }
 }
