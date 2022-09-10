@@ -101,13 +101,8 @@
     <color name="accessibility_floating_menu_background">#B3000000</color> <!-- 70% -->
 
     <color name="people_tile_background">@color/material_dynamic_secondary20</color>
-<<<<<<< HEAD
     
     <color name="keyguard_affordance_background_color">@android:color/system_neutral1_800</color>
-=======
-
-    <color name="keyguard_affordance_background_color">#80000000</color>
 
     <color name="volume_seekbar_bg">@android:color/system_accent2_700</color>
->>>>>>> 91bb9740458f (SystemUI: Make volume panel look alike brightness slider)
 </resources>
