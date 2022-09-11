@@ -14,6 +14,7 @@
 
 package com.android.systemui.statusbar.phone;
 
+import static com.android.systemui.statusbar.phone.StatusBarIconHolder.TYPE_BLUETOOTH;
 import static com.android.systemui.statusbar.phone.StatusBarIconHolder.TYPE_ICON;
 import static com.android.systemui.statusbar.phone.StatusBarIconHolder.TYPE_MOBILE;
 import static com.android.systemui.statusbar.phone.StatusBarIconHolder.TYPE_NETWORK_TRAFFIC;
@@ -42,12 +43,14 @@ import com.android.systemui.demomode.DemoModeCommandReceiver;
 import com.android.systemui.plugins.DarkIconDispatcher;
 import com.android.systemui.plugins.DarkIconDispatcher.DarkReceiver;
 import com.android.systemui.statusbar.BaseStatusBarWifiView;
+import com.android.systemui.statusbar.StatusBarBluetoothView;
 import com.android.systemui.statusbar.StatusBarIconView;
 import com.android.systemui.statusbar.StatusBarMobileView;
 import com.android.systemui.statusbar.StatusBarNetworkTrafficView;
 import com.android.systemui.statusbar.StatusBarWifiView;
 import com.android.systemui.statusbar.StatusIconDisplayable;
 import com.android.systemui.statusbar.connectivity.ui.MobileContextProvider;
+import com.android.systemui.statusbar.phone.PhoneStatusBarPolicy.BluetoothIconState;
 import com.android.systemui.statusbar.phone.StatusBarSignalPolicy.CallIndicatorIconState;
 import com.android.systemui.statusbar.phone.StatusBarSignalPolicy.MobileIconState;
 import com.android.systemui.statusbar.phone.StatusBarSignalPolicy.WifiIconState;
@@ -86,6 +89,8 @@ public interface StatusBarIconController {
     void setIcon(String slot, StatusBarIcon icon);
     /** */
     void setSignalIcon(String slot, WifiIconState state);
+    /** */
+    void setBluetoothIcon(String slot, BluetoothIconState state);
     /** */
     void setMobileIcons(String slot, List<MobileIconState> states);
 
@@ -425,6 +430,9 @@ public interface StatusBarIconController {
                 case TYPE_MOBILE:
                     return addMobileIcon(index, slot, holder.getMobileState());
 
+                case TYPE_BLUETOOTH:
+                    return addBluetoothIcon(index, slot, holder.getBluetoothState());
+
                 case TYPE_NETWORK_TRAFFIC:
                     return addNetworkTrafficIcon(index, slot, holder.getNetworkTrafficState());
             }
@@ -487,6 +495,14 @@ public interface StatusBarIconController {
             return view;
         }
 
+        protected StatusBarBluetoothView addBluetoothIcon(
+                int index, String slot, BluetoothIconState state) {
+            StatusBarBluetoothView view = onCreateStatusBarBluetoothView(slot);
+            view.applyBluetoothState(state);
+            mGroup.addView(view, index, onCreateLayoutParams());
+            return view;
+        }
+
         private StatusBarIconView onCreateStatusBarIconView(String slot, boolean blocked) {
             return new StatusBarIconView(mContext, slot, null, blocked);
         }
@@ -510,6 +526,11 @@ public interface StatusBarIconController {
 
         private StatusBarNetworkTrafficView onCreateStatusBarNetworkTrafficView(String slot) {
             return StatusBarNetworkTrafficView.fromContext(mContext, slot);
+        }
+
+        private StatusBarBluetoothView onCreateStatusBarBluetoothView(String slot) {
+            StatusBarBluetoothView view = StatusBarBluetoothView.fromContext(mContext, slot);
+            return view;
         }
 
         protected LinearLayout.LayoutParams onCreateLayoutParams() {
@@ -571,6 +592,9 @@ public interface StatusBarIconController {
                 case TYPE_MOBILE:
                     onSetMobileIcon(viewIndex, holder.getMobileState());
                     break;
+                case TYPE_BLUETOOTH:
+                    onSetBluetoothIcon(viewIndex, holder.getBluetoothState());
+                    return;
                 case TYPE_NETWORK_TRAFFIC:
                     onSetNetworkTrafficIcon(viewIndex, holder.getNetworkTrafficState());
             }
@@ -610,6 +634,13 @@ public interface StatusBarIconController {
             StatusBarNetworkTrafficView view = (StatusBarNetworkTrafficView) mGroup.getChildAt(viewIndex);
             if (view != null) {
                 view.applyNetworkTrafficState(state);
+            }
+        }
+
+        public void onSetBluetoothIcon(int viewIndex, BluetoothIconState state) {
+            StatusBarBluetoothView view = (StatusBarBluetoothView) mGroup.getChildAt(viewIndex);
+            if (view != null) {
+                view.applyBluetoothState(state);
             }
         }
 
