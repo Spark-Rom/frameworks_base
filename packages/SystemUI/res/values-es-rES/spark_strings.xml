@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2019-2022 Spark
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- AlertSlider -->
+    <string name="alert_slider_mode_priority_text">Prioridad</string>
+    <string name="alert_slider_mode_dnd_text">No Molestar</string>
+    <!-- Screen record -->
+    <!-- Label for notification action to delete a screen recording file [CHAR LIMIT=35] -->
+    <string name="screenrecord_delete_label">Eliminar</string>
+    <!-- A toast message shown after successfully deleting a screen recording [CHAR LIMIT=NONE] -->
+    <string name="screenrecord_delete_description">Grabación de pantalla borrada</string>
+    <string name="screenrecord_stopdot_label">Mostrar punto de parada</string>
+    <string name="screenrecord_stopdot_summary">Mantener pulsado para moverlo</string>
+    <string name="screenrecord_lowquality_label">Menor calidad</string>
+    <string name="screenrecord_lowquality_summary">Para archivo más pequeño</string>
+    <string name="screenrecord_longer_timeout_switch_label">Límite de tamaño de archivo mayor</string>
+    <string name="screenrecord_longer_timeout_switch_summary">Limitar grabación a 15GB</string>
+    <string name="screenrecord_skip_time_label">Ignorar temporizador</string>
+    <string name="screenrecord_skip_time_summary">No esperar 3 segundos</string>
+    <!-- Screenshot delete action -->
+    <!-- Label for UI element which allows deleting the screenshot [CHAR LIMIT=30] -->
+    <string name="screenshot_delete_label">Eliminar</string>
+    <!-- Content description indicating that tapping the element will allow deleting the screenshot [CHAR LIMIT=NONE] -->
+    <string name="screenshot_delete_description">Eliminar captura de pantalla</string>
+    <!-- Reader mode QS tile -->
+    <string name="quick_settings_reading_mode">Modo lectura</string>
+    <string name="accessibility_quick_settings_reading_mode_on">Modo lectura activado.</string>
+    <string name="accessibility_quick_settings_reading_mode_off">Modo lectura desactivado.</string>
+    <string name="accessibility_quick_settings_reading_mode_changed_on">Modo lectura activado.</string>
+    <string name="accessibility_quick_settings_reading_mode_changed_off">Modo lectura desactivado.</string>
+    <!-- Refresh Rate Tile -->
+    <string name="refresh_rate_tile_label">Tasa de refresco</string>
+    <string name="refresh_rate_auto_mode_placeholder">        Auto (<xliff:g id="min_refresh_rate" example="60">%1$d</xliff:g> - <xliff:g id="max_refresh_rate" example="60">%2$d</xliff:g> Hz)
+    </string>
+    <string name="refresh_rate_forced_mode_placeholder"><xliff:g id="refresh_rate" example="60">%1$d</xliff:g> Hz</string>
+    <!-- Name of the nfc status bar icon. -->
+    <string name="status_bar_nfc">NFC</string>
+    <!-- Accessibility label for nfc icon (not shown on screen) [CHAR LIMIT=NONE] -->
+    <string name="accessibility_status_bar_nfc">NFC</string>
+    <!-- Anti flicker QS tile -->
+    <string name="quick_settings_anti_flicker">Antiparpadeo</string>
+    <!-- PowerShare QS tile -->
+    <string name="quick_settings_powershare_label">Wireless PowerShare</string>
+    <string name="quick_settings_powershare_off_powersave_label">Transferencia inalámbrica de energía apagada\nAhorro de energía</string>
+    <string name="quick_settings_powershare_off_low_battery_label">Transferencia inalámbrica de energía desactivada\nBatería demasiado baja</string>
+    <string name="quick_settings_powershare_enabled_label">Wireless PowerShare activado</string>
+    <!-- Caffeine tile -->
+    <string name="quick_settings_caffeine_label">Cafeína</string>
+    <string name="accessibility_quick_settings_caffeine_off">Cafeína apagada</string>
+    <string name="accessibility_quick_settings_caffeine_on">Cafeína encendida</string>
+    <!-- Ambient display QS tile -->
+    <string name="quick_settings_ambient_display_label">Pantalla ambiente</string>
+    <string name="accessibility_quick_settings_ambient_display_off">Pantalla Ambiente desactivada.</string>
+    <string name="accessibility_quick_settings_ambient_display_on">Pantalla ambiente activada.</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_off">Pantalla Ambiente desactivada.</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_on">Pantalla ambiente activada.</string>
+    <!-- USB tethering QS tile -->
+    <string name="quick_settings_usb_tether_label">Anclaje de red por USB</string>
+    <!-- Sync QS Tile -->
+    <string name="quick_settings_sync_label">Sincronización</string>
+    <string name="accessibility_quick_settings_sync_off">Sincronización desacticada</string>
+    <string name="accessibility_quick_settings_sync_on">Sincronización activada</string>
+    <string name="accessibility_quick_settings_sync_changed_off">Sincronización desactivada</string>
+    <string name="accessibility_quick_settings_sync_changed_on">Sincronización activada</string>
+    <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">Sonido</string>
+    <string name="quick_settings_sound_ring">Timbre</string>
+    <string name="quick_settings_sound_vibrate">Vibrar</string>
+    <string name="quick_settings_sound_mute">Silenciar</string>
+    <!-- Screenshot QS tile -->
+    <string name="quick_settings_full_screenshot_label">Completa</string>
+    <string name="quick_settings_screenshot_label">Captura de pantalla</string>
+    <string name="quick_settings_region_screenshot_label">Parcial</string>
+    <!-- Screenshot Delete Toast -->
+    <string name="delete_screenshot_toast">Captura de pantalla borrada</string>
+    <!-- Statusbar tuner -->
+    <string name="statusbar_items_title">Iconos de barra de estado</string>
+    <!-- Name of status bar icons. -->
+    <string name="status_bar_call_strength">Intensidad de llamada</string>
+    <string name="status_bar_data_saver">Ahorro de datos</string>
+    <string name="status_bar_vpn">VPN</string>
+    <!-- Heads Up QS Tile -->
+    <string name="quick_settings_heads_up_label">Notificaciones emergentes</string>
+    <string name="accessibility_quick_settings_heads_up_off">Notificaciones emergentes desactivadas.</string>
+    <string name="accessibility_quick_settings_heads_up_on">Notificaciones emergentes activadas.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_off">Notificaciones emergentes desactivadas.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_on">Notificaciones emergentes activadas.</string>
+    <!-- Poweroff/Reboot/Recovery QS tile -->
+    <string name="quick_settings_poweroff_label">Apagar</string>
+    <string name="quick_settings_reboot_label">Reiniciar</string>
+    <string name="quick_settings_reboot_recovery_label">Recovery</string>
+    <!-- Advanced Reboot -->
+    <string name="global_action_restart_advanced">Avanzado</string>
+    <string name="global_action_restart_recovery">Recovery</string>
+    <string name="global_action_restart_bootloader">Bootloader</string>
+    <string name="global_action_restart_ui">SystemUI</string>
+    <string name="global_action_onthego">OnTheGo</string>
+    <!-- On The Go -->
+    <string name="onthego_notification_ticker">OnTheGo activado</string>
+    <string name="onthego_notification_title">On-The-Go activado</string>
+    <string name="onthego_notification_stop">Detener</string>
+    <string name="onthego_notification_options">Opciones</string>
+    <string name="onthego_notification_error">No se pudo iniciar OnTheGo</string>
+    <string name="onthego_notification_restart">Reiniciar OnTheGo</string>
+    <string name="onthego_notification_camera_changed">Modo de cámara cambiado</string>
+    <string name="onthego_transparency">Transparencia OnTheGo</string>
+    <string name="onthego_front_camera">Usar cámara frontal</string>
+    <string name="onthego_service_toggle">Reiniciar servicio automáticamente</string>
+    <string name="onthego_channel_name">OnTheGo</string>
+    <!-- OnTheGo Tile -->
+    <string name="quick_settings_onthego_label">OnTheGo</string>
+    <string name="accessibility_quick_settings_onthego_off">OnTheGo desactivado</string>
+    <string name="accessibility_quick_settings_onthego_on">OnTheGo activado</string>
+    <string name="accessibility_quick_settings_onthego_changed_off">OnTheGo desactivado</string>
+    <string name="accessibility_quick_settings_onthego_changed_on">OnTheGo activado</string>
+    <!-- Text to use when the number in a notification info is too large -->
+    <!-- Face Unlock -->
+    <string name="face_unlock_recognizing">Reconociendo cara...</string>
+    <!-- Name of the clock in status bar [CHAR LIMIT=30] -->
+    <string name="clock">Reloj</string>
+    <!-- Kill button in notification guts -->
+    <string name="force_stop_dlg_title">¿Forzar detención?</string>
+    <string name="force_stop_dlg_text">Si fuerzas la detención de una aplicación, puede que no funcione correctamente.</string>
+    <string name="guts_force_close_app">Cerrar aplicación</string>
+    <!-- Volume panel QS tile -->
+    <string name="quick_settings_volume_panel_label">Panel de volumen</string>
+    <!-- AOD QS tile -->
+    <string name="quick_settings_aod_label">AOD</string>
+    <string name="quick_settings_aod_on_charge_label">AOD al cargar</string>
+    <string name="quick_settings_aod_off_label">AOD apagado</string>
+    <string name="quick_settings_aod_off_powersave_label">AOD apagado\nAhorro de batería</string>
+    <!-- DataSwitch Tile -->
+    <string name="qs_data_switch_label">SIM de datos</string>
+    <string name="qs_data_switch_toast_0">No hay tarjeta SIM insertada</string>
+    <string name="qs_data_switch_toast_1">Solo se ha insertado una tarjeta SIM</string>
+    <string name="qs_data_switch_changed_1">Cambiar a SIM 1 para datos móviles</string>
+    <string name="qs_data_switch_changed_2">Cambiar a SIM 2 para datos móviles</string>
+    <!-- FPS Info tile -->
+    <string name="quick_settings_fpsinfo_label">Datos de FPS</string>
+    <string name="accessibility_quick_settings_fpsinfo_off">Off</string>
+    <string name="accessibility_quick_settings_fpsinfo_on">Información de FPS encendido</string>
+    <!-- FPS view text placeholder -->
+    <string name="fps_text_placeholder"><xliff:g id="fps" example="90">%1$d</xliff:g></string>
+    <!-- Navigation bar dpad -->
+    <string name="accessibility_dpad_left">Cursor izquierdo</string>
+    <string name="accessibility_dpad_right">Cursor derecho</string>
+    <!-- Kill foreground app -->
+    <string name="task_helper_app_killed">%1$s se detuvo</string>
+    <string name="empty_app_killed">Aplicación</string>
+    <!-- Advanced nav gestures -->
+    <string name="app_picker_dialog_title">Elegir una aplicación</string>
+    <string name="active_edge_app_select_title">Elegir aplicación</string>
+    <string name="active_edge_activity_select_title">Elegir actividad</string>
+    <!-- Compass QS Tile -->
+    <string name="quick_settings_compass_label">Brújula</string>
+    <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
+    <string name="quick_settings_compass_init">Iniciando\u2026</string>
+    <string name="accessibility_quick_settings_compass_off">Brújula desactivada</string>
+    <string name="accessibility_quick_settings_compass_on">Brújula activada</string>
+    <string name="accessibility_quick_settings_compass_changed_off">Brújula desactivada</string>
+    <string name="accessibility_quick_settings_compass_changed_on">Brújula activada</string>
+    <string name="quick_settings_compass_N">N</string>
+    <string name="quick_settings_compass_NE">NE</string>
+    <string name="quick_settings_compass_E">E</string>
+    <string name="quick_settings_compass_SE">SE</string>
+    <string name="quick_settings_compass_S">S</string>
+    <string name="quick_settings_compass_SW">SO</string>
+    <string name="quick_settings_compass_W">O</string>
+    <string name="quick_settings_compass_NW">NO</string>
+    <!-- CPUInfo tile -->
+    <string name="quick_settings_cpuinfo_label">Información de la CPU</string>
+    <!-- SoundSearch Tile -->
+    <string name="quick_settings_sound_search">Buscar sonido</string>
+    <string name="quick_settings_sound_search_no_app">Lo sentimos, pero esto no funciona si no tienes una aplicación de búsqueda de sonido.</string>
+    <!-- Google Lens Screenshot string -->
+    <string name="lensss">Lens</string>
+    <!-- Data usage info in QS footer -->
+    <string name="usage_data">usado hoy</string>
+    <string name="usage_data_default_suffix">Datos</string>
+    <string name="usage_wifi_default_suffix">Wi-Fi</string>
+    <!-- Smart Pixels QS Tile -->
+    <string name="quick_settings_smart_pixels">Píxeles Inteligentes</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Píxeles Inteligentes automáticos</string>
+    <!-- 5G toggle in internet dialog -->
+    <string name="enable_fiveg">Habilitar 5G</string>
+</resources>
