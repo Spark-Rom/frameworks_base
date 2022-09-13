@@ -1266,9 +1266,15 @@ public class Binder implements IBinder {
         // Log any exceptions as warnings, don't silently suppress them.
         // If the call was {@link IBinder#FLAG_ONEWAY} then these exceptions
         // disappear into the ether.
-        final boolean tracingEnabled = Trace.isTagEnabled(Trace.TRACE_TAG_AIDL) &&
-                (Binder.isStackTrackingEnabled() || Binder.isTracingEnabled(callingUid));
-        data.mPerformBinderRedirectionCheck = mPerformRedirectionCheck;
+        final boolean tagEnabled = Trace.isTagEnabled(Trace.TRACE_TAG_AIDL);
+        final String transactionTraceName;
+        if (tagEnabled) {
+            transactionTraceName = getTransactionTraceName(code);
+        } else {
+            transactionTraceName = null;
+        }
+
+        final boolean tracingEnabled = tagEnabled && transactionTraceName != null;
         try {
             final BinderCallHeavyHitterWatcher heavyHitterWatcher = sHeavyHitterWatcher;
             if (heavyHitterWatcher != null) {
@@ -1276,7 +1282,7 @@ public class Binder implements IBinder {
                 heavyHitterWatcher.onTransaction(callingUid, getClass(), code);
             }
             if (tracingEnabled) {
-                Trace.traceBegin(Trace.TRACE_TAG_AIDL, getTransactionTraceName(code));
+                Trace.traceBegin(Trace.TRACE_TAG_AIDL, transactionTraceName);
             }
 
             if ((flags & FLAG_COLLECT_NOTED_APP_OPS) != 0) {
