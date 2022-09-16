@@ -561,6 +561,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     // Behavior of volume button music controls
     private boolean mVolumeMusicControlActive;
     private boolean mVolumeMusicControl;
+    private boolean mVolumeWakeActive;
 
     private boolean mPendingKeyguardOccluded;
     private boolean mKeyguardOccludedChanged;
@@ -714,7 +715,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private static final int MSG_HANDLE_ALL_APPS = 22;
     private static final int MSG_LAUNCH_ASSIST = 23;
     private static final int MSG_RINGER_TOGGLE_CHORD = 24;
-    private static final int MSG_DISPATCH_VOLKEY_WITH_WAKE_LOCK = 25;
+    private static final int MSG_DISPATCH_VOLKEY_WITH_WAKE_LOCK = 29;
 
     private LineageHardwareManager mLineageHardware;
 
@@ -799,7 +800,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, false, "Hardkey Long-Press");
                     break;
                 case MSG_DISPATCH_VOLKEY_WITH_WAKE_LOCK:
-                    final KeyEvent event = (KeyEvent) msg.obj;
+                    KeyEvent event = (KeyEvent) msg.obj;
                     dispatchMediaKeyWithWakeLockToAudioService(event);
                     dispatchMediaKeyWithWakeLockToAudioService(
                             KeyEvent.changeAction(event, KeyEvent.ACTION_UP));
@@ -868,9 +869,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.FORCE_SHOW_NAVBAR), false, this,
-                    UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.VOLBTN_MUSIC_CONTROLS), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.TORCH_POWER_BUTTON_GESTURE), false, this,
@@ -2760,8 +2758,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     Settings.System.LOCK_POWER_MENU_DISABLED, 1,
                     UserHandle.USER_CURRENT) != 0;
             mVolumeMusicControl = Settings.System.getIntForUser(resolver,
-                    Settings.System.VOLUME_BUTTON_MUSIC_CONTROL, 0,
-                    UserHandle.USER_CURRENT) != 0;
+                    Settings.System.VOLUME_BUTTON_MUSIC_CONTROL,
+                            0, UserHandle.USER_CURRENT) != 0;
         }
         if (updateRotation) {
             updateRotation(true);
@@ -4173,6 +4171,16 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     // On TVs volume keys never go to the foreground app
                     result &= ~ACTION_PASS_TO_USER;
                 }
+                if (!interactive && isWakeKey && down) {
+                    mVolumeWakeActive = true;
+                    break;
+                }
+                if (!down && mVolumeWakeActive) {
+                    isWakeKey = false;
+                    result &= ~ACTION_PASS_TO_USER;
+                    mVolumeWakeActive = false;
+                    break;
+                }
                 // we come back from a handled music control event - ignore the up event
                 if (!interactive && !down && mVolumeMusicControlActive) {
                     isWakeKey = false;
@@ -4233,6 +4241,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     // {@link interceptKeyBeforeDispatching()}.
                     result |= ACTION_PASS_TO_USER;
                 } else if ((result & ACTION_PASS_TO_USER) == 0) {
+                    // If we aren't passing to the user and no one else
+                    // handled it send it to the session manager to
+                    // figure out.
+                    MediaSessionLegacyHelper.getHelper(mContext).sendVolumeKeyEvent(
+                            event, AudioManager.USE_DEFAULT_STREAM_TYPE, true);
+
                     boolean notHandledMusicControl = false;
                     if (!interactive && mVolumeMusicControl && isMusicActive()) {
                         if (down) {
@@ -6540,23 +6554,18 @@ public class PhoneWindowManager implements WindowManagerPolicy {
      *    controlled by this device, or through remote submix).
      */
     private boolean isMusicActive() {
-        final AudioManager am = mContext.getSystemService(AudioManager.class);
+        final AudioManager am = (AudioManager)mContext.getSystemService(Context.AUDIO_SERVICE);
         if (am == null) {
-            Log.e(TAG, "isMusicActive: couldn't get AudioManager reference");
+            Log.w(TAG, "isMusicActive: couldn't get AudioManager reference");
             return false;
         }
         return am.isMusicActive();
     }
 
-    private void scheduleLongPressKeyEvent(final KeyEvent origEvent, final int keyCode) {
-        final KeyEvent event = new KeyEvent(
-            origEvent.getDownTime(),
-            origEvent.getEventTime(),
-            origEvent.getAction(),
-            keyCode,
-            0
-        );
-        final Message msg = mHandler.obtainMessage(MSG_DISPATCH_VOLKEY_WITH_WAKE_LOCK, event);
+    private void scheduleLongPressKeyEvent(KeyEvent origEvent, int keyCode) {
+        KeyEvent event = new KeyEvent(origEvent.getDownTime(), origEvent.getEventTime(),
+                origEvent.getAction(), keyCode, 0);
+        Message msg = mHandler.obtainMessage(MSG_DISPATCH_VOLKEY_WITH_WAKE_LOCK, event);
         msg.setAsynchronous(true);
         mHandler.sendMessageDelayed(msg, ViewConfiguration.getLongPressTimeout());
     }
