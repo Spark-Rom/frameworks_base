@@ -6423,6 +6423,12 @@ public final class Settings {
         public static final String RETICKER_COLORED = "reticker_colored";
 
         /**
+         * Restyled reTicker
+         * @hide
+         */
+        public static final String NEW_RETICKER = "new_reticker";
+
+        /**
          * Switch between filters for lockscreen album art
          * @hide
          */
