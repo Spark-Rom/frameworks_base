@@ -674,6 +674,17 @@ public class InternetDialogController implements AccessPointController.AccessPoi
         startActivity(getSettingsIntent(), view);
     }
 
+    void launchMobileNetworkSetting() {
+        // Dismissing a dialog into its touch surface and starting an activity at the same time
+        // looks bad, so let's make sure the dialog just fades out quickly.
+        mDialogLaunchAnimator.disableAllCurrentDialogsExitAnimations();
+        mCallback.dismissDialog();
+
+        mActivityStarter.postStartActivityDismissingKeyguard(
+                new Intent(Settings.ACTION_NETWORK_OPERATOR_SETTINGS)
+                .putExtra(Settings.EXTRA_SUB_ID, mDefaultDataSubId), 0);
+    }
+
     void launchHotspotSetting() {
         // Dismissing a dialog into its touch surface and starting an activity at the same time
         // looks bad, so let's make sure the dialog just fades out quickly.
