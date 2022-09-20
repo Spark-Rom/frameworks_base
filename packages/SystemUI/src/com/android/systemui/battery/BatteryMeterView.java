@@ -359,7 +359,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
             switch (mTextChargingSymbol) {
                 case 1:
                 default:
-                    text = "₹" + text;
+                    text = "⚡️ " + text;
                    break;
                 case 2:
                     text = "~" + text;
@@ -371,7 +371,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
                     text = "*" + text;
                     break;
                 case 5:
-                    text = "⚡" + text;
+                    text = "₹" + text;
                     break;
                 case 6:
                     text = "$" + text;
