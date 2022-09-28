@@ -12238,6 +12238,12 @@ public final class Settings {
         public static final String BRIGHTNESS_SLIDER_STYLE = "brightness_slider_style";
 
         /**
+         * Quicksettings tile shape
+         * @hide
+         */
+        public static final String QS_TILE_SHAPE = "qs_tile_shape";
+
+        /**
          * These entries are considered common between the personal and the managed profile,
          * since the managed profile doesn't get to change them.
          */
