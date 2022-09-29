@@ -147,6 +147,9 @@ class SparkThemeOverlayController @Inject constructor(
                 settingsObserver, UserHandle.USER_ALL)
             registerContentObserverForUser(MONET_ENGINE_WHITE_LUMINANCE,
                 settingsObserver, UserHandle.USER_ALL)
+            registerContentObserverForUser(SYSTEM_BLACK_THEME,
+                settingsObserver, UserHandle.USER_ALL)
+
         }
 
         colorOverride = getColorOverride()
