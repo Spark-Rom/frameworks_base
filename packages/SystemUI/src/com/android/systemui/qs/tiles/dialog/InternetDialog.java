@@ -44,6 +44,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.net.wifi.WifiManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -92,6 +93,8 @@ public class InternetDialog extends SystemUIDialog implements
 
     @VisibleForTesting
     protected InternetAdapter mAdapter;
+    @VisibleForTesting
+    protected WifiManager mWifiManager;
     @VisibleForTesting
     protected View mDialogView;
     @VisibleForTesting
@@ -193,6 +196,7 @@ public class InternetDialog extends SystemUIDialog implements
         mCanChangeWifiState = WifiEnterpriseRestrictionUtils.isChangeWifiStateAllowed(context);
         mKeyguard = keyguardStateController;
         mUiEventLogger = uiEventLogger;
+        mWifiManager = mInternetDialogController.getWifiManager();
         mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         mAdapter = new InternetAdapter(mInternetDialogController);
         if (!aboveStatusBar) {
