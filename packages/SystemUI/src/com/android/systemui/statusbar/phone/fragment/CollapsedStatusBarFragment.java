@@ -124,7 +124,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private LinearLayout mEndSideContent;
     private View mOngoingCallChip;
     private View mNotificationIconAreaInner;
-    private View mNetworkTrafficHolder;
     private View mClockView;
     private View mCenterClockView;
     private View mRightClockView;
@@ -276,7 +275,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mDarkIconManager.setShouldLog(true);
         mStatusBarIconController.addIconGroup(mDarkIconManager);
         mEndSideContent = mStatusBar.findViewById(R.id.status_bar_end_side_content);
-        mNetworkTrafficHolder = mStatusBar.findViewById(R.id.network_traffic_holder);
         mBatteryBar = mStatusBar.findViewById(R.id.battery_bar);
         mClockController = new ClockController(getContext(), mStatusBar);
         mSignalClusterEndPadding = getResources().getDimensionPixelSize(R.dimen.signal_cluster_battery_padding);
@@ -580,7 +578,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private void hideEndSideContent(boolean animate) {
         animateHide(mBatteryBar, animate);
         animateHide(mEndSideContent, animate);
-        animateHide(mNetworkTrafficHolder, animate);
     }
 
     private void showEndSideContent(boolean animate) {
@@ -589,12 +586,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         int state = mAnimationScheduler.getAnimationState();
         if (state == IDLE || state == SHOWING_PERSISTENT_DOT) {
             animateShow(mEndSideContent, animate);
-            animateShow(mNetworkTrafficHolder, animate);
         } else {
             // We are in the middle of a system status event animation, which will animate the
             // alpha (but not the visibility). Allow the view to become visible again
             mEndSideContent.setVisibility(View.VISIBLE);
-            mNetworkTrafficHolder.setVisibility(View.VISIBLE);
         }
     }
 
