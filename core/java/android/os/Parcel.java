@@ -561,6 +561,7 @@ public final class Parcel {
                     mPoolNext = sOwnedPool;
                     sOwnedPool = this;
                     sOwnedPoolSize++;
+                    return;
                 }
             }
         } else {
@@ -570,9 +571,12 @@ public final class Parcel {
                     mPoolNext = sHolderPool;
                     sHolderPool = this;
                     sHolderPoolSize++;
+                    return;
                 }
             }
         }
+
+        destroy();
     }
 
     /**
