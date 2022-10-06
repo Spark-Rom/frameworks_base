@@ -33,9 +33,11 @@ import android.provider.Settings.Secure.MONET_ENGINE_CHROMA_FACTOR
 import android.provider.Settings.Secure.MONET_ENGINE_ACCURATE_SHADES
 import android.provider.Settings.Secure.MONET_ENGINE_LINEAR_LIGHTNESS
 import android.provider.Settings.Secure.MONET_ENGINE_WHITE_LUMINANCE
+import android.provider.Settings.Secure.SYSTEM_CUSTOM_THEME
 import android.util.Log
 import android.util.TypedValue
-
+import com.android.systemui.statusbar.policy.ConfigurationController
+import com.android.systemui.statusbar.policy.ConfigurationController.ConfigurationListener
 import com.android.systemui.broadcast.BroadcastDispatcher
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Background
@@ -85,6 +87,7 @@ class SparkThemeOverlayController @Inject constructor(
     featureFlags: FeatureFlags,
     @Main resources: Resources,
     wakefulnessLifecycle: WakefulnessLifecycle,
+    configurationController: ConfigurationController,
 ) : ThemeOverlayController(
     context,
     broadcastDispatcher,
@@ -101,6 +104,7 @@ class SparkThemeOverlayController @Inject constructor(
     featureFlags,
     resources,
     wakefulnessLifecycle,
+    configurationController,
 ) {
 
     private val settingsObserver = object : ContentObserver(bgHandler) {
@@ -147,7 +151,7 @@ class SparkThemeOverlayController @Inject constructor(
                 settingsObserver, UserHandle.USER_ALL)
             registerContentObserverForUser(MONET_ENGINE_WHITE_LUMINANCE,
                 settingsObserver, UserHandle.USER_ALL)
-            registerContentObserverForUser(SYSTEM_BLACK_THEME,
+            registerContentObserverForUser(SYSTEM_CUSTOM_THEME,
                 settingsObserver, UserHandle.USER_ALL)
 
         }
