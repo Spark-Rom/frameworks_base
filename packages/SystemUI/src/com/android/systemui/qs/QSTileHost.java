@@ -14,24 +14,19 @@
 
 package com.android.systemui.qs;
 
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.Resources;
-import android.database.ContentObserver;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
 import android.os.UserHandle;
 import android.os.UserManager;
-import android.provider.Settings;
 import android.provider.Settings.Secure;
 import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.Log;
 
+import androidx.annotation.MainThread;
 import androidx.annotation.Nullable;
 
 import com.android.internal.logging.InstanceId;
@@ -39,9 +34,7 @@ import com.android.internal.logging.InstanceIdSequence;
 import com.android.internal.logging.UiEventLogger;
 import com.android.systemui.Dumpable;
 import com.android.systemui.R;
-import com.android.systemui.broadcast.BroadcastDispatcher;
 import com.android.systemui.dagger.SysUISingleton;
-import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.dump.DumpManager;
 import com.android.systemui.plugins.PluginListener;
@@ -54,7 +47,6 @@ import com.android.systemui.qs.external.TileLifecycleManager;
 import com.android.systemui.qs.external.TileServiceKey;
 import com.android.systemui.qs.external.TileServiceRequestController;
 import com.android.systemui.qs.logging.QSLogger;
-import com.android.systemui.qs.tiles.SecureQSTile;
 import com.android.systemui.settings.UserTracker;
 import com.android.systemui.shared.plugins.PluginManager;
 import com.android.systemui.statusbar.phone.AutoTileManager;
@@ -73,12 +65,20 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.Executor;
 import java.util.function.Predicate;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-/** Platform implementation of the quick settings tile host **/
+/** Platform implementation of the quick settings tile host
+ *
+ * This class keeps track of the set of current tiles and is the in memory source of truth
+ * (ground truth is kept in {@link Secure#QS_TILES}). When the ground truth changes,
+ * {@link #onTuningChanged} will be called and the tiles will be re-created as needed.
+ *
+ * This class also provides the interface for adding/removing/changing tiles.
+ */
 @SysUISingleton
 public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, Dumpable {
     private static final String TAG = "QSTileHost";
@@ -94,11 +94,11 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
     private final TunerService mTunerService;
     private final PluginManager mPluginManager;
     private final DumpManager mDumpManager;
-    private final BroadcastDispatcher mBroadcastDispatcher;
     private final QSLogger mQSLogger;
     private final UiEventLogger mUiEventLogger;
     private final InstanceIdSequence mInstanceIdSequence;
     private final CustomTileStatePersister mCustomTileStatePersister;
+    private final Executor mMainExecutor;
 
     private final List<Callback> mCallbacks = new ArrayList<>();
     @Nullable
@@ -114,20 +114,15 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
     private final TileServiceRequestController mTileServiceRequestController;
     private TileLifecycleManager.Factory mTileLifeCycleManagerFactory;
 
-    private final ContentObserver mSettingsObserver;
-    private boolean mIsSecureTileDisabledOnLockscreen = true;
-
     @Inject
     public QSTileHost(Context context,
             StatusBarIconController iconController,
             QSFactory defaultFactory,
-            @Main Handler mainHandler,
-            @Background Looper bgLooper,
+            @Main Executor mainExecutor,
             PluginManager pluginManager,
             TunerService tunerService,
             Provider<AutoTileManager> autoTiles,
             DumpManager dumpManager,
-            BroadcastDispatcher broadcastDispatcher,
             Optional<CentralSurfaces> centralSurfacesOptional,
             QSLogger qsLogger,
             UiEventLogger uiEventLogger,
@@ -145,7 +140,7 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
         mDumpManager = dumpManager;
         mQSLogger = qsLogger;
         mUiEventLogger = uiEventLogger;
-        mBroadcastDispatcher = broadcastDispatcher;
+        mMainExecutor = mainExecutor;
         mTileServiceRequestController = tileServiceRequestControllerBuilder.create(this);
         mTileLifeCycleManagerFactory = tileLifecycleManagerFactory;
 
@@ -159,7 +154,7 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
         mSecureSettings = secureSettings;
         mCustomTileStatePersister = customTileStatePersister;
 
-        mainHandler.post(() -> {
+        mainExecutor.execute(() -> {
             // This is technically a hack to avoid circular dependency of
             // QSTileHost -> XXXTile -> QSTileHost. Posting ensures creation
             // finishes before creating any tiles.
@@ -168,41 +163,7 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
             mAutoTiles = autoTiles.get();
             mTileServiceRequestController.init();
         });
-        mContext.registerReceiver(mLiveDisplayReceiver, new IntentFilter(
-                "lineageos.intent.action.INITIALIZE_LIVEDISPLAY"));
-
-        setSecureTileDisabledOnLockscreen();
-        mSettingsObserver = new ContentObserver(mainHandler) {
-            @Override
-            public void onChange(boolean selfChange) {
-                setSecureTileDisabledOnLockscreen();
-            }
-        };
-        mSecureSettings.registerContentObserverForUser(
-            Settings.Secure.DISABLE_SECURE_TILES_ON_LOCKSCREEN,
-            mSettingsObserver, UserHandle.USER_ALL);
     }
-
-    private void setSecureTileDisabledOnLockscreen() {
-        mIsSecureTileDisabledOnLockscreen = mSecureSettings.getIntForUser(
-            Settings.Secure.DISABLE_SECURE_TILES_ON_LOCKSCREEN,
-            1, UserHandle.USER_CURRENT) == 1;
-        mTiles.values().stream()
-            .filter(tile -> tile instanceof SecureQSTile)
-            .map(tile -> (SecureQSTile) tile)
-            .forEach(tile ->
-                tile.setDisabledOnLockscreen(mIsSecureTileDisabledOnLockscreen));
-    }
-
-    private final BroadcastReceiver mLiveDisplayReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String value = mTunerService.getValue(TILES_SETTING);
-            // Force remove and recreate of all tiles.
-            onTuningChanged(TILES_SETTING, "");
-            onTuningChanged(TILES_SETTING, value);
-        }
-    };
 
     public StatusBarIconController getIconController() {
         return mIconController;
@@ -214,14 +175,12 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
     }
 
     public void destroy() {
-        mSecureSettings.unregisterContentObserver(mSettingsObserver);
         mTiles.values().forEach(tile -> tile.destroy());
         mAutoTiles.destroy();
         mTunerService.removeTunable(this);
         mPluginManager.removePluginListener(this);
         mDumpManager.unregisterDumpable(TAG);
         mTileServiceRequestController.destroy();
-        mContext.unregisterReceiver(mLiveDisplayReceiver);
     }
 
     @Override
@@ -302,12 +261,39 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
         return mTileSpecs.indexOf(spec);
     }
 
+    /**
+     * Whenever the Secure Setting keeping track of the current tiles changes (or upon start) this
+     * will be called with the new value of the setting.
+     *
+     * This method will do the following:
+     * <ol>
+     *     <li>Destroy any existing tile that's not one of the current tiles (in the setting)</li>
+     *     <li>Create new tiles for those that don't already exist. If this tiles end up being
+     *         not available, they'll also be destroyed.</li>
+     *     <li>Save the resolved list of tiles (current tiles that are available) into the setting.
+     *         This means that after this call ends, the tiles in the Setting, {@link #mTileSpecs},
+     *         and visible tiles ({@link #mTiles}) must match.
+     *         </li>
+     * </ol>
+     *
+     * Additionally, if the user has changed, it'll do the following:
+     * <ul>
+     *     <li>Change the user for SystemUI tiles: {@link QSTile#userSwitch}.</li>
+     *     <li>Destroy any {@link CustomTile} and recreate it for the new user.</li>
+     * </ul>
+     *
+     * This happens in main thread as {@link com.android.systemui.tuner.TunerServiceImpl} dispatches
+     * in main thread.
+     *
+     * @see QSTile#isAvailable
+     */
+    @MainThread
     @Override
     public void onTuningChanged(String key, String newValue) {
         if (!TILES_SETTING.equals(key)) {
             return;
         }
-        if (DEBUG) Log.d(TAG, "Recreating tiles");
+        Log.d(TAG, "Recreating tiles");
         if (newValue == null && UserManager.isDeviceInDemoMode(mContext)) {
             newValue = mContext.getResources().getString(R.string.quick_settings_tiles_retail_mode);
         }
@@ -322,7 +308,7 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
         if (tileSpecs.equals(mTileSpecs) && currentUser == mCurrentUser) return;
         mTiles.entrySet().stream().filter(tile -> !tileSpecs.contains(tile.getKey())).forEach(
                 tile -> {
-                    if (DEBUG) Log.d(TAG, "Destroying tile: " + tile.getKey());
+                    Log.d(TAG, "Destroying tile: " + tile.getKey());
                     mQSLogger.logTileDestroyed(tile.getKey(), "Tile removed");
                     tile.getValue().destroy();
                 });
@@ -337,14 +323,11 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
                     if (!(tile instanceof CustomTile) && mCurrentUser != currentUser) {
                         tile.userSwitch(currentUser);
                     }
-                    if (tile instanceof SecureQSTile) {
-                        ((SecureQSTile) tile).setDisabledOnLockscreen(mIsSecureTileDisabledOnLockscreen);
-                    }
                     newTiles.put(tileSpec, tile);
                     mQSLogger.logTileAdded(tileSpec);
                 } else {
                     tile.destroy();
-                    if (DEBUG) Log.d(TAG, "Destroying not available tile: " + tileSpec);
+                    Log.d(TAG, "Destroying not available tile: " + tileSpec);
                     mQSLogger.logTileDestroyed(tileSpec, "Tile not available");
                 }
             } else {
@@ -352,23 +335,20 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
                 // destroy it
                 if (tile != null) {
                     tile.destroy();
-                    if (DEBUG) Log.d(TAG, "Destroying tile for wrong user: " + tileSpec);
+                    Log.d(TAG, "Destroying tile for wrong user: " + tileSpec);
                     mQSLogger.logTileDestroyed(tileSpec, "Tile for wrong user");
                 }
-                if (DEBUG) Log.d(TAG, "Creating tile: " + tileSpec);
+                Log.d(TAG, "Creating tile: " + tileSpec);
                 try {
                     tile = createTile(tileSpec);
                     if (tile != null) {
                         tile.setTileSpec(tileSpec);
                         if (tile.isAvailable()) {
-                            if (tile instanceof SecureQSTile) {
-                                ((SecureQSTile) tile).setDisabledOnLockscreen(mIsSecureTileDisabledOnLockscreen);
-                            }
                             newTiles.put(tileSpec, tile);
                             mQSLogger.logTileAdded(tileSpec);
                         } else {
                             tile.destroy();
-                            if (DEBUG) Log.d(TAG, "Destroying not available tile: " + tileSpec);
+                            Log.d(TAG, "Destroying not available tile: " + tileSpec);
                             mQSLogger.logTileDestroyed(tileSpec, "Tile not available");
                         }
                     }
@@ -380,34 +360,44 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
         mCurrentUser = currentUser;
         List<String> currentSpecs = new ArrayList<>(mTileSpecs);
         mTileSpecs.clear();
-        mTileSpecs.addAll(tileSpecs);
+        mTileSpecs.addAll(newTiles.keySet()); // Only add the valid (available) tiles.
         mTiles.clear();
         mTiles.putAll(newTiles);
         if (newTiles.isEmpty() && !tileSpecs.isEmpty()) {
             // If we didn't manage to create any tiles, set it to empty (default)
-            if (DEBUG) Log.d(TAG, "No valid tiles on tuning changed. Setting to default.");
-            changeTiles(currentSpecs, loadTileSpecs(mContext, ""));
+            Log.d(TAG, "No valid tiles on tuning changed. Setting to default.");
+            changeTilesByUser(currentSpecs, loadTileSpecs(mContext, ""));
         } else {
+            String resolvedTiles = TextUtils.join(",", mTileSpecs);
+            if (!resolvedTiles.equals(newValue)) {
+                // If the resolved tiles (those we actually ended up with) are different than
+                // the ones that are in the setting, update the Setting.
+                saveTilesToSettings(mTileSpecs);
+            }
             for (int i = 0; i < mCallbacks.size(); i++) {
                 mCallbacks.get(i).onTilesChanged();
             }
         }
     }
 
+    /**
+     * Only use with [CustomTile] if the tile doesn't exist anymore (and therefore doesn't need
+     * its lifecycle terminated).
+     */
     @Override
     public void removeTile(String spec) {
-        changeTileSpecs(tileSpecs-> tileSpecs.remove(spec));
+        mMainExecutor.execute(() -> changeTileSpecs(tileSpecs-> tileSpecs.remove(spec)));
     }
 
     /**
      * Remove many tiles at once.
      *
-     * It will only save to settings once (as opposed to {@link QSTileHost#removeTile} called
+     * It will only save to settings once (as opposed to {@link QSTileHost#removeTileByUser} called
      * multiple times).
      */
     @Override
     public void removeTiles(Collection<String> specs) {
-        changeTileSpecs(tileSpecs -> tileSpecs.removeAll(specs));
+        mMainExecutor.execute(() -> changeTileSpecs(tileSpecs -> tileSpecs.removeAll(specs)));
     }
 
     @Override
@@ -431,27 +421,30 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
      * @param requestPosition -1 for end, 0 for beginning, or X for insertion at position X
      */
     public void addTile(String spec, int requestPosition) {
-        if (spec.equals("work")) Log.wtfStack(TAG, "Adding work tile");
-        changeTileSpecs(tileSpecs -> {
-            if (tileSpecs.contains(spec)) return false;
+        mMainExecutor.execute(() ->
+                changeTileSpecs(tileSpecs -> {
+                    if (tileSpecs.contains(spec)) return false;
 
-            int size = tileSpecs.size();
-            if (requestPosition == POSITION_AT_END || requestPosition >= size) {
-                tileSpecs.add(spec);
-            } else {
-                tileSpecs.add(requestPosition, spec);
-            }
-            return true;
-        });
+                    int size = tileSpecs.size();
+                    if (requestPosition == POSITION_AT_END || requestPosition >= size) {
+                        tileSpecs.add(spec);
+                    } else {
+                        tileSpecs.add(requestPosition, spec);
+                    }
+                    return true;
+                })
+        );
     }
 
-    void saveTilesToSettings(List<String> tileSpecs) {
-        if (tileSpecs.contains("work")) Log.wtfStack(TAG, "Saving work tile");
+
+    @MainThread
+    private void saveTilesToSettings(List<String> tileSpecs) {
         mSecureSettings.putStringForUser(TILES_SETTING, TextUtils.join(",", tileSpecs),
                 null /* tag */, false /* default */, mCurrentUser,
                 true /* overrideable by restore */);
     }
 
+    @MainThread
     private void changeTileSpecs(Predicate<List<String>> changeFunction) {
         final String setting = mSecureSettings.getStringForUser(TILES_SETTING, mCurrentUser);
         final List<String> tileSpecs = loadTileSpecs(mContext, setting);
@@ -471,29 +464,32 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
      */
     public void addTile(ComponentName tile, boolean end) {
         String spec = CustomTile.toSpec(tile);
-        if (!mTileSpecs.contains(spec)) {
-            List<String> newSpecs = new ArrayList<>(mTileSpecs);
-            if (end) {
-                newSpecs.add(spec);
-            } else {
-                newSpecs.add(0, spec);
-            }
-            changeTiles(mTileSpecs, newSpecs);
-        }
+        addTile(spec, end ? POSITION_AT_END : 0);
     }
 
-    public void removeTile(ComponentName tile) {
-        List<String> newSpecs = new ArrayList<>(mTileSpecs);
-        newSpecs.remove(CustomTile.toSpec(tile));
-        changeTiles(mTileSpecs, newSpecs);
+    /**
+     * This will call through {@link #changeTilesByUser}. It should only be used when a tile is
+     * removed by a <b>user action</b> like {@code adb}.
+     */
+    public void removeTileByUser(ComponentName tile) {
+        mMainExecutor.execute(() -> {
+            List<String> newSpecs = new ArrayList<>(mTileSpecs);
+            if (newSpecs.remove(CustomTile.toSpec(tile))) {
+                changeTilesByUser(mTileSpecs, newSpecs);
+            }
+        });
     }
 
     /**
      * Change the tiles triggered by the user editing.
      * <p>
      * This is not called on device start, or on user change.
+     *
+     * {@link android.service.quicksettings.TileService#onTileRemoved} will be called for tiles
+     * that are removed.
      */
-    public void changeTiles(List<String> previousTiles, List<String> newTiles) {
+    @MainThread
+    public void changeTilesByUser(List<String> previousTiles, List<String> newTiles) {
         final List<String> copy = new ArrayList<>(previousTiles);
         final int NP = copy.size();
         for (int i = 0; i < NP; i++) {
@@ -575,6 +571,20 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
                     addedSpecs.add(tile);
                 }
             }
+        }
+
+        if (!tiles.contains("internet")) {
+            if (tiles.contains("wifi")) {
+                // Replace the WiFi with Internet, and remove the Cell
+                tiles.set(tiles.indexOf("wifi"), "internet");
+                tiles.remove("cell");
+            } else if (tiles.contains("cell")) {
+                // Replace the Cell with Internet
+                tiles.set(tiles.indexOf("cell"), "internet");
+            }
+        } else {
+            tiles.remove("wifi");
+            tiles.remove("cell");
         }
         return tiles;
     }
