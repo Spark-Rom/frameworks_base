@@ -4,44 +4,79 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- AlertSlider -->
-    <string name="alert_slider_mode_priority_text">優先</string>
-    <string name="alert_slider_mode_dnd_text">Do Not Disturb</string>
-    <!-- Screen record -->
-    <!-- Label for notification action to delete a screen recording file [CHAR LIMIT=35] -->
-    <string name="screenrecord_delete_label">削除</string>
-    <!-- A toast message shown after successfully deleting a screen recording [CHAR LIMIT=NONE] -->
-    <string name="screenrecord_delete_description">画面録画を削除しました</string>
-    <string name="screenrecord_stopdot_label">停止ドットを表示</string>
-    <string name="screenrecord_stopdot_summary">長押しで移動します</string>
-    <string name="screenrecord_lowquality_label">低品質にする</string>
-    <string name="screenrecord_lowquality_summary">ファイルサイズを小さくして低品質にする</string>
-    <string name="screenrecord_longer_timeout_switch_label">ファイルサイズの上限を大きくする</string>
-    <string name="screenrecord_longer_timeout_switch_summary">録画サイズを15GBに制限する</string>
-    <string name="screenrecord_skip_time_label">タイマーをスキップ</string>
-    <string name="screenrecord_skip_time_summary">3秒間の待機を削除する</string>
     <!-- Screenshot delete action -->
     <!-- Label for UI element which allows deleting the screenshot [CHAR LIMIT=30] -->
     <string name="screenshot_delete_label">削除</string>
     <!-- Content description indicating that tapping the element will allow deleting the screenshot [CHAR LIMIT=NONE] -->
     <string name="screenshot_delete_description">スクリーンショットを削除</string>
-    <!-- Reader mode QS tile -->
-    <string name="quick_settings_reading_mode">読書モード</string>
-    <string name="accessibility_quick_settings_reading_mode_on">読書モード ON</string>
-    <string name="accessibility_quick_settings_reading_mode_off">読書モード OFF</string>
-    <string name="accessibility_quick_settings_reading_mode_changed_on">読書モードを ON にしました</string>
-    <string name="accessibility_quick_settings_reading_mode_changed_off">読書モードを OFF にしました</string>
-    <!-- Refresh Rate Tile -->
-    <string name="refresh_rate_tile_label">リフレッシュレート</string>
-    <string name="refresh_rate_auto_mode_placeholder">        自動 (<xliff:g id="min_refresh_rate" example="60">%1$d</xliff:g> - <xliff:g id="max_refresh_rate" example="60">%2$d</xliff:g> Hz)
-    </string>
-    <string name="refresh_rate_forced_mode_placeholder"><xliff:g id="refresh_rate" example="60">%1$d</xliff:g> Hz</string>
     <!-- Name of the nfc status bar icon. -->
     <string name="status_bar_nfc">NFC</string>
     <!-- Accessibility label for nfc icon (not shown on screen) [CHAR LIMIT=NONE] -->
     <string name="accessibility_status_bar_nfc">NFC</string>
-    <!-- Anti flicker QS tile -->
-    <string name="quick_settings_anti_flicker">アンチフリッカー</string>
+    <!-- Screen record delete action -->
+    <!-- Label for notification action to delete a screen recording file [CHAR LIMIT=35] -->
+    <string name="screenrecord_delete_label">削除</string>
+    <!-- A toast message shown after successfully deleting a screen recording [CHAR LIMIT=NONE] -->
+    <string name="screenrecord_delete_description">画面録画を削除しました</string>
+    <!-- Statusbar tuner -->
+    <string name="statusbar_items_title">ステータスバーのアイコン</string>
+    <!-- Name of the VPN status bar icon. -->
+    <string name="status_bar_vpn">VPN</string>
+    <!-- Sb Data Saver icon -->
+    <string name="status_bar_data_saver">データセーバー</string>
+    <!-- Sb Call Strength icon -->
+    <string name="status_bar_call_strength">電波強度</string>
+    <!-- Alert slider extras -->
+    <string name="volume_ringer_priority_only">Priority</string>
+    <string name="volume_ringer_alarms_only">Alarms</string>
+    <string name="volume_ringer_dnd">DnD</string>
+    <string name="tristate_flashlight">トーチ</string>
+    <string name="tristate_flashlight_on">Torch on</string>
+    <string name="tristate_flashlight_off">Torch off</string>
+    <string name="tristate_flashlight_blink">Torch blink</string>
+    <string name="tristate_brightness_bright">Max-brightness</string>
+    <string name="tristate_brightness_dark">Min-brightness</string>
+    <string name="tristate_brightness_auto">Auto-brightness</string>
+    <string name="tristate_rotation_auto">Auto-rotate</string>
+    <string name="tristate_rotation_0">Portrait</string>
+    <string name="tristate_rotation_90">Landscape (90°)</string>
+    <string name="tristate_rotation_270">Landscape (270°)</string>
+    <!-- Advanced Reboot -->
+    <string name="global_action_restart_advanced">高度な再起動</string>
+    <string name="global_action_restart_recovery">リカバリー</string>
+    <string name="global_action_restart_bootloader">ブートローダー</string>
+    <string name="global_action_restart_ui">システム UI</string>
+    <string name="global_action_onthego">On-The-Go</string>
+    <!-- On The Go -->
+    <string name="onthego_notification_ticker">On-The-Go が有効化されました</string>
+    <string name="onthego_notification_title">On-The-Go が有効です</string>
+    <string name="onthego_notification_stop">停止</string>
+    <string name="onthego_notification_options">オプション</string>
+    <string name="onthego_notification_error">On-The-Go を開始できません</string>
+    <string name="onthego_notification_restart">On-The-Go を再起動</string>
+    <string name="onthego_notification_camera_changed">カメラモードを変更しました</string>
+    <string name="onthego_transparency">On-The-Go の透明度</string>
+    <string name="onthego_front_camera">フロントカメラを使用</string>
+    <string name="onthego_service_toggle">自動でサービスを再始動</string>
+    <string name="onthego_channel_name">On-The-Go</string>
+    <!-- OnTheGo Tile -->
+    <string name="quick_settings_onthego_label">On-The-Go</string>
+    <string name="accessibility_quick_settings_onthego_off">On-The-Go OFF</string>
+    <string name="accessibility_quick_settings_onthego_on">On-The-Go ON</string>
+    <string name="accessibility_quick_settings_onthego_changed_off">On-The-Go を OFF にしました</string>
+    <string name="accessibility_quick_settings_onthego_changed_on">On-The-Go を ON にしました</string>
+    <!-- Text to use when the number in a notification info is too large -->
+    <!-- Name of the clock in status bar [CHAR LIMIT=30] -->
+    <string name="clock">時計</string>
+    <!-- Kill button in notification guts -->
+    <string name="force_stop_dlg_title">強制停止しますか?</string>
+    <string name="force_stop_dlg_text">アプリを強制停止すると正常に機能しないことがあります</string>
+    <string name="guts_force_close_app">アプリを閉じる</string>
+    <!-- AOD QS tile -->
+    <string name="quick_settings_aod_label">AOD</string>
+    <string name="quick_settings_aod_on_charge_label">充電時の AOD</string>
+    <string name="quick_settings_aod_off_label">AOD OFF</string>
+    <string name="quick_settings_aod_off_powersave_label">AOD OFF\nバッテリー節約</string>
     <!-- PowerShare QS tile -->
     <string name="quick_settings_powershare_label">ワイヤレス PowerShare</string>
     <string name="quick_settings_powershare_off_powersave_label">ワイヤレス PowerShare OFF\nバッテリー節約</string>
@@ -70,18 +105,6 @@
     <string name="quick_settings_sound_ring">着信</string>
     <string name="quick_settings_sound_vibrate">振動</string>
     <string name="quick_settings_sound_mute">ミュート</string>
-    <!-- Screenshot QS tile -->
-    <string name="quick_settings_full_screenshot_label">全画面</string>
-    <string name="quick_settings_screenshot_label">スクリーンショット</string>
-    <string name="quick_settings_region_screenshot_label">範囲選択</string>
-    <!-- Screenshot Delete Toast -->
-    <string name="delete_screenshot_toast">スクリーンショットを削除しました</string>
-    <!-- Statusbar tuner -->
-    <string name="statusbar_items_title">ステータスバーのアイコン</string>
-    <!-- Name of status bar icons. -->
-    <string name="status_bar_call_strength">電波強度</string>
-    <string name="status_bar_data_saver">データセーバー</string>
-    <string name="status_bar_vpn">VPN</string>
     <!-- Heads Up QS Tile -->
     <string name="quick_settings_heads_up_label">Heads Up</string>
     <string name="accessibility_quick_settings_heads_up_off">Heads Up OFF</string>
@@ -92,46 +115,8 @@
     <string name="quick_settings_poweroff_label">電源を切る</string>
     <string name="quick_settings_reboot_label">再起動</string>
     <string name="quick_settings_reboot_recovery_label">リカバリー</string>
-    <!-- Advanced Reboot -->
-    <string name="global_action_restart_advanced">高度な再起動</string>
-    <string name="global_action_restart_recovery">リカバリー</string>
-    <string name="global_action_restart_bootloader">ブートローダー</string>
-    <string name="global_action_restart_ui">システム UI</string>
-    <string name="global_action_onthego">On-The-Go</string>
-    <!-- On The Go -->
-    <string name="onthego_notification_ticker">On-The-Go が有効化されました</string>
-    <string name="onthego_notification_title">On-The-Go が有効です</string>
-    <string name="onthego_notification_stop">停止</string>
-    <string name="onthego_notification_options">オプション</string>
-    <string name="onthego_notification_error">On-The-Go を開始できません</string>
-    <string name="onthego_notification_restart">On-The-Go を再起動</string>
-    <string name="onthego_notification_camera_changed">カメラモードを変更しました</string>
-    <string name="onthego_transparency">On-The-Go の透明度</string>
-    <string name="onthego_front_camera">フロントカメラを使用</string>
-    <string name="onthego_service_toggle">自動でサービスを再始動</string>
-    <string name="onthego_channel_name">On-The-Go</string>
-    <!-- OnTheGo Tile -->
-    <string name="quick_settings_onthego_label">On-The-Go</string>
-    <string name="accessibility_quick_settings_onthego_off">On-The-Go OFF</string>
-    <string name="accessibility_quick_settings_onthego_on">On-The-Go ON</string>
-    <string name="accessibility_quick_settings_onthego_changed_off">On-The-Go を OFF にしました</string>
-    <string name="accessibility_quick_settings_onthego_changed_on">On-The-Go を ON にしました</string>
-    <!-- Text to use when the number in a notification info is too large -->
-    <!-- Face Unlock -->
-    <string name="face_unlock_recognizing">顔を認識中...</string>
-    <!-- Name of the clock in status bar [CHAR LIMIT=30] -->
-    <string name="clock">時計</string>
-    <!-- Kill button in notification guts -->
-    <string name="force_stop_dlg_title">強制停止しますか?</string>
-    <string name="force_stop_dlg_text">アプリを強制停止すると正常に機能しないことがあります</string>
-    <string name="guts_force_close_app">アプリを閉じる</string>
     <!-- Volume panel QS tile -->
     <string name="quick_settings_volume_panel_label">音量パネル</string>
-    <!-- AOD QS tile -->
-    <string name="quick_settings_aod_label">AOD</string>
-    <string name="quick_settings_aod_on_charge_label">充電時の AOD</string>
-    <string name="quick_settings_aod_off_label">AOD OFF</string>
-    <string name="quick_settings_aod_off_powersave_label">AOD OFF\nバッテリー節約</string>
     <!-- DataSwitch Tile -->
     <string name="qs_data_switch_label">データ SIM の変更</string>
     <string name="qs_data_switch_toast_0">現在 SIM カードは挿入されていません</string>
@@ -147,9 +132,17 @@
     <!-- Navigation bar dpad -->
     <string name="accessibility_dpad_left">カーソルを左へ</string>
     <string name="accessibility_dpad_right">カーソルを右へ</string>
+    <!-- Reader mode QS tile -->
+    <string name="quick_settings_reading_mode">読書モード</string>
+    <string name="accessibility_quick_settings_reading_mode_on">読書モード ON</string>
+    <string name="accessibility_quick_settings_reading_mode_off">読書モード OFF</string>
+    <string name="accessibility_quick_settings_reading_mode_changed_on">読書モードを ON にしました</string>
+    <string name="accessibility_quick_settings_reading_mode_changed_off">読書モードを OFF にしました</string>
     <!-- Kill foreground app -->
     <string name="task_helper_app_killed">%1$s を強制停止しました</string>
     <string name="empty_app_killed">アプリ</string>
+    <!-- Anti flicker QS tile -->
+    <string name="quick_settings_anti_flicker">アンチフリッカー</string>
     <!-- Advanced nav gestures -->
     <string name="app_picker_dialog_title">アプリを選択</string>
     <string name="active_edge_app_select_title">アプリを選択</string>
@@ -175,15 +168,52 @@
     <!-- SoundSearch Tile -->
     <string name="quick_settings_sound_search">音声検索</string>
     <string name="quick_settings_sound_search_no_app">申し訳ありませんが、音楽検索アプリがインストールされていない場合は動作しません。</string>
+    <!-- Refresh Rate Tile -->
+    <string name="refresh_rate_tile_label">リフレッシュレート</string>
+    <string name="refresh_rate_auto_mode_placeholder">        自動 (<xliff:g id="min_refresh_rate" example="60">%1$d</xliff:g> - <xliff:g id="max_refresh_rate" example="60">%2$d</xliff:g> Hz)
+    </string>
+    <string name="refresh_rate_forced_mode_placeholder"><xliff:g id="refresh_rate" example="60">%1$d</xliff:g> Hz</string>
     <!-- Google Lens Screenshot string -->
     <string name="lensss">レンズ</string>
-    <!-- Data usage info in QS footer -->
-    <string name="usage_data">今日の使用量</string>
-    <string name="usage_data_default_suffix">データ</string>
-    <string name="usage_wifi_default_suffix">Wi-Fi</string>
     <!-- Smart Pixels QS Tile -->
     <string name="quick_settings_smart_pixels">スマートピクセル</string>
     <string name="quick_settings_smart_pixels_on_power_save">自動有効</string>
-    <!-- 5G toggle in internet dialog -->
-    <string name="enable_fiveg">5G を有効化</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • Dash charging (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> until full)</string>
+    <string name="keyguard_plugged_in_dash_charging"><xliff:g id="percentage">%s</xliff:g> • Dash charging</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with a warp charger. Should match keyguard_plugged_in_warp_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_warp_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • Warp Charging (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> until full)</string>
+    <string name="keyguard_plugged_in_warp_charging"><xliff:g id="percentage">%s</xliff:g> • Warp Charging</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with a VOOC charger. Should match keyguard_plugged_in_vooc_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_vooc_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • VOOC Charging (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> until full)</string>
+    <string name="keyguard_plugged_in_vooc_charging"><xliff:g id="percentage">%s</xliff:g> • VOOC Charging</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_turbo_power_time"><xliff:g id="percentage">%2$s</xliff:g> • Turbo Charging (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> until full)</string>
+    <string name="keyguard_plugged_in_turbo_charging"><xliff:g id="percentage">%s</xliff:g> • Turbo Charging</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with an oem fast power charger. Should match keyguard_plugged_in_turbo_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_oem_power_time"><xliff:g id="percentage">%2$s</xliff:g> • Fast Charging (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> until full)</string>
+    <string name="keyguard_plugged_in_oem_charging"><xliff:g id="percentage">%s</xliff:g> • Fast Charging</string>
+    <!-- Screen record -->
+    <string name="screenrecord_stopdot_label">停止ドットを表示</string>
+    <string name="screenrecord_stopdot_summary">長押しで移動します</string>
+    <string name="screenrecord_lowquality_label">低品質にする</string>
+    <string name="screenrecord_lowquality_summary">ファイルサイズを小さくして低品質にする</string>
+    <string name="screenrecord_longer_timeout_switch_label">ファイルサイズの上限を大きくする</string>
+    <string name="screenrecord_longer_timeout_switch_summary">録画サイズを15GBに制限する</string>
+    <string name="screenrecord_skip_time_label">タイマーをスキップ</string>
+    <string name="screenrecord_skip_time_summary">3秒間の待機を削除する</string>
+    <!-- Omnijaws Weather -->
+    <string name="omnijaws_service_error">Error</string>
+    <string name="omnijaws_service_unkown">No weather data</string>
+    <string name="omnijaws_service_error_long">Error loading weather data</string>
+    <string name="omnijaws_service_disabled">Service is disabled</string>
+    <string name="omnijaws_detail_header">Weather</string>
+    <string name="omnijaws_label_default">Weather</string>
+    <string name="omnijaws_current_text">Now</string>
+    <string name="omnijaws_package_not_available">OmniJaws not available</string>
+    <string name="omnijaws_service_last_update">Last update:</string>
+    <!-- QS InternetDialog: Summary for how many devices are connected to the hotspot -->
+    <plurals name="quick_settings_internet_hotspot_summary_num_devices">
+        <item quantity="other">%d devices connected</item>
+    </plurals>
 </resources>
