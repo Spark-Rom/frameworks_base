@@ -4,44 +4,79 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- AlertSlider -->
-    <string name="alert_slider_mode_priority_text">Priority</string>
-    <string name="alert_slider_mode_dnd_text">DND</string>
-    <!-- Screen record -->
-    <!-- Label for notification action to delete a screen recording file [CHAR LIMIT=35] -->
-    <string name="screenrecord_delete_label">Διαγραφή</string>
-    <!-- A toast message shown after successfully deleting a screen recording [CHAR LIMIT=NONE] -->
-    <string name="screenrecord_delete_description">Screen recording deleted</string>
-    <string name="screenrecord_stopdot_label">Show stop dot</string>
-    <string name="screenrecord_stopdot_summary">Longpress to move it</string>
-    <string name="screenrecord_lowquality_label">Lower quality</string>
-    <string name="screenrecord_lowquality_summary">For smaller file size</string>
-    <string name="screenrecord_longer_timeout_switch_label">Bigger file size limit</string>
-    <string name="screenrecord_longer_timeout_switch_summary">Limit recording size to 15 GB</string>
-    <string name="screenrecord_skip_time_label">Skip timer</string>
-    <string name="screenrecord_skip_time_summary">Remove 3 second wait</string>
     <!-- Screenshot delete action -->
     <!-- Label for UI element which allows deleting the screenshot [CHAR LIMIT=30] -->
     <string name="screenshot_delete_label">Διαγραφή</string>
     <!-- Content description indicating that tapping the element will allow deleting the screenshot [CHAR LIMIT=NONE] -->
     <string name="screenshot_delete_description">Διαγραφή στιγμιότυπου οθόνης</string>
-    <!-- Reader mode QS tile -->
-    <string name="quick_settings_reading_mode">Reading mode</string>
-    <string name="accessibility_quick_settings_reading_mode_on">Reading mode on.</string>
-    <string name="accessibility_quick_settings_reading_mode_off">Reading mode off.</string>
-    <string name="accessibility_quick_settings_reading_mode_changed_on">Reading mode turned on.</string>
-    <string name="accessibility_quick_settings_reading_mode_changed_off">Reading mode turned off.</string>
-    <!-- Refresh Rate Tile -->
-    <string name="refresh_rate_tile_label">Refresh rate</string>
-    <string name="refresh_rate_auto_mode_placeholder">        Auto (<xliff:g id="min_refresh_rate" example="60">%1$d</xliff:g> - <xliff:g id="max_refresh_rate" example="60">%2$d</xliff:g> Hz)
-    </string>
-    <string name="refresh_rate_forced_mode_placeholder"><xliff:g id="refresh_rate" example="60">%1$d</xliff:g> Hz</string>
     <!-- Name of the nfc status bar icon. -->
     <string name="status_bar_nfc">NFC</string>
     <!-- Accessibility label for nfc icon (not shown on screen) [CHAR LIMIT=NONE] -->
     <string name="accessibility_status_bar_nfc">Nfc</string>
-    <!-- Anti flicker QS tile -->
-    <string name="quick_settings_anti_flicker">Anti flicker</string>
+    <!-- Screen record delete action -->
+    <!-- Label for notification action to delete a screen recording file [CHAR LIMIT=35] -->
+    <string name="screenrecord_delete_label">Διαγραφή</string>
+    <!-- A toast message shown after successfully deleting a screen recording [CHAR LIMIT=NONE] -->
+    <string name="screenrecord_delete_description">Screen recording deleted</string>
+    <!-- Statusbar tuner -->
+    <string name="statusbar_items_title">Εικονίδια γραμμής κατάστασης</string>
+    <!-- Name of the VPN status bar icon. -->
+    <string name="status_bar_vpn">VPN</string>
+    <!-- Sb Data Saver icon -->
+    <string name="status_bar_data_saver">Data saver</string>
+    <!-- Sb Call Strength icon -->
+    <string name="status_bar_call_strength">Call strength</string>
+    <!-- Alert slider extras -->
+    <string name="volume_ringer_priority_only">Priority</string>
+    <string name="volume_ringer_alarms_only">Alarms</string>
+    <string name="volume_ringer_dnd">DnD</string>
+    <string name="tristate_flashlight">Πυρσός</string>
+    <string name="tristate_flashlight_on">Torch on</string>
+    <string name="tristate_flashlight_off">Torch off</string>
+    <string name="tristate_flashlight_blink">Torch blink</string>
+    <string name="tristate_brightness_bright">Max-brightness</string>
+    <string name="tristate_brightness_dark">Min-brightness</string>
+    <string name="tristate_brightness_auto">Auto-brightness</string>
+    <string name="tristate_rotation_auto">Auto-rotate</string>
+    <string name="tristate_rotation_0">Portrait</string>
+    <string name="tristate_rotation_90">Landscape (90°)</string>
+    <string name="tristate_rotation_270">Landscape (270°)</string>
+    <!-- Advanced Reboot -->
+    <string name="global_action_restart_advanced">Προχωρημένα</string>
+    <string name="global_action_restart_recovery">Recovery</string>
+    <string name="global_action_restart_bootloader">Bootloader</string>
+    <string name="global_action_restart_ui">ΣύστημαUI</string>
+    <string name="global_action_onthego">On-The-Go</string>
+    <!-- On The Go -->
+    <string name="onthego_notification_ticker">Η λειτουργία On-The-Go ενεργοποιήθηκε</string>
+    <string name="onthego_notification_title">Η λειτουργία On-The-Go είναι ενεργή</string>
+    <string name="onthego_notification_stop">Διακοπή</string>
+    <string name="onthego_notification_options">Options</string>
+    <string name="onthego_notification_error">Unable to start On-The-Go</string>
+    <string name="onthego_notification_restart">Restart On-The-Go</string>
+    <string name="onthego_notification_camera_changed">Camera mode changed</string>
+    <string name="onthego_transparency">Transparency</string>
+    <string name="onthego_front_camera">Use front camera</string>
+    <string name="onthego_service_toggle">Automatically restart service</string>
+    <string name="onthego_channel_name">Main</string>
+    <!-- OnTheGo Tile -->
+    <string name="quick_settings_onthego_label">Main</string>
+    <string name="accessibility_quick_settings_onthego_off">On-The-Go off</string>
+    <string name="accessibility_quick_settings_onthego_on">On-The-Go on</string>
+    <string name="accessibility_quick_settings_onthego_changed_off">On-The-Go turned off</string>
+    <string name="accessibility_quick_settings_onthego_changed_on">On-The-Go turned on</string>
+    <!-- Text to use when the number in a notification info is too large -->
+    <!-- Name of the clock in status bar [CHAR LIMIT=30] -->
+    <string name="clock">Clock</string>
+    <!-- Kill button in notification guts -->
+    <string name="force_stop_dlg_title">Force stop?</string>
+    <string name="force_stop_dlg_text">If you force stop an app, it may misbehave.</string>
+    <string name="guts_force_close_app">Κλείσιμο Εφαρμογής</string>
+    <!-- AOD QS tile -->
+    <string name="quick_settings_aod_label">AOD</string>
+    <string name="quick_settings_aod_on_charge_label">AOD on charge</string>
+    <string name="quick_settings_aod_off_label">AOD off</string>
+    <string name="quick_settings_aod_off_powersave_label">AOD off\nBattery saver</string>
     <!-- PowerShare QS tile -->
     <string name="quick_settings_powershare_label">Wireless PowerShare</string>
     <string name="quick_settings_powershare_off_powersave_label">Wireless PowerShare off\nBattery saver</string>
@@ -70,18 +105,6 @@
     <string name="quick_settings_sound_ring">Κουδούνισμα</string>
     <string name="quick_settings_sound_vibrate">Δόνηση</string>
     <string name="quick_settings_sound_mute">Mute</string>
-    <!-- Screenshot QS tile -->
-    <string name="quick_settings_full_screenshot_label">Full</string>
-    <string name="quick_settings_screenshot_label">Στιγμιότυπο οθόνης</string>
-    <string name="quick_settings_region_screenshot_label">Μερικό στιγμιότυπο οθόνης</string>
-    <!-- Screenshot Delete Toast -->
-    <string name="delete_screenshot_toast">Screenshot deleted</string>
-    <!-- Statusbar tuner -->
-    <string name="statusbar_items_title">Εικονίδια γραμμής κατάστασης</string>
-    <!-- Name of status bar icons. -->
-    <string name="status_bar_call_strength">Call strength</string>
-    <string name="status_bar_data_saver">Data saver</string>
-    <string name="status_bar_vpn">VPN</string>
     <!-- Heads Up QS Tile -->
     <string name="quick_settings_heads_up_label">Αναδυόμενες ειδοποιήσεις</string>
     <string name="accessibility_quick_settings_heads_up_off">Αναδυόμενες ειδοποιήσεις ανενεργές.</string>
@@ -92,46 +115,8 @@
     <string name="quick_settings_poweroff_label">Απενεργοποίηση</string>
     <string name="quick_settings_reboot_label">Επανεκκίνηση</string>
     <string name="quick_settings_reboot_recovery_label">Recovery</string>
-    <!-- Advanced Reboot -->
-    <string name="global_action_restart_advanced">Προχωρημένα</string>
-    <string name="global_action_restart_recovery">Recovery</string>
-    <string name="global_action_restart_bootloader">Bootloader</string>
-    <string name="global_action_restart_ui">ΣύστημαUI</string>
-    <string name="global_action_onthego">On-The-Go</string>
-    <!-- On The Go -->
-    <string name="onthego_notification_ticker">Η λειτουργία On-The-Go ενεργοποιήθηκε</string>
-    <string name="onthego_notification_title">Η λειτουργία On-The-Go είναι ενεργή</string>
-    <string name="onthego_notification_stop">Διακοπή</string>
-    <string name="onthego_notification_options">Options</string>
-    <string name="onthego_notification_error">Unable to start On-The-Go</string>
-    <string name="onthego_notification_restart">Restart On-The-Go</string>
-    <string name="onthego_notification_camera_changed">Camera mode changed</string>
-    <string name="onthego_transparency">Transparency</string>
-    <string name="onthego_front_camera">Use front camera</string>
-    <string name="onthego_service_toggle">Automatically restart service</string>
-    <string name="onthego_channel_name">Main</string>
-    <!-- OnTheGo Tile -->
-    <string name="quick_settings_onthego_label">Main</string>
-    <string name="accessibility_quick_settings_onthego_off">On-The-Go off</string>
-    <string name="accessibility_quick_settings_onthego_on">On-The-Go on</string>
-    <string name="accessibility_quick_settings_onthego_changed_off">On-The-Go turned off</string>
-    <string name="accessibility_quick_settings_onthego_changed_on">On-The-Go turned on</string>
-    <!-- Text to use when the number in a notification info is too large -->
-    <!-- Face Unlock -->
-    <string name="face_unlock_recognizing">Recognizing face...</string>
-    <!-- Name of the clock in status bar [CHAR LIMIT=30] -->
-    <string name="clock">Clock</string>
-    <!-- Kill button in notification guts -->
-    <string name="force_stop_dlg_title">Force stop?</string>
-    <string name="force_stop_dlg_text">If you force stop an app, it may misbehave.</string>
-    <string name="guts_force_close_app">Κλείσιμο Εφαρμογής</string>
     <!-- Volume panel QS tile -->
     <string name="quick_settings_volume_panel_label">Πάνελ έντασης</string>
-    <!-- AOD QS tile -->
-    <string name="quick_settings_aod_label">AOD</string>
-    <string name="quick_settings_aod_on_charge_label">AOD on charge</string>
-    <string name="quick_settings_aod_off_label">AOD off</string>
-    <string name="quick_settings_aod_off_powersave_label">AOD off\nBattery saver</string>
     <!-- DataSwitch Tile -->
     <string name="qs_data_switch_label">Switch data card</string>
     <string name="qs_data_switch_toast_0">Δεν έχει εισαχθεί κάρτα SIM</string>
@@ -147,9 +132,17 @@
     <!-- Navigation bar dpad -->
     <string name="accessibility_dpad_left">Cursor left</string>
     <string name="accessibility_dpad_right">Cursor right</string>
+    <!-- Reader mode QS tile -->
+    <string name="quick_settings_reading_mode">Reading mode</string>
+    <string name="accessibility_quick_settings_reading_mode_on">Reading mode on.</string>
+    <string name="accessibility_quick_settings_reading_mode_off">Reading mode off.</string>
+    <string name="accessibility_quick_settings_reading_mode_changed_on">Reading mode turned on.</string>
+    <string name="accessibility_quick_settings_reading_mode_changed_off">Reading mode turned off.</string>
     <!-- Kill foreground app -->
     <string name="task_helper_app_killed">%1$s αναγκαστικό κλείσιμο</string>
     <string name="empty_app_killed">Εφαρμογή</string>
+    <!-- Anti flicker QS tile -->
+    <string name="quick_settings_anti_flicker">Anti flicker</string>
     <!-- Advanced nav gestures -->
     <string name="app_picker_dialog_title">Select an app</string>
     <string name="active_edge_app_select_title">Select app</string>
@@ -175,15 +168,53 @@
     <!-- SoundSearch Tile -->
     <string name="quick_settings_sound_search">Sound search</string>
     <string name="quick_settings_sound_search_no_app">Sorry, but this doesn\'t work if you don\'t have a Sound search app.</string>
+    <!-- Refresh Rate Tile -->
+    <string name="refresh_rate_tile_label">Refresh rate</string>
+    <string name="refresh_rate_auto_mode_placeholder">        Auto (<xliff:g id="min_refresh_rate" example="60">%1$d</xliff:g> - <xliff:g id="max_refresh_rate" example="60">%2$d</xliff:g> Hz)
+    </string>
+    <string name="refresh_rate_forced_mode_placeholder"><xliff:g id="refresh_rate" example="60">%1$d</xliff:g> Hz</string>
     <!-- Google Lens Screenshot string -->
     <string name="lensss">Lens</string>
-    <!-- Data usage info in QS footer -->
-    <string name="usage_data">used today</string>
-    <string name="usage_data_default_suffix">Data</string>
-    <string name="usage_wifi_default_suffix">Wi-Fi</string>
     <!-- Smart Pixels QS Tile -->
     <string name="quick_settings_smart_pixels">Smart Pixels</string>
     <string name="quick_settings_smart_pixels_on_power_save">Auto-enabled Smart Pixels</string>
-    <!-- 5G toggle in internet dialog -->
-    <string name="enable_fiveg">Enable 5G</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • Dash charging (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> until full)</string>
+    <string name="keyguard_plugged_in_dash_charging"><xliff:g id="percentage">%s</xliff:g> • Dash charging</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with a warp charger. Should match keyguard_plugged_in_warp_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_warp_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • Warp Charging (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> until full)</string>
+    <string name="keyguard_plugged_in_warp_charging"><xliff:g id="percentage">%s</xliff:g> • Warp Charging</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with a VOOC charger. Should match keyguard_plugged_in_vooc_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_vooc_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • VOOC Charging (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> until full)</string>
+    <string name="keyguard_plugged_in_vooc_charging"><xliff:g id="percentage">%s</xliff:g> • VOOC Charging</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_turbo_power_time"><xliff:g id="percentage">%2$s</xliff:g> • Turbo Charging (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> until full)</string>
+    <string name="keyguard_plugged_in_turbo_charging"><xliff:g id="percentage">%s</xliff:g> • Turbo Charging</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with an oem fast power charger. Should match keyguard_plugged_in_turbo_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_oem_power_time"><xliff:g id="percentage">%2$s</xliff:g> • Fast Charging (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> until full)</string>
+    <string name="keyguard_plugged_in_oem_charging"><xliff:g id="percentage">%s</xliff:g> • Fast Charging</string>
+    <!-- Screen record -->
+    <string name="screenrecord_stopdot_label">Show stop dot</string>
+    <string name="screenrecord_stopdot_summary">Longpress to move it</string>
+    <string name="screenrecord_lowquality_label">Lower quality</string>
+    <string name="screenrecord_lowquality_summary">For smaller file size</string>
+    <string name="screenrecord_longer_timeout_switch_label">Bigger file size limit</string>
+    <string name="screenrecord_longer_timeout_switch_summary">Limit recording size to 15 GB</string>
+    <string name="screenrecord_skip_time_label">Skip timer</string>
+    <string name="screenrecord_skip_time_summary">Remove 3 second wait</string>
+    <!-- Omnijaws Weather -->
+    <string name="omnijaws_service_error">Error</string>
+    <string name="omnijaws_service_unkown">No weather data</string>
+    <string name="omnijaws_service_error_long">Error loading weather data</string>
+    <string name="omnijaws_service_disabled">Service is disabled</string>
+    <string name="omnijaws_detail_header">Weather</string>
+    <string name="omnijaws_label_default">Weather</string>
+    <string name="omnijaws_current_text">Now</string>
+    <string name="omnijaws_package_not_available">OmniJaws not available</string>
+    <string name="omnijaws_service_last_update">Last update:</string>
+    <!-- QS InternetDialog: Summary for how many devices are connected to the hotspot -->
+    <plurals name="quick_settings_internet_hotspot_summary_num_devices">
+        <item quantity="one">%d device connected</item>
+        <item quantity="other">%d devices connected</item>
+    </plurals>
 </resources>

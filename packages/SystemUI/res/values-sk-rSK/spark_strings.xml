@@ -6,20 +6,20 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Screenshot delete action -->
     <!-- Label for UI element which allows deleting the screenshot [CHAR LIMIT=30] -->
-    <string name="screenshot_delete_label">删除</string>
+    <string name="screenshot_delete_label">Delete</string>
     <!-- Content description indicating that tapping the element will allow deleting the screenshot [CHAR LIMIT=NONE] -->
-    <string name="screenshot_delete_description">删除屏幕截图</string>
+    <string name="screenshot_delete_description">Delete screenshot</string>
     <!-- Name of the nfc status bar icon. -->
     <string name="status_bar_nfc">NFC</string>
     <!-- Accessibility label for nfc icon (not shown on screen) [CHAR LIMIT=NONE] -->
     <string name="accessibility_status_bar_nfc">Nfc</string>
     <!-- Screen record delete action -->
     <!-- Label for notification action to delete a screen recording file [CHAR LIMIT=35] -->
-    <string name="screenrecord_delete_label">删除</string>
+    <string name="screenrecord_delete_label">Delete</string>
     <!-- A toast message shown after successfully deleting a screen recording [CHAR LIMIT=NONE] -->
     <string name="screenrecord_delete_description">Screen recording deleted</string>
     <!-- Statusbar tuner -->
-    <string name="statusbar_items_title">状态栏图标</string>
+    <string name="statusbar_items_title">Statusbar icons</string>
     <!-- Name of the VPN status bar icon. -->
     <string name="status_bar_vpn">VPN</string>
     <!-- Sb Data Saver icon -->
@@ -30,7 +30,7 @@
     <string name="volume_ringer_priority_only">Priority</string>
     <string name="volume_ringer_alarms_only">Alarms</string>
     <string name="volume_ringer_dnd">DnD</string>
-    <string name="tristate_flashlight">手电筒</string>
+    <string name="tristate_flashlight">Torch</string>
     <string name="tristate_flashlight_on">Torch on</string>
     <string name="tristate_flashlight_off">Torch off</string>
     <string name="tristate_flashlight_blink">Torch blink</string>
@@ -42,40 +42,40 @@
     <string name="tristate_rotation_90">Landscape (90°)</string>
     <string name="tristate_rotation_270">Landscape (270°)</string>
     <!-- Advanced Reboot -->
-    <string name="global_action_restart_advanced">高级选项</string>
-    <string name="global_action_restart_recovery">恢复模式</string>
-    <string name="global_action_restart_bootloader">引导模式</string>
-    <string name="global_action_restart_ui">系统界面</string>
-    <string name="global_action_onthego">行走模式</string>
+    <string name="global_action_restart_advanced">Advanced</string>
+    <string name="global_action_restart_recovery">Recovery</string>
+    <string name="global_action_restart_bootloader">Bootloader</string>
+    <string name="global_action_restart_ui">SystemUI</string>
+    <string name="global_action_onthego">OnTheGo</string>
     <!-- On The Go -->
-    <string name="onthego_notification_ticker">行走模式已激活</string>
-    <string name="onthego_notification_title">行走模式正在运行</string>
-    <string name="onthego_notification_stop">停止</string>
-    <string name="onthego_notification_options">选项</string>
-    <string name="onthego_notification_error">无法启用行走模式</string>
-    <string name="onthego_notification_restart">重新启用行走模式</string>
-    <string name="onthego_notification_camera_changed">相机模式已更改</string>
-    <string name="onthego_transparency">透明度</string>
-    <string name="onthego_front_camera">使用前置摄像头</string>
-    <string name="onthego_service_toggle">自动重启服务</string>
-    <string name="onthego_channel_name">主要</string>
+    <string name="onthego_notification_ticker">On-The-Go activated</string>
+    <string name="onthego_notification_title">On-The-Go is active</string>
+    <string name="onthego_notification_stop">Stop</string>
+    <string name="onthego_notification_options">Options</string>
+    <string name="onthego_notification_error">Unable to start On-The-Go</string>
+    <string name="onthego_notification_restart">Restart On-The-Go</string>
+    <string name="onthego_notification_camera_changed">Camera mode changed</string>
+    <string name="onthego_transparency">On-The-Go Transparency</string>
+    <string name="onthego_front_camera">Use front camera</string>
+    <string name="onthego_service_toggle">Automatically restart service</string>
+    <string name="onthego_channel_name">On-The-Go</string>
     <!-- OnTheGo Tile -->
-    <string name="quick_settings_onthego_label">行走模式</string>
-    <string name="accessibility_quick_settings_onthego_off">行走模式关闭</string>
-    <string name="accessibility_quick_settings_onthego_on">行走模式开启</string>
-    <string name="accessibility_quick_settings_onthego_changed_off">行走模式已关闭</string>
-    <string name="accessibility_quick_settings_onthego_changed_on">行走模式已开启</string>
+    <string name="quick_settings_onthego_label">On-The-Go</string>
+    <string name="accessibility_quick_settings_onthego_off">On-The-Go off</string>
+    <string name="accessibility_quick_settings_onthego_on">On-The-Go on</string>
+    <string name="accessibility_quick_settings_onthego_changed_off">On-The-Go turned off</string>
+    <string name="accessibility_quick_settings_onthego_changed_on">On-The-Go turned on</string>
     <!-- Text to use when the number in a notification info is too large -->
     <!-- Name of the clock in status bar [CHAR LIMIT=30] -->
     <string name="clock">Clock</string>
     <!-- Kill button in notification guts -->
-    <string name="force_stop_dlg_title">要强行停止吗？</string>
-    <string name="force_stop_dlg_text">强行停止某个应用可能会导致其出现异常。</string>
-    <string name="guts_force_close_app">关闭应用程序</string>
+    <string name="force_stop_dlg_title">Force stop?</string>
+    <string name="force_stop_dlg_text">If you force stop an app, it may misbehave.</string>
+    <string name="guts_force_close_app">Close App</string>
     <!-- AOD QS tile -->
-    <string name="quick_settings_aod_label">息屏显示</string>
-    <string name="quick_settings_aod_on_charge_label">在充电时显示息屏显示</string>
-    <string name="quick_settings_aod_off_label">关闭息屏显示</string>
+    <string name="quick_settings_aod_label">AOD</string>
+    <string name="quick_settings_aod_on_charge_label">AOD on charge</string>
+    <string name="quick_settings_aod_off_label">AOD off</string>
     <string name="quick_settings_aod_off_powersave_label">AOD off\nBattery saver</string>
     <!-- PowerShare QS tile -->
     <string name="quick_settings_powershare_label">Wireless PowerShare</string>
@@ -83,50 +83,50 @@
     <string name="quick_settings_powershare_off_low_battery_label">Wireless PowerShare off\nBattery too low</string>
     <string name="quick_settings_powershare_enabled_label">Wireless PowerShare is enabled</string>
     <!-- Caffeine tile -->
-    <string name="quick_settings_caffeine_label">屏幕常亮</string>
-    <string name="accessibility_quick_settings_caffeine_off">关闭屏幕常亮</string>
-    <string name="accessibility_quick_settings_caffeine_on">保持亮屏开启</string>
+    <string name="quick_settings_caffeine_label">Caffeine</string>
+    <string name="accessibility_quick_settings_caffeine_off">Caffeine off</string>
+    <string name="accessibility_quick_settings_caffeine_on">Caffeine on</string>
     <!-- Ambient display QS tile -->
-    <string name="quick_settings_ambient_display_label">息屏显示</string>
-    <string name="accessibility_quick_settings_ambient_display_off">关闭息屏显示</string>
-    <string name="accessibility_quick_settings_ambient_display_on">开启息屏显示</string>
-    <string name="accessibility_quick_settings_ambient_display_changed_off">息屏显示已关闭</string>
-    <string name="accessibility_quick_settings_ambient_display_changed_on">息屏显示已开启</string>
+    <string name="quick_settings_ambient_display_label">Ambient display</string>
+    <string name="accessibility_quick_settings_ambient_display_off">Ambient display off.</string>
+    <string name="accessibility_quick_settings_ambient_display_on">Ambient display on.</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_off">Ambient display turned off.</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_on">Ambient display turned on.</string>
     <!-- USB tethering QS tile -->
-    <string name="quick_settings_usb_tether_label">USB 共享网络</string>
+    <string name="quick_settings_usb_tether_label">USB tethering</string>
     <!-- Sync QS Tile -->
-    <string name="quick_settings_sync_label">同步</string>
-    <string name="accessibility_quick_settings_sync_off">关闭同步</string>
-    <string name="accessibility_quick_settings_sync_on">开启同步</string>
-    <string name="accessibility_quick_settings_sync_changed_off">同步已关闭</string>
-    <string name="accessibility_quick_settings_sync_changed_on">同步开启</string>
+    <string name="quick_settings_sync_label">Sync</string>
+    <string name="accessibility_quick_settings_sync_off">Sync off</string>
+    <string name="accessibility_quick_settings_sync_on">Sync on</string>
+    <string name="accessibility_quick_settings_sync_changed_off">Sync turned off</string>
+    <string name="accessibility_quick_settings_sync_changed_on">Sync turned on</string>
     <!-- Sound QS Tile -->
-    <string name="quick_settings_sound_label">声音</string>
-    <string name="quick_settings_sound_ring">铃声</string>
-    <string name="quick_settings_sound_vibrate">振动</string>
+    <string name="quick_settings_sound_label">Sound</string>
+    <string name="quick_settings_sound_ring">Ring</string>
+    <string name="quick_settings_sound_vibrate">Vibrate</string>
     <string name="quick_settings_sound_mute">Mute</string>
     <!-- Heads Up QS Tile -->
-    <string name="quick_settings_heads_up_label">悬浮通知</string>
-    <string name="accessibility_quick_settings_heads_up_off">关闭浮动通知</string>
-    <string name="accessibility_quick_settings_heads_up_on">开启浮动通知</string>
-    <string name="accessibility_quick_settings_heads_up_changed_off">浮动通知关闭.</string>
-    <string name="accessibility_quick_settings_heads_up_changed_on">浮动通知已开启</string>
+    <string name="quick_settings_heads_up_label">Heads up</string>
+    <string name="accessibility_quick_settings_heads_up_off">Heads up off.</string>
+    <string name="accessibility_quick_settings_heads_up_on">Heads up on.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_off">Heads up turned off.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_on">Heads up turned on.</string>
     <!-- Poweroff/Reboot/Recovery QS tile -->
-    <string name="quick_settings_poweroff_label">关闭电源</string>
-    <string name="quick_settings_reboot_label">重启</string>
-    <string name="quick_settings_reboot_recovery_label">恢复模式</string>
+    <string name="quick_settings_poweroff_label">Power off</string>
+    <string name="quick_settings_reboot_label">Reboot</string>
+    <string name="quick_settings_reboot_recovery_label">Recovery</string>
     <!-- Volume panel QS tile -->
-    <string name="quick_settings_volume_panel_label">音量面板</string>
+    <string name="quick_settings_volume_panel_label">Volume panel</string>
     <!-- DataSwitch Tile -->
-    <string name="qs_data_switch_label">切换数据卡</string>
-    <string name="qs_data_switch_toast_0">当前没有插入 SIM 卡</string>
-    <string name="qs_data_switch_toast_1">当前仅插入一张 SIM 卡</string>
-    <string name="qs_data_switch_changed_1">设置卡 1 为数据卡</string>
-    <string name="qs_data_switch_changed_2">设置卡 2 为数据卡</string>
+    <string name="qs_data_switch_label">Switch data card</string>
+    <string name="qs_data_switch_toast_0">Currently no SIM card is inserted</string>
+    <string name="qs_data_switch_toast_1">Currently only one SIM card is inserted</string>
+    <string name="qs_data_switch_changed_1">Switch data card to SIM 1.</string>
+    <string name="qs_data_switch_changed_2">Switch data card to SIM 2.</string>
     <!-- FPS Info tile -->
-    <string name="quick_settings_fpsinfo_label">FPS 信息</string>
-    <string name="accessibility_quick_settings_fpsinfo_off">关闭 FPS 信息</string>
-    <string name="accessibility_quick_settings_fpsinfo_on">开启 FPS 信息</string>
+    <string name="quick_settings_fpsinfo_label">FPS Info</string>
+    <string name="accessibility_quick_settings_fpsinfo_off">FPS Info off</string>
+    <string name="accessibility_quick_settings_fpsinfo_on">FPS Info on</string>
     <!-- FPS view text placeholder -->
     <string name="fps_text_placeholder"><xliff:g id="fps" example="90">%1$d</xliff:g></string>
     <!-- Navigation bar dpad -->
@@ -139,32 +139,32 @@
     <string name="accessibility_quick_settings_reading_mode_changed_on">Reading mode turned on.</string>
     <string name="accessibility_quick_settings_reading_mode_changed_off">Reading mode turned off.</string>
     <!-- Kill foreground app -->
-    <string name="task_helper_app_killed">%1$s 已停止运行</string>
-    <string name="empty_app_killed">应用程序</string>
+    <string name="task_helper_app_killed">%1$s force stopped</string>
+    <string name="empty_app_killed">App</string>
     <!-- Anti flicker QS tile -->
     <string name="quick_settings_anti_flicker">Anti flicker</string>
     <!-- Advanced nav gestures -->
-    <string name="app_picker_dialog_title">选择一个应用</string>
-    <string name="active_edge_app_select_title">选择应用</string>
-    <string name="active_edge_activity_select_title">选择活动</string>
+    <string name="app_picker_dialog_title">Select an app</string>
+    <string name="active_edge_app_select_title">Select app</string>
+    <string name="active_edge_activity_select_title">Select activity</string>
     <!-- Compass QS Tile -->
-    <string name="quick_settings_compass_label">指南针</string>
+    <string name="quick_settings_compass_label">Compass</string>
     <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
-    <string name="quick_settings_compass_init">正在初始化\u2026</string>
-    <string name="accessibility_quick_settings_compass_off">关闭指南针</string>
-    <string name="accessibility_quick_settings_compass_on">开启指南针</string>
-    <string name="accessibility_quick_settings_compass_changed_off">罗盘已关闭</string>
-    <string name="accessibility_quick_settings_compass_changed_on">罗盘已开启</string>
-    <string name="quick_settings_compass_N">北</string>
-    <string name="quick_settings_compass_NE">东北</string>
-    <string name="quick_settings_compass_E">东</string>
-    <string name="quick_settings_compass_SE">东南</string>
-    <string name="quick_settings_compass_S">南</string>
-    <string name="quick_settings_compass_SW">西南</string>
-    <string name="quick_settings_compass_W">西</string>
-    <string name="quick_settings_compass_NW">西北</string>
+    <string name="quick_settings_compass_init">Initializing\u2026</string>
+    <string name="accessibility_quick_settings_compass_off">Compass off</string>
+    <string name="accessibility_quick_settings_compass_on">Compass on</string>
+    <string name="accessibility_quick_settings_compass_changed_off">Compass turned off</string>
+    <string name="accessibility_quick_settings_compass_changed_on">Compass turned on</string>
+    <string name="quick_settings_compass_N">N</string>
+    <string name="quick_settings_compass_NE">NE</string>
+    <string name="quick_settings_compass_E">E</string>
+    <string name="quick_settings_compass_SE">SE</string>
+    <string name="quick_settings_compass_S">S</string>
+    <string name="quick_settings_compass_SW">SW</string>
+    <string name="quick_settings_compass_W">W</string>
+    <string name="quick_settings_compass_NW">NW</string>
     <!-- CPUInfo tile -->
-    <string name="quick_settings_cpuinfo_label">CPU 信息</string>
+    <string name="quick_settings_cpuinfo_label">CPU Info</string>
     <!-- SoundSearch Tile -->
     <string name="quick_settings_sound_search">Sound search</string>
     <string name="quick_settings_sound_search_no_app">Sorry, but this doesn\'t work if you don\'t have a Sound search app.</string>
@@ -214,6 +214,9 @@
     <string name="omnijaws_service_last_update">Last update:</string>
     <!-- QS InternetDialog: Summary for how many devices are connected to the hotspot -->
     <plurals name="quick_settings_internet_hotspot_summary_num_devices">
+        <item quantity="one">%d device connected</item>
+        <item quantity="few">%d devices connected</item>
+        <item quantity="many">%d devices connected</item>
         <item quantity="other">%d devices connected</item>
     </plurals>
 </resources>
