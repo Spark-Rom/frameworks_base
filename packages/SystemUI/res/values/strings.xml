@@ -2539,4 +2539,8 @@
     =1 {# notification}
     other {# notifications}
     }</string>
+    
+    <!-- Home controls -->
+    <string name="home_controls_tile_title">Home</string>
+    
 </resources>
