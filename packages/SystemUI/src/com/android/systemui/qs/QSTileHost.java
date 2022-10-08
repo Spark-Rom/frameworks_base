@@ -14,15 +14,19 @@
 
 package com.android.systemui.qs;
 
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
+import android.database.ContentObserver;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.UserHandle;
 import android.os.UserManager;
+import android.provider.Settings;
 import android.provider.Settings.Secure;
 import android.text.TextUtils;
 import android.util.ArraySet;
@@ -50,6 +54,7 @@ import com.android.systemui.qs.external.TileLifecycleManager;
 import com.android.systemui.qs.external.TileServiceKey;
 import com.android.systemui.qs.external.TileServiceRequestController;
 import com.android.systemui.qs.logging.QSLogger;
+import com.android.systemui.qs.tiles.SecureQSTile;
 import com.android.systemui.settings.UserTracker;
 import com.android.systemui.shared.plugins.PluginManager;
 import com.android.systemui.statusbar.phone.AutoTileManager;
@@ -108,6 +113,9 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
 
     private final TileServiceRequestController mTileServiceRequestController;
     private TileLifecycleManager.Factory mTileLifeCycleManagerFactory;
+    private final ContentObserver mSettingsObserver;
+    private final Handler mMainHandler;
+    private boolean mIsSecureTileDisabledOnLockscreen = true;
 
     @Inject
     public QSTileHost(Context context,
@@ -127,7 +135,8 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
             SecureSettings secureSettings,
             CustomTileStatePersister customTileStatePersister,
             TileServiceRequestController.Builder tileServiceRequestControllerBuilder,
-            TileLifecycleManager.Factory tileLifecycleManagerFactory
+            TileLifecycleManager.Factory tileLifecycleManagerFactory,
+            @Background Handler backgroundHandler
     ) {
         mIconController = iconController;
         mContext = context;
@@ -140,6 +149,7 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
         mBroadcastDispatcher = broadcastDispatcher;
         mTileServiceRequestController = tileServiceRequestControllerBuilder.create(this);
         mTileLifeCycleManagerFactory = tileLifecycleManagerFactory;
+        mMainHandler = mainHandler;
 
         mInstanceIdSequence = new InstanceIdSequence(MAX_QS_INSTANCE_ID);
         mCentralSurfacesOptional = centralSurfacesOptional;
@@ -151,6 +161,17 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
         mSecureSettings = secureSettings;
         mCustomTileStatePersister = customTileStatePersister;
 
+        backgroundHandler.post(this::setSecureTileDisabledOnLockscreen);
+        mSettingsObserver = new ContentObserver(backgroundHandler) {
+            @Override
+            public void onChange(boolean selfChange) {
+                setSecureTileDisabledOnLockscreen();
+            }
+        };
+        mSecureSettings.registerContentObserverForUser(
+            Settings.Secure.DISABLE_SECURE_TILES_ON_LOCKSCREEN,
+            mSettingsObserver, UserHandle.USER_ALL);
+
         mainHandler.post(() -> {
             // This is technically a hack to avoid circular dependency of
             // QSTileHost -> XXXTile -> QSTileHost. Posting ensures creation
@@ -159,6 +180,32 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
             // AutoTileManager can modify mTiles so make sure mTiles has already been initialized.
             mAutoTiles = autoTiles.get();
             mTileServiceRequestController.init();
+        });
+        mContext.registerReceiver(mLiveDisplayReceiver, new IntentFilter(
+                "lineageos.intent.action.INITIALIZE_LIVEDISPLAY"));
+    }
+
+    private final BroadcastReceiver mLiveDisplayReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String value = mTunerService.getValue(TILES_SETTING);
+            // Force remove and recreate of all tiles.
+            onTuningChanged(TILES_SETTING, "");
+            onTuningChanged(TILES_SETTING, value);
+        }
+    };
+
+    private void setSecureTileDisabledOnLockscreen() {
+        final boolean disabled = mSecureSettings.getIntForUser(
+            Settings.Secure.DISABLE_SECURE_TILES_ON_LOCKSCREEN,
+            1, UserHandle.USER_CURRENT) == 1;
+        mMainHandler.post(() -> {
+            mIsSecureTileDisabledOnLockscreen = disabled;
+            mTiles.values().stream()
+                .filter(tile -> tile instanceof SecureQSTile)
+                .map(tile -> (SecureQSTile) tile)
+                .forEach(tile ->
+                    tile.setDisabledOnLockscreen(mIsSecureTileDisabledOnLockscreen));
         });
     }
 
@@ -172,12 +219,14 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
     }
 
     public void destroy() {
+        mSecureSettings.unregisterContentObserver(mSettingsObserver);
         mTiles.values().forEach(tile -> tile.destroy());
         mAutoTiles.destroy();
         mTunerService.removeTunable(this);
         mPluginManager.removePluginListener(this);
         mDumpManager.unregisterDumpable(TAG);
         mTileServiceRequestController.destroy();
+        mContext.unregisterReceiver(mLiveDisplayReceiver);
     }
 
     @Override
@@ -263,7 +312,7 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
         if (!TILES_SETTING.equals(key)) {
             return;
         }
-        Log.d(TAG, "Recreating tiles");
+        if (DEBUG) Log.d(TAG, "Recreating tiles");
         if (newValue == null && UserManager.isDeviceInDemoMode(mContext)) {
             newValue = mContext.getResources().getString(R.string.quick_settings_tiles_retail_mode);
         }
@@ -278,7 +327,7 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
         if (tileSpecs.equals(mTileSpecs) && currentUser == mCurrentUser) return;
         mTiles.entrySet().stream().filter(tile -> !tileSpecs.contains(tile.getKey())).forEach(
                 tile -> {
-                    Log.d(TAG, "Destroying tile: " + tile.getKey());
+                    if (DEBUG) Log.d(TAG, "Destroying tile: " + tile.getKey());
                     mQSLogger.logTileDestroyed(tile.getKey(), "Tile removed");
                     tile.getValue().destroy();
                 });
@@ -293,11 +342,14 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
                     if (!(tile instanceof CustomTile) && mCurrentUser != currentUser) {
                         tile.userSwitch(currentUser);
                     }
+                    if (tile instanceof SecureQSTile) {
+                        ((SecureQSTile) tile).setDisabledOnLockscreen(mIsSecureTileDisabledOnLockscreen);
+                    }
                     newTiles.put(tileSpec, tile);
                     mQSLogger.logTileAdded(tileSpec);
                 } else {
                     tile.destroy();
-                    Log.d(TAG, "Destroying not available tile: " + tileSpec);
+                    if (DEBUG) Log.d(TAG, "Destroying not available tile: " + tileSpec);
                     mQSLogger.logTileDestroyed(tileSpec, "Tile not available");
                 }
             } else {
@@ -305,20 +357,23 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
                 // destroy it
                 if (tile != null) {
                     tile.destroy();
-                    Log.d(TAG, "Destroying tile for wrong user: " + tileSpec);
+                    if (DEBUG) Log.d(TAG, "Destroying tile for wrong user: " + tileSpec);
                     mQSLogger.logTileDestroyed(tileSpec, "Tile for wrong user");
                 }
-                Log.d(TAG, "Creating tile: " + tileSpec);
+                if (DEBUG) Log.d(TAG, "Creating tile: " + tileSpec);
                 try {
                     tile = createTile(tileSpec);
                     if (tile != null) {
                         tile.setTileSpec(tileSpec);
                         if (tile.isAvailable()) {
+                            if (tile instanceof SecureQSTile) {
+                                ((SecureQSTile) tile).setDisabledOnLockscreen(mIsSecureTileDisabledOnLockscreen);
+                            }
                             newTiles.put(tileSpec, tile);
                             mQSLogger.logTileAdded(tileSpec);
                         } else {
                             tile.destroy();
-                            Log.d(TAG, "Destroying not available tile: " + tileSpec);
+                            if (DEBUG) Log.d(TAG, "Destroying not available tile: " + tileSpec);
                             mQSLogger.logTileDestroyed(tileSpec, "Tile not available");
                         }
                     }
@@ -335,7 +390,7 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
         mTiles.putAll(newTiles);
         if (newTiles.isEmpty() && !tileSpecs.isEmpty()) {
             // If we didn't manage to create any tiles, set it to empty (default)
-            Log.d(TAG, "No valid tiles on tuning changed. Setting to default.");
+            if (DEBUG) Log.d(TAG, "No valid tiles on tuning changed. Setting to default.");
             changeTiles(currentSpecs, loadTileSpecs(mContext, ""));
         } else {
             for (int i = 0; i < mCallbacks.size(); i++) {
@@ -526,20 +581,6 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
                 }
             }
         }
-
-        if (!tiles.contains("internet")) {
-            if (tiles.contains("wifi")) {
-                // Replace the WiFi with Internet, and remove the Cell
-                tiles.set(tiles.indexOf("wifi"), "internet");
-                tiles.remove("cell");
-            } else if (tiles.contains("cell")) {
-                // Replace the Cell with Internet
-                tiles.set(tiles.indexOf("cell"), "internet");
-            }
-        } else {
-            tiles.remove("wifi");
-            tiles.remove("cell");
-        }
         return tiles;
     }
 
@@ -555,7 +596,7 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
         final String defaultTileList = res.getString(R.string.quick_settings_tiles_default);
 
         tiles.addAll(Arrays.asList(defaultTileList.split(",")));
-        if (Build.IS_DEBUGGABLE
+        if (Build.IS_ENG
                 && GarbageMonitor.ADD_MEMORY_TILE_TO_DEFAULT_ON_DEBUGGABLE_BUILDS) {
             tiles.add(GarbageMonitor.MemoryTile.TILE_SPEC);
         }
