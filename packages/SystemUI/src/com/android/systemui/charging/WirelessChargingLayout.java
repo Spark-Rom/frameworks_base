@@ -84,11 +84,6 @@ final class WirelessChargingLayout extends FrameLayout {
 
         // amount of battery:
         final TextView percentage = findViewById(R.id.wireless_charging_percentage);
-
-        if (batteryLevel != WirelessChargingAnimation.UNKNOWN_BATTERY_LEVEL) {
-            percentage.setText(NumberFormat.getPercentInstance().format(batteryLevel / 100f));
-            percentage.setAlpha(0);
-        }
         final ImageView chargingIcon = findViewById(R.id.wireless_charging_icon);
 
         final long chargingAnimationFadeStartOffset = context.getResources().getInteger(
@@ -106,7 +101,7 @@ final class WirelessChargingLayout extends FrameLayout {
                 TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, batteryPadding,
                         getResources().getDisplayMetrics()));
 
-        if (batteryLevel != UNKNOWN_BATTERY_LEVEL) {
+        if (batteryLevel != WirelessChargingAnimation.UNKNOWN_BATTERY_LEVEL) {
             percentage.setText(NumberFormat.getPercentInstance().format(batteryLevel / 100f));
             percentage.setAlpha(0);
             chargingIcon.setPadding(sidePadding, 0, 0, 0);
@@ -180,7 +175,7 @@ final class WirelessChargingLayout extends FrameLayout {
         mRippleView = findViewById(R.id.wireless_charging_ripple);
         mRippleView.setupShader(rippleShape);
         int color = Utils.getColorAttr(mRippleView.getContext(),
-                android.R.attr.colorAccent).getDefaultColor();
+                R.attr.wallpaperTextColorAccent).getDefaultColor();
         if (mRippleView.getRippleShape() == RippleShape.ROUNDED_BOX) {
             mRippleView.setDuration(ROUNDED_BOX_RIPPLE_ANIMATION_DURATION);
             mRippleView.setSparkleStrength(0.22f);
