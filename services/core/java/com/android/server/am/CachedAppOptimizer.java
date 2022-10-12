@@ -417,7 +417,7 @@ public final class CachedAppOptimizer {
     private void setAppCompactProperties() {
         boolean useCompaction =
                     Boolean.valueOf(SystemProperties.get("persist.sys.appcompact.enable_app_compact",
-                        "false"));
+                        "true"));
         int threadPriority =
                     Integer.valueOf(SystemProperties.get("persist.sys.appcompact.thread_priority",
                         String.valueOf(Process.THREAD_GROUP_BACKGROUND)));
