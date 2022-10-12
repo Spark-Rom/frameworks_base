@@ -4263,10 +4263,10 @@
     <item name="config_inCallNotificationVolume" format="float" type="dimen">.10</item>
 
     <!-- URI for in call notification sound -->
-    <string translatable="false" name="config_inCallNotificationSound">/product/media/audio/ui/InCallNotification.ogg</string>
+    <string translatable="false" name="config_inCallNotificationSound">/product/media/audio/ui/SparkInCallNotification.ogg</string>
 
     <!-- URI for camera shutter sound -->
-    <string translatable="false" name="config_cameraShutterSound">/product/media/audio/ui/camera_click.ogg</string>
+    <string translatable="false" name="config_cameraShutterSound">/product/media/audio/ui/Spark_camera_click.ogg</string>
 
     <!-- URI for default ringtone sound file to be used for silent ringer vibration -->
     <string translatable="false" name="config_defaultRingtoneVibrationSound"></string>
