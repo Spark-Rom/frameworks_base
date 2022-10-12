@@ -91,6 +91,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.ServiceInfo;
+import android.hardware.power.Mode;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManagerInternal;
@@ -237,6 +238,7 @@ public class OomAdjuster {
     int mBServiceAppThreshold = 5;
     // Enable B-service aging propagation on memory pressure.
     boolean mEnableBServicePropagation = false;
+    public static int mCurRenderThreadTid = -1;
     public static boolean mIsTopAppRenderThreadBoostEnabled = false;
     
     private final int mNumSlots;
@@ -1619,6 +1621,13 @@ public class OomAdjuster {
             hasVisibleActivities = true;
             procState = PROCESS_STATE_CUR_TOP;
 
+            if(mIsTopAppRenderThreadBoostEnabled) {
+                if(mCurRenderThreadTid != app.getRenderThreadTid() && app.getRenderThreadTid() > 0) {
+                    mCurRenderThreadTid = app.getRenderThreadTid();
+                    mLocalPowerManager.setPowerMode(Mode.GAME_LOADING, true);
+                }
+            }
+
             if (DEBUG_OOM_ADJ_REASON || logUid == appUid) {
                 reportOomAdjMessageLocked(TAG_OOM_ADJ, "Making top: " + app);
             }
@@ -2710,7 +2719,7 @@ public class OomAdjuster {
                             } else {
                                 // Boost priority for top app UI and render threads
                                 setThreadPriority(app.getPid(), THREAD_PRIORITY_TOP_APP_BOOST);
-                                if (mIsTopAppRenderThreadBoostEnabled && renderThreadTid != 0) {
+                                if (renderThreadTid != 0) {
                                     try {
                                         setThreadPriority(renderThreadTid,
                                                 THREAD_PRIORITY_TOP_APP_BOOST);
