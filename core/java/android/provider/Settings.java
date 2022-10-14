@@ -5778,6 +5778,12 @@ public final class Settings {
         public static final String QS_SYSTEM_INFO = "qs_system_info";
 
         /**
+         * Shows system info icon
+         * @hide
+         */
+        public static final String QS_SYSTEM_INFO_ICON = "qs_system_info_icon";
+
+        /**
          * Whether to display roaming indicator for roaming signal connection
          * @hide
          */
