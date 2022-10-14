@@ -929,6 +929,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
         statusBarWindowStateController.addListener(this::onStatusBarWindowStateChanged);
 
         mScreenOffAnimationController = screenOffAnimationController;
+        mSystemSettings = systemSettings;
         mBurnInProtectionController = burnInProtectionController;
 
         mPanelExpansionStateManager.addExpansionListener(this::onPanelExpansionChanged);
@@ -940,7 +941,8 @@ public class CentralSurfacesImpl extends CoreStartable implements
         mActivityIntentHelper = new ActivityIntentHelper(mContext);
         mActivityLaunchAnimator = activityLaunchAnimator;
         mGameSpaceManager = new GameSpaceManager(mContext, mKeyguardStateController);
-        mSystemSettings = systemSettings;
+        mCustomSettingsObserver = new CustomSettingsObserver(backgroundHandler);
+
         // The status bar background may need updating when the ongoing call status changes.
         mOngoingCallController.addCallback((animate) -> maybeUpdateBarMode());
 
@@ -2141,12 +2143,16 @@ public class CentralSurfacesImpl extends CoreStartable implements
 
         void observe() {
             mSystemSettings.registerContentObserverForUser(Settings.System.QS_SYSTEM_INFO, this, UserHandle.USER_ALL);
+            mSystemSettings.registerContentObserverForUser(Settings.System.QS_SYSTEM_INFO_ICON, this, UserHandle.USER_ALL);
         }
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             switch (uri.getLastPathSegment()) {
                 case Settings.System.QS_SYSTEM_INFO:
+                    updateQSSystemInfo();
+                    break;
+                case Settings.System.QS_SYSTEM_INFO_ICON:
                     updateQSSystemInfo();
                     break;
             }

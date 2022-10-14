@@ -139,7 +139,9 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
     private StatusBarContentInsetsProvider mInsetsProvider;
 
     private TextView mSystemInfoText;
+    private View mSystemInfoLayout;
     private int mSystemInfoMode;
+    private boolean mShowSystemInfoIcon;
     private ImageView mSystemInfoIcon;
     private String mSysCPUTemp;
     private String mSysBatTemp;
@@ -174,13 +176,9 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
     public QuickStatusBarHeader(Context context, AttributeSet attrs) {
         super(context, attrs);
         mActivityStarter = Dependency.get(ActivityStarter.class);
-<<<<<<< HEAD
-    }
-=======
-        mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         mSystemInfoMode = getQsSystemInfoMode();
+        mShowSystemInfoIcon = getQsSystemInfoIcon();
      }
->>>>>>> e0e90b398a73 ([SQUASH]: SystemUI: Add QS System Info [1/2])
 
     /**
      * How much the view containing the clock and QQS will translate down when QS is fully expanded.
@@ -210,7 +208,7 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         mPrivacyContainer = findViewById(R.id.privacy_container);
         mSystemInfoIcon = findViewById(R.id.system_info_icon);
         mSystemInfoText = findViewById(R.id.system_info_text);
-
+        mSystemInfoLayout = findViewById(R.id.system_info_layout);
         mClockContainer = findViewById(R.id.clock_container);
         mClockView = findViewById(R.id.clock);
         mClockView.setQsHeader();
@@ -226,13 +224,9 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         Configuration config = mContext.getResources().getConfiguration();
         setDatePrivacyContainersWidth(config.orientation == Configuration.ORIENTATION_LANDSCAPE);
 
-<<<<<<< HEAD
-=======
-        setBatteryClickable(true);
 	updateSysInfoResources();
         updateSettings();
 
->>>>>>> e0e90b398a73 ([SQUASH]: SystemUI: Add QS System Info [1/2])
         mIconsAlphaAnimatorFixed = new TouchAnimator.Builder()
                 .addFloat(mIconContainer, "alpha", 0, 1)
                 .addFloat(mBatteryRemainingIcon, "alpha", 0, 1)
@@ -274,6 +268,11 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                 Settings.System.QS_SYSTEM_INFO, 0);
     }
 
+    private boolean getQsSystemInfoIcon() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_SYSTEM_INFO_ICON, 1) == 1;
+    }
+
     private void updateSystemInfoText() {
         mSystemInfoText.setVisibility(View.GONE);
         mSystemInfoIcon.setVisibility(View.GONE);
@@ -300,7 +299,10 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         }
         if (systemInfoText != " " && systemInfoText != null && !systemInfoText.isEmpty()) {
             mSystemInfoText.setText(systemInfoText);
+            if (mShowSystemInfoIcon) {
             mSystemInfoIcon.setVisibility(View.VISIBLE);
+            }
+            setChipVisibility(mPrivacyChip.getVisibility() == View.VISIBLE);
             mSystemInfoText.setVisibility(View.VISIBLE);
         }
     }
@@ -439,6 +441,7 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
 
     public void updateSettings() {
         mSystemInfoMode = getQsSystemInfoMode();
+        mShowSystemInfoIcon = getQsSystemInfoIcon();
         updateSystemInfoText();
         updateResources();
     }
@@ -548,6 +551,7 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                 // These views appear on expanding down
                 .addFloat(mDateView, "alpha", 0, 0, 1)
                 .addFloat(mClockDateView, "alpha", 1, 0, 0)
+                .addFloat(mSystemInfoLayout, "alpha", 1, 1)
                 .addFloat(mQSCarriers, "alpha", 0, 1)
                 // Use statusbar paddings when collapsed,
                 // align with QS when expanded, and animate translation
@@ -600,6 +604,10 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         if (showBattery) {
             mBatteryIcon.setVisibility(visibility ? View.GONE : View.VISIBLE);
         }
+       	boolean showSystemInfo = mSystemInfoMode != 0;
+        if (showSystemInfo) {
+            mSystemInfoLayout.setVisibility(visibility ? View.GONE : View.VISIBLE);
+         }
         if (visibility || showBattery) {
             // Animates the icons and battery indicator from alpha 0 to 1, when the chip is visible
             mIconsAlphaAnimator = mIconsAlphaAnimatorFixed;
