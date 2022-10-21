@@ -8297,7 +8297,8 @@ public class CarrierConfigManager {
      *
      * The syntax of the retry rule:
      * 1. Retry based on {@link NetworkCapabilities}. Note that only APN-type network capabilities
-     *    are supported.
+     *    are supported. If the capabilities are not specified, then the retry rule only applies
+     *    to the current failed APN used in setup data call request.
      * "capabilities=[netCaps1|netCaps2|...], [retry_interval=n1|n2|n3|n4...], [maximum_retries=n]"
      *
      * 2. Retry based on {@link DataFailCause}
@@ -9192,8 +9193,12 @@ public class CarrierConfigManager {
         sDefaults.putStringArray(
                 KEY_TELEPHONY_DATA_SETUP_RETRY_RULES_STRING_ARRAY, new String[] {
                         "capabilities=eims, retry_interval=1000, maximum_retries=20",
-                        "fail_causes=8|27|28|29|30|32|33|35|50|51|111|-5|-6|65537|65538|-3|2252|"
-                                + "2253|2254, maximum_retries=0", // No retry for those causes
+                        // No retry fail causes. Do not specify the capabilities here so the
+                        // maximum_retries=0 will only apply to the failed APN, not the capability.
+                        // Specify the retry interval here so the next available APN can be selected
+                        // for setup.
+                        "fail_causes=8|27|28|29|30|32|33|35|50|51|111|-5|-6|65537|65538|-3|65543|"
+                                + "65547|2252|2253|2254, maximum_retries=0, retry_interval=2500",
                         "capabilities=mms|supl|cbs, retry_interval=2000",
                         "capabilities=internet|enterprise|dun|ims|fota, retry_interval=2500|3000|"
                                 + "5000|10000|15000|20000|40000|60000|120000|240000|"
