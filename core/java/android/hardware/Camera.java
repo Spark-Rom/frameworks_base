@@ -293,7 +293,7 @@ public class Camera {
         List<String> packageList = Arrays.asList(
                 SystemProperties.get("vendor.camera.aux.packagelist", packageName).split(","));
         List<String> packageBlacklist = Arrays.asList(
-                SystemProperties.get("vendor.camera.aux.packageexcludelist", "").split(","));
+                SystemProperties.get("vendor.camera.aux.packageblacklist", "").split(","));
 
         return packageList.contains(packageName) && !packageBlacklist.contains(packageName);
     }
