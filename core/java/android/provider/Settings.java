@@ -12831,6 +12831,13 @@ public final class Settings {
                 "device_state_rotation_lock";
 
         /**
+         *  Toggle the wallpaper zoom effects
+         *  0 = 0ff, 1 = on
+         * @hide
+         */
+        public static final String DISPLAY_SETTINGS_WALLPAPER_ZOOM = "display_settings_wallpaper_zoom";
+
+        /**
          * Control whether communal mode is allowed on this device.
          *
          * @hide
