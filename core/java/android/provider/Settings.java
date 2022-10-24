@@ -6720,6 +6720,11 @@ public final class Settings {
         public static final String CHARGING_ANIMATION = "charging_animation";
 
         /**
+         * @hide
+         */
+        public static final String SMALL_CLOCK_DOUBLE_LINE = "small_clock_double_line";
+
+        /**
          * Whether allowing pocket service to register sensors and dispatch informations.
          *   0 = disabled
          *   1 = enabled
@@ -7100,11 +7105,6 @@ public final class Settings {
          * @hide
          */
         public static final String QS_WEATHER_POSITION = "qs_weather_position";
-        
-        /**
-         * @hide
-         */
-        public static final String SECONDARY_COLOR_CLOCK = "use_secondary_color_clock";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
@@ -12508,6 +12508,21 @@ public final class Settings {
          * @hide
          */
         public static final String PULSE_SMOOTHING_ENABLED = "pulse_smoothing_enabled";
+        
+        /**
+         * @hide
+         */
+        public static final String KG_CUSTOM_CLOCK_COLOR = "kg_custom_clock_color";
+
+        /**
+         * @hide
+         */
+        public static final String KG_CUSTOM_CLOCK_COLOR_ENABLED = "kg_custom_clock_color_enabled";
+        
+        /**
+         * @hide
+         */
+        public static final String KG_CUSTOM_CLOCK_FONT = "kg_custom_clock_font";
 
 	/**
          * Pulse gravity
