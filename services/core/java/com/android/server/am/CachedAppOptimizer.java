@@ -40,6 +40,7 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.EventLog;
 import android.util.Slog;
+import android.util.BoostFramework;
 import android.util.SparseArray;
 
 import com.android.internal.annotations.GuardedBy;
@@ -365,6 +366,7 @@ public final class CachedAppOptimizer {
 
     private final ProcessDependencies mProcessDependencies;
     private final ProcLocksReader mProcLocksReader;
+    public static BoostFramework mPerf = new BoostFramework();
 
     public CachedAppOptimizer(ActivityManagerService am) {
         this(am, null, new DefaultProcessDependencies());
@@ -416,10 +418,10 @@ public final class CachedAppOptimizer {
 
     private void setAppCompactProperties() {
         boolean useCompaction =
-                    Boolean.valueOf(SystemProperties.get("persist.sys.appcompact.enable_app_compact",
-                        "true"));
+                    Boolean.valueOf(mPerf.perfGetProp("vendor.appcompact.enable_app_compact",
+                        "false"));
         int threadPriority =
-                    Integer.valueOf(SystemProperties.get("persist.sys.appcompact.thread_priority",
+                    Integer.valueOf(mPerf.perfGetProp("vendor.appcompact.thread_priority",
                         String.valueOf(Process.THREAD_GROUP_BACKGROUND)));
         // Let the user change the group back to THREAD_GROUP_SYSYTEM
         // For any other value, set it to THREAD_GROUP_BACKGROUND
@@ -427,34 +429,34 @@ public final class CachedAppOptimizer {
             threadPriority = Process.THREAD_GROUP_BACKGROUND;
 
         int someCompactionType =
-                    Integer.valueOf(SystemProperties.get("persist.sys.appcompact.some_compact_type",
+                    Integer.valueOf(mPerf.perfGetProp("vendor.appcompact.some_compact_type",
                         String.valueOf(COMPACT_ACTION_ANON_FLAG)));
         int fullCompactionType =
-                    Integer.valueOf(SystemProperties.get("persist.sys.appcompact.full_compact_type",
+                    Integer.valueOf(mPerf.perfGetProp("vendor.appcompact.full_compact_type",
                         String.valueOf(COMPACT_ACTION_ANON_FLAG)));
         int compactThrottleSomeSome =
-                    Integer.valueOf(SystemProperties.get("persist.sys.appcompact.compact_throttle_somesome",
+                    Integer.valueOf(mPerf.perfGetProp("vendor.appcompact.compact_throttle_somesome",
                         String.valueOf(DEFAULT_COMPACT_THROTTLE_1)));
         int compactThrottleSomeFull =
-                    Integer.valueOf(SystemProperties.get("persist.sys.appcompact.compact_throttle_somefull",
+                    Integer.valueOf(mPerf.perfGetProp("vendor.appcompact.compact_throttle_somefull",
                         String.valueOf(DEFAULT_COMPACT_THROTTLE_2)));
         int compactThrottleFullSome =
-                    Integer.valueOf(SystemProperties.get("persist.sys.appcompact.compact_throttle_fullsome",
+                    Integer.valueOf(mPerf.perfGetProp("vendor.appcompact.compact_throttle_fullsome",
                         String.valueOf(DEFAULT_COMPACT_THROTTLE_3)));
         int compactThrottleFullFull =
-                    Integer.valueOf(SystemProperties.get("persist.sys.appcompact.compact_throttle_fullfull",
+                    Integer.valueOf(mPerf.perfGetProp("vendor.appcompact.compact_throttle_fullfull",
                         String.valueOf(DEFAULT_COMPACT_THROTTLE_4)));
         int compactThrottleBfgs =
-                    Integer.valueOf(SystemProperties.get("persist.sys.appcompact.compact_throttle_bfgs",
+                    Integer.valueOf(mPerf.perfGetProp("vendor.appcompact.compact_throttle_bfgs",
                         String.valueOf(DEFAULT_COMPACT_THROTTLE_5)));
         int compactThrottlePersistent =
-                    Integer.valueOf(SystemProperties.get("persist.sys.appcompact.compact_throttle_persistent",
+                    Integer.valueOf(mPerf.perfGetProp("vendor.appcompact.compact_throttle_persistent",
                         String.valueOf(DEFAULT_COMPACT_THROTTLE_6)));
         int fullRssThrottleKB =
-                    Integer.valueOf(SystemProperties.get("persist.sys.appcompact.rss_throttle_kb",
+                    Integer.valueOf(mPerf.perfGetProp("vendor.appcompact.rss_throttle_kb",
                         String.valueOf(DEFAULT_COMPACT_FULL_RSS_THROTTLE_KB)));
         int deltaRssThrottleKB =
-                    Integer.valueOf(SystemProperties.get("persist.sys.appcompact.delta_rss_throttle_kb",
+                    Integer.valueOf(mPerf.perfGetProp("vendor.appcompact.delta_rss_throttle_kb",
                         String.valueOf(DEFAULT_COMPACT_FULL_DELTA_RSS_THROTTLE_KB)));
 
         DeviceConfig.setProperty(
@@ -1331,7 +1333,8 @@ public final class CachedAppOptimizer {
                 && (newAdj == ProcessList.PREVIOUS_APP_ADJ || newAdj == ProcessList.HOME_APP_ADJ)) {
             // Perform a minor compaction when a perceptible app becomes the prev/home app
             compactAppSome(app, false);
-        } else if (oldAdj < ProcessList.CACHED_APP_MIN_ADJ
+        } else if ((oldAdj < ProcessList.CACHED_APP_MIN_ADJ
+                || oldAdj > ProcessList.CACHED_APP_MAX_ADJ)
                 && newAdj >= ProcessList.CACHED_APP_MIN_ADJ
                 && newAdj <= ProcessList.CACHED_APP_MAX_ADJ) {
             // Perform a major compaction when any app enters cached
@@ -1399,7 +1402,7 @@ public final class CachedAppOptimizer {
 
             // don't compact if the process has returned to perceptible
             // and this is only a cached/home/prev compaction
-            if ((action == COMPACT_ACTION_FILE || action == COMPACT_ACTION_FULL)
+            if ((action == COMPACT_PROCESS_SOME || action == COMPACT_PROCESS_FULL)
                     && (proc.mState.getSetAdj() <= ProcessList.PERCEPTIBLE_APP_ADJ)) {
                 if (DEBUG_COMPACTION) {
                     Slog.d(TAG_AM,

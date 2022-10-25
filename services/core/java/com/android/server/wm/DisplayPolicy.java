@@ -16,8 +16,10 @@
 
 package com.android.server.wm;
 
+import static android.app.WindowConfiguration.ACTIVITY_TYPE_RECENTS;
 import static android.app.WindowConfiguration.WINDOWING_MODE_FREEFORM;
 import static android.app.WindowConfiguration.WINDOWING_MODE_MULTI_WINDOW;
+import static android.app.WindowConfiguration.WINDOWING_MODE_UNDEFINED;
 import static android.view.Display.TYPE_INTERNAL;
 import static android.view.InsetsState.ITYPE_BOTTOM_MANDATORY_GESTURES;
 import static android.view.InsetsState.ITYPE_BOTTOM_TAPPABLE_ELEMENT;
@@ -92,6 +94,7 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.Px;
 import android.app.ActivityManager;
+import android.app.ActivityTaskManager;
 import android.app.ActivityThread;
 import android.app.LoadedApk;
 import android.app.ResourcesManager;
@@ -99,6 +102,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.content.pm.ApplicationInfo;
 import android.database.ContentObserver;
 import android.graphics.Insets;
 import android.graphics.PixelFormat;
@@ -114,6 +118,7 @@ import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.util.BoostFramework;
 import android.util.ArraySet;
 import android.util.PrintWriterPrinter;
 import android.util.Slog;
@@ -207,6 +212,19 @@ public class DisplayPolicy {
     private final AccessibilityManager mAccessibilityManager;
     private final ImmersiveModeConfirmation mImmersiveModeConfirmation;
     private final ScreenshotHelper mScreenshotHelper;
+
+    private static boolean SCROLL_BOOST_SS_ENABLE = false;
+    private static boolean DRAG_PLH_ENABLE = false;
+    private static boolean isLowRAM = false;
+
+    /*
+     * @hide
+     */
+    BoostFramework mPerfBoostDrag = null;
+    BoostFramework mPerfBoostFling = null;
+    BoostFramework mPerfBoostPrefling = null;
+    BoostFramework mPerf = new BoostFramework();
+    private boolean mIsPerfBoostFlingAcquired;
 
     private final Object mServiceAcquireLock = new Object();
     private StatusBarManagerInternal mStatusBarManagerInternal;
@@ -411,13 +429,45 @@ public class DisplayPolicy {
         }
     }
 
+    private String getAppPackageName() {
+        String currentPackage;
+        try {
+            ActivityManager.RunningTaskInfo rti = ActivityTaskManager.getService().getTasks(
+                1, false /* filterVisibleRecents */, false /*keepIntentExtra */).get(0);
+            currentPackage = rti.topActivity.getPackageName();
+        } catch (Exception e) {
+            currentPackage = null;
+        }
+        return currentPackage;
+    }
+
+    private boolean isTopAppGame(String currentPackage, BoostFramework BoostType) {
+        boolean isGame = false;
+        if (isLowRAM) {
+            try {
+                ApplicationInfo ai = mContext.getPackageManager().getApplicationInfo(currentPackage, 0);
+                if(ai != null) {
+                    isGame = (ai.category == ApplicationInfo.CATEGORY_GAME) ||
+                            ((ai.flags & ApplicationInfo.FLAG_IS_GAME) ==
+                                ApplicationInfo.FLAG_IS_GAME);
+                }
+            } catch (Exception e) {
+                return false;
+            }
+        } else {
+            isGame = (BoostType.perfGetFeedback(BoostFramework.VENDOR_FEEDBACK_WORKLOAD_TYPE,
+                      currentPackage) == BoostFramework.WorkloadType.GAME);
+        }
+        return isGame;
+    }
+
     private class SettingsObserver extends ContentObserver {
         public SettingsObserver(Handler handler) {
             super(handler);
 
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.FORCE_SHOW_NAVBAR), false, this,
+                            Settings.System.FORCE_SHOW_NAVBAR), false, this,
                     UserHandle.USER_ALL);
 
             updateSettings();
@@ -435,7 +485,7 @@ public class DisplayPolicy {
                 : service.mContext.createDisplayContext(displayContent.getDisplay());
         mUiContext = displayContent.isDefaultDisplay ? service.mAtmService.mUiContext
                 : service.mAtmService.mSystemThread
-                        .getSystemUiContext(displayContent.getDisplayId());
+                .getSystemUiContext(displayContent.getDisplayId());
         mDisplayContent = displayContent;
         mLock = service.getWindowManagerLock();
 
@@ -452,6 +502,12 @@ public class DisplayPolicy {
             mScreenOnEarly = true;
             mScreenOnFully = true;
         }
+
+        if (mPerf != null) {
+            SCROLL_BOOST_SS_ENABLE = Boolean.parseBoolean(mPerf.perfGetProp("vendor.perf.gestureflingboost.enable", "true"));
+            DRAG_PLH_ENABLE = Boolean.parseBoolean(mPerf.perfGetProp("ro.vendor.perf.dplh", "false"));
+        }
+        isLowRAM = SystemProperties.getBoolean("ro.config.low_ram", false);
 
         final Looper looper = UiThread.getHandler().getLooper();
         mHandler = new PolicyHandler(looper);
@@ -473,7 +529,7 @@ public class DisplayPolicy {
                     public void onSwipeFromBottom() {
                         synchronized (mLock) {
                             final WindowState bar = mNavigationBar != null
-                                        && mNavigationBarPosition == NAV_BAR_BOTTOM
+                                    && mNavigationBarPosition == NAV_BAR_BOTTOM
                                     ? mNavigationBar
                                     : findAltBarMatchingPosition(ALT_BAR_BOTTOM);
                             requestTransientBars(bar, true /* isGestureOnSystemBar */);
@@ -505,9 +561,9 @@ public class DisplayPolicy {
                     }
 
                     private void requestTransientBarsForSideSwipe(Region excludedRegion,
-                            int navBarSide, int altBarSide) {
+                                                                  int navBarSide, int altBarSide) {
                         final WindowState barMatchingSide = mNavigationBar != null
-                                        && mNavigationBarPosition == navBarSide
+                                && mNavigationBarPosition == navBarSide
                                 ? mNavigationBar
                                 : findAltBarMatchingPosition(altBarSide);
                         final boolean allowSideSwipe = mNavigationBarAlwaysShowOnSideGesture &&
@@ -535,27 +591,95 @@ public class DisplayPolicy {
 
                     @Override
                     public void onVerticalFling(int duration) {
-                        if (mService.mPowerManagerInternal != null) {
-                            mService.mPowerManagerInternal.setPowerBoost(
-                                    Boost.INTERACTION, duration + 160);
+                        String currentPackage = getAppPackageName();
+                        if (currentPackage == null) {
+                            Slog.e(TAG, "Error: package name null");
+                            return;
+                        }
+                        if (SCROLL_BOOST_SS_ENABLE) {
+                            if (mPerfBoostFling == null) {
+                                mPerfBoostFling = new BoostFramework();
+                                mIsPerfBoostFlingAcquired = false;
+                            }
+                            if (mPerfBoostFling == null) {
+                                Slog.e(TAG, "Error: boost object null");
+                                return;
+                            }
+                            boolean isGame = isTopAppGame(currentPackage, mPerfBoostFling);
+                            if (!isGame) {
+                                mPerfBoostFling.perfHint(BoostFramework.VENDOR_HINT_SCROLL_BOOST,
+                                    currentPackage, duration + 160, BoostFramework.Scroll.VERTICAL);
+                                mIsPerfBoostFlingAcquired = true;
+                           }
                         }
                     }
 
                     @Override
                     public void onHorizontalFling(int duration) {
-                        if (mService.mPowerManagerInternal != null) {
-                            mService.mPowerManagerInternal.setPowerBoost(
-                                    Boost.INTERACTION, duration + 160);
+                        String currentPackage = getAppPackageName();
+                        if (currentPackage == null) {
+                            Slog.e(TAG, "Error: package name null");
+                            return;
+                        }
+                        if (SCROLL_BOOST_SS_ENABLE) {
+                            if (mPerfBoostFling == null) {
+                                mPerfBoostFling = new BoostFramework();
+                                mIsPerfBoostFlingAcquired = false;
+                            }
+                            if (mPerfBoostFling == null) {
+                                Slog.e(TAG, "Error: boost object null");
+                                return;
+                            }
+                            boolean isGame = isTopAppGame(currentPackage, mPerfBoostFling);
+                            if (!isGame) {
+                                mPerfBoostFling.perfHint(BoostFramework.VENDOR_HINT_SCROLL_BOOST,
+                                    currentPackage, duration + 160, BoostFramework.Scroll.HORIZONTAL);
+                                mIsPerfBoostFlingAcquired = true;
+                            }
                         }
                     }
 
                     @Override
-                    public void onScroll(boolean started, int duration) {
-                    	if (started) {
-                          if (mService.mPowerManagerInternal != null) {
-                              mService.mPowerManagerInternal.setPowerBoost(
-                                     Boost.INTERACTION, duration + 160);
-                         }
+                    public void onScroll(boolean started) {
+                        String currentPackage = getAppPackageName();
+                        if (currentPackage == null) {
+                            Slog.e(TAG, "Error: package name null");
+                            return;
+                        }
+                        boolean isGame;
+                        if (mPerfBoostDrag == null) {
+                            mPerfBoostDrag = new BoostFramework();
+                        }
+                        if (mPerfBoostDrag == null) {
+                            Slog.e(TAG, "Error: boost object null");
+                            return;
+                        }
+                        if (SCROLL_BOOST_SS_ENABLE) {
+                            if (mPerfBoostPrefling == null) {
+                                mPerfBoostPrefling = new BoostFramework();
+                            }
+                            if (mPerfBoostPrefling == null) {
+                                Slog.e(TAG, "Error: boost object null");
+                                return;
+                            }
+                            isGame = isTopAppGame(currentPackage, mPerfBoostPrefling);
+                            if (!isGame) {
+                                mPerfBoostPrefling.perfHint(BoostFramework.VENDOR_HINT_SCROLL_BOOST,
+                                        currentPackage, -1, BoostFramework.Scroll.PREFILING);
+                            }
+                        }
+                        isGame = isTopAppGame(currentPackage, mPerfBoostDrag);
+                        if (!isGame && started) {
+                            if (DRAG_PLH_ENABLE) {
+                                mPerfBoostDrag.perfEvent(BoostFramework.VENDOR_HINT_DRAG_START, currentPackage);
+                            }
+                            mPerfBoostDrag.perfHint(BoostFramework.VENDOR_HINT_DRAG_BOOST,
+                                            currentPackage, -1, 1);
+                        } else {
+                            if (DRAG_PLH_ENABLE) {
+                                mPerfBoostDrag.perfEvent(BoostFramework.VENDOR_HINT_DRAG_END, currentPackage);
+                            }
+                            mPerfBoostDrag.perfLockRelease();
                         }
                     }
 
@@ -574,6 +698,11 @@ public class DisplayPolicy {
                         final WindowOrientationListener listener = getOrientationListener();
                         if (listener != null) {
                             listener.onTouchStart();
+                        }
+                        if(SCROLL_BOOST_SS_ENABLE && mPerfBoostFling!= null
+                                            && mIsPerfBoostFlingAcquired) {
+                            mPerfBoostFling.perfLockRelease();
+                            mIsPerfBoostFlingAcquired = false;
                         }
                     }
 
@@ -637,8 +766,8 @@ public class DisplayPolicy {
 
             @Override
             public int onAppTransitionStartingLocked(boolean keyguardGoingAway,
-                    boolean keyguardOccluding, long duration,
-                    long statusBarAnimationStartTime, long statusBarAnimationDuration) {
+                                                     boolean keyguardOccluding, long duration,
+                                                     long statusBarAnimationStartTime, long statusBarAnimationDuration) {
                 mHandler.post(() -> {
                     StatusBarManagerInternal statusBar = getStatusBarManagerInternal();
                     if (statusBar != null) {
@@ -924,11 +1053,11 @@ public class DisplayPolicy {
     public boolean finishScreenTurningOn() {
         synchronized (mLock) {
             ProtoLog.d(WM_DEBUG_SCREEN_ON,
-                            "finishScreenTurningOn: mAwake=%b, mScreenOnEarly=%b, "
-                                    + "mScreenOnFully=%b, mKeyguardDrawComplete=%b, "
-                                    + "mWindowManagerDrawComplete=%b",
-                            mAwake, mScreenOnEarly, mScreenOnFully, mKeyguardDrawComplete,
-                            mWindowManagerDrawComplete);
+                    "finishScreenTurningOn: mAwake=%b, mScreenOnEarly=%b, "
+                            + "mScreenOnFully=%b, mKeyguardDrawComplete=%b, "
+                            + "mWindowManagerDrawComplete=%b",
+                    mAwake, mScreenOnEarly, mScreenOnFully, mKeyguardDrawComplete,
+                    mWindowManagerDrawComplete);
 
             if (mScreenOnFully || !mScreenOnEarly || !mWindowManagerDrawComplete
                     || (mAwake && !mKeyguardDrawComplete)) {
@@ -1290,7 +1419,7 @@ public class DisplayPolicy {
                         }
                         mDisplayContent.setInsetProvider(insetsType, win,
                                 win.getAttrs().providedInternalInsets != null ? (displayFrames,
-                                        windowContainer, inOutFrame) -> {
+                                                                                 windowContainer, inOutFrame) -> {
                                     final Insets[] providedInternalInsets = win.getLayoutingAttrs(
                                             displayFrames.mRotation).providedInternalInsets;
                                     if (providedInternalInsets != null
@@ -1304,8 +1433,8 @@ public class DisplayPolicy {
                                 || insetsType == ITYPE_EXTRA_NAVIGATION_BAR)) {
                             mDisplayContent.setInsetProvider(ITYPE_LEFT_GESTURES, win,
                                     (displayFrames, windowState, inOutFrame) -> {
-                                final int leftSafeInset =
-                                        Math.max(displayFrames.mDisplayCutoutSafe.left,0);
+                                        final int leftSafeInset =
+                                                Math.max(displayFrames.mDisplayCutoutSafe.left,0);
                                         inOutFrame.left = 0;
                                         inOutFrame.top = 0;
                                         inOutFrame.bottom = displayFrames.mDisplayHeight;
@@ -1679,7 +1808,7 @@ public class DisplayPolicy {
      * @param attached For sub-windows, the window it is attached to. Otherwise null.
      */
     public void applyPostLayoutPolicyLw(WindowState win, WindowManager.LayoutParams attrs,
-            WindowState attached, WindowState imeTarget) {
+                                        WindowState attached, WindowState imeTarget) {
         if (attrs.type == TYPE_NAVIGATION_BAR) {
             // Keep mNavigationBarPosition updated to make sure the transient detection and bar
             // color control is working correctly.
@@ -1777,7 +1906,7 @@ public class DisplayPolicy {
     }
 
     private void addStatusBarAppearanceRegionsForDimmingWindow(int appearance, Rect statusBarFrame,
-            Rect winBounds, Rect winFrame) {
+                                                               Rect winBounds, Rect winFrame) {
         if (!sTmpRect.setIntersect(winBounds, statusBarFrame)) {
             return;
         }
@@ -1865,7 +1994,7 @@ public class DisplayPolicy {
         // now shown.
         final boolean hideIme = win.mIsImWindow
                 && (mDisplayContent.isAodShowing()
-                        || (mDisplayContent.isDefaultDisplay && !mWindowManagerDrawComplete));
+                || (mDisplayContent.isDefaultDisplay && !mWindowManagerDrawComplete));
         if (hideIme) {
             return true;
         }
@@ -1877,7 +2006,7 @@ public class DisplayPolicy {
         // Show IME over the keyguard if the target allows it.
         final boolean showImeOverKeyguard = imeTarget != null && imeTarget.isVisible()
                 && win.mIsImWindow && (imeTarget.canShowWhenLocked()
-                        || !imeTarget.canBeHiddenByKeyguard());
+                || !imeTarget.canBeHiddenByKeyguard());
         if (showImeOverKeyguard) {
             return false;
         }
@@ -1886,7 +2015,7 @@ public class DisplayPolicy {
         final boolean allowShowWhenLocked = isKeyguardOccluded()
                 // Show error dialogs over apps that are shown on keyguard.
                 && (win.canShowWhenLocked()
-                        || (win.mAttrs.privateFlags & LayoutParams.PRIVATE_FLAG_SYSTEM_ERROR) != 0);
+                || (win.mAttrs.privateFlags & LayoutParams.PRIVATE_FLAG_SYSTEM_ERROR) != 0);
         return !allowShowWhenLocked;
     }
 
@@ -2084,7 +2213,7 @@ public class DisplayPolicy {
      * button bar.
      */
     public int getNonDecorDisplayWidth(int fullWidth, int fullHeight, int rotation, int uiMode,
-            DisplayCutout displayCutout) {
+                                       DisplayCutout displayCutout) {
         int width = fullWidth;
         if (hasNavigationBar()) {
             final int navBarPosition = navigationBarPosition(rotation);
@@ -2160,7 +2289,7 @@ public class DisplayPolicy {
      * than that to account for more transient decoration like a status bar.
      */
     public int getConfigDisplayWidth(int fullWidth, int fullHeight, int rotation, int uiMode,
-            DisplayCutout displayCutout) {
+                                     DisplayCutout displayCutout) {
         return getNonDecorDisplayWidth(fullWidth, fullHeight, rotation, uiMode, displayCutout);
     }
 
@@ -2171,7 +2300,7 @@ public class DisplayPolicy {
      * than that to account for more transient decoration like a status bar.
      */
     public int getConfigDisplayHeight(int fullWidth, int fullHeight, int rotation, int uiMode,
-            DisplayCutout displayCutout) {
+                                      DisplayCutout displayCutout) {
         // There is a separate status bar at the top of the display.  We don't count that as part
         // of the fixed decor, since it can hide; however, for purposes of configurations,
         // we do want to exclude it since applications can't generally use that part
@@ -2219,7 +2348,7 @@ public class DisplayPolicy {
      * @param outInsets the insets to return
      */
     public void getStableInsetsLw(int displayRotation, DisplayCutout displayCutout,
-            Rect outInsets) {
+                                  Rect outInsets) {
         outInsets.setEmpty();
 
         // Navigation bar and status bar.
@@ -2235,7 +2364,7 @@ public class DisplayPolicy {
      * @param outInsets the insets to return
      */
     public void getNonDecorInsetsLw(int displayRotation, DisplayCutout displayCutout,
-            Rect outInsets) {
+                                    Rect outInsets) {
         outInsets.setEmpty();
 
         // Only navigation bar
@@ -2324,13 +2453,13 @@ public class DisplayPolicy {
         final @InsetsType int restorePositionTypes =
                 (controlTarget.getRequestedVisibility(ITYPE_NAVIGATION_BAR)
                         ? Type.navigationBars() : 0)
-                | (controlTarget.getRequestedVisibility(ITYPE_STATUS_BAR)
+                        | (controlTarget.getRequestedVisibility(ITYPE_STATUS_BAR)
                         ? Type.statusBars() : 0)
-                | (mExtraNavBarAlt != null && controlTarget.getRequestedVisibility(
-                                ITYPE_EXTRA_NAVIGATION_BAR)
+                        | (mExtraNavBarAlt != null && controlTarget.getRequestedVisibility(
+                        ITYPE_EXTRA_NAVIGATION_BAR)
                         ? Type.navigationBars() : 0)
-                | (mClimateBarAlt != null && controlTarget.getRequestedVisibility(
-                                ITYPE_CLIMATE_BAR)
+                        | (mClimateBarAlt != null && controlTarget.getRequestedVisibility(
+                        ITYPE_CLIMATE_BAR)
                         ? Type.statusBars() : 0);
 
         if (swipeTarget == mNavigationBar
@@ -2405,7 +2534,7 @@ public class DisplayPolicy {
                     (mLastFocusedWindow != null && mLastFocusedWindow.canReceiveKeys());
             winCandidate = isKeyguardShowing() && !isKeyguardOccluded() ? mNotificationShade
                     : lastFocusCanReceiveKeys ? mLastFocusedWindow
-                            : mTopFullscreenOpaqueWindowState;
+                    : mTopFullscreenOpaqueWindowState;
             if (winCandidate == null) {
                 return;
             }
@@ -2473,14 +2602,14 @@ public class DisplayPolicy {
     @VisibleForTesting
     @Nullable
     static WindowState chooseNavigationColorWindowLw(WindowState candidate, WindowState imeWindow,
-            @NavigationBarPosition int navBarPosition) {
+                                                     @NavigationBarPosition int navBarPosition) {
         // If the IME window is visible and FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS is set, then IME
         // window can be navigation color window.
         final boolean imeWindowCanNavColorWindow = imeWindow != null
                 && imeWindow.isVisible()
                 && navBarPosition == NAV_BAR_BOTTOM
                 && (imeWindow.mAttrs.flags
-                        & WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS) != 0;
+                & WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS) != 0;
         if (!imeWindowCanNavColorWindow) {
             // No IME window is involved. Determine the result only with candidate window.
             return candidate;
@@ -2664,7 +2793,7 @@ public class DisplayPolicy {
      *         on the nav bar opacity rules chosen by {@link #mNavBarOpacityMode}.
      */
     private int configureNavBarOpacity(int appearance, boolean multiWindowTaskVisible,
-            boolean freeformRootTaskVisible) {
+                                       boolean freeformRootTaskVisible) {
         final boolean drawBackground = drawsBarBackground(mNavBarBackgroundWindow);
 
         if (mNavBarOpacityMode == NAV_BAR_FORCE_TRANSPARENT) {
@@ -2982,7 +3111,7 @@ public class DisplayPolicy {
      * provided {@param insetsType}.
      */
     private static boolean intersectsAnyInsets(Rect bounds, InsetsState insetsState,
-            @InsetsType int insetsType) {
+                                               @InsetsType int insetsType) {
         final ArraySet<Integer> internalTypes = InsetsState.toInternalType(insetsType);
         for (int i = 0; i < internalTypes.size(); i++) {
             final InsetsSource source = insetsState.peekSource(internalTypes.valueAt(i));

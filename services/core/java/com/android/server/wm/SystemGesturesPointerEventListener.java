@@ -231,7 +231,7 @@ class SystemGesturesPointerEventListener implements PointerEventListener {
                 mSwipeFireable = false;
                 mDebugFireable = false;
                 if (mScrollFired)
-                    mCallbacks.onScroll(false, 0);
+                    mCallbacks.onScroll(false);
                 mScrollFired = false;
                 mCallbacks.onUpOrCancel();
                 break;
@@ -351,7 +351,7 @@ class SystemGesturesPointerEventListener implements PointerEventListener {
         }
         @Override
         public boolean onFling(MotionEvent down, MotionEvent up,
-                float velocityX, float velocityY) {
+                               float velocityX, float velocityY) {
             mOverscroller.computeScrollOffset();
             long now = SystemClock.uptimeMillis();
 
@@ -376,17 +376,12 @@ class SystemGesturesPointerEventListener implements PointerEventListener {
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2,
-                                   float distanceX, float distanceY) {
-
-           int duration = mOverscroller.getDuration();
-           if (duration > MAX_FLING_TIME_MILLIS) {
-               duration = MAX_FLING_TIME_MILLIS;
-           }
-           if (!mScrollFired) {
-               mCallbacks.onScroll(true, duration);
-               mScrollFired = true;
-           }
-           return true;
+                                float distanceX, float distanceY) {
+            if (!mScrollFired) {
+                mCallbacks.onScroll(true);
+                mScrollFired = true;
+            }
+            return true;
         }
     }
 
@@ -398,7 +393,7 @@ class SystemGesturesPointerEventListener implements PointerEventListener {
         void onFling(int durationMs);
         void onVerticalFling(int durationMs);
         void onHorizontalFling(int durationMs);
-        void onScroll(boolean started, int durationMs);
+        void onScroll(boolean started);
         void onDown();
         void onUpOrCancel();
         void onMouseHoverAtTop();

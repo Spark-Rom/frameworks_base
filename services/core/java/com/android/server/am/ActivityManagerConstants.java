@@ -32,9 +32,11 @@ import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Process;
+import android.os.SystemClock;
+import android.os.SystemProperties;
 import android.os.Message;
 import android.os.PowerExemptionManager;
-import android.os.SystemClock;
 import android.provider.DeviceConfig;
 import android.provider.DeviceConfig.OnPropertiesChangedListener;
 import android.provider.DeviceConfig.Properties;
@@ -43,6 +45,7 @@ import android.os.Process;
 import android.os.SystemProperties;
 import android.text.TextUtils;
 import android.util.ArraySet;
+import android.util.BoostFramework;
 import android.util.KeyValueListParser;
 import android.util.Slog;
 
@@ -708,13 +711,15 @@ final class ActivityManagerConstants extends ContentObserver {
     public int CUR_MAX_CACHED_PROCESSES;
     public int CUR_MAX_PHANTOM_PROCESSES;
 
+    public static BoostFramework mPerf = new BoostFramework();
+
     static boolean USE_TRIM_SETTINGS = true;
     static int EMPTY_APP_PERCENT = 50;
     static int TRIM_EMPTY_PERCENT = 100;
     static int TRIM_CACHE_PERCENT = 100;
     static long TRIM_ENABLE_MEMORY = 1073741824;
     public static boolean allowTrim() { return Process.getTotalMemory() < TRIM_ENABLE_MEMORY ; }
-    
+
     // The maximum number of empty app processes we will let sit around.  This will be
     // initialized in the constructor.
     public int CUR_MAX_EMPTY_PROCESSES;
@@ -1077,19 +1082,19 @@ final class ActivityManagerConstants extends ContentObserver {
     }
 
     private void updatePerfConfigConstants() {
+        if (mPerf != null) {
           // Maximum number of cached processes we will allow.
             DEFAULT_MAX_CACHED_PROCESSES = MAX_CACHED_PROCESSES = CUR_MAX_CACHED_PROCESSES = Integer.valueOf(
-                                                 SystemProperties.get("persist.sys.fw.bg_apps_limit", "60"));
-
-	  // Maximum number of phantom processes before the system starts trimming phantom processes.
-	    DEFAULT_MAX_PHANTOM_PROCESSES = MAX_PHANTOM_PROCESSES = CUR_MAX_PHANTOM_PROCESSES = Integer.valueOf(
-                                                 SystemProperties.get("persist.sys.fw.bg_apps_limit", "60"));
+                                                 mPerf.perfGetProp("ro.vendor.qti.sys.fw.bg_apps_limit", "32"));
+          // Maximum number of phantom processes before the system starts trimming phantom processes.
+            DEFAULT_MAX_PHANTOM_PROCESSES = MAX_PHANTOM_PROCESSES = CUR_MAX_PHANTOM_PROCESSES = Integer.valueOf(
+                    mPerf.perfGetProp("persist.sys.fw.bg_apps_limit", "60"));
             //Trim Settings
-            USE_TRIM_SETTINGS = Boolean.parseBoolean(SystemProperties.get("persist.sys.fw.use_trim_settings", "true"));
-            EMPTY_APP_PERCENT = Integer.valueOf(SystemProperties.get("persist.sys.fw.empty_app_percent", "50"));
-            TRIM_EMPTY_PERCENT = Integer.valueOf(SystemProperties.get("persist.sys.fw.trim_empty_percent", "100"));
-            TRIM_CACHE_PERCENT = Integer.valueOf(SystemProperties.get("persist.sys.fw.trim_cache_percent", "100"));
-            TRIM_ENABLE_MEMORY = Long.valueOf(SystemProperties.get("persist.sys.fw.trim_enable_memory", "1073741824"));
+            USE_TRIM_SETTINGS = Boolean.parseBoolean(mPerf.perfGetProp("ro.vendor.qti.sys.fw.use_trim_settings", "true"));
+            EMPTY_APP_PERCENT = Integer.valueOf(mPerf.perfGetProp("ro.vendor.qti.sys.fw.empty_app_percent", "50"));
+            TRIM_EMPTY_PERCENT = Integer.valueOf(mPerf.perfGetProp("ro.vendor.qti.sys.fw.trim_empty_percent", "100"));
+            TRIM_CACHE_PERCENT = Integer.valueOf(mPerf.perfGetProp("ro.vendor.qti.sys.fw.trim_cache_percent", "100"));
+            TRIM_ENABLE_MEMORY = Long.valueOf(mPerf.perfGetProp("ro.vendor.qti.sys.fw.trim_enable_memory", "1073741824"));
 
             // The maximum number of empty app processes we will let sit around.
             CUR_MAX_EMPTY_PROCESSES = computeEmptyProcessLimit(CUR_MAX_CACHED_PROCESSES);
@@ -1097,6 +1102,7 @@ final class ActivityManagerConstants extends ContentObserver {
             final int rawEmptyProcesses = computeEmptyProcessLimit(MAX_CACHED_PROCESSES);
             CUR_TRIM_EMPTY_PROCESSES = computeTrimEmptyApps(rawEmptyProcesses);
             CUR_TRIM_CACHED_PROCESSES = computeTrimCachedApps(rawEmptyProcesses, MAX_CACHED_PROCESSES);
+        }
     }
 
     public void start(ContentResolver resolver) {
@@ -1111,6 +1117,7 @@ final class ActivityManagerConstants extends ContentObserver {
         }
         updateConstants();
         updatePerfConfigConstants();
+
         if (mSystemServerAutomaticHeapDumpEnabled) {
             updateEnableAutomaticSystemServerHeapDumps();
         }
