@@ -933,6 +933,7 @@ public final class CachedAppOptimizer {
 
                 Process.setThreadGroupAndCpuset(mCachedAppOptimizerThread.getThreadId(),
                     mCompactionPriority);
+
             } else {
                 Slog.d(TAG_AM, "Freezer disabled");
                 enableFreezer(false);
