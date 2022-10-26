@@ -128,10 +128,6 @@ final class WirelessChargingLayout extends FrameLayout {
         textFadeAnimator.setInterpolator(Interpolators.LINEAR);
         textFadeAnimator.setStartDelay(chargingAnimationFadeStartOffset);
 
-        // play all animations together
-        AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.playTogether(textSizeAnimator, textOpacityAnimator, textFadeAnimator);
-
         // Animation Scale: battery icon scales from 0% to 100%
         ValueAnimator battSizeAnimator = ObjectAnimator.ofFloat(chargingIcon, "batterySize",
                 batteryLevelTextSizeStart, batteryLevelTextSizeEnd);
@@ -154,8 +150,8 @@ final class WirelessChargingLayout extends FrameLayout {
         FadeAnimatorBattIcon.setStartDelay(chargingAnimationFadeStartOffset);
 
         // play all animations together
-        AnimatorSet animatorSetBattIcon = new AnimatorSet();
-        animatorSetBattIcon.playTogether(battSizeAnimator, OpacityAnimatorBattIcon, FadeAnimatorBattIcon);
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(textSizeAnimator, textOpacityAnimator, textFadeAnimator, battSizeAnimator, OpacityAnimatorBattIcon, FadeAnimatorBattIcon);
 
         ValueAnimator scrimFadeInAnimator = ObjectAnimator.ofArgb(this,
                 "backgroundColor", Color.TRANSPARENT, SCRIM_COLOR);
