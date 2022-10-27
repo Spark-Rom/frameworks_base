@@ -332,7 +332,7 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
         if (!mFalsingManager.isFalseTap(FalsingManager.LOW_PENALTY)) {
             mHandler.obtainMessage(H.CLICK, view).sendToTarget();
         }
-        vibrateTile(45);
+        vibrateTile(20);
     }
 
     public void secondaryClick(@Nullable View view) {
@@ -356,7 +356,7 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
                 getInstanceId());
         mQSLogger.logTileLongClick(mTileSpec, mStatusBarStateController.getState(), mState.state);
         mHandler.obtainMessage(H.LONG_CLICK, view).sendToTarget();
-        vibrateTile(45);
+        vibrateTile(20);
     }
 
     public LogMaker populate(LogMaker logMaker) {
