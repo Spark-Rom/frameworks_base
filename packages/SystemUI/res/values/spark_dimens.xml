@@ -130,4 +130,7 @@
     <dimen name="status_bar_battery_icon_width_landscape_buddy">22.0dip</dimen>
     
     <dimen name="smartspace_text_size">20sp</dimen>
+
+    <!-- Bluetooth dialog -->
+    <dimen name="bluetooth_dialog_active_device_bottom_margin">4dp</dimen>
 </resources>
