@@ -126,6 +126,7 @@ android_library {
         "vendor.lineage.powershare-V1.0-java",
         "colorkt",
         "themelib",
+        "AndroidSystemBlur-platform",
     ],
     manifest: "AndroidManifest.xml",
 

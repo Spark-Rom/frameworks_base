@@ -718,4 +718,7 @@
         <item>com.android.keyguard</item>
         <item>com.android.systemui</item>
     </string-array>
+    
+    <integer name="background_blur_radius">80</integer>
+    <item name="background_blur_colour_opacity" format="float" type="dimen">0.88</item>
 </resources>
