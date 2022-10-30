@@ -437,6 +437,11 @@ public class KeyguardClockSwitch extends RelativeLayout {
         	mClockView.setTypeface(serif);
         	mLargeClockView.setTypeface(serif);
         	break;
+        	case 50:
+        	Typeface googlesansclock = Typeface.create("googlesansclock", Typeface.NORMAL);
+        	mClockView.setTypeface(googlesansclock);
+        	mLargeClockView.setTypeface(googlesansclock);
+        	break;
         	default:
         	break;
         	
