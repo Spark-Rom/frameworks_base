@@ -80,6 +80,7 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.os.Trace;
 import android.os.VibrationEffect;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.provider.Settings.Global;
 import android.text.InputFilter;
@@ -163,6 +164,8 @@ public class VolumeDialogImpl implements VolumeDialog,
             Settings.Secure.VOLUME_PANEL_ON_LEFT;
     public static final String SHOW_APP_VOLUME =
             "system:" + Settings.System.SHOW_APP_VOLUME;
+    public static final String CUSTOM_VOLUME_STYLES =
+            "system:" + Settings.System.CUSTOM_VOLUME_STYLES;
 
     private static final long USER_ATTEMPT_GRACE_PERIOD = 1000;
     private static final int UPDATE_ANIMATION_DURATION = 80;
@@ -314,6 +317,8 @@ public class VolumeDialogImpl implements VolumeDialog,
     // Number of animating rows
     private int mAnimatingRows = 0;
 
+    private int customVolumeStyles = 0;
+
     private boolean mShowAppVolume = true;
 
     public VolumeDialogImpl(
@@ -370,6 +375,7 @@ public class VolumeDialogImpl implements VolumeDialog,
             mTunerService.addTunable(mTunable, VOLUME_PANEL_ON_LEFT);
         }
         mTunerService.addTunable(mTunable, SHOW_APP_VOLUME);
+        mTunerService.addTunable(mTunable, CUSTOM_VOLUME_STYLES);
 
         initDimens();
     }
@@ -768,7 +774,10 @@ public class VolumeDialogImpl implements VolumeDialog,
             } else if (SHOW_APP_VOLUME.equals(key)) {
                 mShowAppVolume =  TunerService.parseIntegerSwitch(newValue, true);
                 initAppVolumeH();
-            }
+            } else if (CUSTOM_VOLUME_STYLES.equals(key)) {
+                customVolumeStyles = TunerService.parseInteger(newValue, 0);
+                initDialog(mActivityManager.getLockTaskModeState());
+            } 
         }
     };
 
@@ -878,7 +887,13 @@ public class VolumeDialogImpl implements VolumeDialog,
         row.iconMuteRes = iconMuteRes;
         row.important = important;
         row.defaultStream = defaultStream;
-        row.view = mDialog.getLayoutInflater().inflate(R.layout.volume_dialog_row, null);
+	if (customVolumeStyles == 0) {
+           row.view = mDialog.getLayoutInflater().inflate(R.layout.volume_dialog_row_aosp, null);
+        } else if (customVolumeStyles == 1) {
+           row.view = mDialog.getLayoutInflater().inflate(R.layout.volume_dialog_row_rui, null);
+        } else {
+           row.view = mDialog.getLayoutInflater().inflate(R.layout.volume_dialog_row_rice, null);
+        }
         row.view.setId(row.stream);
         row.view.setTag(row);
         row.header = row.view.findViewById(R.id.volume_row_header);
@@ -893,8 +908,18 @@ public class VolumeDialogImpl implements VolumeDialog,
 
         row.anim = null;
 
-        final LayerDrawable seekbarDrawable =
-                (LayerDrawable) mContext.getDrawable(R.drawable.volume_row_seekbar);
+	final LayerDrawable seekbarDrawable;
+	
+	if (customVolumeStyles == 0) {
+          seekbarDrawable =
+                  (LayerDrawable) mContext.getDrawable(R.drawable.volume_row_seekbar_aosp);
+	} else if (customVolumeStyles == 1) {
+          seekbarDrawable =
+                  (LayerDrawable) mContext.getDrawable(R.drawable.volume_row_seekbar_rui);
+	} else {
+          seekbarDrawable =
+                  (LayerDrawable) mContext.getDrawable(R.drawable.volume_row_seekbar_rice);
+	}
 
         final LayerDrawable seekbarProgressDrawable = (LayerDrawable)
                 ((RoundedCornerProgressDrawable) seekbarDrawable.findDrawableByLayerId(
