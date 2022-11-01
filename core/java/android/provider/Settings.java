@@ -7119,6 +7119,12 @@ public final class Settings {
         public static final String OMNIJAWS_WEATHER_ICON_PACK = "omnijaws_weather_icon_pack";
 
         /**
+         * Whether to show IME space
+         * @hide
+         */
+        public static final String HIDE_IME_SPACE_ENABLE = "hide_ime_space_enable";
+
+        /**
          * Date font size QS
          * @hide
          */
