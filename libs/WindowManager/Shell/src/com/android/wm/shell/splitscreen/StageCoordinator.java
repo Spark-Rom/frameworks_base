@@ -81,6 +81,7 @@ import android.view.IRemoteAnimationFinishedCallback;
 import android.view.IRemoteAnimationRunner;
 import android.view.RemoteAnimationAdapter;
 import android.view.RemoteAnimationTarget;
+import android.view.Surface;
 import android.view.SurfaceControl;
 import android.view.SurfaceSession;
 import android.view.WindowManager;
@@ -1348,8 +1349,13 @@ class StageCoordinator implements SplitLayout.SplitLayoutHandler,
 
         mDisplayLayout.rotateTo(mContext.getResources(), toRotation);
         mSplitLayout.rotateTo(toRotation, mDisplayLayout.stableInsets());
-        updateWindowBounds(mSplitLayout, wct);
-        updateUnfoldBounds();
+        if (mSplitLayout.isLandscape()
+                && (fromRotation == Surface.ROTATION_90 || fromRotation == Surface.ROTATION_270)) {
+            onLayoutSizeChanged(mSplitLayout);
+        } else {
+            updateWindowBounds(mSplitLayout, wct);
+            updateUnfoldBounds();
+        }
     }
 
     private void onFoldedStateChanged(boolean folded) {
