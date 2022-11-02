@@ -5673,6 +5673,16 @@ public class ActivityManagerService extends IActivityManager.Stub
         return mAppErrors.isBadProcess(processName, uid);
     }
 
+    private boolean isAppFrozen(int pid) {
+        synchronized (mPidsSelfLocked) {
+            final ProcessRecord app = mPidsSelfLocked.get(pid);
+            if (app != null && app.mOptRecord != null) {
+                return app.mOptRecord.isFrozen();
+            }
+        }
+        return false;
+    }
+
     // NOTE: this is an internal method used by the OnShellCommand implementation only and should
     // be guarded by permission checking.
     int getUidState(int uid) {
@@ -17294,6 +17304,11 @@ public class ActivityManagerService extends IActivityManager.Stub
         @Override
         public boolean isAppBad(final String processName, final int uid) {
             return ActivityManagerService.this.isAppBad(processName, uid);
+        }
+
+        @Override
+        public boolean isAppFrozen(int pid) {
+            return ActivityManagerService.this.isAppFrozen(pid);
         }
 
         @Override

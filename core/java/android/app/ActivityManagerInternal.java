@@ -501,6 +501,9 @@ public abstract class ActivityManagerInternal {
     /** Returns true if the given process name and uid is currently marked 'bad' */
     public abstract boolean isAppBad(String processName, int uid);
 
+    /** Returns true if the given process is frozen. */
+    public abstract boolean isAppFrozen(int pid);
+
     /** Remove pending backup for the given userId. */
     public abstract void clearPendingBackup(@UserIdInt int userId);
 
