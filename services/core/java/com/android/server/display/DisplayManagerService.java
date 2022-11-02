@@ -40,6 +40,7 @@ import android.Manifest;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.UserIdInt;
+import android.app.ActivityManagerInternal;
 import android.app.AppOpsManager;
 import android.app.compat.CompatChanges;
 import android.companion.virtual.IVirtualDevice;
@@ -222,6 +223,7 @@ public final class DisplayManagerService extends SystemService {
     private final DisplayModeDirector mDisplayModeDirector;
     private WindowManagerInternal mWindowManagerInternal;
     private InputManagerInternal mInputManagerInternal;
+    private ActivityManagerInternal mActivityManagerInternal;
     private IMediaProjectionManager mProjectionService;
     private DeviceStateManagerInternal mDeviceStateManager;
     private int[] mUserDisabledHdrTypes = {};
@@ -606,6 +608,7 @@ public final class DisplayManagerService extends SystemService {
         synchronized (mSyncRoot) {
             mWindowManagerInternal = LocalServices.getService(WindowManagerInternal.class);
             mInputManagerInternal = LocalServices.getService(InputManagerInternal.class);
+            mActivityManagerInternal = LocalServices.getService(ActivityManagerInternal.class);
 
             mDeviceStateManager = LocalServices.getService(DeviceStateManagerInternal.class);
             mContext.getSystemService(DeviceStateManager.class).registerCallback(
@@ -2764,6 +2767,10 @@ public final class DisplayManagerService extends SystemService {
 
         public void notifyDisplayEventAsync(int displayId, @DisplayEvent int event) {
             if (!shouldSendEvent(event)) {
+                return;
+            }
+            if (mActivityManagerInternal != null && mActivityManagerInternal.isAppFrozen(mPid)) {
+                Slog.w(TAG, "Don't notify frozen process " + mPid + " that displays changed.");
                 return;
             }
 
