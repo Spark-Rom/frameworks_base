@@ -52,7 +52,7 @@ import com.android.systemui.statusbar.policy.DeviceProvisionedController
 import com.android.systemui.theme.ThemeOverlayApplier
 import com.android.systemui.theme.ThemeOverlayController
 import com.android.systemui.util.settings.SecureSettings
-
+import com.android.systemui.util.settings.SystemSettings
 import dev.kdrag0n.colorkt.Color
 import dev.kdrag0n.colorkt.cam.Zcam
 import dev.kdrag0n.colorkt.conversion.ConversionGraph.convert
@@ -89,6 +89,7 @@ class SparkThemeOverlayController @Inject constructor(
     @Main resources: Resources,
     wakefulnessLifecycle: WakefulnessLifecycle,
     configurationController: ConfigurationController,
+    systemSettings: SystemSettings,
 ) : ThemeOverlayController(
     context,
     broadcastDispatcher,
@@ -106,6 +107,7 @@ class SparkThemeOverlayController @Inject constructor(
     resources,
     wakefulnessLifecycle,
     configurationController,
+    systemSettings,
 ) {
 
     private val settingsObserver = object : ContentObserver(bgHandler) {

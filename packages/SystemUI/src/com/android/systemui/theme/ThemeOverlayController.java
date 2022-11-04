@@ -25,7 +25,7 @@ import static com.android.systemui.theme.ThemeOverlayApplier.OVERLAY_COLOR_BOTH;
 import static com.android.systemui.theme.ThemeOverlayApplier.OVERLAY_COLOR_INDEX;
 import static com.android.systemui.theme.ThemeOverlayApplier.OVERLAY_COLOR_SOURCE;
 import static com.android.systemui.theme.ThemeOverlayApplier.TIMESTAMP_FIELD;
-
+import com.android.systemui.util.settings.SystemSettings;
 import android.annotation.Nullable;
 import android.app.WallpaperColors;
 import android.app.WallpaperManager;
@@ -116,6 +116,7 @@ public class ThemeOverlayController extends CoreStartable implements Dumpable {
     private final BroadcastDispatcher mBroadcastDispatcher;
     private final Executor mBgExecutor;
     private final SecureSettings mSecureSettings;
+    private final SystemSettings mSystemSettings;
     private final Executor mMainExecutor;
     private final Handler mBgHandler;
     private final boolean mIsMonetEnabled;
@@ -359,7 +360,7 @@ public class ThemeOverlayController extends CoreStartable implements Dumpable {
             UserManager userManager, DeviceProvisionedController deviceProvisionedController,
             UserTracker userTracker, DumpManager dumpManager, FeatureFlags featureFlags,
             @Main Resources resources, WakefulnessLifecycle wakefulnessLifecycle,
-            ConfigurationController configurationController) {
+            ConfigurationController configurationController, SystemSettings systemSettings) {
         super(context);
 
         mIsMonetEnabled = featureFlags.isEnabled(Flags.MONET);
@@ -369,6 +370,7 @@ public class ThemeOverlayController extends CoreStartable implements Dumpable {
         mBgExecutor = bgExecutor;
         mMainExecutor = mainExecutor;
         mBgHandler = bgHandler;
+        mSystemSettings = systemSettings;
         mThemeManager = themeOverlayApplier;
         mSecureSettings = secureSettings;
         mWallpaperManager = wallpaperManager;
