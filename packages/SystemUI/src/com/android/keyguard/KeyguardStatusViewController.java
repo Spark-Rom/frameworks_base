@@ -74,18 +74,21 @@ public class KeyguardStatusViewController extends ViewController<KeyguardStatusV
     @Override
     public void onInit() {
         mKeyguardClockSwitchController.init();
+        mView.onThemeChanged();
     }
 
     @Override
     protected void onViewAttached() {
         mKeyguardUpdateMonitor.registerCallback(mInfoCallback);
         mConfigurationController.addCallback(mConfigurationListener);
+        mView.onThemeChanged();
     }
 
     @Override
     protected void onViewDetached() {
         mKeyguardUpdateMonitor.removeCallback(mInfoCallback);
         mConfigurationController.removeCallback(mConfigurationListener);
+        mView.onThemeChanged();
     }
 
     /**
@@ -94,6 +97,7 @@ public class KeyguardStatusViewController extends ViewController<KeyguardStatusV
     public void dozeTimeTick() {
         refreshTime();
         mKeyguardSliceViewController.refresh();
+        mView.onThemeChanged();
     }
 
     /**
@@ -109,6 +113,7 @@ public class KeyguardStatusViewController extends ViewController<KeyguardStatusV
      */
     public void setDarkAmount(float darkAmount) {
         mView.setDarkAmount(darkAmount);
+        mView.onThemeChanged();
     }
 
     /**
@@ -117,6 +122,7 @@ public class KeyguardStatusViewController extends ViewController<KeyguardStatusV
      */
     public void displayClock(@ClockSize int clockSize, boolean animate) {
         mKeyguardClockSwitchController.displayClock(clockSize, animate);
+        mView.onThemeChanged();
     }
 
     /**
@@ -126,6 +132,7 @@ public class KeyguardStatusViewController extends ViewController<KeyguardStatusV
      */
     public void animateFoldToAod() {
         mKeyguardClockSwitchController.animateFoldToAod();
+        mView.onThemeChanged();
     }
 
     /**
@@ -140,6 +147,7 @@ public class KeyguardStatusViewController extends ViewController<KeyguardStatusV
      */
     public void setTranslationYExcludingMedia(float translationY) {
         mView.setChildrenTranslationYExcludingMediaView(translationY);
+        mView.onThemeChanged();
     }
 
     /**
@@ -148,6 +156,7 @@ public class KeyguardStatusViewController extends ViewController<KeyguardStatusV
     public void setAlpha(float alpha) {
         if (!mKeyguardVisibilityHelper.isVisibilityAnimating()) {
             mView.setAlpha(alpha);
+            mView.onThemeChanged();
         }
     }
 
@@ -156,6 +165,7 @@ public class KeyguardStatusViewController extends ViewController<KeyguardStatusV
      */
     public void setPivotX(float pivot) {
         mView.setPivotX(pivot);
+        mView.onThemeChanged();
     }
 
     /**
@@ -163,6 +173,7 @@ public class KeyguardStatusViewController extends ViewController<KeyguardStatusV
      */
     public void setPivotY(float pivot) {
         mView.setPivotY(pivot);
+        mView.onThemeChanged();
     }
 
     /**
@@ -199,6 +210,7 @@ public class KeyguardStatusViewController extends ViewController<KeyguardStatusV
      */
     public void setStatusAccessibilityImportance(int mode) {
         mView.setImportantForAccessibility(mode);
+        mView.onThemeChanged();
     }
 
     /**
@@ -255,16 +267,19 @@ public class KeyguardStatusViewController extends ViewController<KeyguardStatusV
         @Override
         public void onTimeChanged() {
             refreshTime();
+            mView.onThemeChanged();
         }
 
         @Override
         public void onTimeFormatChanged(String timeFormat) {
             mKeyguardClockSwitchController.refreshFormat();
+            mView.onThemeChanged();
         }
 
         @Override
         public void onTimeZoneChanged(TimeZone timeZone) {
             mKeyguardClockSwitchController.updateTimeZone(timeZone);
+            mView.onThemeChanged();
         }
 
         @Override
@@ -272,12 +287,14 @@ public class KeyguardStatusViewController extends ViewController<KeyguardStatusV
             if (showing) {
                 if (DEBUG) Slog.v(TAG, "refresh statusview showing:" + showing);
                 refreshTime();
+                mView.onThemeChanged();
             }
         }
 
         @Override
         public void onUserSwitchComplete(int userId) {
             mKeyguardClockSwitchController.refreshFormat();
+            mView.onThemeChanged();
         }
     };
 
