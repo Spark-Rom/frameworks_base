@@ -302,7 +302,6 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
             if (mShowSystemInfoIcon) {
             mSystemInfoIcon.setVisibility(View.VISIBLE);
             }
-            setChipVisibility(mPrivacyChip.getVisibility() == View.VISIBLE);
             mSystemInfoText.setVisibility(View.VISIBLE);
         }
     }
