@@ -65,14 +65,14 @@
             android:layout_gravity="center_vertical|start"
             android:gravity="center_vertical|start">
             
-            <com.android.systemui.corvus.qsweather.QsWeatherImage
+            <com.android.systemui.spark.qsweather.QsWeatherImage
                 android:id="@+id/weather_image"
                 android:layout_width="24dp"
                 android:paddingStart="2dp"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|start" />
 
-            <com.android.systemui.corvus.qsweather.QsWeatherText
+            <com.android.systemui.spark.qsweather.QsWeatherText
                 android:id="@+id/weather_temp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

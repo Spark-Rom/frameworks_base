@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.android.systemui.corvus.qsweather;
+package com.android.systemui.spark.qsweather;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -35,7 +35,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.android.systemui.R;
-import com.android.systemui.omni.OmniJawsClient;
+import com.android.internal.util.spark.OmniJawsClient;
 
 public class KGWeatherImage extends ImageView implements
         OmniJawsClient.OmniJawsObserver {

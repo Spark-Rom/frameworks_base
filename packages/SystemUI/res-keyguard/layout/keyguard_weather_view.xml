@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="@dimen/below_clock_padding_start">
-    <com.android.systemui.corvus.qsweather.KGWeatherText
+    <com.android.systemui.spark.qsweather.KGWeatherText
         android:textColor="?wallpaperTextColor"
         android:gravity="start"
         android:layout_gravity="start"
@@ -19,7 +19,7 @@
         android:singleLine="true"
         style="@style/TextAppearance.Keyguard.Secondary"
         />
-    <com.android.systemui.corvus.qsweather.KGWeatherImage
+    <com.android.systemui.spark.qsweather.KGWeatherImage
         android:gravity="start"
         android:layout_gravity="start"
         android:layout_marginBottom="6dp"

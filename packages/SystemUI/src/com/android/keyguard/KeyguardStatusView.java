@@ -30,7 +30,7 @@ import android.graphics.Typeface;
 import androidx.core.graphics.ColorUtils;
 
 import com.android.systemui.R;
-import com.android.systemui.corvus.qsweather.KGWeatherText;
+import com.android.systemui.spark.qsweather.KGWeatherText;
 import com.android.systemui.statusbar.CrossFadeHelper;
 
 

@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2017 AICP
- *		 2021 CorvusOS
+ *  Copyright (C) 2021 CorvusOS
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.systemui.corvus.qsweather;
+package com.android.systemui.spark.qsweather;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -23,47 +22,65 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.ContentObserver;
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.VectorDrawable;
 import android.os.Handler;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.systemui.R;
-import com.android.systemui.omni.OmniJawsClient;
+import com.android.internal.util.spark.OmniJawsClient;
 
-public class QsWeatherImage extends ImageView implements
+import java.util.Arrays;
+
+public class QsWeatherText extends TextView implements
         OmniJawsClient.OmniJawsObserver {
 
-    private String TAG = QsWeatherImage.class.getSimpleName();
+    private static final String TAG = QsWeatherText.class.getSimpleName();
 
     private static final boolean DEBUG = false;
 
     private Context mContext;
 
     private int mQsWeatherEnabled;
-    private Drawable mWeatherImage;
     private OmniJawsClient mWeatherClient;
     private OmniJawsClient.WeatherInfo mWeatherData;
     private boolean mEnabled;
-    private boolean mAttached;
 
     Handler mHandler;
 
-    public QsWeatherImage(Context context) {
-        this(context, null);
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_SHOW_WEATHER_TEMP), false, this,
+                    UserHandle.USER_ALL);
+            updateSettings(false);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            updateSettings(true);
+        }
     }
 
-    public QsWeatherImage(Context context, AttributeSet attrs) {
+    public QsWeatherText(Context context) {
+        this(context, null);
+
+    }
+
+    public QsWeatherText(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public QsWeatherImage(Context context, AttributeSet attrs, int defStyle) {
+    public QsWeatherText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         final Resources resources = getResources();
         mContext = context;
@@ -72,11 +89,6 @@ public class QsWeatherImage extends ImageView implements
         mEnabled = mWeatherClient.isOmniJawsEnabled();
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
-    }
-
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
     }
 
     @Override
@@ -94,25 +106,6 @@ public class QsWeatherImage extends ImageView implements
         mWeatherClient.cleanupObserver();
     }
 
-    class SettingsObserver extends ContentObserver {
-        SettingsObserver(Handler handler) {
-            super(handler);
-        }
-
-        void observe() {
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_SHOW_WEATHER_TEMP), false, this,
-                    UserHandle.USER_ALL);
-            updateSettings();
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            updateSettings();
-        }
-    }
-
     @Override
     public void weatherUpdated() {
         if (DEBUG) Log.d(TAG, "weatherUpdated");
@@ -124,16 +117,27 @@ public class QsWeatherImage extends ImageView implements
         if (DEBUG) Log.d(TAG, "weatherError " + errorReason);
     }
 
-    public void updateSettings() {
+    public void updateSettings(boolean onChange) {
         ContentResolver resolver = mContext.getContentResolver();
         mQsWeatherEnabled = Settings.System.getIntForUser(
                 resolver, Settings.System.QS_SHOW_WEATHER_TEMP, 0,
                 UserHandle.USER_CURRENT);
-        if ((mQsWeatherEnabled == 1 || mQsWeatherEnabled == 2 || mQsWeatherEnabled == 5)) {
+        if ((mQsWeatherEnabled != 0 && mQsWeatherEnabled != 5)) {
             mWeatherClient.setOmniJawsEnabled(true);
             queryAndUpdateWeather();
         } else {
             setVisibility(View.GONE);
+        }
+
+        if (onChange && mQsWeatherEnabled == 0) {
+            // Disable OmniJaws if tile isn't used either
+            String[] tiles = Settings.Secure.getStringForUser(resolver,
+                    Settings.Secure.QS_TILES, UserHandle.USER_CURRENT).split(",");
+            boolean weatherTileEnabled = Arrays.asList(tiles).contains("weather");
+            Log.d(TAG, "Weather tile enabled " + weatherTileEnabled);
+            if (!weatherTileEnabled) {
+                mWeatherClient.setOmniJawsEnabled(false);
+            }
         }
     }
 
@@ -143,13 +147,16 @@ public class QsWeatherImage extends ImageView implements
             if (mEnabled) {
                 mWeatherClient.queryWeather();
                 mWeatherData = mWeatherClient.getWeatherInfo();
-                mWeatherImage = mWeatherClient.getWeatherConditionImage(mWeatherData.conditionCode);
                 if (mWeatherData != null) {
-                    if ((mQsWeatherEnabled == 1
-                            || mQsWeatherEnabled == 2
-                            || mQsWeatherEnabled == 5)) {
-                        setImageDrawable(mWeatherImage);
-                        setVisibility(View.VISIBLE);
+                    if ((mQsWeatherEnabled != 0 || mQsWeatherEnabled != 5)) {
+                        if (mQsWeatherEnabled == 2 || mQsWeatherEnabled == 4) {
+                            setText(mWeatherData.temp);
+                        } else {
+                            setText(mWeatherData.temp + mWeatherData.tempUnits);
+                        }
+                        if (mQsWeatherEnabled != 0 && mQsWeatherEnabled != 5) {
+                            setVisibility(View.VISIBLE);
+                        }
                     }
                 } else {
                     setVisibility(View.GONE);

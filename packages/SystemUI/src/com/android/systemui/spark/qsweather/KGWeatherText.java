@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.systemui.corvus.qsweather;
+package com.android.systemui.spark.qsweather;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -32,14 +32,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.android.systemui.R;
-import com.android.systemui.omni.OmniJawsClient;
+import com.android.internal.util.spark.OmniJawsClient;
 
 import java.util.Arrays;
 
-public class QsWeatherText extends TextView implements
+public class KGWeatherText extends TextView implements
         OmniJawsClient.OmniJawsObserver {
 
-    private static final String TAG = QsWeatherText.class.getSimpleName();
+    private static final String TAG = KGWeatherText.class.getSimpleName();
 
     private static final boolean DEBUG = false;
 
@@ -60,7 +60,7 @@ public class QsWeatherText extends TextView implements
         void observe() {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_SHOW_WEATHER_TEMP), false, this,
+                    Settings.System.KG_SHOW_WEATHER_TEMP), false, this,
                     UserHandle.USER_ALL);
             updateSettings(false);
         }
@@ -71,16 +71,16 @@ public class QsWeatherText extends TextView implements
         }
     }
 
-    public QsWeatherText(Context context) {
+    public KGWeatherText(Context context) {
         this(context, null);
 
     }
 
-    public QsWeatherText(Context context, AttributeSet attrs) {
+    public KGWeatherText(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public QsWeatherText(Context context, AttributeSet attrs, int defStyle) {
+    public KGWeatherText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         final Resources resources = getResources();
         mContext = context;
@@ -120,7 +120,7 @@ public class QsWeatherText extends TextView implements
     public void updateSettings(boolean onChange) {
         ContentResolver resolver = mContext.getContentResolver();
         mQsWeatherEnabled = Settings.System.getIntForUser(
-                resolver, Settings.System.QS_SHOW_WEATHER_TEMP, 0,
+                resolver, Settings.System.KG_SHOW_WEATHER_TEMP, 0,
                 UserHandle.USER_CURRENT);
         if ((mQsWeatherEnabled != 0 && mQsWeatherEnabled != 5)) {
             mWeatherClient.setOmniJawsEnabled(true);
@@ -151,6 +151,26 @@ public class QsWeatherText extends TextView implements
                     if ((mQsWeatherEnabled != 0 || mQsWeatherEnabled != 5)) {
                         if (mQsWeatherEnabled == 2 || mQsWeatherEnabled == 4) {
                             setText(mWeatherData.temp);
+                        } else if (mQsWeatherEnabled == 6) {
+                            String formattedCondition = mWeatherData.condition;
+                            if (formattedCondition.toLowerCase().contains("clouds")) {
+                              formattedCondition = "Cloudy";
+                            } else if (formattedCondition.toLowerCase().contains("rain")) {
+                              formattedCondition = "Rainy";
+                            } else if (formattedCondition.toLowerCase().contains("clear")) {
+                              formattedCondition = "Sunny";
+                            } else if (formattedCondition.toLowerCase().contains("storm")) {
+                              formattedCondition = "Stormy";
+                            } else if (formattedCondition.toLowerCase().contains("snow")) {
+                              formattedCondition = "Snowy";
+                            } else if (formattedCondition.toLowerCase().contains("wind")) {
+                              formattedCondition = "Windy";
+                            } else if (formattedCondition.toLowerCase().contains("mist")) {
+                              formattedCondition = "Misty";
+                            } else {
+                              formattedCondition = mWeatherData.condition;
+                            }
+                            setText(mWeatherData.temp + mWeatherData.tempUnits + " ~ "  + formattedCondition);
                         } else {
                             setText(mWeatherData.temp + mWeatherData.tempUnits);
                         }
