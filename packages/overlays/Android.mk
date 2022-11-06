@@ -65,21 +65,6 @@ LOCAL_REQUIRED_MODULES := \
         IconPackOutlineSystemUIOverlay \
         IconPackAcherusAndroidOverlay \
         IconPackAcherusSystemUIOverlay \
-        IconShapeCloudyOverlay \
-        IconShapeCylinderOverlay \
-        IconShapeFlowerOverlay \
-        IconShapeHeartOverlay \
-        IconShapeHexagonOverlay \
-        IconShapeLeafOverlay \
-        IconShapePebbleOverlay \
-        IconShapeRoundedHexagonOverlay \
-        IconShapeRoundedRectOverlay \
-        IconShapeSquareOverlay \
-        IconShapeSquircleOverlay \
-        IconShapeStretchedOverlay \
-        IconShapeTaperedRectOverlay \
-        IconShapeTeardropOverlay \
-        IconShapeVesselOverlay \
 	NavigationBarMode3ButtonOverlay \
 	NavigationBarModeGesturalOverlay \
 	NavigationBarModeGesturalOverlayNarrowBack \
