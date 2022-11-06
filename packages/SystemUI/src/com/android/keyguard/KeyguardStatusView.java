@@ -287,6 +287,9 @@ public class KeyguardStatusView extends GridLayout {
         	if (mSliceTitle != null) {
         	mSliceTitle.setTypeface(nothingdot57);
         	}
+                if (mClockView != null) {
+                mClockView.setTypeface(nothingdot57);
+                }
         	break;
         	case 24:
         	Typeface nunitobold = Typeface.create("nunito-bold", Typeface.NORMAL);

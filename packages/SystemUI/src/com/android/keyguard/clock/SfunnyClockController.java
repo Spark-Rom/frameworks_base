@@ -13,6 +13,10 @@ import com.android.settingslib.Utils;
 import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.ClockPlugin;
+import android.graphics.Typeface;
+import android.os.UserHandle;
+import android.provider.Settings;
+import android.content.Context;
 
 import java.util.TimeZone;
 
@@ -23,9 +27,12 @@ public class SfunnyClockController implements ClockPlugin {
     private TextClock mHourClock;
     private final LayoutInflater mLayoutInflater;
     private TextClock mMinuteClock;
+    private TextClock mMinuteClockBig;
+    private TextClock mHourClockBig;
     private final ViewPreviewer mRenderer = new ViewPreviewer();
     private final Resources mResources;
     private ClockLayout mView;
+    private Context mContext;
 
     
     public String getName() {
@@ -60,10 +67,11 @@ public class SfunnyClockController implements ClockPlugin {
         return BitmapFactory.decodeResource(mResources, R.drawable.default_thumbnail);
     }
 
-    public SfunnyClockController(Resources resources, LayoutInflater layoutInflater, SysuiColorExtractor sysuiColorExtractor) {
+    public SfunnyClockController(Resources resources, LayoutInflater layoutInflater, SysuiColorExtractor sysuiColorExtractor, Context context) {
         mResources = resources;
         mLayoutInflater = layoutInflater;
         mColorExtractor = sysuiColorExtractor;
+        mContext = mLayoutInflater.getContext();
     }
 
     private void createViews() {
@@ -71,9 +79,21 @@ public class SfunnyClockController implements ClockPlugin {
         mBigClockView = (ClockLayout) mLayoutInflater.inflate(R.layout.digital_clock_sfuny_big, (ViewGroup) null);
         mHourClock = (TextClock) mView.findViewById(R.id.clockHour);
         mMinuteClock = (TextClock) mView.findViewById(R.id.clockMinute);
+        mHourClockBig = (TextClock) mBigClockView.findViewById(R.id.clockHour);
+        mMinuteClockBig = (TextClock) mBigClockView.findViewById(R.id.clockMinute);
+
     }
 
-    
+
+    @Override
+    public void setTypeface(Typeface tf) {
+        mMinuteClock.setTypeface(tf);
+        mHourClock.setTypeface(tf);
+        mMinuteClockBig.setTypeface(tf);
+        mHourClockBig.setTypeface(tf);
+
+    }
+
     public void onDestroyView() {
         mView = null;
         mHourClock = null;
@@ -112,17 +132,29 @@ public class SfunnyClockController implements ClockPlugin {
 
     
     public void setTextColor(int color) {
+        boolean isCustomColorEnabled = Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                Settings.Secure.KG_CUSTOM_CLOCK_COLOR_ENABLED, 0, UserHandle.USER_CURRENT) != 0;
+        int customClockColor = Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                Settings.Secure.KG_CUSTOM_CLOCK_COLOR, 0x92FFFFFF, UserHandle.USER_CURRENT);
         TextClock textClock = mHourClock;
+        TextClock textClock2 = mMinuteClock;
+        TextClock textClock3 = mHourClockBig;
+        TextClock textClock4 = mMinuteClockBig;
+        if (isCustomColorEnabled) {
+           textClock.setTextColor(customClockColor);
+           textClock2.setTextColor(customClockColor);
+           textClock3.setTextColor(customClockColor);
+           textClock4.setTextColor(customClockColor);
+         } else {
         int i2 = -1;
         textClock.setTextColor(mDarkAmount < 0.5f ? Utils.getColorAttrDefaultColor(textClock.getContext(), R.attr.wallpaperTextColorAccent) : -1);
-        TextClock textClock2 = mMinuteClock;
         if (mDarkAmount < 0.5f) {
             i2 = Utils.getColorAttrDefaultColor(textClock2.getContext(), R.attr.wallpaperTextColorAccent);
         }
         textClock2.setTextColor(i2);
+        }
     }
 
-    
     public void onTimeTick() {
         mView.onTimeChanged();
         mBigClockView.onTimeChanged();

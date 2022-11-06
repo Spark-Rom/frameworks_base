@@ -19,7 +19,7 @@ import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.ClockPlugin;
 import androidx.core.graphics.ColorUtils;
-
+import android.graphics.Typeface;
 import com.android.internal.colorextraction.ColorExtractor;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.GradientDrawable.Orientation;
@@ -83,6 +83,9 @@ public class ClockertinoClockController implements ClockPlugin {
 
     }
 
+    @Override
+    public void setTypeface(Typeface tf) {
+    }
     public void onDestroyView() {
         mView = null;
         mTimeWidgetBase = null;
