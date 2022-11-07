@@ -508,10 +508,10 @@ public class KeyguardStatusView extends GridLayout {
         	break;
         	
         }
-        mKeyguardWeather.setTextSize(18.0f);
-        mKeyguardSlice.setViewsTextSize(18.0f);
+        mKeyguardWeather.setTextSize(16.0f);
+        mKeyguardSlice.setViewsTextSize(16.0f);
         if (mSliceTitle != null) {
-           mSliceTitle.setTextSize(18.0f);
+           mSliceTitle.setTextSize(16.0f);
         }
     }
     

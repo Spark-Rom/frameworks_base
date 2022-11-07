@@ -618,13 +618,14 @@
     <!-- The margin between the status view and the notifications on Keyguard.-->
     <dimen name="keyguard_status_view_bottom_margin">20dp</dimen>
     <!-- Minimum margin between clock and status bar -->
-    <dimen name="keyguard_clock_top_margin">42dp</dimen>
+    <dimen name="keyguard_clock_top_margin">18dp</dimen>
     <!-- The amount to shift the clocks during a small/large transition -->
     <dimen name="keyguard_clock_switch_y_shift">10dp</dimen>
     <!-- When large clock is showing, offset the smartspace by this amount -->
     <dimen name="keyguard_smartspace_top_offset">12dp</dimen>
     <!-- With the large clock, move up slightly from below the center? -->
-    <dimen name="keyguard_large_clock_top_margin">-360dp</dimen>
+    <dimen name="keyguard_large_clock_top_margin">-120dp</dimen>
+    <dimen name="keyguard_large_clock_top_margin_single_line">-360dp</dimen>
 
     <!-- Default line spacing multiplier between hours and minutes of the keyguard clock -->
     <item name="keyguard_clock_line_spacing_scale" type="dimen" format="float">.7</item>
@@ -859,8 +860,10 @@
     <dimen name="burn_in_prevention_offset_y_clock">42dp</dimen>
 
     <!-- Clock maximum font size (dp is intentional, to prevent any further scaling) -->
-    <dimen name="large_clock_text_size">110dp</dimen>
-    <dimen name="clock_text_size">80dp</dimen>
+    <dimen name="large_clock_text_size">150dp</dimen>
+    <dimen name="clock_text_size">86dp</dimen>
+    <dimen name="large_clock_text_size_single_line">125dp</dimen>
+    <dimen name="clock_text_size_single_line">80dp</dimen>
 
     <!-- The maximum offset in either direction that icons move to prevent burn-in on AOD. -->
     <dimen name="default_burn_in_prevention_offset">15dp</dimen>

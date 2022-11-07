@@ -312,9 +312,19 @@ public class KeyguardClockSwitchController extends ViewController<KeyguardClockS
     }
 
     private void updateClockLayout() {
-        int largeClockTopMargin = getContext().getResources().getDimensionPixelSize(
-                R.dimen.keyguard_large_clock_top_margin)
-                - (int) mLargeClockViewController.getBottom();
+        boolean isClockSingleLine = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.SMALL_CLOCK_DOUBLE_LINE , 0, UserHandle.USER_CURRENT) == 0;
+        
+        int largeClockTopMargin;
+        if (isClockSingleLine) {
+          largeClockTopMargin = getContext().getResources().getDimensionPixelSize(
+                  R.dimen.keyguard_large_clock_top_margin_single_line)
+                  - (int) mLargeClockViewController.getBottom();
+	} else {
+          largeClockTopMargin = getContext().getResources().getDimensionPixelSize(
+                  R.dimen.keyguard_large_clock_top_margin)
+                  - (int) mLargeClockViewController.getBottom();
+	}
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(MATCH_PARENT,
                 MATCH_PARENT);
         lp.topMargin = largeClockTopMargin;
