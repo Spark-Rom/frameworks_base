@@ -1627,6 +1627,10 @@ public class OomAdjuster {
                     if (mLocalPowerManager != null) {
                       mLocalPowerManager.setPowerMode(Mode.GAME_LOADING, true);
                     }
+                } else {
+                    if (mLocalPowerManager != null) {
+                      mLocalPowerManager.setPowerMode(Mode.GAME_LOADING, false);
+                    }
                 }
             }
 
@@ -2706,7 +2710,7 @@ public class OomAdjuster {
                                 // Switch UI pipeline for app to SCHED_FIFO
                                 state.setSavedPriority(Process.getThreadPriority(app.getPid()));
                                 mService.scheduleAsFifoPriority(app.getPid(), true);
-                                if (renderThreadTid != 0) {
+                                if (renderThreadTid > 0) {
                                     mService.scheduleAsFifoPriority(renderThreadTid,
                                             /* suppressLogs */true);
                                     if (DEBUG_OOM_ADJ) {
@@ -2721,7 +2725,7 @@ public class OomAdjuster {
                             } else {
                                 // Boost priority for top app UI and render threads
                                 setThreadPriority(app.getPid(), THREAD_PRIORITY_TOP_APP_BOOST);
-                                if (renderThreadTid != 0) {
+                                if (renderThreadTid > 0) {
                                     try {
                                         setThreadPriority(renderThreadTid,
                                                 THREAD_PRIORITY_TOP_APP_BOOST);
