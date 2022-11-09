@@ -1204,15 +1204,6 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
         mQRCodeScannerButton.getDrawable().setTint(iconColor);
         mRightAffordanceView.getDrawable().setTint(iconColor);
         mLeftAffordanceView.getDrawable().setTint(iconColor);
-
-        ColorStateList bgColor = Utils.getColorAttr(
-                mContext,
-                com.android.internal.R.attr.colorSurface);
-        mWalletButton.setBackgroundTintList(bgColor);
-        mControlsButton.setBackgroundTintList(bgColor);
-        mQRCodeScannerButton.setBackgroundTintList(bgColor);
-        mRightAffordanceView.setBackgroundTintList(bgColor);
-        mLeftAffordanceView.setBackgroundTintList(bgColor);
     }
 
     /**
