@@ -7281,6 +7281,12 @@ public final class Settings {
         public static final String KEYGUARD_QUICK_TOGGLES = "keyguard_quick_toggles";
 
         /**
+         * Whether to settings custom transitions PageTileLayout
+         * @hide
+         */
+        public static final String CUSTOM_TRANSITIONS_KEY = "custom_transitions_page_tile";
+
+        /**
          * @hide
          */
         @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
