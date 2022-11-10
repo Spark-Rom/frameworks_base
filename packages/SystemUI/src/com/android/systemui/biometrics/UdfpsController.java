@@ -40,9 +40,11 @@ import android.hardware.fingerprint.FingerprintManager;
 import android.hardware.fingerprint.IUdfpsOverlayController;
 import android.hardware.fingerprint.IUdfpsOverlayControllerCallback;
 import android.hardware.fingerprint.FingerprintSensorPropertiesInternal;
+import android.hardware.power.Boost;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.PowerManager;
+import android.os.PowerManagerInternal;
 import android.os.Process;
 import android.os.Trace;
 import android.os.UserHandle;
@@ -62,6 +64,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.LatencyTracker;
 import com.android.internal.util.spark.SparkUtils;
 import com.android.keyguard.KeyguardUpdateMonitor;
+import com.android.server.LocalServices;
 import com.android.systemui.R;
 import com.android.systemui.animation.ActivityLaunchAnimator;
 import com.android.systemui.biometrics.dagger.BiometricsBackground;
@@ -117,6 +120,7 @@ public class UdfpsController implements DozeReceiver {
 
     private final Context mContext;
     private final Execution mExecution;
+    private final PowerManagerInternal mLocalPowerManager;
     private final FingerprintManager mFingerprintManager;
     @NonNull private final LayoutInflater mInflater;
     private final WindowManager mWindowManager;
@@ -725,6 +729,7 @@ public class UdfpsController implements DozeReceiver {
         if (SparkUtils.isPackageInstalled(mContext, "com.spark.udfps.resources")) {
             mUdfpsAnimation = new UdfpsAnimation(mContext, mWindowManager, mSensorProps);
         }
+        mLocalPowerManager = LocalServices.getService(PowerManagerInternal.class);
     }
 
     private void updateScreenOffFodState() {
@@ -975,6 +980,9 @@ public class UdfpsController implements DozeReceiver {
             mUdfpsAnimation.show();
         }
         mOnFingerDown = true;
+        if (mLocalPowerManager != null) {
+            mLocalPowerManager.setPowerBoost(Boost.INTERACTION, 2000);
+        }
     }
 
     private synchronized void onFingerUp(long requestId, @NonNull UdfpsView view) {
