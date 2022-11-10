@@ -202,7 +202,7 @@ public class SurfaceAnimationRunnerTest {
                 mMockTransaction, this::finishedCallback);
         waitUntilNextFrame();
 
-        verify(mMockPowerManager).setPowerBoost(eq(Boost.INTERACTION), eq(0));
+        verify(mMockPowerManager).setPowerBoost(eq(Boost.INTERACTION), eq(2000));
     }
 
     private void waitUntilNextFrame() throws Exception {
