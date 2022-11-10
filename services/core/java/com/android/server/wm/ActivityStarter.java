@@ -136,7 +136,6 @@ import com.android.server.uri.NeededUriGrants;
 import com.android.server.wm.ActivityMetricsLogger.LaunchingState;
 import com.android.server.wm.LaunchParamsController.LaunchParams;
 import com.android.server.wm.TaskFragment.EmbeddingCheckResult;
-
 import ink.kaleidoscope.server.ParallelSpaceManagerService;
 
 import java.io.PrintWriter;
