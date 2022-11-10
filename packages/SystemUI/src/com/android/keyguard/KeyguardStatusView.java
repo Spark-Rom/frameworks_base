@@ -503,6 +503,33 @@ public class KeyguardStatusView extends GridLayout {
         	Typeface googlesansclock = Typeface.create("googlesansclock", Typeface.NORMAL);
         	mKeyguardSlice.setViewsTypeface(googlesansclock);
         	mKeyguardWeather.setTypeface(googlesansclock);
+        	if (mSliceTitle != null) {
+        	mSliceTitle.setTypeface(googlesansclock);
+        	}
+        	break;
+        	case 51:
+        	Typeface apiceoutline = Typeface.create("apiceoutline", Typeface.NORMAL);
+        	mKeyguardSlice.setViewsTypeface(apiceoutline);
+        	mKeyguardWeather.setTypeface(apiceoutline);
+        	if (mSliceTitle != null) {
+        	mSliceTitle.setTypeface(apiceoutline);
+        	}
+        	break;
+        	case 52:
+        	Typeface audimat = Typeface.create("audimat", Typeface.NORMAL);
+        	mKeyguardSlice.setViewsTypeface(audimat);
+        	mKeyguardWeather.setTypeface(audimat);
+        	if (mSliceTitle != null) {
+        	mSliceTitle.setTypeface(audimat);
+        	}
+        	break;
+        	case 53:
+        	Typeface geometossoftextrabold = Typeface.create("geometossoftextrabold", Typeface.NORMAL);
+        	mKeyguardSlice.setViewsTypeface(geometossoftextrabold);
+        	mKeyguardWeather.setTypeface(geometossoftextrabold);
+        	if (mSliceTitle != null) {
+        	mSliceTitle.setTypeface(geometossoftextrabold);
+        	}
         	break;
         	default:
         	break;

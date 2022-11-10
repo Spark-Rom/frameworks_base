@@ -405,6 +405,18 @@ public class KeyguardClockSwitch extends RelativeLayout {
         	Typeface googlesansclock = Typeface.create("googlesansclock", Typeface.NORMAL);
                 setTypeface(googlesansclock);
         	break;
+        	case 51:
+        	Typeface apiceoutline = Typeface.create("apiceoutline", Typeface.NORMAL);
+                setTypeface(apiceoutline);
+        	break;
+        	case 52:
+        	Typeface audimat = Typeface.create("audimat", Typeface.NORMAL);
+                setTypeface(audimat);
+        	break;
+        	case 53:
+        	Typeface geometossoftextrabold = Typeface.create("geometossoftextrabold", Typeface.NORMAL);
+                setTypeface(geometossoftextrabold);
+        	break;
         	default:
         	break;
         	

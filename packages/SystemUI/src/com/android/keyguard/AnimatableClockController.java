@@ -227,53 +227,59 @@ public class AnimatableClockController extends ViewController<AnimatableClockVie
     /**
      * Check if font is broken
      */
-    public boolean isBrokenFont() {
+    public int isBrokenFont() {
         int customClockFont = Settings.Secure.getIntForUser(getContext().getContentResolver(),
                 Settings.Secure.KG_CUSTOM_CLOCK_FONT , 0, UserHandle.USER_CURRENT);
-	boolean isBroken = false;
+	int isBroken = 0;
                 
 	switch (customClockFont) {
-		case 23:
-		isBroken = true;
+		case 1:
+		isBroken = 1;
 		break;
 		case 2:
-		isBroken = true;
+		isBroken = 1;
 		break;
 		case 4:
-		isBroken = true;
+		isBroken = 1;
 		break;
 		case 7:
-		isBroken = true;
+		isBroken = 1;
 		break;
 		case 9:
-		isBroken = true;
+		isBroken = 1;
+		break;
+		case 15:
+		isBroken = 2;
 		break;
 		case 17:
-		isBroken = true;
+		isBroken = 1;
 		break;
 		case 20:
-		isBroken = true;
+		isBroken = 1;
 		break;
 		case 21:
-		isBroken = true;
-		break;
-		case 1:
-		isBroken = true;
-		break;
-		case 16:
-		isBroken = true;
-		break;
-		case 27:
-		isBroken = true;
-		break;
-		case 33:
-		isBroken = true;
+		isBroken = 1;
 		break;
 		case 22:
-		isBroken = true;
+		isBroken = 1;
+		break;
+		case 23:
+		isBroken = 2;
+		break;
+		case 26:
+		isBroken = 1;
+		break;
+		case 27:
+		isBroken = 3;
+		break;
+		case 33:
+		isBroken = 1;
+		break;
+		case 51:
+		isBroken = 2;
 		break;
 		default:
-		isBroken = false;
+		isBroken = 0;
 		break;
 	  }
 	  
@@ -282,14 +288,18 @@ public class AnimatableClockController extends ViewController<AnimatableClockVie
     
     private void updateLocale() {
         Locale currLocale = Locale.getDefault();
-        boolean mIsBrokenFont = isBrokenFont();
+        int mIsBrokenFont = isBrokenFont();
         if (!Objects.equals(currLocale, mLocale)) {
             mLocale = currLocale;
             NumberFormat nf = NumberFormat.getInstance(mLocale);
             if (nf.format(FORMAT_NUMBER).equals(mBurmeseNumerals)) {
                 mView.setLineSpacingScale(mBurmeseLineSpacing);
-            } else if (mIsBrokenFont && !nf.format(FORMAT_NUMBER).equals(mBurmeseNumerals)) {
+            } else if (mIsBrokenFont == 1 && !nf.format(FORMAT_NUMBER).equals(mBurmeseNumerals)) {
                 mView.setLineSpacingScale(mBrokenFontLineSpacing);
+            } else if (mIsBrokenFont == 2 && !nf.format(FORMAT_NUMBER).equals(mBurmeseNumerals)) {
+                mView.setLineSpacingScale(0.96f);
+            } else if (mIsBrokenFont == 3 && !nf.format(FORMAT_NUMBER).equals(mBurmeseNumerals)) {
+                mView.setLineSpacingScale(0.86f);
             } else {
                 mView.setLineSpacingScale(mDefaultLineSpacing);
             }
