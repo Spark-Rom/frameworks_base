@@ -94,7 +94,7 @@
           android:id="@+id/left_aligned_notification_icon_container"
           android:layout_width="match_parent"
           android:layout_height="@dimen/notification_shelf_height"
-          android:paddingStart="@dimen/below_clock_padding_start_icons"
+          android:paddingStart="@dimen/below_clock_padding_start"
           android:visibility="invisible"
           />
     </LinearLayout>

@@ -189,9 +189,9 @@ public class KeyguardSliceView extends LinearLayout {
             if (titleItem == null) {
               button.setText(null);
             } else if (titleItem.getText().toString().length() > 13) {
-              button.setText(titleItem.getText().toString().substring(0, Math.min(13, titleItem.getText().toString().length())) + "...");
+              button.setText(" " + titleItem.getText().toString().substring(0, Math.min(13, titleItem.getText().toString().length())) + "...");
             } else {
-              button.setText(titleItem.getText().toString());
+              button.setText(" " + titleItem.getText().toString());
             }
 
 
@@ -479,15 +479,12 @@ public class KeyguardSliceView extends LinearLayout {
 
         private void updatePadding() {
             boolean hasText = !TextUtils.isEmpty(getText());
-            boolean isDate = Uri.parse(KeyguardSliceProvider.KEYGUARD_DATE_URI).equals(getTag());
             int padding = (int) mContext.getResources()
                     .getDimension(R.dimen.widget_horizontal_padding) / 2;
-            int iconPadding = (int) mContext.getResources()
-                    .getDimension(R.dimen.widget_icon_padding);
             // orientation is vertical, so add padding to top & bottom
-            setPadding(!isDate ? iconPadding : 0, padding, 0, hasText ? padding : 0);
+            setPadding(0, padding, 0, hasText ? padding : 0);
 
-            setCompoundDrawablePadding(iconPadding);
+            setCompoundDrawablePadding(0);
         }
 
         @Override
