@@ -49,6 +49,7 @@ import com.android.internal.util.Parcelling;
 import com.android.internal.util.Parcelling.BuiltIn.ForBoolean;
 import com.android.server.SystemConfig;
 
+import java.io.File;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.text.Collator;
@@ -2799,4 +2800,9 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
     }
     
     /** {@hide} */ public int canOverrideRes() { return overrideRes; }
+
+    /** {@hide} */
+    public boolean baseCodePathExists() {
+        return new File(sourceDir).exists();
+    }
 }
