@@ -43,6 +43,7 @@ import android.database.ContentObserver;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.RemoteException;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
@@ -58,6 +59,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import com.android.internal.graphics.ColorUtils;
+import com.android.internal.statusbar.IStatusBarService;
 import com.android.systemui.CoreStartable;
 import com.android.systemui.Dumpable;
 import com.android.systemui.broadcast.BroadcastDispatcher;
@@ -124,6 +126,7 @@ public class ThemeOverlayController extends CoreStartable implements Dumpable {
     private final UserTracker mUserTracker;
     private final DeviceProvisionedController mDeviceProvisionedController;
     private final Resources mResources;
+    private final IStatusBarService mBarService;
     // Current wallpaper colors associated to a user.
     private final SparseArray<WallpaperColors> mCurrentColors = new SparseArray<>();
     private final WallpaperManager mWallpaperManager;
@@ -361,7 +364,7 @@ public class ThemeOverlayController extends CoreStartable implements Dumpable {
             UserManager userManager, DeviceProvisionedController deviceProvisionedController,
             UserTracker userTracker, DumpManager dumpManager, FeatureFlags featureFlags,
             @Main Resources resources, WakefulnessLifecycle wakefulnessLifecycle,
-            ConfigurationController configurationController, SystemSettings systemSettings) {
+            ConfigurationController configurationController, SystemSettings systemSettings, IStatusBarService barService) {
         super(context);
 
         mIsMonetEnabled = featureFlags.isEnabled(Flags.MONET);
@@ -381,6 +384,7 @@ public class ThemeOverlayController extends CoreStartable implements Dumpable {
         mWakefulnessLifecycle = wakefulnessLifecycle;
         mConfigurationController = configurationController;
         dumpManager.registerDumpable(TAG, this);
+        mBarService = barService;
     }
 
     @Override
@@ -598,7 +602,7 @@ public class ThemeOverlayController extends CoreStartable implements Dumpable {
                     @Override
                     public void onChange(boolean selfChange, Collection<Uri> collection, int flags,
                             int userId) {
-                        restartSystemUI();
+                        restartAndroid();
                     }
                 },
                 UserHandle.USER_ALL);
@@ -655,8 +659,11 @@ public class ThemeOverlayController extends CoreStartable implements Dumpable {
         mConfigurationController.addCallback(mConfigurationListener);
     }
 
-    private void restartSystemUI() {
-        android.os.Process.killProcess(android.os.Process.myPid());
+    private void restartAndroid() {
+        try {
+            mBarService.restart();
+        } catch (RemoteException e) {
+        }
     }
 
     protected void reevaluateSystemTheme(boolean forceReload) {
