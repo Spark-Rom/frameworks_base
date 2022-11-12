@@ -44,12 +44,10 @@ internal abstract class SecureQSTile<TState : QSTile.State> protected constructo
 
     private var disableOnLockscreen = true
 
-    fun setDisabledOnLockscreen(disable: Boolean) {
-        disableOnLockscreen = disable
-    }
-
     override fun handleClick(view: View?) {
-        handleClick(view, mKeyguard.isMethodSecure && mKeyguard.isShowing && disableOnLockscreen)
+        val disable = Settings.Secure.getInt(mContext.contentResolver,
+                Settings.Secure.DISABLE_SECURE_TILES_ON_LOCKSCREEN, 1) == 1
+        handleClick(view, mKeyguard.isMethodSecure && mKeyguard.isShowing && !disable)
     }
 
     protected fun checkKeyguard(view: View?, keyguardShowing: Boolean): Boolean {
