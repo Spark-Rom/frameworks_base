@@ -67,7 +67,7 @@
     <string name="accessibility_quick_settings_onthego_changed_on">行走模式已开启</string>
     <!-- Text to use when the number in a notification info is too large -->
     <!-- Name of the clock in status bar [CHAR LIMIT=30] -->
-    <string name="clock">Clock</string>
+    <string name="clock">时钟</string>
     <!-- Kill button in notification guts -->
     <string name="force_stop_dlg_title">要强行停止吗？</string>
     <string name="force_stop_dlg_text">强行停止某个应用可能会导致其出现异常。</string>
