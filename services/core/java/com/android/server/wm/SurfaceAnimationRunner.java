@@ -343,7 +343,7 @@ class SurfaceAnimationRunner {
             }
             startPendingAnimationsLocked();
         }
-        mPowerManagerInternal.setPowerBoost(Boost.INTERACTION, 2000);
+        mPowerManagerInternal.setPowerBoost(Boost.INTERACTION, 5000);
     }
 
     private void scheduleApplyTransaction() {
