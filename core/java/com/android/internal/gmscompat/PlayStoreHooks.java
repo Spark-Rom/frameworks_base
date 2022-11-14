@@ -18,7 +18,6 @@ package com.android.internal.gmscompat;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.ActivityThread;
 import android.app.PendingIntent;
 import android.app.compat.gms.GmsCompat;
 import android.app.usage.StorageStats;
@@ -40,12 +39,11 @@ import android.os.storage.StorageManager;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.android.internal.gmscompat.util.GmcActivityUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BiConsumer;
 
@@ -160,8 +158,7 @@ public final class PlayStoreHooks {
         };
     }
 
-    // call at the end of Activity#onResume()
-    public static void activityResumed(Activity activity) {
+    public static void activityStarted(Activity activity) {
         if (pendingConfirmationIntents.size() != 0) {
             Intent i = pendingConfirmationIntents.removeLast();
             activity.startActivity(i);
@@ -206,11 +203,9 @@ public final class PlayStoreHooks {
             if (status == PackageInstaller.STATUS_PENDING_USER_ACTION) {
                 Intent confirmationIntent = intent.getParcelableExtra(Intent.EXTRA_INTENT);
 
-                // there is no public API that I'm aware of (as of API 31)
-                // that would allow to *reliably* find this out
-                if (ActivityThread.currentActivityThread().hasAtLeastOneResumedActivity()) {
-                    confirmationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(confirmationIntent);
+                Activity activity = GmcActivityUtils.getMostRecentVisibleActivity();
+                if (activity != null) {
+                    activity.startActivity(confirmationIntent);
                 } else {
                     pendingConfirmationIntents.addLast(confirmationIntent);
                     try {
@@ -312,7 +307,7 @@ public final class PlayStoreHooks {
     // ApplicationPackageManager#setApplicationEnabledSetting
     public static void setApplicationEnabledSetting(String packageName, int newState) {
         if (newState == PackageManager.COMPONENT_ENABLED_STATE_ENABLED
-                    && ActivityThread.currentActivityThread().hasAtLeastOneResumedActivity())
+                    && GmcActivityUtils.getMostRecentVisibleActivity() != null)
         {
             openAppSettings(packageName);
         }
