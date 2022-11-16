@@ -92,6 +92,10 @@ import android.window.ITaskFragmentOrganizer;
 import android.window.TaskFragmentInfo;
 import android.window.TaskFragmentOrganizerToken;
 
+import android.hardware.power.Boost;
+import android.os.PowerManagerInternal;
+import com.android.server.LocalServices;
+
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.protolog.common.ProtoLog;
 import com.android.internal.util.function.pooled.PooledLambda;
@@ -190,6 +194,8 @@ class TaskFragment extends WindowContainer<WindowContainer> {
     final ActivityTaskSupervisor mTaskSupervisor;
     final RootWindowContainer mRootWindowContainer;
     private final TaskFragmentOrganizerController mTaskFragmentOrganizerController;
+    
+    public PowerManagerInternal mLocalPowerManager;
 
     // TODO(b/233177466): Move mMinWidth and mMinHeight to Task and remove usages in TaskFragment
     /**
@@ -364,6 +370,7 @@ class TaskFragment extends WindowContainer<WindowContainer> {
                 mAtmService.mWindowOrganizerController.mTaskFragmentOrganizerController;
         mFragmentToken = fragmentToken;
         mRemoteToken = new RemoteToken(this);
+        mLocalPowerManager = LocalServices.getService(PowerManagerInternal.class);
     }
 
     @NonNull
@@ -1286,6 +1293,10 @@ class TaskFragment extends WindowContainer<WindowContainer> {
         // to ignore it when computing the desired screen orientation.
         boolean anim = true;
         final DisplayContent dc = taskDisplayArea.mDisplayContent;
+        
+        if (mLocalPowerManager != null) {
+          mLocalPowerManager.setPowerBoost(Boost.INTERACTION, 2000);
+        }
         if (prev != null) {
             if (prev.finishing) {
                 if (DEBUG_TRANSITION) {
@@ -1295,6 +1306,9 @@ class TaskFragment extends WindowContainer<WindowContainer> {
                     anim = false;
                     dc.prepareAppTransition(TRANSIT_NONE);
                 } else {
+        	    if (mLocalPowerManager != null) {
+          	      mLocalPowerManager.setPowerBoost(Boost.INTERACTION, 2000);
+        	    }
                     dc.prepareAppTransition(TRANSIT_CLOSE);
                 }
                 prev.setVisibility(false);
@@ -1306,6 +1320,9 @@ class TaskFragment extends WindowContainer<WindowContainer> {
                     anim = false;
                     dc.prepareAppTransition(TRANSIT_NONE);
                 } else {
+        	    if (mLocalPowerManager != null) {
+          	      mLocalPowerManager.setPowerBoost(Boost.INTERACTION, 2000);
+        	    }
                     dc.prepareAppTransition(TRANSIT_OPEN,
                             next.mLaunchTaskBehind ? TRANSIT_FLAG_OPEN_BEHIND : 0);
                 }
@@ -1567,6 +1584,10 @@ class TaskFragment extends WindowContainer<WindowContainer> {
         if (prev == resuming) {
             Slog.wtf(TAG, "Trying to pause activity that is in process of being resumed");
             return false;
+        }
+
+        if (mLocalPowerManager != null) {
+           mLocalPowerManager.setPowerBoost(Boost.INTERACTION, 2000);
         }
 
         ProtoLog.v(WM_DEBUG_STATES, "Moving to PAUSING: %s", prev);

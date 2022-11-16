@@ -51,6 +51,7 @@ import static android.os.Process.THREAD_GROUP_TOP_APP;
 import static android.os.Process.THREAD_PRIORITY_DISPLAY;
 import static android.os.Process.THREAD_PRIORITY_TOP_APP_BOOST;
 import static android.os.Process.setProcessGroup;
+import static android.os.Process.setCgroupProcsProcessGroup;
 import static android.os.Process.setThreadPriority;
 import static android.os.Process.setThreadScheduler;
 
@@ -238,6 +239,9 @@ public class OomAdjuster {
     int mBServiceAppThreshold = 5;
     // Enable B-service aging propagation on memory pressure.
     boolean mEnableBServicePropagation = false;
+    // Process in same process Group keep in same cgroup
+    boolean mEnableProcessGroupCgroupFollow = false;
+    boolean mProcessGroupCgroupFollowDex2oatOnly = false;
     public static int mCurRenderThreadTid = -1;
     public static boolean mIsTopAppRenderThreadBoostEnabled = false;
     
@@ -300,22 +304,29 @@ public class OomAdjuster {
 
         mMinBServiceAgingTime = Integer.valueOf(SystemProperties.get("persist.sys.fw.bservice_age", "5000"));
         mBServiceAppThreshold = Integer.valueOf(SystemProperties.get("persist.sys.fw.bservice_limit", "5"));
-        mEnableBServicePropagation = Boolean.parseBoolean(SystemProperties.get("persist.sys.fw.bservice_enable", "false"));
-        mIsTopAppRenderThreadBoostEnabled = Boolean.parseBoolean(SystemProperties.get("persist.sys.perf.topAppRenderThreadBoost.enable", "false"));
+        mEnableBServicePropagation = Boolean.parseBoolean(SystemProperties.get("persist.sys.fw.bservice_enable", "true"));
+        mEnableProcessGroupCgroupFollow = Boolean.parseBoolean(SystemProperties.get("persist.sys.cgroup_follow.enable", "true"));
+        mProcessGroupCgroupFollowDex2oatOnly = Boolean.parseBoolean(SystemProperties.get("persist.sys.fw.cgroup_follow.dex2oat_only", "true"));
+        mIsTopAppRenderThreadBoostEnabled = Boolean.parseBoolean(SystemProperties.get("persist.sys.perf.topAppRenderThreadBoost.enable", "true"));
             
         mProcessGroupHandler = new Handler(adjusterThread.getLooper(), msg -> {
             final int pid = msg.arg1;
             final int group = msg.arg2;
+            final ProcessRecord app = (ProcessRecord)msg.obj;
             if (pid == ActivityManagerService.MY_PID) {
                 // Skip setting the process group for system_server, keep it as default.
                 return true;
             }
             if (Trace.isTagEnabled(Trace.TRACE_TAG_ACTIVITY_MANAGER)) {
                 Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "setProcessGroup "
-                        + msg.obj + " to " + group);
+                       + app.processName + " to " + group);
             }
             try {
-                setProcessGroup(pid, group);
+                if (mEnableProcessGroupCgroupFollow) {
+                    setCgroupProcsProcessGroup(app.info.uid, pid, group, mProcessGroupCgroupFollowDex2oatOnly);
+                } else {
+                    setProcessGroup(pid, group);
+                }
             } catch (Exception e) {
                 if (DEBUG_ALL) {
                     Slog.w(TAG, "Failed setting process group of " + pid + " to " + group, e);
@@ -2661,7 +2672,7 @@ public class OomAdjuster {
         }
 
         if (state.getCurAdj() != state.getSetAdj()) {
-            ProcessList.setOomAdj(app.getPid(), app.uid, state.getCurAdj());
+            ProcessList.setOomAdj(app.getPid(), app.uid, app.mState.getCurAdj());
             if (DEBUG_SWITCH || DEBUG_OOM_ADJ || mService.mCurOomAdjUid == app.info.uid) {
                 String msg = "Set " + app.getPid() + " " + app.processName + " adj "
                         + state.getCurAdj() + ": " + state.getAdjType();
@@ -2706,7 +2717,7 @@ public class OomAdjuster {
                         break;
                 }
                 mProcessGroupHandler.sendMessage(mProcessGroupHandler.obtainMessage(
-                        0 /* unused */, app.getPid(), processGroup, app.processName));
+                        0 /* unused */, app.getPid(), processGroup, app));
                 try {
                     final int renderThreadTid = app.getRenderThreadTid();
                     if (curSchedGroup == ProcessList.SCHED_GROUP_TOP_APP) {

@@ -178,6 +178,7 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.Region;
+import android.hardware.power.Boost;
 import android.hardware.configstore.V1_0.OptionalBool;
 import android.hardware.configstore.V1_1.ISurfaceFlingerConfigs;
 import android.hardware.display.DisplayManager;
@@ -354,6 +355,8 @@ public class WindowManagerService extends IWindowManager.Stub
     static final int LAYOUT_REPEAT_THRESHOLD = 4;
 
     static final boolean PROFILE_ORIENTATION = false;
+    static WindowState mFocusingWindow;
+    String mFocusingActivity;
 
     /** The maximum length we will accept for a loaded animation duration:
      * this is 10 seconds.
@@ -3428,12 +3431,28 @@ public class WindowManagerService extends IWindowManager.Stub
         ValueAnimator.setDurationScale(scale);
     }
 
+    private float animationScalesCheck (int which) {
+        float value = -1.0f;
+        if (!mAnimationsDisabled) {
+            if (value == -1.0f) {
+                switch (which) {
+                    case WINDOW_ANIMATION_SCALE: value = mWindowAnimationScaleSetting; break;
+                    case TRANSITION_ANIMATION_SCALE: value = mTransitionAnimationScaleSetting; break;
+                    case ANIMATION_DURATION_SCALE: value = mAnimatorDurationScaleSetting; break;
+                }
+            }
+        } else {
+            value = 0;
+        }
+        return value;
+    }
+
     public float getWindowAnimationScaleLocked() {
-        return mAnimationsDisabled ? 0 : mWindowAnimationScaleSetting;
+        return animationScalesCheck(WINDOW_ANIMATION_SCALE);
     }
 
     public float getTransitionAnimationScaleLocked() {
-        return mAnimationsDisabled ? 0 : mTransitionAnimationScaleSetting;
+        return animationScalesCheck(TRANSITION_ANIMATION_SCALE);
     }
 
     @Override
@@ -6081,6 +6100,9 @@ public class WindowManagerService extends IWindowManager.Stub
         }
 
         mLatencyTracker.onActionStart(ACTION_ROTATE_SCREEN);
+        if (mPowerManagerInternal != null) {
+           mPowerManagerInternal.setPowerBoost(Boost.INTERACTION, 2000);
+        }
         mExitAnimId = exitAnim;
         mEnterAnimId = enterAnim;
 

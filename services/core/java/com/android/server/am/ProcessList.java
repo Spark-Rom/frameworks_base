@@ -82,6 +82,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManagerInternal;
 import android.content.res.Resources;
 import android.graphics.Point;
+import android.hardware.power.Boost;
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
 import android.os.AppZygote;
@@ -94,6 +95,7 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.os.PowerManager;
+import android.os.PowerManagerInternal;
 import android.os.Process;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
@@ -411,6 +413,8 @@ public final class ProcessList {
     private boolean mVoldAppDataIsolationEnabled = false;
 
     private ArrayList<String> mAppDataIsolationAllowlistedApps;
+    
+    PowerManagerInternal mLocalPowerManager;
 
     /**
      * Temporary to avoid allocations.  Protected by main lock.
@@ -846,6 +850,7 @@ public final class ProcessList {
             mAppExitInfoTracker.init(mService);
             mImperceptibleKillRunner = new ImperceptibleKillRunner(sKillThread.getLooper());
         }
+        mLocalPowerManager = LocalServices.getService(PowerManagerInternal.class);
     }
 
     void onSystemReady() {
@@ -2338,6 +2343,16 @@ public final class ProcessList {
             if (bindMountAppStorageDirs) {
                 storageManagerInternal.prepareStorageDirs(userId, pkgDataInfoMap.keySet(),
                         app.processName);
+            }
+            if (mLocalPowerManager != null) {
+                if ((hostingRecord.getType() != null)
+                       && (hostingRecord.getType().equals(HostingRecord.HOSTING_TYPE_NEXT_ACTIVITY)
+                               || hostingRecord.getType().equals(HostingRecord.HOSTING_TYPE_NEXT_TOP_ACTIVITY))) {
+                                   //TODO: not acting on pre-activity
+                    if (startResult != null) {
+                        mLocalPowerManager.setPowerBoost(Boost.INTERACTION, 2000);
+                    }
+                }
             }
             checkSlow(startTime, "startProcess: returned from zygote!");
             return startResult;

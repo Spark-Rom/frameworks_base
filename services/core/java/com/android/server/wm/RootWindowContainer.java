@@ -49,6 +49,7 @@ import static com.android.internal.protolog.ProtoLogGroup.WM_SHOW_TRANSACTIONS;
 import static com.android.server.policy.PhoneWindowManager.SYSTEM_DIALOG_REASON_ASSIST;
 import static com.android.server.policy.WindowManagerPolicy.FINISH_LAYOUT_REDO_LAYOUT;
 import static com.android.server.policy.WindowManagerPolicy.FINISH_LAYOUT_REDO_WALLPAPER;
+import static com.android.server.wm.ActivityRecord.State.DESTROYED;
 import static com.android.server.wm.ActivityRecord.State.FINISHING;
 import static com.android.server.wm.ActivityRecord.State.PAUSED;
 import static com.android.server.wm.ActivityRecord.State.RESUMED;
@@ -139,6 +140,8 @@ import android.view.DisplayInfo;
 import android.view.SurfaceControl;
 import android.view.WindowManager;
 import android.window.WindowContainerToken;
+
+import android.hardware.power.Boost;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.app.ResolverActivity;
@@ -1799,7 +1802,7 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
     }
 
     @Nullable
-    Task getTopDisplayFocusedRootTask() {
+    public Task getTopDisplayFocusedRootTask() {
         for (int i = getChildCount() - 1; i >= 0; --i) {
             final Task focusedRootTask = getChildAt(i).getFocusedRootTask();
             if (focusedRootTask != null) {
@@ -2190,9 +2193,30 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
         if (preferredTaskDisplayArea != null) {
             mTmpFindTaskResult.process(preferredTaskDisplayArea);
             if (mTmpFindTaskResult.mIdealRecord != null) {
+                if(mTmpFindTaskResult.mIdealRecord.getState() == DESTROYED) {
+                    /*It's a new app launch */
+                    if (mWmService.mPowerManagerInternal != null) {
+            	      mWmService.mPowerManagerInternal.setPowerBoost(Boost.INTERACTION, 2000);
+            	    }
+                }
+
+                if(mTmpFindTaskResult.mIdealRecord.getState() == STOPPED) {
+                     /*Warm launch */
+                    if (mWmService.mPowerManagerInternal != null) {
+            	      mWmService.mPowerManagerInternal.setPowerBoost(Boost.INTERACTION, 1000);
+            	    }
+                }
                 return mTmpFindTaskResult.mIdealRecord;
             } else if (mTmpFindTaskResult.mCandidateRecord != null) {
                 candidateActivity = mTmpFindTaskResult.mCandidateRecord;
+            }
+        }
+
+        /* Acquire perf lock *only* during new app launch */
+        if ((mTmpFindTaskResult.mIdealRecord == null) ||
+            (mTmpFindTaskResult.mIdealRecord.getState() == DESTROYED)) {
+            if (mWmService.mPowerManagerInternal != null) {
+            	mWmService.mPowerManagerInternal.setPowerBoost(Boost.INTERACTION, 0);
             }
         }
 

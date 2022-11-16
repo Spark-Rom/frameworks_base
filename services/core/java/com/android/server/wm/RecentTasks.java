@@ -72,6 +72,10 @@ import android.util.SparseBooleanArray;
 import android.view.MotionEvent;
 import android.view.WindowManagerPolicyConstants.PointerEventListener;
 
+import android.hardware.power.Boost;
+import android.os.PowerManagerInternal;
+import com.android.server.LocalServices;
+
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.protolog.common.ProtoLog;
 import com.android.internal.util.function.pooled.PooledLambda;
@@ -205,6 +209,7 @@ class RecentTasks {
     private final HashMap<ComponentName, ActivityInfo> mTmpAvailActCache = new HashMap<>();
     private final HashMap<String, ApplicationInfo> mTmpAvailAppCache = new HashMap<>();
     private final SparseBooleanArray mTmpQuietProfileUserIds = new SparseBooleanArray();
+    private final PowerManagerInternal mLocalPowerManager = LocalServices.getService(PowerManagerInternal.class);
 
     // TODO(b/127498985): This is currently a rough heuristic for interaction inside an app
     private final PointerEventListener mListener = new PointerEventListener() {
@@ -1209,6 +1214,9 @@ class RecentTasks {
     void remove(Task task) {
         mTasks.remove(task);
         notifyTaskRemoved(task, false /* wasTrimmed */, false /* killProcess */);
+        if (mLocalPowerManager != null) {
+           mLocalPowerManager.setPowerBoost(Boost.INTERACTION, 2000);
+        }
     }
 
     /**

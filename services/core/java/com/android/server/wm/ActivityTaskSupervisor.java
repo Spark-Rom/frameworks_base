@@ -48,6 +48,7 @@ import static android.view.WindowManager.TRANSIT_TO_FRONT;
 
 import static com.android.internal.protolog.ProtoLogGroup.WM_DEBUG_STATES;
 import static com.android.internal.protolog.ProtoLogGroup.WM_DEBUG_TASKS;
+import static com.android.server.wm.ActivityRecord.State.DESTROYED;
 import static com.android.server.wm.ActivityRecord.State.PAUSED;
 import static com.android.server.wm.ActivityRecord.State.PAUSING;
 import static com.android.server.wm.ActivityRecord.State.RESTARTING_PROCESS;
@@ -110,8 +111,10 @@ import android.content.pm.ResolveInfo;
 import android.content.pm.UserInfo;
 import android.content.res.Configuration;
 import android.graphics.Rect;
+import android.hardware.power.Boost;
 import android.hardware.SensorPrivacyManager;
 import android.hardware.SensorPrivacyManagerInternal;
+import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
@@ -121,6 +124,7 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.os.PowerManager;
+import android.os.PowerManagerInternal;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.SystemClock;
@@ -139,6 +143,7 @@ import android.view.Display;
 import com.android.internal.R;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.app.procstats.ProcessStats;
 import com.android.internal.content.ReferrerIntent;
 import com.android.internal.protolog.common.ProtoLog;
 import com.android.internal.util.ArrayUtils;
@@ -153,6 +158,7 @@ import com.android.server.wm.ActivityMetricsLogger.LaunchingState;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -178,6 +184,8 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
 
     // How long we can hold the launch wake lock before giving up.
     private static final int LAUNCH_TIMEOUT = 10 * 1000 * Build.HW_TIMEOUT_MULTIPLIER;
+    
+    PowerManagerInternal mLocalPowerManager;
 
     /** How long we wait until giving up on the activity telling us it released the top state. */
     private static final int TOP_RESUMED_STATE_LOSS_TIMEOUT = 500;
@@ -238,7 +246,7 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
     private static final int MAX_TASK_IDS_PER_USER = UserHandle.PER_USER_RANGE;
 
     final ActivityTaskManagerService mService;
-    RootWindowContainer mRootWindowContainer;
+    public RootWindowContainer mRootWindowContainer;
 
     /** The historial list of recent tasks including inactive tasks */
     RecentTasks mRecentTasks;
@@ -446,6 +454,7 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
         mLaunchParamsPersister = new LaunchParamsPersister(mPersisterQueue, this);
         mLaunchParamsController = new LaunchParamsController(mService, mLaunchParamsPersister);
         mLaunchParamsController.registerDefaultModifiers(this);
+        mLocalPowerManager = LocalServices.getService(PowerManagerInternal.class);
     }
 
     void onSystemReady() {
@@ -1039,6 +1048,9 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
         boolean knownToBeDead = false;
         if (wpc != null && wpc.hasThread()) {
             try {
+            	if (mLocalPowerManager != null) {
+            	mLocalPowerManager.setPowerBoost(Boost.INTERACTION, 2000);
+            	}
                 realStartActivityLocked(r, wpc, andResume, checkConfig);
                 return;
             } catch (RemoteException e) {
@@ -1423,6 +1435,18 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
     void findTaskToMoveToFront(Task task, int flags, ActivityOptions options, String reason,
             boolean forceNonResizeable) {
         Task currentRootTask = task.getRootTask();
+        
+        Task focusedStack = mRootWindowContainer.getTopDisplayFocusedRootTask();
+        ActivityRecord top_activity = focusedStack != null ? focusedStack.getTopNonFinishingActivity() : null;
+
+        //top_activity = task.stack.topRunningActivityLocked();
+        /* App is launching from recent apps and it's a new process */
+        if((top_activity != null) && (top_activity.getState() == DESTROYED)) {
+            if (mLocalPowerManager != null) {
+               mLocalPowerManager.setPowerBoost(Boost.INTERACTION, 2000);
+            }
+        }
+
         if (currentRootTask == null) {
             Slog.e(TAG, "findTaskToMoveToFront: can't move task="
                     + task + " to front. Root task is null");
