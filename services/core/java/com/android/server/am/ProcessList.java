@@ -83,6 +83,7 @@ import android.content.pm.PackageManagerInternal;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.hardware.power.Boost;
+import android.hardware.power.Mode;
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
 import android.os.AppZygote;
@@ -2350,7 +2351,9 @@ public final class ProcessList {
                                || hostingRecord.getType().equals(HostingRecord.HOSTING_TYPE_NEXT_TOP_ACTIVITY))) {
                                    //TODO: not acting on pre-activity
                     if (startResult != null) {
-                        mLocalPowerManager.setPowerBoost(Boost.INTERACTION, 2000);
+                        mLocalPowerManager.setPowerMode(Mode.LAUNCH, true);
+                    } else {
+                        mLocalPowerManager.setPowerMode(Mode.LAUNCH, false);
                     }
                 }
             }

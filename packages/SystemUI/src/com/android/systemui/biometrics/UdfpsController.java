@@ -39,7 +39,7 @@ import android.hardware.fingerprint.FingerprintManager;
 import android.hardware.fingerprint.IUdfpsOverlayController;
 import android.hardware.fingerprint.IUdfpsOverlayControllerCallback;
 import android.hardware.fingerprint.FingerprintSensorPropertiesInternal;
-import android.hardware.power.Boost;
+import android.hardware.power.Mode;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.PowerManager;
@@ -801,6 +801,10 @@ public class UdfpsController implements DozeReceiver {
         } else {
             Log.v(TAG, "showUdfpsOverlay | the overlay is already showing");
         }
+        
+        if (mLocalPowerManager != null) {
+            mLocalPowerManager.setPowerMode(Mode.LAUNCH, true);
+        }
     }
 
     private void hideUdfpsOverlay() {
@@ -823,6 +827,10 @@ public class UdfpsController implements DozeReceiver {
 
         mOverlay = null;
         mOrientationListener.disable();
+        
+        if (mLocalPowerManager != null) {
+            mLocalPowerManager.setPowerMode(Mode.LAUNCH, false);
+        }
     }
 
     /**
@@ -972,9 +980,6 @@ public class UdfpsController implements DozeReceiver {
             mUdfpsAnimation.show();
         }
         mOnFingerDown = true;
-        if (mLocalPowerManager != null) {
-            mLocalPowerManager.setPowerBoost(Boost.INTERACTION, 2000);
-        }
     }
 
     private synchronized void onFingerUp(long requestId, @NonNull UdfpsView view) {

@@ -304,10 +304,10 @@ public class OomAdjuster {
 
         mMinBServiceAgingTime = Integer.valueOf(SystemProperties.get("persist.sys.fw.bservice_age", "5000"));
         mBServiceAppThreshold = Integer.valueOf(SystemProperties.get("persist.sys.fw.bservice_limit", "5"));
-        mEnableBServicePropagation = Boolean.parseBoolean(SystemProperties.get("persist.sys.fw.bservice_enable", "true"));
-        mEnableProcessGroupCgroupFollow = Boolean.parseBoolean(SystemProperties.get("persist.sys.cgroup_follow.enable", "true"));
-        mProcessGroupCgroupFollowDex2oatOnly = Boolean.parseBoolean(SystemProperties.get("persist.sys.fw.cgroup_follow.dex2oat_only", "true"));
-        mIsTopAppRenderThreadBoostEnabled = Boolean.parseBoolean(SystemProperties.get("persist.sys.perf.topAppRenderThreadBoost.enable", "true"));
+        mEnableBServicePropagation = Boolean.parseBoolean(SystemProperties.get("persist.sys.fw.bservice_enable", "false"));
+        mEnableProcessGroupCgroupFollow = Boolean.parseBoolean(SystemProperties.get("persist.sys.cgroup_follow.enable", "false"));
+        mProcessGroupCgroupFollowDex2oatOnly = Boolean.parseBoolean(SystemProperties.get("persist.sys.fw.cgroup_follow.dex2oat_only", "false"));
+        mIsTopAppRenderThreadBoostEnabled = Boolean.parseBoolean(SystemProperties.get("persist.sys.perf.topAppRenderThreadBoost.enable", "false"));
             
         mProcessGroupHandler = new Handler(adjusterThread.getLooper(), msg -> {
             final int pid = msg.arg1;
@@ -1643,11 +1643,11 @@ public class OomAdjuster {
                 if(mCurRenderThreadTid != app.getRenderThreadTid() && app.getRenderThreadTid() > 0) {
                     mCurRenderThreadTid = app.getRenderThreadTid();
                     if (mLocalPowerManager != null) {
-                      mLocalPowerManager.setPowerMode(Mode.GAME_LOADING, true);
+                      mLocalPowerManager.setPowerMode(Mode.SUSTAINED_PERFORMANCE, true);
                     }
                 } else {
                     if (mLocalPowerManager != null) {
-                      mLocalPowerManager.setPowerMode(Mode.GAME_LOADING, false);
+                      mLocalPowerManager.setPowerMode(Mode.SUSTAINED_PERFORMANCE, false);
                     }
                 }
             }

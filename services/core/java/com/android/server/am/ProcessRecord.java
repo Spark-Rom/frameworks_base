@@ -31,10 +31,12 @@ import android.content.pm.PackageManagerInternal;
 import android.content.pm.ProcessInfo;
 import android.content.pm.VersionedPackage;
 import android.content.res.CompatibilityInfo;
+import android.hardware.power.Boost;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Process;
+import android.os.PowerManagerInternal;
 import android.os.RemoteException;
 import android.os.SystemClock;
 import android.os.Trace;
@@ -55,6 +57,7 @@ import com.android.internal.app.procstats.ProcessState;
 import com.android.internal.app.procstats.ProcessStats;
 import com.android.internal.os.Zygote;
 import com.android.internal.util.FrameworkStatsLog;
+import com.android.server.LocalServices;
 import com.android.server.wm.WindowProcessController;
 import com.android.server.wm.WindowProcessListener;
 
@@ -1075,6 +1078,7 @@ class ProcessRecord implements WindowProcessListener {
                     && mErrorState.getAnrAnnotation() != null) {
                 description = description + ": " + mErrorState.getAnrAnnotation();
             }
+            PowerManagerInternal mLocalPowerManager = LocalServices.getService(PowerManagerInternal.class);
             if (mService != null && (noisy || info.uid == mService.mCurOomAdjUid)) {
                 mService.reportUidInfoMessageLocked(TAG,
                         "Killing " + toShortString() + " (adj " + mState.getSetAdj()
@@ -1099,6 +1103,11 @@ class ProcessRecord implements WindowProcessListener {
                     mKillTime = SystemClock.uptimeMillis();
                 }
             }
+            if (mLocalPowerManager != null) {
+              if (!mErrorState.isNotResponding() && !mErrorState.isCrashing()) {
+                 mLocalPowerManager.setPowerBoost(Boost.INTERACTION, 2000);
+              }
+           }
             Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
         }
     }

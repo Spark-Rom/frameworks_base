@@ -256,6 +256,8 @@ import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.Rect;
 import android.hardware.display.DisplayManagerInternal;
+import android.hardware.power.Boost;
+import android.hardware.power.Mode;
 import android.media.audiofx.AudioEffect;
 import android.net.ConnectivityManager;
 import android.net.Proxy;
@@ -3350,6 +3352,14 @@ public class ActivityManagerService extends IActivityManager.Stub
                 mAppProfiler.setAllowLowerMemLevelLocked(false);
                 doLowMem = false;
             }
+            
+            if (mLocalPowerManager != null) {
+              // either the task will trigger the back animation or gets swipes from overview
+              if (!app.mErrorState.isNotResponding() && !app.mErrorState.isCrashing()) {
+                  mLocalPowerManager.setPowerBoost(Boost.INTERACTION, 2000);
+              }
+            }
+
             EventLogTags.writeAmProcDied(app.userId, pid, app.processName, setAdj, setProcState);
             if (DEBUG_CLEANUP) Slog.v(TAG_CLEANUP,
                 "Dying app: " + app + ", pid: " + pid + ", thread: " + thread.asBinder());
@@ -4750,6 +4760,14 @@ public class ActivityManagerService extends IActivityManager.Stub
         }
 
         EventLogTags.writeAmProcBound(app.userId, pid, app.processName);
+
+        if (mLocalPowerManager != null) {
+          if (app.getHostingRecord() != null && app.getHostingRecord().isTopApp()) {
+              mLocalPowerManager.setPowerMode(Mode.LAUNCH, true);
+          } else {
+              mLocalPowerManager.setPowerMode(Mode.LAUNCH, false);
+          }
+        }
 
         synchronized (mProcLock) {
             app.mState.setCurAdj(ProcessList.INVALID_ADJ);
