@@ -46,7 +46,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
 
-import com.android.internal.util.spark.ImageHelper;
+import com.android.internal.util.spark.AmbientImageHelper;
 import com.android.systemui.R;
 
 public class AmbientCustomImage extends FrameLayout {
@@ -112,10 +112,10 @@ public class AmbientCustomImage extends FrameLayout {
    private void loadAmbientImage() {
        mImage = null;
        File file = new File(mContext.getFilesDir(), AMBIENT_IMAGE_FILE_NAME);
-       if (file.exists()) {
+       if (file.exists() && file != null) {
            if (DEBUG) Log.i(TAG, "Load ambient image");
            final Bitmap image = BitmapFactory.decodeFile(file.getAbsolutePath());
-           mImage = new BitmapDrawable(mContext.getResources(), ImageHelper.resizeMaxDeviceSize(mContext, image));
+           mImage = new BitmapDrawable(mContext.getResources(), AmbientImageHelper.resizeMaxDeviceSize(mContext, image));
        }
    }
 

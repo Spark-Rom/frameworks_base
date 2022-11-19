@@ -149,115 +149,224 @@ public class AmbientText extends FrameLayout {
         TextView textView = (TextView) findViewById(R.id.ambient_text);
 
         switch (textFont) {
-            case 0:
-                textView.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
-                break;
-            case 1:
-                textView.setTypeface(Typeface.create("sans-serif", Typeface.BOLD));
-                break;
-            case 2:
-                textView.setTypeface(Typeface.create("sans-serif", Typeface.ITALIC));
-                break;
-            case 3:
-                textView.setTypeface(Typeface.create("sans-serif", Typeface.BOLD_ITALIC));
-                break;
-            case 4:
-                textView.setTypeface(Typeface.create("sans-serif-light", Typeface.ITALIC));
-                break;
-            case 5:
-                textView.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
-                break;
-            case 6:
-                textView.setTypeface(Typeface.create("sans-serif-thin", Typeface.ITALIC));
-                break;
-            case 7:
-                textView.setTypeface(Typeface.create("sans-serif-thin", Typeface.NORMAL));
-                break;
-            case 8:
-            default:
-                textView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
-                break;
-            case 9:
-                textView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.ITALIC));
-                break;
-            case 10:
-                textView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
-                break;
-            case 11:
-                textView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD_ITALIC));
-                break;
-            case 12:
-                textView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-                break;
-            case 13:
-                textView.setTypeface(Typeface.create("sans-serif-medium", Typeface.ITALIC));
-                break;
-            case 14:
-                textView.setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.NORMAL));
-                break;
-            case 15:
-                textView.setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.ITALIC));
-                break;
-            case 16:
-                textView.setTypeface(Typeface.create("sans-serif-black", Typeface.NORMAL));
-                break;
-            case 17:
-                textView.setTypeface(Typeface.create("sans-serif-black", Typeface.ITALIC));
-                break;
-            case 18:
-                textView.setTypeface(Typeface.create("cursive", Typeface.NORMAL));
-                break;
-            case 19:
-                textView.setTypeface(Typeface.create("cursive", Typeface.BOLD));
-                break;
-            case 20:
-                textView.setTypeface(Typeface.create("casual", Typeface.NORMAL));
-                break;
-            case 21:
-                textView.setTypeface(Typeface.create("serif", Typeface.NORMAL));
-                break;
-            case 22:
-                textView.setTypeface(Typeface.create("serif", Typeface.ITALIC));
-                break;
-            case 23:
-                textView.setTypeface(Typeface.create("serif", Typeface.BOLD));
-                break;
-            case 24:
-                textView.setTypeface(Typeface.create("serif", Typeface.BOLD_ITALIC));
-                break;
-            case 25:
-                textView.setTypeface(Typeface.create("gobold-light-sys", Typeface.NORMAL));
-                break;
-            case 26:
-                textView.setTypeface(Typeface.create("roadrage-sys", Typeface.NORMAL));
-                break;
-            case 27:
-                textView.setTypeface(Typeface.create("snowstorm-sys", Typeface.NORMAL));
-                break;
-            case 28:
-                textView.setTypeface(Typeface.create("googlesans-sys", Typeface.NORMAL));
-                break;
-            case 29:
-                textView.setTypeface(Typeface.create("neoneon-sys", Typeface.NORMAL));
-                break;
-            case 30:
-                textView.setTypeface(Typeface.create("themeable-sys", Typeface.NORMAL));
-                break;
-            case 31:
-                textView.setTypeface(Typeface.create("samsung-sys", Typeface.NORMAL));
-                break;
-            case 32:
-                textView.setTypeface(Typeface.create("mexcellent-sys", Typeface.NORMAL));
-                break;
-            case 33:
-                textView.setTypeface(Typeface.create("burnstown-sys", Typeface.NORMAL));
-                break;
-            case 34:
-                textView.setTypeface(Typeface.create("dumbledor-sys", Typeface.NORMAL));
-                break;
-            case 35:
-                textView.setTypeface(Typeface.create("phantombold-sys", Typeface.NORMAL));
-                break;
+        	case 0:
+        	Typeface sansSF = Typeface.create("sans-serif", Typeface.NORMAL);
+        	textView.setTypeface(sansSF);
+        	break;
+        	case 1:
+        	Typeface accuratist = Typeface.create("accuratist", Typeface.NORMAL);
+        	textView.setTypeface(accuratist);
+        	break;
+        	case 2:
+        	Typeface aclonica = Typeface.create("aclonica", Typeface.NORMAL);
+        	textView.setTypeface(aclonica);
+        	break;
+        	case 3:
+        	Typeface amarante = Typeface.create("amarante", Typeface.NORMAL);
+        	textView.setTypeface(amarante);
+        	break;
+        	case 4:
+        	Typeface bariol = Typeface.create("bariol", Typeface.NORMAL);
+        	textView.setTypeface(bariol);
+        	break;
+        	case 5:
+        	Typeface cagliostro = Typeface.create("cagliostro", Typeface.NORMAL);
+        	textView.setTypeface(cagliostro);
+        	break;
+        	case 6:
+        	Typeface cocon = Typeface.create("cocon", Typeface.NORMAL);
+        	textView.setTypeface(cocon);
+        	break;
+        	case 7:
+        	Typeface comfortaa = Typeface.create("comfortaa", Typeface.NORMAL);
+        	textView.setTypeface(comfortaa);
+        	break;
+        	case 8:
+        	Typeface comicsans = Typeface.create("comicsans", Typeface.NORMAL);
+        	textView.setTypeface(comicsans);
+        	break;
+        	case 9:
+        	Typeface coolstory = Typeface.create("coolstory", Typeface.NORMAL);
+        	textView.setTypeface(coolstory);
+        	break;
+        	case 10:
+        	Typeface exotwo = Typeface.create("exotwo", Typeface.NORMAL);
+        	textView.setTypeface(exotwo);
+        	break;
+        	case 11:
+        	Typeface fifa2018 = Typeface.create("fifa2018", Typeface.NORMAL);
+        	textView.setTypeface(fifa2018);
+        	break;
+        	case 12:
+        	Typeface fluidsans = Typeface.create("fluid-sans", Typeface.NORMAL);
+        	textView.setTypeface(fluidsans);
+        	break;
+        	case 13:
+        	Typeface googlesans = Typeface.create("googlesans", Typeface.NORMAL);
+        	textView.setTypeface(googlesans);
+        	break;
+        	case 14:
+        	Typeface grandhotel = Typeface.create("grandhotel", Typeface.NORMAL);
+        	textView.setTypeface(grandhotel);
+        	break;
+        	case 15:
+        	Typeface harmonyossans = Typeface.create("harmonyos-sans", Typeface.NORMAL);
+        	textView.setTypeface(harmonyossans);
+        	break;
+        	case 16:
+        	Typeface intercustom = Typeface.create("inter_custom", Typeface.NORMAL);
+        	textView.setTypeface(intercustom);
+        	break;
+        	case 17:
+        	Typeface jtleonor = Typeface.create("jtleonor", Typeface.NORMAL);
+        	textView.setTypeface(jtleonor);
+        	break;
+        	case 18:
+        	Typeface latobold = Typeface.create("lato-bold", Typeface.NORMAL);
+        	textView.setTypeface(latobold);
+        	break;
+        	case 19:
+        	Typeface lgsmartgothic = Typeface.create("lgsmartgothic", Typeface.NORMAL);
+        	textView.setTypeface(lgsmartgothic);
+        	break;
+        	case 20:
+        	Typeface linotte = Typeface.create("linotte", Typeface.NORMAL);
+        	textView.setTypeface(linotte);
+        	break;
+        	case 21:
+        	Typeface misans = Typeface.create("misans", Typeface.NORMAL);
+        	textView.setTypeface(misans);
+        	break;
+        	case 22:
+        	Typeface nokiapure = Typeface.create("nokiapure", Typeface.NORMAL);
+        	textView.setTypeface(nokiapure);
+        	break;
+        	case 23:
+        	Typeface nothingdot57 = Typeface.create("nothingdot57", Typeface.NORMAL);
+        	textView.setTypeface(nothingdot57);
+        	break;
+        	case 24:
+        	Typeface nunitobold = Typeface.create("nunito-bold", Typeface.NORMAL);
+        	textView.setTypeface(nunitobold);
+        	break;
+        	case 25:
+        	Typeface opsans = Typeface.create("op-sans", Typeface.NORMAL);
+        	textView.setTypeface(opsans);
+        	break;
+        	case 26:
+        	Typeface oneplusslate = Typeface.create("oneplusslate", Typeface.NORMAL);
+        	textView.setTypeface(oneplusslate);
+        	break;
+        	case 27:
+        	Typeface opposans = Typeface.create("opposans", Typeface.NORMAL);
+        	textView.setTypeface(opposans);
+        	break;
+        	case 28:
+        	Typeface oswaldbold = Typeface.create("oswald-bold", Typeface.NORMAL);
+        	textView.setTypeface(oswaldbold);
+        	break;
+        	case 29:
+        	Typeface productsansvh = Typeface.create("productsansvh", Typeface.NORMAL);
+        	textView.setTypeface(productsansvh);
+        	break;
+        	case 30:
+        	Typeface quando = Typeface.create("quando", Typeface.NORMAL);
+        	textView.setTypeface(quando);
+        	break;
+        	case 31:
+        	Typeface redressed = Typeface.create("redressed", Typeface.NORMAL);
+        	textView.setTypeface(redressed);
+        	break;
+        	case 32:
+        	Typeface reemkufi = Typeface.create("reemkufi", Typeface.NORMAL);
+        	textView.setTypeface(reemkufi);
+        	break;
+        	case 33:
+        	Typeface robotocondensed = Typeface.create("robotocondensed", Typeface.NORMAL);
+        	textView.setTypeface(robotocondensed);
+        	break;
+        	case 34:
+        	Typeface rosemary = Typeface.create("rosemary", Typeface.NORMAL);
+        	textView.setTypeface(rosemary);
+        	break;
+        	case 35:
+        	Typeface rubikbold = Typeface.create("rubik-bold", Typeface.NORMAL);
+        	textView.setTypeface(rubikbold);
+        	break;
+        	case 36:
+        	Typeface samsungone = Typeface.create("samsungone", Typeface.NORMAL);
+        	textView.setTypeface(samsungone);
+        	break;
+        	case 37:
+        	Typeface sanfrancisco = Typeface.create("sanfrancisco", Typeface.NORMAL);
+        	textView.setTypeface(sanfrancisco);
+        	break;
+        	case 38:
+        	Typeface simpleday = Typeface.create("simpleday", Typeface.NORMAL);
+        	textView.setTypeface(simpleday);
+        	break;
+        	case 39:
+        	Typeface sonysketch = Typeface.create("sonysketch", Typeface.NORMAL);
+        	textView.setTypeface(sonysketch);
+        	break;
+        	case 40:
+        	Typeface storopia = Typeface.create("storopia", Typeface.NORMAL);
+        	textView.setTypeface(storopia);
+        	break;
+        	case 41:
+        	Typeface surfer = Typeface.create("surfer", Typeface.NORMAL);
+        	textView.setTypeface(surfer);
+        	break;
+        	case 42:
+        	Typeface ubuntu = Typeface.create("ubuntu", Typeface.NORMAL);
+        	textView.setTypeface(ubuntu);
+        	break;
+        	case 43:
+        	Typeface manrope = Typeface.create("manrope", Typeface.NORMAL);
+        	textView.setTypeface(manrope);
+        	break;
+        	case 44:
+        	Typeface notosans = Typeface.create("noto-sans", Typeface.NORMAL);
+        	textView.setTypeface(notosans);
+        	break;
+        	case 45:
+        	Typeface recursivecasual = Typeface.create("recursive-casual", Typeface.NORMAL);
+        	textView.setTypeface(recursivecasual);
+        	break;
+        	case 46:
+        	Typeface recursive = Typeface.create("recursive", Typeface.NORMAL);
+        	textView.setTypeface(recursive);
+        	break;
+        	case 47:
+        	Typeface robotosystem = Typeface.create("roboto-system", Typeface.NORMAL);
+        	textView.setTypeface(robotosystem);
+        	break;
+        	case 48:
+        	Typeface sourcesans = Typeface.create("source-sans", Typeface.NORMAL);
+        	textView.setTypeface(sourcesans);
+        	break;
+        	case 49:
+        	Typeface serif = Typeface.create("serif", Typeface.NORMAL);
+        	textView.setTypeface(serif);
+        	break;
+        	case 50:
+        	Typeface googlesansclock = Typeface.create("googlesansclock", Typeface.NORMAL);
+        	textView.setTypeface(googlesansclock);
+        	break;
+        	case 51:
+        	Typeface apiceoutline = Typeface.create("apiceoutline", Typeface.NORMAL);
+        	textView.setTypeface(apiceoutline);
+        	break;
+        	case 52:
+        	Typeface audimat = Typeface.create("audimat", Typeface.NORMAL);
+        	textView.setTypeface(audimat);
+        	break;
+        	case 53:
+        	Typeface geometossoftextrabold = Typeface.create("geometossoftextrabold", Typeface.NORMAL);
+        	textView.setTypeface(geometossoftextrabold);
+        	break;
+        	default:
+        	break;
         }
     }
 
