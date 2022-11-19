@@ -39,7 +39,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-
+import android.widget.Toast;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -57,6 +57,7 @@ public class AmbientCustomImage extends FrameLayout {
 
    private Drawable mImage;
    private ImageView mCustomImage;
+   private int mCount = 0;
 
    public AmbientCustomImage(Context context) {
        this(context, null);
@@ -104,7 +105,16 @@ public class AmbientCustomImage extends FrameLayout {
            }
            output.flush();
            if (DEBUG) Log.i(TAG, "Saved ambient image " + " " + file.getAbsolutePath());
-       } catch (IOException e) {
+            } catch (Exception e) {
+            if (mCount > 2) return;
+             boolean mAmbientCustomImageEnable = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.AMBIENT_IMAGE,
+                0, UserHandle.USER_CURRENT) != 0;
+            if (mAmbientCustomImageEnable) {
+                Toast toast = Toast.makeText(mContext, R.string.photos_not_allowed, Toast.LENGTH_SHORT);
+                toast.show();
+            }
+           mCount++;
            Log.e(TAG, "Save ambient image failed " + " " + imageUri);
        }
    }
@@ -112,7 +122,7 @@ public class AmbientCustomImage extends FrameLayout {
    private void loadAmbientImage() {
        mImage = null;
        File file = new File(mContext.getFilesDir(), AMBIENT_IMAGE_FILE_NAME);
-       if (file.exists() && file != null) {
+       if (file.exists()) {
            if (DEBUG) Log.i(TAG, "Load ambient image");
            final Bitmap image = BitmapFactory.decodeFile(file.getAbsolutePath());
            mImage = new BitmapDrawable(mContext.getResources(), AmbientImageHelper.resizeMaxDeviceSize(mContext, image));
