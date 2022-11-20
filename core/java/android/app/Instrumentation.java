@@ -67,7 +67,6 @@ import java.util.List;
 import java.util.concurrent.TimeoutException;
 
 import com.android.internal.util.spark.PixelPropsUtils;
-import com.android.internal.util.spark.AttestationHooks;
 
 /**
  * Base class for implementing application instrumentation code.  When running
@@ -1248,7 +1247,6 @@ public class Instrumentation {
         Application app = getFactory(context.getPackageName())
                 .instantiateApplication(cl, className);
         app.attach(context);
-        AttestationHooks.initApplicationBeforeOnCreate(app);
         String packageName = context.getPackageName();
         PixelPropsUtils.setProps(packageName);
         return app;
@@ -1269,7 +1267,6 @@ public class Instrumentation {
         GmsCompat.maybeEnable(context);
         Application app = (Application)clazz.newInstance();
         app.attach(context);
-        AttestationHooks.initApplicationBeforeOnCreate(app);
         String packageName = context.getPackageName();
         PixelPropsUtils.setProps(packageName);
         return app;
