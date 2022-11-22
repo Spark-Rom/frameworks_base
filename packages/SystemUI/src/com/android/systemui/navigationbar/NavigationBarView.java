@@ -45,6 +45,7 @@ import android.provider.Settings;
 import com.android.systemui.Dependency;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.os.UserHandle;
 import android.util.SparseArray;
 import android.view.ContextThemeWrapper;
 import android.view.Display;
