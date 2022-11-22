@@ -63,7 +63,7 @@ import dev.kdrag0n.colorkt.ucs.lab.CieLab
 import dev.kdrag0n.monet.theme.ColorSwatch
 import dev.kdrag0n.monet.theme.DynamicColorScheme
 import dev.kdrag0n.monet.theme.MaterialYouTargets
-
+import com.android.internal.statusbar.IStatusBarService
 import java.util.concurrent.Executor
 
 import javax.inject.Inject
@@ -90,6 +90,7 @@ class SparkThemeOverlayController @Inject constructor(
     wakefulnessLifecycle: WakefulnessLifecycle,
     configurationController: ConfigurationController,
     systemSettings: SystemSettings,
+    barService: IStatusBarService,
 ) : ThemeOverlayController(
     context,
     broadcastDispatcher,
@@ -108,6 +109,7 @@ class SparkThemeOverlayController @Inject constructor(
     wakefulnessLifecycle,
     configurationController,
     systemSettings,
+    barService,
 ) {
 
     private val settingsObserver = object : ContentObserver(bgHandler) {

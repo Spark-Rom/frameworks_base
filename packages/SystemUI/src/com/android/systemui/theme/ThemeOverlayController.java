@@ -78,7 +78,6 @@ import com.android.systemui.statusbar.policy.ConfigurationController.Configurati
 import com.android.systemui.statusbar.policy.DeviceProvisionedController;
 import com.android.systemui.statusbar.policy.DeviceProvisionedController.DeviceProvisionedListener;
 import com.android.systemui.util.settings.SecureSettings;
-import com.android.systemui.util.settings.SystemSettings;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -374,7 +373,6 @@ public class ThemeOverlayController extends CoreStartable implements Dumpable {
         mBgExecutor = bgExecutor;
         mMainExecutor = mainExecutor;
         mBgHandler = bgHandler;
-        mSystemSettings = systemSettings;
         mThemeManager = themeOverlayApplier;
         mSecureSettings = secureSettings;
         mSystemSettings = systemSettings;
