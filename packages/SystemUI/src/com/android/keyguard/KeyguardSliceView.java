@@ -146,7 +146,7 @@ public class KeyguardSliceView extends LinearLayout {
             SliceItem mainTitle = header.getTitleItem();
             if (mainTitle == null) {
               mTitle.setText(null);
-            } else if (mainTitle.getText().toString().length() > 13) {
+            } else if (mainTitle.getText().toString().length() > 16) {
               mTitle.setText(" ~ " + mainTitle.getText().toString().substring(0, Math.min(13, mainTitle.getText().toString().length())) + "...");
             } else {
               mTitle.setText(" ~ " + mainTitle.getText().toString());
@@ -188,7 +188,7 @@ public class KeyguardSliceView extends LinearLayout {
             final SliceItem titleItem = rc.getTitleItem();
             if (titleItem == null) {
               button.setText(null);
-            } else if (titleItem.getText().toString().length() > 13) {
+            } else if (titleItem.getText().toString().length() > 16) {
               button.setText(" " + titleItem.getText().toString().substring(0, Math.min(13, titleItem.getText().toString().length())) + "...");
             } else {
               button.setText(" " + titleItem.getText().toString());
