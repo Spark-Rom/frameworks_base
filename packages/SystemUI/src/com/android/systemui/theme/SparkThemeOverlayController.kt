@@ -35,6 +35,7 @@ import android.provider.Settings.Secure.MONET_ENGINE_LINEAR_LIGHTNESS
 import android.provider.Settings.Secure.MONET_ENGINE_WHITE_LUMINANCE
 import android.provider.Settings.Secure.SYSTEM_CUSTOM_THEME
 import android.util.Log
+import com.android.systemui.util.settings.SystemSettings
 import android.util.TypedValue
 import com.android.systemui.statusbar.policy.ConfigurationController
 import com.android.systemui.statusbar.policy.ConfigurationController.ConfigurationListener
@@ -63,7 +64,7 @@ import dev.kdrag0n.colorkt.ucs.lab.CieLab
 import dev.kdrag0n.monet.theme.ColorSwatch
 import dev.kdrag0n.monet.theme.DynamicColorScheme
 import dev.kdrag0n.monet.theme.MaterialYouTargets
-
+import com.android.internal.statusbar.IStatusBarService
 import java.util.concurrent.Executor
 
 import javax.inject.Inject
@@ -88,7 +89,9 @@ class SparkThemeOverlayController @Inject constructor(
     featureFlags: FeatureFlags,
     @Main resources: Resources,
     wakefulnessLifecycle: WakefulnessLifecycle,
+    systemSettings: SystemSettings,
     configurationController: ConfigurationController,
+    barService: IStatusBarService,
 ) : ThemeOverlayController(
     context,
     broadcastDispatcher,
@@ -105,7 +108,9 @@ class SparkThemeOverlayController @Inject constructor(
     featureFlags,
     resources,
     wakefulnessLifecycle,
+    systemSettings,
     configurationController,
+    barService,
 ) {
 
     private val settingsObserver = object : ContentObserver(bgHandler) {
