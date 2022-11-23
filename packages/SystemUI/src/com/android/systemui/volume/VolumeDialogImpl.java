@@ -775,8 +775,13 @@ public class VolumeDialogImpl implements VolumeDialog,
                 mShowAppVolume =  TunerService.parseIntegerSwitch(newValue, true);
                 initAppVolumeH();
             } else if (CUSTOM_VOLUME_STYLES.equals(key)) {
-                customVolumeStyles = TunerService.parseInteger(newValue, 0);
-                initDialog(mActivityManager.getLockTaskModeState());
+                final int selectedVolStyle = TunerService.parseInteger(newValue, 0);
+                if (customVolumeStyles != selectedVolStyle) {
+                    customVolumeStyles = selectedVolStyle;
+                    mHandler.post(() -> {
+                        mControllerCallbackH.onConfigurationChanged();
+                    });
+                }
             } 
         }
     };
