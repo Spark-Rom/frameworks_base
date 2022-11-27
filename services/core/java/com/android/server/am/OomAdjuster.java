@@ -244,6 +244,7 @@ public class OomAdjuster {
     boolean mProcessGroupCgroupFollowDex2oatOnly = false;
     public static int mCurRenderThreadTid = -1;
     public static boolean mIsTopAppRenderThreadBoostEnabled = false;
+    boolean mEnableBgt = false;
     
     private final int mNumSlots;
     private final ArrayList<ProcessRecord> mTmpProcessList = new ArrayList<ProcessRecord>();
@@ -308,6 +309,7 @@ public class OomAdjuster {
         mEnableProcessGroupCgroupFollow = Boolean.parseBoolean(SystemProperties.get("persist.sys.cgroup_follow.enable", "false"));
         mProcessGroupCgroupFollowDex2oatOnly = Boolean.parseBoolean(SystemProperties.get("persist.sys.fw.cgroup_follow.dex2oat_only", "false"));
         mIsTopAppRenderThreadBoostEnabled = Boolean.parseBoolean(SystemProperties.get("persist.sys.perf.topAppRenderThreadBoost.enable", "false"));
+        mEnableBgt = Boolean.parseBoolean(SystemProperties.get("persist.sys.bgt.enable", "false"));
             
         mProcessGroupHandler = new Handler(adjusterThread.getLooper(), msg -> {
             final int pid = msg.arg1;
@@ -2672,6 +2674,37 @@ public class OomAdjuster {
         }
 
         if (state.getCurAdj() != state.getSetAdj()) {
+            // Hooks for background apps transition
+            if (mEnableBgt) {
+                if ((state.getSetAdj() >= ProcessList.CACHED_APP_MIN_ADJ &&
+                        state.getSetAdj() <= ProcessList.CACHED_APP_MAX_ADJ) &&
+                        state.getCurAdj() == ProcessList.FOREGROUND_APP_ADJ &&
+                            state.hasForegroundActivities()) {
+                    Slog.d(TAG,"App adj change from cached state to fg state : "
+                            + app.getPid() + " " + app.processName);
+                    if (mLocalPowerManager != null) {
+                      mLocalPowerManager.setPowerMode(Mode.EXPENSIVE_RENDERING, true);
+                    }
+                } else {
+                    if (mLocalPowerManager != null) {
+                      mLocalPowerManager.setPowerMode(Mode.EXPENSIVE_RENDERING, false);
+                    }
+                }
+                if(state.getSetAdj() == ProcessList.PREVIOUS_APP_ADJ &&
+                        (state.getCurAdj() >= ProcessList.CACHED_APP_MIN_ADJ &&
+                        state.getCurAdj() <= ProcessList.CACHED_APP_MAX_ADJ) &&
+                            app.hasActivities()) {
+                    Slog.d(TAG,"App adj change from previous state to cached state : "
+                            + app.getPid() + " " + app.processName);
+                    if (mLocalPowerManager != null) {
+                      mLocalPowerManager.setPowerMode(Mode.EXPENSIVE_RENDERING, true);
+                    }
+                } else {
+                    if (mLocalPowerManager != null) {
+                      mLocalPowerManager.setPowerMode(Mode.EXPENSIVE_RENDERING, false);
+                    }
+                }
+            }
             ProcessList.setOomAdj(app.getPid(), app.uid, app.mState.getCurAdj());
             if (DEBUG_SWITCH || DEBUG_OOM_ADJ || mService.mCurOomAdjUid == app.info.uid) {
                 String msg = "Set " + app.getPid() + " " + app.processName + " adj "
