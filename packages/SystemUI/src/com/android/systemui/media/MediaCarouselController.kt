@@ -932,7 +932,7 @@ class MediaCarouselController @Inject constructor(
                     blurEnabled = systemSettings.getIntForUser(
                         MEDIA_ARTWORK_BLUR_ENABLED, 0, USER_CURRENT) == 1,
                     blurRadius = systemSettings.getFloatForUser(
-                        MEDIA_ARTWORK_BLUR_RADIUS, 1f, USER_CURRENT)
+                        MEDIA_ARTWORK_BLUR_RADIUS, 85f, USER_CURRENT)
                 )
                 mainHandler.post {
                     artworkSettings = newSettings
@@ -953,7 +953,7 @@ class MediaCarouselController @Inject constructor(
                 )
                 MEDIA_ARTWORK_BLUR_RADIUS -> artworkSettings.copy(
                     blurRadius = systemSettings.getFloatForUser(
-                        MEDIA_ARTWORK_BLUR_RADIUS, 1f, USER_CURRENT)
+                        MEDIA_ARTWORK_BLUR_RADIUS, 85f, USER_CURRENT)
                 )
                 else -> return
             }

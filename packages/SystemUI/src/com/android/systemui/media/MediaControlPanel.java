@@ -694,8 +694,8 @@ public class MediaControlPanel {
                     		   albumView.setRenderEffect(
                         		RenderEffect.createBlurEffect(
                             		mArtworkSettings.getBlurRadius(),
-                            		mArtworkSettings.getBlurRadius() / 2,
-                            	   Shader.TileMode.MIRROR
+                            		mArtworkSettings.getBlurRadius(),
+                            	   Shader.TileMode.CLAMP
                         	)
                     	    );
                	 }
