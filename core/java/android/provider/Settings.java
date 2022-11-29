@@ -7225,6 +7225,12 @@ public final class Settings {
          * @hide
          */
         public static final String KG_CUSTOM_CLOCK_COLOR_ENABLED = "kg_custom_clock_color_enabled";
+        
+        /**        
+         * Haptic feedback on volume panel
+         * @hide
+         */ 
+        public static final String VOLUME_PANEL_HAPTIC_FEEDBACK = "volume_panel_haptic_feedback";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
