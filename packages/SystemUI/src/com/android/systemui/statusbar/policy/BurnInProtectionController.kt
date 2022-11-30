@@ -87,8 +87,8 @@ class BurnInProtectionController @Inject constructor(
             maxStatusBarOffsetX = minOf(
                 getDimensionPixelSize(R.dimen.status_bar_padding_start),
                 getDimensionPixelSize(R.dimen.status_bar_padding_end)
-            )
-            maxStatusBarOffsetY = getDimensionPixelSize(R.dimen.status_bar_offset_max_y)
+            ) / 2
+            maxStatusBarOffsetY = getDimensionPixelSize(R.dimen.status_bar_offset_max_y) / 2
         }
         calculateNavBarMaxOffset()
         logD {
