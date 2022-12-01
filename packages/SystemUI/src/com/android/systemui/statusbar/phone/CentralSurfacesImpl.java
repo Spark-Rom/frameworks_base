@@ -991,7 +991,6 @@ public class CentralSurfacesImpl extends CoreStartable implements
         deviceStateManager.registerCallback(mMainExecutor,
                 new FoldStateListener(mContext, this::onFoldedStateChanged));
         wiredChargingRippleController.registerCallbacks();
-        mBurnInProtectionController.setCentralSurfaces(this);
     }
 
     @Override
@@ -1685,6 +1684,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
     // Try to remove this.
     protected void createNavigationBar(@Nullable RegisterStatusBarResult result) {
         mNavigationBarController.createNavigationBars(true /* includeDefaultDisplay */, result);
+        mBurnInProtectionController.setNavigationBarView(getNavigationBarView());
     }
 
     /**

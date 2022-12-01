@@ -23,9 +23,9 @@ import android.util.Log
 import com.android.systemui.R
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.doze.util.getBurnInOffset
+import com.android.systemui.navigationbar.NavigationBarView
 import com.android.systemui.navigationbar.NavigationModeController
 import com.android.systemui.shared.system.QuickStepContract.isGesturalMode
-import com.android.systemui.statusbar.phone.CentralSurfaces
 import com.android.systemui.statusbar.phone.PhoneStatusBarView
 import com.android.systemui.statusbar.policy.ConfigurationController
 import com.android.systemui.statusbar.policy.ConfigurationController.ConfigurationListener
@@ -44,7 +44,6 @@ private const val BURN_IN_PREVENTION_PERIOD = 83f
 private const val UPDATE_INTERVAL = 1000 * 10L
 
 private val TAG = BurnInProtectionController::class.simpleName
-private val DEBUG = Log.isLoggable(TAG, Log.DEBUG)
 
 @SysUISingleton
 class BurnInProtectionController @Inject constructor(
@@ -61,7 +60,7 @@ class BurnInProtectionController @Inject constructor(
 
     private var navigationMode: Int = navigationModeController.addListener(this)
 
-    private var centralSurfaces: CentralSurfaces? = null
+    private var navigationBarView: NavigationBarView? = null
     private var phoneStatusBarView: PhoneStatusBarView? = null
 
     private var shiftJob: Job? = null
@@ -98,19 +97,26 @@ class BurnInProtectionController @Inject constructor(
 
     private fun calculateNavBarMaxOffset() {
         with(context.resources) {
-            maxNavBarShiftX = if (isGesturalMode()) 0 else (getDimensionPixelSize(R.dimen.navigation_side_padding) / 2)
-            maxNavBarShiftY = if (isGesturalMode())
-                getDimensionPixelSize(R.dimen.navigation_handle_bottom)
-            else
-                (getDimensionPixelSize(R.dimen.navigation_bar_height) / 2)
+            maxNavBarShiftX = if (isGesturalMode()) {
+                0
+            } else {
+                getDimensionPixelSize(R.dimen.floating_rotation_button_min_margin) / 2
+            }
+            maxNavBarShiftY = if (isGesturalMode()) {
+                (2 * getDimensionPixelSize(R.dimen.navigation_handle_bottom)) / 3
+            } else {
+                val frameHeight = getDimensionPixelSize(R.dimen.navigation_bar_height)
+                val buttonHeight = getDimensionPixelSize(R.dimen.navigation_icon_size)
+                (2 * (frameHeight - buttonHeight)) / 3
+            }
         }
         logD {
             "maxNavBarShiftX = $maxNavBarShiftX, maxNavBarShiftY = $maxNavBarShiftY"
         }
     }
 
-    fun setCentralSurfaces(centralSurfaces: CentralSurfaces) {
-        this.centralSurfaces = centralSurfaces
+    fun setNavigationBarView(navigationBarView: NavigationBarView) {
+        this.navigationBarView = navigationBarView
     }
 
     fun setPhoneStatusBarView(phoneStatusBarView: PhoneStatusBarView) {
@@ -154,7 +160,7 @@ class BurnInProtectionController @Inject constructor(
             logD {
                 "Translating navbar"
             }
-            centralSurfaces?.navigationBarView?.offsetNavBar(nbOffset)
+            navigationBarView?.offsetNavBar(nbOffset)
             navBarOffset = nbOffset
         }
     }
@@ -210,8 +216,10 @@ private fun getBurnInOffsetY(maxOffset: Int): Int {
     )
 }
 
-private inline fun logD(msg: () -> String) {
-    if (DEBUG) Log.d(TAG, msg())
+private inline fun logD(crossinline msg: () -> String) {
+    if (Log.isLoggable(TAG, Log.DEBUG)) {
+        Log.d(TAG, msg())
+    }
 }
 
 data class Offset(
