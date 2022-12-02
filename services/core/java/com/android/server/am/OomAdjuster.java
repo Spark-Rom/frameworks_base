@@ -92,6 +92,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.ServiceInfo;
+import android.hardware.power.Boost;
 import android.hardware.power.Mode;
 import android.os.Handler;
 import android.os.IBinder;
@@ -2683,11 +2684,7 @@ public class OomAdjuster {
                     Slog.d(TAG,"App adj change from cached state to fg state : "
                             + app.getPid() + " " + app.processName);
                     if (mLocalPowerManager != null) {
-                      mLocalPowerManager.setPowerMode(Mode.EXPENSIVE_RENDERING, true);
-                    }
-                } else {
-                    if (mLocalPowerManager != null) {
-                      mLocalPowerManager.setPowerMode(Mode.EXPENSIVE_RENDERING, false);
+                      mLocalPowerManager.setPowerBoost(Boost.INTERACTION, 2500);
                     }
                 }
                 if(state.getSetAdj() == ProcessList.PREVIOUS_APP_ADJ &&
@@ -2697,11 +2694,7 @@ public class OomAdjuster {
                     Slog.d(TAG,"App adj change from previous state to cached state : "
                             + app.getPid() + " " + app.processName);
                     if (mLocalPowerManager != null) {
-                      mLocalPowerManager.setPowerMode(Mode.EXPENSIVE_RENDERING, true);
-                    }
-                } else {
-                    if (mLocalPowerManager != null) {
-                      mLocalPowerManager.setPowerMode(Mode.EXPENSIVE_RENDERING, false);
+                      mLocalPowerManager.setPowerBoost(Boost.INTERACTION, 1250);
                     }
                 }
             }
