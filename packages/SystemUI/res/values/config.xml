@@ -776,6 +776,6 @@
         <item>@color/dream_overlay_aqi_hazardous</item>
     </integer-array>
     
-    <integer name="background_blur_radius">80</integer>
+    <integer name="background_blur_radius">100</integer>
     <item name="background_blur_colour_opacity" format="float" type="dimen">0.88</item>
 </resources>
