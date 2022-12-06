@@ -108,12 +108,10 @@ class NotificationSectionsManager @Inject internal constructor(
         keyguardMediaController.attachSinglePaneContainer(mediaControlsView)
 
         // set visibilities
-        val vis = if (showHeaders) View.VISIBLE else View.GONE
-        silentHeaderView?.visibility = vis
-        alertingHeaderView?.visibility = vis
-        peopleHeaderView?.visibility = vis
-        incomingHeaderView?.visibility = vis
-        mediaControlsView?.visibility = vis
+        silentHeaderView?.setVisible(showHeaders, false)
+        alertingHeaderView?.setVisible(showHeaders, false)
+        peopleHeaderView?.setVisible(showHeaders, false)
+        incomingHeaderView?.setVisible(showHeaders, false)
     }
 
     fun setHeadersVisibility(visible: Boolean) {

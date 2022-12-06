@@ -608,6 +608,7 @@ public class NotificationStackScrollLayout extends ViewGroup implements Dumpable
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             update();
+            reinflateViews();
         }
 
         void update() {
