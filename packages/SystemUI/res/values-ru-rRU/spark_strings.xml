@@ -46,21 +46,21 @@
     <string name="global_action_restart_recovery">Рекавери</string>
     <string name="global_action_restart_bootloader">Режим Fastboot</string>
     <string name="global_action_restart_ui">Системный интерфейс</string>
-    <string name="global_action_onthego">On-The-Go</string>
+    <string name="global_action_onthego">Режим «На ходу»</string>
     <!-- On The Go -->
     <string name="onthego_notification_ticker">Режим «На ходу» включен</string>
     <string name="onthego_notification_title">Режим «На ходу» активен</string>
     <string name="onthego_notification_stop">Стоп</string>
     <string name="onthego_notification_options">Параметры</string>
-    <string name="onthego_notification_error">Не удаётся включить режим \"На ходу\"</string>
+    <string name="onthego_notification_error">Не удаётся включить режим «На ходу»</string>
     <string name="onthego_notification_restart">Перезапустить режим «На ходу»</string>
     <string name="onthego_notification_camera_changed">Режим камеры изменён</string>
-    <string name="onthego_transparency">Transparency</string>
+    <string name="onthego_transparency">Прозрачность</string>
     <string name="onthego_front_camera">Использовать переднюю камеру</string>
     <string name="onthego_service_toggle">Автоматический перезапуск службы</string>
-    <string name="onthego_channel_name">Main</string>
+    <string name="onthego_channel_name">На ходу</string>
     <!-- OnTheGo Tile -->
-    <string name="quick_settings_onthego_label">Main</string>
+    <string name="quick_settings_onthego_label">На ходу</string>
     <string name="accessibility_quick_settings_onthego_off">Режим «На ходу» выкл.</string>
     <string name="accessibility_quick_settings_onthego_on">Режим «На ходу» вкл.</string>
     <string name="accessibility_quick_settings_onthego_changed_off">Режим «На ходу» выключен</string>
@@ -209,13 +209,13 @@
     <string name="omnijaws_detail_header">Погода</string>
     <string name="omnijaws_label_default">Погода</string>
     <string name="omnijaws_current_text">Только что</string>
-    <string name="omnijaws_package_not_available">OmniJaws not available</string>
+    <string name="omnijaws_package_not_available">OmniJaws недоступен</string>
     <string name="omnijaws_service_last_update">Последнее обновление:</string>
     <!-- QS InternetDialog: Summary for how many devices are connected to the hotspot -->
     <plurals name="quick_settings_internet_hotspot_summary_num_devices">
-        <item quantity="one">%d device connected</item>
-        <item quantity="few">%d devices connected</item>
-        <item quantity="many">%d devices connected</item>
-        <item quantity="other">%d devices connected</item>
+        <item quantity="one">%d устройство подключено</item>
+        <item quantity="few">%d устройств подключено</item>
+        <item quantity="many">%d устройств подключено</item>
+        <item quantity="other">%d устройств подключено</item>
     </plurals>
 </resources>
