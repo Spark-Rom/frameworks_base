@@ -181,6 +181,7 @@ public class OverviewProxyService extends CurrentUserTracker implements
     private boolean mBound;
     private boolean mIsEnabled;
     private int mCurrentBoundedUserId = -1;
+    private float mNavBarButtonAlpha;
     private boolean mInputFocusTransferStarted;
     private float mInputFocusTransferStartY;
     private long mInputFocusTransferStartMillis;
@@ -305,6 +306,12 @@ public class OverviewProxyService extends CurrentUserTracker implements
                     mConnectionCallbacks.get(i).onOverviewShown(fromHome);
                 }
             });
+        }
+
+        @Override
+        public void setNavBarButtonAlpha(float alpha, boolean animate) {
+            verifyCallerAndClearCallingIdentityPostMain("setNavBarButtonAlpha", () ->
+                    notifyNavBarButtonAlphaChanged(alpha, animate));
         }
 
         @Override
@@ -623,6 +630,9 @@ public class OverviewProxyService extends CurrentUserTracker implements
         mDesktopModeOptional = desktopModeOptional;
         mUiEventLogger = uiEventLogger;
 
+        // Assumes device always starts with back button until launcher tells it that it does not
+        mNavBarButtonAlpha = 1.0f;
+
         dumpManager.registerDumpable(getClass().getSimpleName(), this);
 
         // Listen for nav bar mode changes
@@ -825,6 +835,7 @@ public class OverviewProxyService extends CurrentUserTracker implements
             mConnectionCallbacks.add(listener);
         }
         listener.onConnectionChanged(mOverviewProxy != null);
+        listener.onNavBarButtonAlphaChanged(mNavBarButtonAlpha, false);
     }
 
     @Override
@@ -854,7 +865,14 @@ public class OverviewProxyService extends CurrentUserTracker implements
         if (mOverviewProxy != null) {
             mOverviewProxy.asBinder().unlinkToDeath(mOverviewServiceDeathRcpt, 0);
             mOverviewProxy = null;
+            notifyNavBarButtonAlphaChanged(1f, false /* animate */);
             notifyConnectionChanged();
+        }
+    }
+
+    private void notifyNavBarButtonAlphaChanged(float alpha, boolean animate) {
+        for (int i = mConnectionCallbacks.size() - 1; i >= 0; --i) {
+            mConnectionCallbacks.get(i).onNavBarButtonAlphaChanged(alpha, animate);
         }
     }
 
@@ -1092,6 +1110,7 @@ public class OverviewProxyService extends CurrentUserTracker implements
         pw.print("  mInputFocusTransferStartMillis="); pw.println(mInputFocusTransferStartMillis);
         pw.print("  mWindowCornerRadius="); pw.println(mWindowCornerRadius);
         pw.print("  mSupportsRoundedCornersOnWindows="); pw.println(mSupportsRoundedCornersOnWindows);
+        pw.print("  mNavBarButtonAlpha="); pw.println(mNavBarButtonAlpha);
         pw.print("  mActiveNavBarRegion="); pw.println(mActiveNavBarRegion);
         pw.print("  mNavBarMode="); pw.println(mNavBarMode);
         mSysUiState.dump(pw, args);
@@ -1106,6 +1125,8 @@ public class OverviewProxyService extends CurrentUserTracker implements
         default void onQuickScrubStarted() {}
         /** Notify the recents app (overview) is started by 3-button navigation. */
         default void onToggleRecentApps() {}
+        /** Notify changes in the nav bar button alpha */
+        default void onNavBarButtonAlphaChanged(float alpha, boolean animate) {}
         default void onHomeRotationEnabled(boolean enabled) {}
         default void onTaskbarEnabled(boolean enabled) {}
         default void onTaskbarStatusUpdated(boolean visible, boolean stashed) {}

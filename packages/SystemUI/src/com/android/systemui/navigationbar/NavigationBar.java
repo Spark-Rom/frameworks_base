@@ -35,6 +35,7 @@ import static android.view.WindowManagerPolicyConstants.NAV_BAR_MODE_GESTURAL;
 
 import static com.android.internal.accessibility.common.ShortcutConstants.CHOOSER_PACKAGE_NAME;
 import static com.android.internal.config.sysui.SystemUiDeviceConfigFlags.HOME_BUTTON_LONG_PRESS_DURATION_MS;
+import static com.android.internal.config.sysui.SystemUiDeviceConfigFlags.NAV_BAR_HANDLE_FORCE_OPAQUE;
 import static com.android.systemui.navigationbar.NavBarHelper.transitionMode;
 import static com.android.systemui.recents.OverviewProxyService.OverviewProxyListener;
 import static com.android.systemui.shared.recents.utilities.Utilities.isTablet;
@@ -228,7 +229,10 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
     private Locale mLocale;
     private int mLayoutDirection;
 
+    private boolean mAllowForceNavBarHandleOpaque;
+    private boolean mForceNavBarHandleOpaque;
     private Optional<Long> mHomeButtonLongPressDurationMs;
+    private boolean mIsCurrentUserSetup;
 
     /** @see android.view.WindowInsetsController#setSystemBarsAppearance(int, int) */
     private @Appearance int mAppearance;
@@ -375,6 +379,37 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
         }
 
         @Override
+        public void onNavBarButtonAlphaChanged(float alpha, boolean animate) {
+            if (!mIsCurrentUserSetup) {
+                // If the current user is not yet setup, then don't update any button alphas
+                return;
+            }
+            if (QuickStepContract.isLegacyMode(mNavBarMode)) {
+                // Don't allow the bar buttons to be affected by the alpha
+                return;
+            }
+
+            ButtonDispatcher buttonDispatcher = null;
+            boolean forceVisible = false;
+            if (QuickStepContract.isGesturalMode(mNavBarMode)) {
+                // Disallow home handle animations when in gestural
+                animate = false;
+                forceVisible = mAllowForceNavBarHandleOpaque && mForceNavBarHandleOpaque;
+                buttonDispatcher = mView.getHomeHandle();
+                if (getBarTransitions() != null) {
+                    getBarTransitions().setBackgroundOverrideAlpha(alpha);
+                }
+            } else if (QuickStepContract.isSwipeUpMode(mNavBarMode)) {
+                buttonDispatcher = mView.getBackButton();
+            }
+            if (buttonDispatcher != null) {
+                buttonDispatcher.setVisibility(
+                        (forceVisible || alpha > 0) ? View.VISIBLE : View.INVISIBLE);
+                buttonDispatcher.setAlpha(forceVisible ? 1f : alpha, animate);
+            }
+        }
+
+        @Override
         public void onHomeRotationEnabled(boolean enabled) {
             mView.getRotationButtonController().setHomeRotationEnabled(enabled);
         }
@@ -421,14 +456,27 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
             new DeviceConfig.OnPropertiesChangedListener() {
                 @Override
                 public void onPropertiesChanged(DeviceConfig.Properties properties) {
+                    if (properties.getKeyset().contains(NAV_BAR_HANDLE_FORCE_OPAQUE)) {
+                        mForceNavBarHandleOpaque = properties.getBoolean(
+                                NAV_BAR_HANDLE_FORCE_OPAQUE, /* defaultValue = */ true);
+                    }
+
                     if (properties.getKeyset().contains(HOME_BUTTON_LONG_PRESS_DURATION_MS)) {
                         mHomeButtonLongPressDurationMs = Optional.of(
-                            properties.getLong(HOME_BUTTON_LONG_PRESS_DURATION_MS, 0))
-                                .filter(duration -> duration != 0);
+                            properties.getLong(HOME_BUTTON_LONG_PRESS_DURATION_MS, 0)
+                        ).filter(duration -> duration != 0);
                         if (mView != null) {
                             reconfigureHomeLongClick();
                         }
                     }
+                }
+            };
+
+    private final DeviceProvisionedController.DeviceProvisionedListener mUserSetupListener =
+            new DeviceProvisionedController.DeviceProvisionedListener() {
+                @Override
+                public void onUserSetupChanged() {
+                    mIsCurrentUserSetup = mDeviceProvisionedController.isCurrentUserSetup();
                 }
             };
 
@@ -614,6 +662,12 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
         mCommandQueue.addCallback(this);
         mLongPressHomeEnabled = mNavBarHelper.getLongPressHomeEnabled();
         mNavBarHelper.init();
+        mAllowForceNavBarHandleOpaque = mContext.getResources().getBoolean(
+                R.bool.allow_force_nav_bar_handle_opaque);
+        mForceNavBarHandleOpaque = mDeviceConfigProxy.getBoolean(
+                DeviceConfig.NAMESPACE_SYSTEMUI,
+                NAV_BAR_HANDLE_FORCE_OPAQUE,
+                /* defaultValue = */ true);
         mHomeButtonLongPressDurationMs = Optional.of(mDeviceConfigProxy.getLong(
                 DeviceConfig.NAMESPACE_SYSTEMUI,
                 HOME_BUTTON_LONG_PRESS_DURATION_MS,
@@ -633,6 +687,8 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
         // Respect the latest disabled-flags.
         mCommandQueue.recomputeDisableFlags(mDisplayId, false);
 
+        mIsCurrentUserSetup = mDeviceProvisionedController.isCurrentUserSetup();
+        mDeviceProvisionedController.addCallback(mUserSetupListener);
         mNotificationShadeDepthController.addListener(mDepthListener);
     }
 
@@ -644,6 +700,7 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
 
         mNavBarHelper.removeNavTaskStateUpdater(mNavbarTaskbarStateUpdater);
         mNavBarHelper.destroy();
+        mDeviceProvisionedController.removeCallback(mUserSetupListener);
         mNotificationShadeDepthController.removeListener(mDepthListener);
 
         mDeviceConfigProxy.removeOnPropertiesChangedListener(mOnPropertiesChangedListener);
