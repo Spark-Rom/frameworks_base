@@ -76,7 +76,7 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
             "persist.wm.debug.predictive_back_progress_threshold";
     public static final boolean IS_ENABLED =
             SystemProperties.getInt("persist.wm.debug.predictive_back",
-                    SETTING_VALUE_ON) != SETTING_VALUE_OFF;
+                    SETTING_VALUE_OFF) != SETTING_VALUE_OFF;
     private static final int PROGRESS_THRESHOLD = SystemProperties
             .getInt(PREDICTIVE_BACK_PROGRESS_THRESHOLD_PROP, -1);
     private final AtomicBoolean mEnableAnimations = new AtomicBoolean(false);

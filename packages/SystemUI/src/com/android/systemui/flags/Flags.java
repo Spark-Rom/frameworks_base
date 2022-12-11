@@ -253,7 +253,7 @@ public class Flags {
     // 1200 - predictive back
     @Keep
     public static final SysPropBooleanFlag WM_ENABLE_PREDICTIVE_BACK = new SysPropBooleanFlag(
-            1200, "persist.wm.debug.predictive_back", true);
+            1200, "persist.wm.debug.predictive_back", false);
     @Keep
     public static final SysPropBooleanFlag WM_ENABLE_PREDICTIVE_BACK_ANIM = new SysPropBooleanFlag(
             1201, "persist.wm.debug.predictive_back_anim", false);

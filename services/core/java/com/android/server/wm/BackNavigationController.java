@@ -61,7 +61,7 @@ class BackNavigationController {
      * Returns true if the back predictability feature is enabled
      */
     static boolean isEnabled() {
-        return SystemProperties.getInt("persist.wm.debug.predictive_back", 1) != 0;
+        return SystemProperties.getInt("persist.wm.debug.predictive_back", 0) != 0;
     }
 
     static boolean isScreenshotEnabled() {
