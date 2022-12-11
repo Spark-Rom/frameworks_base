@@ -22,6 +22,7 @@ import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.os.Build;
+import android.os.Handler;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
@@ -40,6 +41,7 @@ import com.android.internal.logging.UiEventLogger;
 import com.android.systemui.Dumpable;
 import com.android.systemui.R;
 import com.android.systemui.dagger.SysUISingleton;
+import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.dump.DumpManager;
 import com.android.systemui.plugins.PluginListener;
@@ -151,7 +153,8 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
             CustomTileStatePersister customTileStatePersister,
             TileServiceRequestController.Builder tileServiceRequestControllerBuilder,
             TileLifecycleManager.Factory tileLifecycleManagerFactory,
-            UserFileManager userFileManager
+            UserFileManager userFileManager,
+            @Background Handler backgroundHandler
     ) {
         mIconController = iconController;
         mContext = context;
@@ -175,6 +178,16 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
         mUserTracker = userTracker;
         mSecureSettings = secureSettings;
         mCustomTileStatePersister = customTileStatePersister;
+        backgroundHandler.post(this::setSecureTileDisabledOnLockscreen);
+        mSettingsObserver = new ContentObserver(backgroundHandler) {
+            @Override
+            public void onChange(boolean selfChange) {
+                setSecureTileDisabledOnLockscreen();
+            }
+        };
+        mSecureSettings.registerContentObserverForUser(
+            Settings.Secure.DISABLE_SECURE_TILES_ON_LOCKSCREEN,
+            mSettingsObserver, UserHandle.USER_ALL);
 
         mainExecutor.execute(() -> {
             // This is technically a hack to avoid circular dependency of
@@ -185,41 +198,21 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
             mAutoTiles = autoTiles.get();
             mTileServiceRequestController.init();
         });
-        mContext.registerReceiver(mLiveDisplayReceiver, new IntentFilter(
-                "lineageos.intent.action.INITIALIZE_LIVEDISPLAY"));
-
-        setSecureTileDisabledOnLockscreen();
-        mSettingsObserver = new ContentObserver(mainHandler) {
-            @Override
-            public void onChange(boolean selfChange) {
-                setSecureTileDisabledOnLockscreen();
-            }
-        };
-        mSecureSettings.registerContentObserverForUser(
-            Settings.Secure.DISABLE_SECURE_TILES_ON_LOCKSCREEN,
-            mSettingsObserver, UserHandle.USER_ALL);
     }
 
     private void setSecureTileDisabledOnLockscreen() {
-        mIsSecureTileDisabledOnLockscreen = mSecureSettings.getIntForUser(
+        final boolean disabled = mSecureSettings.getIntForUser(
             Settings.Secure.DISABLE_SECURE_TILES_ON_LOCKSCREEN,
             1, UserHandle.USER_CURRENT) == 1;
-        mTiles.values().stream()
-            .filter(tile -> tile instanceof SecureQSTile)
-            .map(tile -> (SecureQSTile) tile)
-            .forEach(tile ->
-                tile.setDisabledOnLockscreen(mIsSecureTileDisabledOnLockscreen));
+        mMainExecutor.execute(() -> {
+            mIsSecureTileDisabledOnLockscreen = disabled;
+            mTiles.values().stream()
+                .filter(tile -> tile instanceof SecureQSTile)
+                .map(tile -> (SecureQSTile) tile)
+                .forEach(tile ->
+                    tile.setDisabledOnLockscreen(mIsSecureTileDisabledOnLockscreen));
+        });
     }
-
-    private final BroadcastReceiver mLiveDisplayReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String value = mTunerService.getValue(TILES_SETTING);
-            // Force remove and recreate of all tiles.
-            onTuningChanged(TILES_SETTING, "");
-            onTuningChanged(TILES_SETTING, value);
-        }
-    };
 
     public StatusBarIconController getIconController() {
         return mIconController;
@@ -238,7 +231,6 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
         mPluginManager.removePluginListener(this);
         mDumpManager.unregisterDumpable(TAG);
         mTileServiceRequestController.destroy();
-        mContext.unregisterReceiver(mLiveDisplayReceiver);
     }
 
     @Override
@@ -451,11 +443,12 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
      */
     @Override
     public void removeTile(String spec) {
-        if (spec.startsWith(CustomTile.PREFIX)) {
+        if (spec != null && spec.startsWith(CustomTile.PREFIX)) {
             // If the tile is removed (due to it not actually existing), mark it as removed. That
             // way it will be marked as newly added if it appears in the future.
             setTileAdded(CustomTile.getComponentFromSpec(spec), mCurrentUser, false);
         }
+        if (spec != null)
         mMainExecutor.execute(() -> changeTileSpecs(tileSpecs-> tileSpecs.remove(spec)));
     }
 

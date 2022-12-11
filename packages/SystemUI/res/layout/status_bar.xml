@@ -72,7 +72,6 @@
 
                 <include layout="@layout/heads_up_status_bar_layout" />
 
-<<<<<<< HEAD
                 <!-- The alpha of the start side is controlled by PhoneStatusBarTransitions, and the
                      individual views are controlled by StatusBarManager disable flags DISABLE_CLOCK
                      and DISABLE_NOTIFICATION_ICONS, respectively -->
@@ -86,6 +85,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout="@layout/operator_name" />
+
+                <com.android.keyguard.AlphaOptimizedLinearLayout
+                    android:id="@+id/left_icon_area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" >
 
                     <com.android.systemui.spark.logo.LogoImageView
                         android:id="@+id/statusbar_logo"

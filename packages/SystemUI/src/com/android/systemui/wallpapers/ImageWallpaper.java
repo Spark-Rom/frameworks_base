@@ -34,6 +34,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.SystemClock;
+import com.android.systemui.Dependency;
 import android.os.Trace;
 import android.provider.Settings;
 import android.service.wallpaper.WallpaperService;

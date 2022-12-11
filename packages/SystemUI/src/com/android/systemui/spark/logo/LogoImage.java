@@ -130,93 +130,90 @@ public abstract class LogoImage extends ImageView {
         switch (mLogoStyle) {
             case 0:
             default:
-                drawable = mContext.getResources().getDrawable(R.drawable.ic_spark_logo);
-                break;
-            case 1:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_android_logo);
                 break;
-            case 2:
+            case 1:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_adidas);
                 break;
-            case 3:
+            case 2:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_alien);
                 break;
-            case 4:
+            case 3:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_apple_logo);
                 break;
-            case 5:
+            case 4:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_avengers);
                 break;
-            case 6:
+            case 5:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_batman);
                 break;
-            case 7:
+            case 6:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_batman_tdk);
                 break;
-            case 8:
+            case 7:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_beats);
                 break;
-            case 9:
+            case 8:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_biohazard);
                 break;
-            case 10:
+            case 9:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_blackberry);
                 break;
-            case 11:
+            case 10:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_cannabis);
                 break;
-            case 12:
+            case 11:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_emoticon_cool);
                 break;
-            case 13:
+            case 12:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_emoticon_devil);
                 break;
-            case 14:
+            case 13:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_fire);
                 break;
-            case 15:
+            case 14:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_heart);
                 break;
-            case 16:
+            case 15:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_nike);
                 break;
-            case 17:
+            case 16:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_pac_man);
                 break;
-            case 18:
+            case 17:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_puma);
                 break;
-            case 19:
+            case 18:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_rog);
                 break;
-            case 20:
+            case 19:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_spiderman);
                 break;
-            case 21:
+            case 20:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_superman);
                 break;
-            case 22:
+            case 21:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_windows);
                 break;
-            case 23:
+            case 22:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_xbox);
                 break;
-            case 24:
+            case 23:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_ghost);
                 break;
-            case 25:
+            case 24:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_ninja);
                 break;
-            case 26:
+            case 25:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_robot);
                 break;
-            case 27:
+            case 26:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_ironman);
                 break;
-            case 28:
+            case 27:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_captain_america);
                 break;
-            case 29:
+            case 28:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_flash);
                 break;
         }

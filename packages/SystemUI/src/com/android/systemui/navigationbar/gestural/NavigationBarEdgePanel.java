@@ -946,7 +946,7 @@ public class NavigationBarEdgePanel extends View implements NavigationEdgeBackPl
     }
 
     @Override
-    public void setLongSwipeEnabled(boolean enabled) {
-        mIsExtendedSwipe = enabled;
+    public void setLongSwipeEnabled(boolean isLongSwipeEnabled) {
+        mIsExtendedSwipe = isLongSwipeEnabled;
     }
 }

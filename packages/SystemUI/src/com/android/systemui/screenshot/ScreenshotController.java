@@ -616,8 +616,7 @@ public class ScreenshotController {
     private Bitmap captureScreenshot() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getDefaultDisplay().getRealMetrics(displayMetrics);
-        return captureScreenshot(
-                new Rect(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels));
+        return captureScreenshot();
     }
 
     private void saveScreenshot(Bitmap screenshot, Consumer<Uri> finisher, Rect screenRect,

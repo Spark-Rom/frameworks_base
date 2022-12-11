@@ -2096,7 +2096,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                         handleKeyguardDismissAnimationFinished();
                         break;
                     case MSG_POCKET_STATE_CHANGED:
-                        updateBiometricListeningState(BIOMETRIC_ACTION_UPDATE);
+                        updateBiometricListeningState(BIOMETRIC_ACTION_UPDATE, FACE_AUTH_UPDATED_FP_AUTHENTICATED);
                         break;
                     default:
                         super.handleMessage(msg);
@@ -3346,7 +3346,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
         if (mBouncerFullyShown != fullyShow){
             mBouncerFullyShown = fullyShow;
             if (mFaceUnlockBehavior == FACE_UNLOCK_BEHAVIOR_SWIPE){
-                updateFaceListeningState(BIOMETRIC_ACTION_UPDATE);
+                updateFaceListeningState(BIOMETRIC_ACTION_UPDATE, FACE_AUTH_UPDATED_PRIMARY_BOUNCER_SHOWN);
             }
         }
     }

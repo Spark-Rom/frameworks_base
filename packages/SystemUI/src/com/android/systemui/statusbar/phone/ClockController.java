@@ -26,14 +26,14 @@ import com.android.systemui.statusbar.phone.StatusBarIconController;
 import com.android.systemui.statusbar.policy.Clock;
 import com.android.systemui.tuner.TunerService;
 
-import lineageos.providers.LineageSettings;
+import android.provider.Settings;
 
 public class ClockController implements TunerService.Tunable {
 
     private static final String TAG = "ClockController";
 
     private static final String STATUS_BAR_CLOCK =
-            "lineagesystem:" + LineageSettings.System.STATUS_BAR_CLOCK;
+            "system:" + Settings.System.STATUS_BAR_CLOCK;
 
     private static final int CLOCK_POSITION_RIGHT = 0;
     private static final int CLOCK_POSITION_CENTER = 1;

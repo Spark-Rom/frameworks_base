@@ -33,7 +33,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.provider.Settings;
 import androidx.annotation.Nullable;
 
 import com.android.internal.util.FrameworkStatsLog;

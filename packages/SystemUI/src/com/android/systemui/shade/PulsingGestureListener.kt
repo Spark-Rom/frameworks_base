@@ -62,8 +62,8 @@ class PulsingGestureListener @Inject constructor(
         val tunable = Tunable { key: String?, _: String? ->
             when (key) {
                 Settings.Secure.DOZE_DOUBLE_TAP_GESTURE ->
-                    doubleTapEnabled = Settings.Secure.getIntForUser(mView.getContext().getContentResolver(),
-                            Settings.Secure.DOZE_DOUBLE_TAP_GESTURE, 1, UserHandle.USER_CURRENT) == 1;
+                    doubleTapEnabled = ambientDisplayConfiguration.doubleTapGestureEnabled(
+                            UserHandle.USER_CURRENT)
                 Settings.Secure.DOZE_TAP_SCREEN_GESTURE ->
                     singleTapEnabled = ambientDisplayConfiguration.tapGestureEnabled(
                             UserHandle.USER_CURRENT)

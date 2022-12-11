@@ -37,6 +37,9 @@ class BackPanel(context: Context, private val latencyTracker: LatencyTracker) : 
     // True if the panel is currently on the left of the screen
     var isLeftPanel = false
 
+    var isLongSwipeEnabled = false
+    var backArrowVisibility = false
+
     /**
      * Used to track back arrow latency from [android.view.MotionEvent.ACTION_DOWN] to [onDraw]
      */

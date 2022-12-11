@@ -316,17 +316,13 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
             Optional<SysUIUnfoldComponent> sysUIUnfoldComponent,
             Lazy<ShadeController> shadeController,
             LatencyTracker latencyTracker,
-<<<<<<< HEAD
             KeyguardSecurityModel keyguardSecurityModel,
             FeatureFlags featureFlags,
             BouncerCallbackInteractor bouncerCallbackInteractor,
             BouncerInteractor bouncerInteractor,
             BouncerView bouncerView,
-            @Main Handler handler) {
-=======
             @Main Handler handler,
             @Main Handler faceRecognizingHandler) {
->>>>>>> a974c8e6c89b (SystemUI: Tell user when face unlock detection is running)
         mContext = context;
         mViewMediatorCallback = callback;
         mLockPatternUtils = lockPatternUtils;
@@ -1346,23 +1342,18 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
         }
     }
 
-<<<<<<< HEAD
-    /** Display security message to relevant KeyguardMessageArea. */
-    public void setKeyguardMessage(String message, ColorStateList colorState) {
-=======
     private void showFaceRecognizingMessage(){
         if (mFaceRecognitionRunning &&
                 mKeyguardUpdateManager.isUnlockWithFacePossible(mKeyguardUpdateManager.getCurrentUser())) {
-            showBouncerMessage(mContext.getString(R.string.face_unlock_recognizing), null);
+            setKeyguardMessage(mContext.getString(R.string.face_unlock_recognizing), null);
         }
     }
 
     private void hideFaceRecognizingMessage(){
-        showBouncerMessage("", null);
+        setKeyguardMessage("", null);
     }
-
-    public void showBouncerMessage(String message, ColorStateList colorState) {
->>>>>>> a974c8e6c89b (SystemUI: Tell user when face unlock detection is running)
+    /** Display security message to relevant KeyguardMessageArea. */
+    public void setKeyguardMessage(String message, ColorStateList colorState) {
         if (isShowingAlternateAuth()) {
             if (mKeyguardMessageAreaController != null) {
                 mKeyguardMessageAreaController.setMessage(message);

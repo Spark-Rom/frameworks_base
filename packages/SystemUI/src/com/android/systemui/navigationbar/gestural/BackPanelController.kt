@@ -485,6 +485,14 @@ class BackPanelController private constructor(
         }
     }
 
+    override fun setLongSwipeEnabled(isLongSwipeEnabled: Boolean) {
+        mView.isLongSwipeEnabled = isLongSwipeEnabled
+    }
+
+    override fun setBackArrowVisibility(backArrowVisibility: Boolean) {
+        mView.backArrowVisibility = backArrowVisibility;
+    }
+
     override fun setInsets(insetLeft: Int, insetRight: Int) {
     }
 

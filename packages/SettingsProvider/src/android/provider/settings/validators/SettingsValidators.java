@@ -21,7 +21,7 @@ import android.annotation.Nullable;
 import android.content.ComponentName;
 import android.net.Uri;
 import android.text.TextUtils;
-
+import java.util.regex.Pattern;
 import org.json.JSONException;
 import org.json.JSONObject;
 

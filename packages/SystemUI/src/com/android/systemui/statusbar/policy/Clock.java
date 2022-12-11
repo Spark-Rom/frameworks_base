@@ -59,7 +59,7 @@ import com.android.systemui.statusbar.policy.ConfigurationController.Configurati
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerService.Tunable;
 
-import lineageos.providers.LineageSettings;
+import android.provider.Settings;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -88,9 +88,9 @@ public class Clock extends TextView implements
     public static final String STATUS_BAR_CLOCK_SECONDS =
             "system:" + Settings.System.STATUS_BAR_CLOCK_SECONDS;
     private static final String STATUS_BAR_AM_PM =
-            "lineagesystem:" + LineageSettings.System.STATUS_BAR_AM_PM;
+            "system:" + Settings.System.STATUS_BAR_AM_PM;
     private static final String STATUS_BAR_CLOCK_AUTO_HIDE_LAUNCHER =
-            "lineagesystem:" + LineageSettings.System.STATUS_BAR_CLOCK_AUTO_HIDE;
+            "system:" + Settings.System.STATUS_BAR_CLOCK_AUTO_HIDE_LAUNCHER;
     public static final String STATUS_BAR_CLOCK_DATE_DISPLAY =
             "system:" + Settings.System.STATUS_BAR_CLOCK_DATE_DISPLAY;
     public static final String STATUS_BAR_CLOCK_DATE_STYLE =

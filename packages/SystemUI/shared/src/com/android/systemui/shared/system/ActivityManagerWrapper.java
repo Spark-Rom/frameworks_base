@@ -282,6 +282,20 @@ public class ActivityManagerWrapper {
     }
 
     /**
+     * @deprecated use {@link TaskStackChangeListeners#registerTaskStackListener}
+     */
+    public void registerTaskStackListener(TaskStackChangeListener listener) {
+        TaskStackChangeListeners.getInstance().registerTaskStackListener(listener);
+    }
+
+    /**
+     * @deprecated use {@link TaskStackChangeListeners#unregisterTaskStackListener}
+     */
+    public void unregisterTaskStackListener(TaskStackChangeListener listener) {
+        TaskStackChangeListeners.getInstance().unregisterTaskStackListener(listener);
+    }
+
+    /**
      * Removes all the recent tasks.
      */
     public void removeAllRecentTasks() {

@@ -20,7 +20,7 @@ import static android.app.StatusBarManager.WINDOW_STATE_SHOWING;
 import static android.view.View.GONE;
 import static androidx.constraintlayout.widget.ConstraintSet.END;
 import static androidx.constraintlayout.widget.ConstraintSet.PARENT_ID;
-
+import android.app.AlarmManager;
 import static com.android.internal.jank.InteractionJankMonitor.CUJ_NOTIFICATION_SHADE_QS_EXPAND_COLLAPSE;
 import static com.android.keyguard.KeyguardClockSwitch.LARGE;
 import static com.android.keyguard.KeyguardClockSwitch.SMALL;
@@ -40,7 +40,7 @@ import static com.android.systemui.statusbar.phone.panelstate.PanelExpansionStat
 import static com.android.systemui.statusbar.phone.panelstate.PanelExpansionStateManagerKt.STATE_OPEN;
 import static com.android.systemui.statusbar.phone.panelstate.PanelExpansionStateManagerKt.STATE_OPENING;
 import static com.android.systemui.util.DumpUtilsKt.asIndenting;
-
+import com.android.systemui.Dependency;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
@@ -718,18 +718,7 @@ public final class NotificationPanelViewController extends PanelViewController i
             () -> mKeyguardBottomArea.setVisibility(View.GONE);
 
     private final AccessibilityDelegate mAccessibilityDelegate = new AccessibilityDelegate() {
-    private final String[] mAppExceptions;
-
-    private NotificationStackScrollLayout mStackScrollLayout;
-    private KeyguardStatusView mKeyguardStatusView;
-
-    /*Reticker*/
-    private LinearLayout mReTickerComeback;
-    private ImageView mReTickerComebackIcon;
-    private TextView mReTickerContentTV;
-    private NotificationStackScrollLayout mNotificationStackScroller;
-    private boolean mReTickerStatus;
-    private boolean mReTickerColored;
+    public String[] mAppExceptions;
 
         @Override
         public void onInitializeAccessibilityNodeInfo(View host,
@@ -777,6 +766,19 @@ public final class NotificationPanelViewController extends PanelViewController i
     private final KeyguardBottomAreaViewModel mKeyguardBottomAreaViewModel;
     private final KeyguardBottomAreaInteractor mKeyguardBottomAreaInteractor;
     private boolean mBlockedGesturalNavigation = false;
+    public String[] mAppExceptions;
+    /*Reticker*/
+    public LinearLayout mReTickerComeback;
+    public ImageView mReTickerComebackIcon;
+    public TextView mReTickerContentTV;
+    public NotificationStackScrollLayout mNotificationStackScroller;
+    public boolean mReTickerStatus;
+    public boolean mReTickerColored;
+    private NotificationStackScrollLayout mStackScrollLayout;
+    private KeyguardStatusView mKeyguardStatusView;
+
+
+
 
     @Inject
     public NotificationPanelViewController(NotificationPanelView view,

@@ -110,6 +110,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private static final String STATUSBAR_CLOCK_CHIP =
             "system:" + Settings.System.STATUSBAR_CLOCK_CHIP;
 
+    private static final String STATUS_BAR_SHOW_LYRIC =
+            "secure:" + Settings.Secure.STATUS_BAR_SHOW_LYRIC;
+
     public static final String TAG = "CollapsedStatusBarFragment";
     private static final String EXTRA_PANEL_STATE = "panel_state";
     public static final String STATUS_BAR_ICON_MANAGER_TAG = "status_bar_icon_manager";
@@ -123,12 +126,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private final NetworkController mNetworkController;
     private LinearLayout mEndSideContent;
     private View mClockView;
-    private LinearLayout mSystemIconArea;
     private LinearLayout mCustomIconArea;
     private LinearLayout mCenterClockLayout;
     private View mOngoingCallChip;
     private View mNotificationIconAreaInner;
-    private View mClockView;
     private View mCenterClockView;
     private View mRightClockView;
     private int mDisabled1;
@@ -293,7 +294,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mStatusBarIconController.addIconGroup(mDarkIconManager);
         mEndSideContent = mStatusBar.findViewById(R.id.status_bar_end_side_content);
         mClockView = mStatusBar.findViewById(R.id.clock);
-        mSystemIconArea = mStatusBar.findViewById(R.id.system_icon_area);
         mCustomIconArea = mStatusBar.findViewById(R.id.left_icon_area);
         mCenterClockLayout = mStatusBar.findViewById(R.id.centered_area);
         mBatteryBar = mStatusBar.findViewById(R.id.battery_bar);
@@ -308,7 +308,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mBatteryMeterView.addCallback(mBatteryMeterViewCallback);
         mOngoingCallChip = mStatusBar.findViewById(R.id.ongoing_call_chip);
         showEndSideContent(false);
-        mClockView = mStatusBar.findViewById(R.id.clock);
         mCenterClockView = mStatusBar.findViewById(R.id.clock_center);
         mRightClockView = mStatusBar.findViewById(R.id.clock_right);
         showClock(false);
@@ -375,6 +374,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mAnimationScheduler.addCallback(this);
 
         Dependency.get(TunerService.class).addTunable(this, STATUSBAR_CLOCK_CHIP);
+        Dependency.get(TunerService.class).addTunable(this, STATUS_BAR_SHOW_LYRIC);
 
         mSecureSettings.registerContentObserverForUser(
                 Settings.Secure.getUriFor(Settings.Secure.STATUS_BAR_SHOW_VIBRATE_ICON),
@@ -423,6 +423,11 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
                         TunerService.parseIntegerSwitch(newValue, false);
                 updateStatusBarClock();
                 break;
+            case STATUS_BAR_SHOW_LYRIC:
+                if (mLyricController != null) {
+                        mLyricController.setEnabled(TunerService.parseIntegerSwitch(newValue, false));
+                }
+                break;
             default:
                 break;
          }
@@ -451,15 +456,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             mCenterClockView.setPadding(0,0,0,0);
             mRightClockView.setBackgroundResource(0);
             mRightClockView.setPadding(clockPaddingStart, 0, clockPaddingEnd, 0);
-        }
-    }
-
-    @Override
-    public void onTuningChanged(String key, String newValue) {
-        if (key.equals(Settings.Secure.STATUS_BAR_SHOW_LYRIC)) {
-            if (mLyricController != null) {
-                mLyricController.setEnabled(TunerService.parseIntegerSwitch(newValue, false));
-            }
         }
     }
 
@@ -622,10 +618,12 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     }
 
     private void hideEndSideContent(boolean animate) {
+        animateHide(mBatteryBar, animate);
         animateHide(mEndSideContent, animate);
     }
 
     private void showEndSideContent(boolean animate) {
+        animateShow(mBatteryBar, animate);
         // Only show the system icon area if we are not currently animating
         int state = mAnimationScheduler.getAnimationState();
         if (state == IDLE || state == SHOWING_PERSISTENT_DOT) {
@@ -672,14 +670,12 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         animateHide(mNotificationIconAreaInner, animate);
         animateHide(mCustomIconArea, animate);
         animateHide(mCenterClockLayout, animate);
-        animateHide(mBatteryBar, animate);
     }
 
     public void showNotificationIconArea(boolean animate) {
         animateShow(mNotificationIconAreaInner, animate);
         animateShow(mCustomIconArea, animate);
         animateShow(mCenterClockLayout, animate);
-        animateShow(mBatteryBar, animate);
     }
 
     public void hideOperatorName(boolean animate) {
@@ -858,7 +854,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 
         public LyricController(Context context, View statusBar) {
             super(context, statusBar);
-            mLeftSide = statusBar.findViewById(R.id.status_bar_left_side);
+            mLeftSide = statusBar.findViewById(R.id.status_bar_start_side_except_heads_up);
             mCenteredArea = statusBar.findViewById(R.id.centered_area);
         }
 

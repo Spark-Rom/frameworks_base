@@ -218,7 +218,7 @@ public class KeyguardBouncer {
 
             // Split up the work over multiple frames.
             DejankUtils.removeCallbacks(mResetRunnable);
-
+            DejankUtils.postAfterTraversal(mShowRunnable);
             mKeyguardStateController.notifyBouncerShowing(true /* showing */);
             dispatchStartingToShow();
         } finally {

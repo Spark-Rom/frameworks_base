@@ -6275,6 +6275,10 @@ public final class Settings {
         public static final String STATUS_BAR_CLOCK_SECONDS = "status_bar_clock_seconds";
 
         /**
+         * @hide
+         */
+        public static final String STATUS_BAR_AM_PM = "status_bar_am_pm";
+        /**
          * Shows custom date before clock time
          * 0 - No Date
          * 1 - Small Date
@@ -6311,6 +6315,18 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_CLOCK_AUTO_HIDE = "status_bar_clock_auto_hide";
+
+        /**
+         * Whether to auto hide clock
+         * @hide
+         */
+	public static final String STATUS_BAR_CLOCK_AUTO_HIDE_LAUNCHER = "status_bar_clock_auto_hide_launcher";
+
+        /**
+         * Whether to auto hide clock
+         * @hide
+         */
+	public static final String STATUS_BAR_CLOCK = "status_bar_clock";
 
         /** @hide */
         public static final String STATUS_BAR_CLOCK_AUTO_HIDE_HDURATION = "status_bar_clock_auto_hide_hduration";

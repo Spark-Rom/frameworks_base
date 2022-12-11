@@ -76,7 +76,6 @@ public class QuickQSPanelController extends QSPanelControllerBase<QuickQSPanel>
         super(view, qsTileHost, qsCustomizerController, usingMediaPlayer, mediaHost, metricsLogger,
                 uiEventLogger, qsLogger, dumpManager, tunerService);
         mUsingCollapsedLandscapeMediaProvider = usingCollapsedLandscapeMediaProvider;
-        mBrightnessController = quickQSBrightnessController;
         mTunerService = tunerService;
 
         mBrightnessSliderController = brightnessSliderFactory.create(getContext(), mView);
@@ -143,7 +142,7 @@ public class QuickQSPanelController extends QSPanelControllerBase<QuickQSPanel>
         int maxTiles = getResources().getInteger(R.integer.quick_qs_panel_max_tiles);
         int columns = getResources().getInteger(R.integer.quick_settings_num_columns);
         columns = TileUtils.getQSColumnsCount(getContext(), columns);
-        setMaxTiles(Math.max(columns, maxTiles));
+        mView.setMaxTiles(Math.max(columns, maxTiles));
         setTiles();
     }
 

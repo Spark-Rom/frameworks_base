@@ -230,7 +230,7 @@ public class RecordingService extends Service implements ScreenMediaRecorderList
                 // Check user ID - we may be getting a stop intent after user switch, in which case
                 // we want to post the notifications for that user, which is NOT current user
                 int userId = intent.getIntExtra(Intent.EXTRA_USER_HANDLE, USER_ID_NOT_SPECIFIED);
-                stopForeground(true);
+                stopService(userId);
                 break;
 
             case ACTION_SHARE:
@@ -253,7 +253,7 @@ public class RecordingService extends Service implements ScreenMediaRecorderList
                 break;
             case ACTION_SHOW_DIALOG:
                 if (mController != null) {
-                    mController.createScreenRecordDialog(this, null).show();
+                    mController.createScreenRecordDialog(this, null, null, null, null).show();
                 }
                 break;
             case ACTION_DELETE:
