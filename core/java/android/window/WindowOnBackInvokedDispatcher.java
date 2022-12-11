@@ -52,7 +52,7 @@ public class WindowOnBackInvokedDispatcher implements OnBackInvokedDispatcher {
     private IWindow mWindow;
     private static final String TAG = "WindowOnBackDispatcher";
     private static final boolean ENABLE_PREDICTIVE_BACK = SystemProperties
-            .getInt("persist.wm.debug.predictive_back", 1) != 0;
+            .getInt("persist.wm.debug.predictive_back", 0) != 0;
     private static final boolean ALWAYS_ENFORCE_PREDICTIVE_BACK = SystemProperties
             .getInt("persist.wm.debug.predictive_back_always_enforce", 0) != 0;
     @Nullable
