@@ -61,13 +61,13 @@
     </LinearLayout>
 
     <include layout="@layout/qs_carrier_group"
-        android:id="@+id/carrier_group"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:minHeight="@dimen/qs_header_row_min_height"
         android:minWidth="48dp"
         android:layout_marginStart="8dp"
+        android:visibility="invisible"
         android:layout_gravity="end|center_vertical"
         android:focusable="false"/>
 
@@ -87,7 +87,7 @@
         android:layout_height="match_parent"
         android:gravity="end"
         >
-    <LinearLayout
+   <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical|end"
@@ -106,7 +106,7 @@
             systemui:textAppearance="@style/TextAppearance.QS.Status"
             android:paddingEnd="2dp" />
 
-    <LinearLayout
+   <LinearLayout
         android:id="@+id/system_info_layout"
         android:layout_height="match_parent"
         android:layout_width="wrap_content"
@@ -117,7 +117,7 @@
             android:id="@+id/system_info_icon"
             android:layout_width="@dimen/qs_header_alarm_icon_size"
             android:layout_height="@dimen/qs_header_alarm_icon_size"
-            android:paddingStart="@dimen/status_bar_left_clock_starting_padding"
+            android:paddingStart="2dp"
             android:visibility="gone" />
         <com.android.systemui.util.AutoMarqueeTextView
             android:id="@+id/system_info_text"
@@ -127,10 +127,10 @@
             android:singleLine="true"
             android:textAppearance="@style/TextAppearance.QS.Status"
             android:gravity="center_vertical"
-            android:paddingEnd="@dimen/status_bar_left_clock_end_padding"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"
             android:visibility="gone"/>
     </LinearLayout>
-
     </LinearLayout>
     </FrameLayout>
 
