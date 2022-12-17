@@ -91,9 +91,9 @@ public class LocationTile extends SecureQSTile<BooleanState> {
             return;
         }
 
-        final boolean wasEnabled = mState.value;
+        //final boolean wasEnabled = mState.value;
         mHost.openPanels();
-        mController.setLocationEnabled(!wasEnabled);
+        //mController.setLocationEnabled(!wasEnabled);
         switchMode();
     }
 
