@@ -18,8 +18,6 @@ package com.android.systemui.wallpapers;
 
 import static android.view.Display.DEFAULT_DISPLAY;
 
-import static com.android.systemui.flags.Flags.USE_CANVAS_RENDERER;
-
 import android.app.WallpaperColors;
 import android.app.WallpaperManager;
 import android.content.ComponentCallbacks2;
@@ -101,7 +99,7 @@ public class ImageWallpaper extends WallpaperService {
 
     @Override
     public Engine onCreateEngine() {
-        return mFeatureFlags.isEnabled(USE_CANVAS_RENDERER) ? new CanvasEngine() : new GLEngine();
+        return new GLEngine();
     }
 
     @Override
