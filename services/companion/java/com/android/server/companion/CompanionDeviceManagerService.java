@@ -527,9 +527,11 @@ public class CompanionDeviceManagerService extends SystemService {
         @Override
         public void associate(AssociationRequest request, IAssociationRequestCallback callback,
                 String packageName, int userId) throws RemoteException {
-            Slog.i(TAG, "associate() "
+            if (DEBUG) {
+                Slog.i(TAG, "associate() "
                     + "request=" + request + ", "
                     + "package=u" + userId + "/" + packageName);
+            }
             enforceCallerCanManageAssociationsForPackage(getContext(), userId, packageName,
                     "create associations");
 
@@ -1212,7 +1214,7 @@ public class CompanionDeviceManagerService extends SystemService {
     }
 
     private void maybeGrantAutoRevokeExemptions() {
-        Slog.d(TAG, "maybeGrantAutoRevokeExemptions()");
+        if (DEBUG) Slog.d(TAG, "maybeGrantAutoRevokeExemptions()");
 
         PackageManager pm = getContext().getPackageManager();
         for (int userId : LocalServices.getService(UserManagerInternal.class).getUserIds()) {

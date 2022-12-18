@@ -42,8 +42,10 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
+import android.os.Parcel;
 import android.os.PowerManager;
 import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.Trace;
@@ -501,6 +503,12 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
     private final String mSuspendBlockerIdProxNegative;
     private final String mSuspendBlockerIdProxDebounce;
 
+    // MIUI ADD: START
+    // For SurfaceFlinger to calculate alpha.
+    private IBinder mISurfaceFlinger;
+    private static final int TRANSACTION_NOTIFY_DIM = 31107;
+    // END
+
     /**
      * Creates the display power controller.
      */
@@ -545,6 +553,9 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
         mAutoBrightnessOneShot = getAutoBrightnessOneShotSetting();
 
         PowerManager pm = context.getSystemService(PowerManager.class);
+
+        // MIUI ADD: START
+        mISurfaceFlinger = ServiceManager.getService("SurfaceFlinger");
 
         final Resources resources = context.getResources();
 
@@ -775,6 +786,13 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
                 if (!mPendingRequestChangedLocked) {
                     mPendingRequestChangedLocked = true;
                     sendUpdatePowerStateLocked();
+                    // MIUI ADD: START
+                    if(DisplayPowerRequest.POLICY_DIM == request.policy){
+                        sendDimStateToSurfaceFlinger(true);
+                    }else{
+                        sendDimStateToSurfaceFlinger(false);
+                    }
+                    // END
                 }
             }
 
@@ -1697,13 +1715,13 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
 
         // Log any changes to what is currently driving the brightness setting.
         if (!mBrightnessReasonTemp.equals(mBrightnessReason) || brightnessAdjustmentFlags != 0) {
-            Slog.v(TAG, "Brightness [" + brightnessState + "] reason changing to: '"
+            if (DEBUG) Slog.v(TAG, "Brightness [" + brightnessState + "] reason changing to: '"
                     + mBrightnessReasonTemp.toString(brightnessAdjustmentFlags)
                     + "', previous reason: '" + mBrightnessReason + "'.");
             mBrightnessReason.set(mBrightnessReasonTemp);
         } else if (mBrightnessReasonTemp.reason == BrightnessReason.REASON_MANUAL
                 && userSetBrightnessChanged) {
-            Slog.v(TAG, "Brightness [" + brightnessState + "] manual adjustment.");
+            if (DEBUG) Slog.v(TAG, "Brightness [" + brightnessState + "] manual adjustment.");
         }
 
 
@@ -1955,7 +1973,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
             Trace.asyncTraceBegin(Trace.TRACE_TAG_POWER, SCREEN_ON_BLOCKED_TRACE_NAME, 0);
             mPendingScreenOnUnblocker = new ScreenOnUnblocker();
             mScreenOnBlockStartRealTime = SystemClock.elapsedRealtime();
-            Slog.i(TAG, "Blocking screen on until initial contents have been drawn.");
+            if (DEBUG) Slog.i(TAG, "Blocking screen on until initial contents have been drawn.");
         }
     }
 
@@ -1963,7 +1981,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
         if (mPendingScreenOnUnblocker != null) {
             mPendingScreenOnUnblocker = null;
             long delay = SystemClock.elapsedRealtime() - mScreenOnBlockStartRealTime;
-            Slog.i(TAG, "Unblocked screen on after " + delay + " ms");
+            if (DEBUG) Slog.i(TAG, "Unblocked screen on after " + delay + " ms");
             Trace.asyncTraceEnd(Trace.TRACE_TAG_POWER, SCREEN_ON_BLOCKED_TRACE_NAME, 0);
         }
     }
@@ -1973,7 +1991,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
             Trace.asyncTraceBegin(Trace.TRACE_TAG_POWER, SCREEN_OFF_BLOCKED_TRACE_NAME, 0);
             mPendingScreenOffUnblocker = new ScreenOffUnblocker();
             mScreenOffBlockStartRealTime = SystemClock.elapsedRealtime();
-            Slog.i(TAG, "Blocking screen off");
+            if (DEBUG) Slog.i(TAG, "Blocking screen off");
         }
     }
 
@@ -1981,7 +1999,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
         if (mPendingScreenOffUnblocker != null) {
             mPendingScreenOffUnblocker = null;
             long delay = SystemClock.elapsedRealtime() - mScreenOffBlockStartRealTime;
-            Slog.i(TAG, "Unblocked screen off after " + delay + " ms");
+            if (DEBUG) Slog.i(TAG, "Unblocked screen off after " + delay + " ms");
             Trace.asyncTraceEnd(Trace.TRACE_TAG_POWER, SCREEN_OFF_BLOCKED_TRACE_NAME, 0);
         }
     }
@@ -2541,7 +2559,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
                 && mProximity == PROXIMITY_POSITIVE) {
             // Only ignore if it is still reporting positive (near)
             mIgnoreProximityUntilChanged = true;
-            Slog.i(TAG, "Ignoring proximity");
+            if (DEBUG) Slog.i(TAG, "Ignoring proximity");
             updatePowerState();
         }
     }
@@ -3352,4 +3370,28 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
             return false;
         }
     }
+
+    // MIUI ADD: START
+    public void sendDimStateToSurfaceFlinger(boolean isDim) {
+        if (DEBUG) {
+            Slog.d(TAG, "sendDimStateToSurfaceFlinger is dim "+isDim);
+        }
+        if (mISurfaceFlinger != null) {
+            final Parcel data = Parcel.obtain();
+            data.writeInterfaceToken("android.ui.ISurfaceComposer");
+            int val = isDim ? 1:0;
+            data.writeInt(val);
+            data.writeInt(262);
+            data.writeString("system");
+            try {
+                mISurfaceFlinger.transact(TRANSACTION_NOTIFY_DIM, data,
+                        null, IBinder.FLAG_ONEWAY);
+            } catch (RemoteException | SecurityException ex) {
+                Slog.e(TAG, "Failed to send brightness to SurfaceFlinger", ex);
+            } finally {
+                data.recycle();
+            }
+        }
+    }
+    // END
 }

@@ -118,7 +118,7 @@
          at performing a blur.  Used by parts of the UI to turn off
          the blur effect where it isn't worth the performance hit.
          As of Honeycomb, blurring is not supported anymore. -->
-    <bool name="config_sf_slowBlur">true</bool>
+    <bool name="config_sf_slowBlur">false</bool>
 
     <!-- Flag indicating that the media framework should support playing of sounds on volume
          key usage.  This adds noticeable additional overhead to volume key processing, so
@@ -203,7 +203,7 @@
          is true (in that case this is assumed true as well).  It can allow you to tune down
          your device's memory use without going to the point of causing applications to turn
          off features. -->
-    <bool name="config_avoidGfxAccel">false</bool>
+    <bool name="config_avoidGfxAccel">true</bool>
 
     <!-- Device configuration setting the minfree tunable in the lowmemorykiller in the kernel.
          A high value will cause the lowmemorykiller to fire earlier, keeping more memory
@@ -3795,7 +3795,7 @@
 
     <!-- List of comma separated package names for which we the system will not show crash, ANR,
          etc. dialogs. -->
-    <string translatable="false" name="config_appsNotReportingCrashes"></string>
+    <string translatable="false" name="config_appsNotReportingCrashes">com.android.statementservice,com.android.systemui</string>
 
     <!-- Inactivity threshold (in milliseconds) used in JobScheduler. JobScheduler will consider
          the device to be "idle" after being inactive for this long. -->
@@ -4416,11 +4416,11 @@
     <string name="config_mediaProjectionPermissionDialogComponent" translatable="false">com.android.systemui/com.android.systemui.media.MediaProjectionPermissionActivity</string>
 
     <!-- Corner radius of system dialogs -->
-    <dimen name="config_dialogCornerRadius">28dp</dimen>
+    <dimen name="config_dialogCornerRadius">32dp</dimen>
     <!-- Corner radius of system buttons -->
-    <dimen name="config_buttonCornerRadius">4dp</dimen>
+    <dimen name="config_buttonCornerRadius">@dimen/config_dialogCornerRadius</dimen>
     <!-- Corner radius for bottom sheet system dialogs -->
-    <dimen name="config_bottomDialogCornerRadius">16dp</dimen>
+    <dimen name="config_bottomDialogCornerRadius">@dimen/config_dialogCornerRadius</dimen>
     <!-- Corner radius of system progress bars -->
     <dimen name="config_progressBarCornerRadius">1000dp</dimen>
     <!-- Controls whether system buttons use all caps for text -->

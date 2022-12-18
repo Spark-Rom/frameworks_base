@@ -406,10 +406,10 @@ cc_library_shared {
         },
     },
 
-    // Workaround Clang LTO crash.
     lto: {
-        never: true,
+        thin: true,
     },
+    whole_program_vtables: true, // Requires LTO
 }
 
 cc_library_headers {
