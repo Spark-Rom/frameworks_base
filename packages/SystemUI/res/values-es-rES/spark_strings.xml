@@ -4,6 +4,8 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Name of the clock in status bar [CHAR LIMIT=30] -->
+    <string name="clock">Reloj</string>
     <!-- Screenshot delete action -->
     <!-- Label for UI element which allows deleting the screenshot [CHAR LIMIT=30] -->
     <string name="screenshot_delete_label">Eliminar</string>
@@ -66,8 +68,6 @@
     <string name="accessibility_quick_settings_onthego_changed_off">OnTheGo desactivado</string>
     <string name="accessibility_quick_settings_onthego_changed_on">OnTheGo activado</string>
     <!-- Text to use when the number in a notification info is too large -->
-    <!-- Name of the clock in status bar [CHAR LIMIT=30] -->
-    <string name="clock">Reloj</string>
     <!-- Kill button in notification guts -->
     <string name="force_stop_dlg_title">¿Forzar detención?</string>
     <string name="force_stop_dlg_text">Si fuerzas la detención de una aplicación, puede que no funcione correctamente.</string>
@@ -202,19 +202,34 @@
     <string name="screenrecord_longer_timeout_switch_summary">Limitar grabación a 15GB</string>
     <string name="screenrecord_skip_time_label">Ignorar temporizador</string>
     <string name="screenrecord_skip_time_summary">No esperar 3 segundos</string>
-    <!-- Omnijaws Weather -->
-    <string name="omnijaws_service_error">Error</string>
-    <string name="omnijaws_service_unkown">Sin datos del clima</string>
-    <string name="omnijaws_service_error_long">Error al cargar datos de clima</string>
-    <string name="omnijaws_service_disabled">Servicio deshabilitado</string>
-    <string name="omnijaws_detail_header">Clima</string>
-    <string name="omnijaws_label_default">Clima</string>
-    <string name="omnijaws_current_text">Ahora</string>
-    <string name="omnijaws_package_not_available">OmniJaws no disponible</string>
-    <string name="omnijaws_service_last_update">Última actualización:</string>
+    <string name="screenrecord_hevc_switch_label">Habilitar HEVC</string>
     <!-- QS InternetDialog: Summary for how many devices are connected to the hotspot -->
     <plurals name="quick_settings_internet_hotspot_summary_num_devices">
-        <item quantity="one">%d device connected</item>
-        <item quantity="other">%d devices connected</item>
+        <item quantity="one">%d dispositivo conectado</item>
+        <item quantity="other">%d dispositivos conectados</item>
     </plurals>
+    <!-- Data usage panel -->
+    <string name="total_internet_usage">Uso total de Internet (desde el arranque)</string>
+    <string name="cellular_usage">Uso de datos móviles</string>
+    <string name="wifi_usage">Uso de datos Wifi</string>
+    <!-- Screen pinning dialog description. (for devices without navbar) -->
+    <string name="screen_pinning_description_no_navbar">Esto lo mantiene a la vista hasta que lo liberes. Mantén pulsado «Atrás» para liberar.</string>
+    <!-- Notify use that they are in Lock-to-app (for devices without navbar)-->
+    <string name="screen_pinning_toast_no_navbar">Para desfijar esta pantalla, mantén pulsado el botón Atrás</string>
+    <!-- Screen pinning dialog description. (for devices without navbar and with gestures on fingerprint sensor) -->
+    <string name="screen_pinning_description_no_navbar_fpsensor">Esto lo mantiene a la vista hasta que lo desancles. Mantén presionado el sensor de huellas digitales para desanclar.</string>
+    <!-- Notify use that they are in Lock-to-app (for devices without navbar and with gestures on fingerprint sensor)-->
+    <string name="screen_pinning_toast_no_navbar_fpsensor">Para desanclar esta pantalla, mantén presionado el sensor de huellas digitales</string>
+    <!-- Face Unlock -->
+    <string name="face_unlock_recognizing">Reconociendo cara...</string>
+    <!-- Bluetooth dialog -->
+    <string name="turn_on_bluetooth">Usar Bluetooth</string>
+    <string name="bluetooth_is_off">El Bluetooth está desactivado</string>
+    <string name="tap_a_device_to_connect">Toca un dispositivo para conectar</string>
+    <string name="photos_not_allowed">Aplicación no soportada</string>
+    <!-- Preferred network tile -->
+    <string name="quick_settings_preferred_network_label">Red preferida</string>
+    <string name="quick_settings_preferred_network_lte">4G / LTE</string>
+    <string name="quick_settings_preferred_network_nr">5G / NR</string>
+    <string name="quick_settings_preferred_network_unsupported">No admitido</string>
 </resources>

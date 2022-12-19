@@ -4,6 +4,8 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Name of the clock in status bar [CHAR LIMIT=30] -->
+    <string name="clock">Orologio</string>
     <!-- Screenshot delete action -->
     <!-- Label for UI element which allows deleting the screenshot [CHAR LIMIT=30] -->
     <string name="screenshot_delete_label">Elimina</string>
@@ -66,8 +68,6 @@
     <string name="accessibility_quick_settings_onthego_changed_off">On-The-Go disattivato</string>
     <string name="accessibility_quick_settings_onthego_changed_on">On-The-Go attivato</string>
     <!-- Text to use when the number in a notification info is too large -->
-    <!-- Name of the clock in status bar [CHAR LIMIT=30] -->
-    <string name="clock">Orologio</string>
     <!-- Kill button in notification guts -->
     <string name="force_stop_dlg_title">Forzare l\'arresto?</string>
     <string name="force_stop_dlg_text">Se forzi l\'interruzione di un\'app, potrebbe non funzionare correttamente.</string>
@@ -95,7 +95,7 @@
     <!-- USB tethering QS tile -->
     <string name="quick_settings_usb_tether_label">Tethering USB</string>
     <!-- Sync QS Tile -->
-    <string name="quick_settings_sync_label">Sincronizazione</string>
+    <string name="quick_settings_sync_label">Sincronizzazione</string>
     <string name="accessibility_quick_settings_sync_off">Sincronizzazione off</string>
     <string name="accessibility_quick_settings_sync_on">Sincronizzazione on</string>
     <string name="accessibility_quick_settings_sync_changed_off">Sincronizzazione spenta</string>
@@ -202,19 +202,34 @@
     <string name="screenrecord_longer_timeout_switch_summary">Limita la dimensione della registrazione a 15GB</string>
     <string name="screenrecord_skip_time_label">Salta timer</string>
     <string name="screenrecord_skip_time_summary">Rimuovi attesa di 3 secondi</string>
-    <!-- Omnijaws Weather -->
-    <string name="omnijaws_service_error">Errore</string>
-    <string name="omnijaws_service_unkown">Nessun dato meteo</string>
-    <string name="omnijaws_service_error_long">Errore durante il caricamento dei dati meteo</string>
-    <string name="omnijaws_service_disabled">Il servizio è disabilitato</string>
-    <string name="omnijaws_detail_header">Meteo</string>
-    <string name="omnijaws_label_default">Meteo</string>
-    <string name="omnijaws_current_text">Adesso</string>
-    <string name="omnijaws_package_not_available">OmniJaws non disponibile</string>
-    <string name="omnijaws_service_last_update">Ultimo aggiornamento:</string>
+    <string name="screenrecord_hevc_switch_label">Abilita HEVC</string>
     <!-- QS InternetDialog: Summary for how many devices are connected to the hotspot -->
     <plurals name="quick_settings_internet_hotspot_summary_num_devices">
         <item quantity="one">%d dispositivo connesso</item>
         <item quantity="other">%d dispositivi connessi</item>
     </plurals>
+    <!-- Data usage panel -->
+    <string name="total_internet_usage">Utilizzo totale di internet (dal boot)</string>
+    <string name="cellular_usage">Utilizzo dati mobili</string>
+    <string name="wifi_usage">Utilizzo dati Wi-Fi</string>
+    <!-- Screen pinning dialog description. (for devices without navbar) -->
+    <string name="screen_pinning_description_no_navbar">Questo fissa la schermata finché non la sblocchi. Tocca &amp; tieni premuto Indietro per sbloccare.</string>
+    <!-- Notify use that they are in Lock-to-app (for devices without navbar)-->
+    <string name="screen_pinning_toast_no_navbar">Per sbloccare questa schermata, tocca &amp; tieni premuto il pulsante Indietro</string>
+    <!-- Screen pinning dialog description. (for devices without navbar and with gestures on fingerprint sensor) -->
+    <string name="screen_pinning_description_no_navbar_fpsensor">La schermata rimane visibile finché non viene sganciata. Per sganciarla, tocca &amp; tieni premuto il sensore di impronte digitali.</string>
+    <!-- Notify use that they are in Lock-to-app (for devices without navbar and with gestures on fingerprint sensor)-->
+    <string name="screen_pinning_toast_no_navbar_fpsensor">Per sbloccare questa schermata, tocca &amp; tieni premuto il sensore d\'impronte digitali</string>
+    <!-- Face Unlock -->
+    <string name="face_unlock_recognizing">Riconoscimento volto...</string>
+    <!-- Bluetooth dialog -->
+    <string name="turn_on_bluetooth">Usa il Bluetooth</string>
+    <string name="bluetooth_is_off">Bluetooth disattivato</string>
+    <string name="tap_a_device_to_connect">Tocca un dispositivo per connetterti</string>
+    <string name="photos_not_allowed">Questa app non è supportata</string>
+    <!-- Preferred network tile -->
+    <string name="quick_settings_preferred_network_label">Reti preferite</string>
+    <string name="quick_settings_preferred_network_lte">4g / LTE</string>
+    <string name="quick_settings_preferred_network_nr">5g / NR</string>
+    <string name="quick_settings_preferred_network_unsupported">Non supportato</string>
 </resources>
