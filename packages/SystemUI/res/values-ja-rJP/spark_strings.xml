@@ -4,6 +4,8 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Name of the clock in status bar [CHAR LIMIT=30] -->
+    <string name="clock">時計</string>
     <!-- Screenshot delete action -->
     <!-- Label for UI element which allows deleting the screenshot [CHAR LIMIT=30] -->
     <string name="screenshot_delete_label">削除</string>
@@ -27,20 +29,20 @@
     <!-- Sb Call Strength icon -->
     <string name="status_bar_call_strength">電波強度</string>
     <!-- Alert slider extras -->
-    <string name="volume_ringer_priority_only">Priority</string>
-    <string name="volume_ringer_alarms_only">Alarms</string>
-    <string name="volume_ringer_dnd">DnD</string>
+    <string name="volume_ringer_priority_only">優先</string>
+    <string name="volume_ringer_alarms_only">アラーム</string>
+    <string name="volume_ringer_dnd">DND</string>
     <string name="tristate_flashlight">トーチ</string>
-    <string name="tristate_flashlight_on">Torch on</string>
-    <string name="tristate_flashlight_off">Torch off</string>
-    <string name="tristate_flashlight_blink">Torch blink</string>
-    <string name="tristate_brightness_bright">Max-brightness</string>
-    <string name="tristate_brightness_dark">Min-brightness</string>
-    <string name="tristate_brightness_auto">Auto-brightness</string>
-    <string name="tristate_rotation_auto">Auto-rotate</string>
-    <string name="tristate_rotation_0">Portrait</string>
-    <string name="tristate_rotation_90">Landscape (90°)</string>
-    <string name="tristate_rotation_270">Landscape (270°)</string>
+    <string name="tristate_flashlight_on">トーチ ON</string>
+    <string name="tristate_flashlight_off">トーチ OFF</string>
+    <string name="tristate_flashlight_blink">トーチ点滅</string>
+    <string name="tristate_brightness_bright">最大輝度</string>
+    <string name="tristate_brightness_dark">最低輝度</string>
+    <string name="tristate_brightness_auto">自動輝度</string>
+    <string name="tristate_rotation_auto">自動回転</string>
+    <string name="tristate_rotation_0">縦向き</string>
+    <string name="tristate_rotation_90">横向き (90°)</string>
+    <string name="tristate_rotation_270">横向き (270°)</string>
     <!-- Advanced Reboot -->
     <string name="global_action_restart_advanced">高度な再起動</string>
     <string name="global_action_restart_recovery">リカバリー</string>
@@ -66,8 +68,6 @@
     <string name="accessibility_quick_settings_onthego_changed_off">On-The-Go を OFF にしました</string>
     <string name="accessibility_quick_settings_onthego_changed_on">On-The-Go を ON にしました</string>
     <!-- Text to use when the number in a notification info is too large -->
-    <!-- Name of the clock in status bar [CHAR LIMIT=30] -->
-    <string name="clock">時計</string>
     <!-- Kill button in notification guts -->
     <string name="force_stop_dlg_title">強制停止しますか?</string>
     <string name="force_stop_dlg_text">アプリを強制停止すると正常に機能しないことがあります</string>
@@ -179,19 +179,19 @@
     <string name="quick_settings_smart_pixels">スマートピクセル</string>
     <string name="quick_settings_smart_pixels_on_power_save">自動有効</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_dash_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • Dash charging (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> until full)</string>
-    <string name="keyguard_plugged_in_dash_charging"><xliff:g id="percentage">%s</xliff:g> • Dash charging</string>
+    <string name="keyguard_indication_dash_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • Dash Charging (充電完了まで残り<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g>)</string>
+    <string name="keyguard_plugged_in_dash_charging"><xliff:g id="percentage">%s</xliff:g> • Dash Charging</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a warp charger. Should match keyguard_plugged_in_warp_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_warp_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • Warp Charging (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> until full)</string>
+    <string name="keyguard_indication_warp_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • Warp Charging (充電完了まで残り<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g>)</string>
     <string name="keyguard_plugged_in_warp_charging"><xliff:g id="percentage">%s</xliff:g> • Warp Charging</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a VOOC charger. Should match keyguard_plugged_in_vooc_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_vooc_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • VOOC Charging (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> until full)</string>
+    <string name="keyguard_indication_vooc_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • VOOC Charging (充電完了まで残り<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g>)</string>
     <string name="keyguard_plugged_in_vooc_charging"><xliff:g id="percentage">%s</xliff:g> • VOOC Charging</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_turbo_power_time"><xliff:g id="percentage">%2$s</xliff:g> • Turbo Charging (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> until full)</string>
+    <string name="keyguard_indication_turbo_power_time"><xliff:g id="percentage">%2$s</xliff:g> • Turbo Charging (充電完了まで残り<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g>)</string>
     <string name="keyguard_plugged_in_turbo_charging"><xliff:g id="percentage">%s</xliff:g> • Turbo Charging</string>
     <!-- Indication on the keyguard that is shown when the device is charging with an oem fast power charger. Should match keyguard_plugged_in_turbo_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_oem_power_time"><xliff:g id="percentage">%2$s</xliff:g> • Fast Charging (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> until full)</string>
+    <string name="keyguard_indication_oem_power_time"><xliff:g id="percentage">%2$s</xliff:g> • Fast Charging (充電完了まで残り<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g>)</string>
     <string name="keyguard_plugged_in_oem_charging"><xliff:g id="percentage">%s</xliff:g> • Fast Charging</string>
     <!-- Screen record -->
     <string name="screenrecord_stopdot_label">停止ドットを表示</string>
@@ -202,18 +202,33 @@
     <string name="screenrecord_longer_timeout_switch_summary">録画サイズを15GBに制限する</string>
     <string name="screenrecord_skip_time_label">タイマーをスキップ</string>
     <string name="screenrecord_skip_time_summary">3秒間の待機を削除する</string>
-    <!-- Omnijaws Weather -->
-    <string name="omnijaws_service_error">Error</string>
-    <string name="omnijaws_service_unkown">No weather data</string>
-    <string name="omnijaws_service_error_long">Error loading weather data</string>
-    <string name="omnijaws_service_disabled">Service is disabled</string>
-    <string name="omnijaws_detail_header">Weather</string>
-    <string name="omnijaws_label_default">Weather</string>
-    <string name="omnijaws_current_text">Now</string>
-    <string name="omnijaws_package_not_available">OmniJaws not available</string>
-    <string name="omnijaws_service_last_update">Last update:</string>
+    <string name="screenrecord_hevc_switch_label">Enable HEVC</string>
     <!-- QS InternetDialog: Summary for how many devices are connected to the hotspot -->
     <plurals name="quick_settings_internet_hotspot_summary_num_devices">
-        <item quantity="other">%d devices connected</item>
+        <item quantity="other">%d個のデバイスが接続されています</item>
     </plurals>
+    <!-- Data usage panel -->
+    <string name="total_internet_usage">Total internet usage (Since boot)</string>
+    <string name="cellular_usage">Mobile data usage</string>
+    <string name="wifi_usage">Wifi data usage</string>
+    <!-- Screen pinning dialog description. (for devices without navbar) -->
+    <string name="screen_pinning_description_no_navbar">This keeps it in view until you unpin. Touch &amp; hold Back to unpin.</string>
+    <!-- Notify use that they are in Lock-to-app (for devices without navbar)-->
+    <string name="screen_pinning_toast_no_navbar">To unpin this screen, touch &amp; hold Back button</string>
+    <!-- Screen pinning dialog description. (for devices without navbar and with gestures on fingerprint sensor) -->
+    <string name="screen_pinning_description_no_navbar_fpsensor">This keeps it in view until you unpin. Touch &amp; hold fingerprint sensor to unpin.</string>
+    <!-- Notify use that they are in Lock-to-app (for devices without navbar and with gestures on fingerprint sensor)-->
+    <string name="screen_pinning_toast_no_navbar_fpsensor">To unpin this screen, touch &amp; hold fingerprint sensor</string>
+    <!-- Face Unlock -->
+    <string name="face_unlock_recognizing">Recognizing face...</string>
+    <!-- Bluetooth dialog -->
+    <string name="turn_on_bluetooth">Use Bluetooth</string>
+    <string name="bluetooth_is_off">Bluetooth is off</string>
+    <string name="tap_a_device_to_connect">Tap a device to connect</string>
+    <string name="photos_not_allowed">This app isnt supported</string>
+    <!-- Preferred network tile -->
+    <string name="quick_settings_preferred_network_label">Preferred network</string>
+    <string name="quick_settings_preferred_network_lte">4g / LTE</string>
+    <string name="quick_settings_preferred_network_nr">5g / NR</string>
+    <string name="quick_settings_preferred_network_unsupported">Unsupported</string>
 </resources>

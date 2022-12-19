@@ -4,6 +4,8 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Name of the clock in status bar [CHAR LIMIT=30] -->
+    <string name="clock">Saat</string>
     <!-- Screenshot delete action -->
     <!-- Label for UI element which allows deleting the screenshot [CHAR LIMIT=30] -->
     <string name="screenshot_delete_label">Sil</string>
@@ -66,8 +68,6 @@
     <string name="accessibility_quick_settings_onthego_changed_off">Yürüme modu kapatıldı</string>
     <string name="accessibility_quick_settings_onthego_changed_on">Yürüme modu açıldı</string>
     <!-- Text to use when the number in a notification info is too large -->
-    <!-- Name of the clock in status bar [CHAR LIMIT=30] -->
-    <string name="clock">Saat</string>
     <!-- Kill button in notification guts -->
     <string name="force_stop_dlg_title">Zorla durdurulsun mu?</string>
     <string name="force_stop_dlg_text">Uygulamayı kapatmaya zorlamak, kararsız çalışmasına sebep olabilir.</string>
@@ -202,19 +202,34 @@
     <string name="screenrecord_longer_timeout_switch_summary">Kayıt boyutunu 15 GB ile sınırlayın</string>
     <string name="screenrecord_skip_time_label">Zamanlayıcıyı atla</string>
     <string name="screenrecord_skip_time_summary">3 saniye beklemeyi kaldır</string>
-    <!-- Omnijaws Weather -->
-    <string name="omnijaws_service_error">Hata</string>
-    <string name="omnijaws_service_unkown">Hava durumu verileri yok</string>
-    <string name="omnijaws_service_error_long">Hava durumu verileri yüklenemedi</string>
-    <string name="omnijaws_service_disabled">Servis devre dışı</string>
-    <string name="omnijaws_detail_header">Hava durumu</string>
-    <string name="omnijaws_label_default">Hava durumu</string>
-    <string name="omnijaws_current_text">Şimdi</string>
-    <string name="omnijaws_package_not_available">OmniJaws mevcut değil</string>
-    <string name="omnijaws_service_last_update">Son güncelleme:</string>
+    <string name="screenrecord_hevc_switch_label">HEVC\'yi etkinleştir</string>
     <!-- QS InternetDialog: Summary for how many devices are connected to the hotspot -->
     <plurals name="quick_settings_internet_hotspot_summary_num_devices">
         <item quantity="one">%d cihaz bağlandı</item>
         <item quantity="other">%d cihazlar bağlandı</item>
     </plurals>
+    <!-- Data usage panel -->
+    <string name="total_internet_usage">Toplam internet kullanımı (Başlangıçtan beri)</string>
+    <string name="cellular_usage">Mobil veri kullanımı</string>
+    <string name="wifi_usage">Wifi veri kullanımı</string>
+    <!-- Screen pinning dialog description. (for devices without navbar) -->
+    <string name="screen_pinning_description_no_navbar">Bu işlem, siz sabitlemeyi kaldırana kadar ekranı görünür durumda tutar. Sabitlemeyi kaldırmak için Geri\'ye dokunun ve basılı tutun.</string>
+    <!-- Notify use that they are in Lock-to-app (for devices without navbar)-->
+    <string name="screen_pinning_toast_no_navbar">Bu ekrandaki sabitlemeyi kaldırmak için, &amp; dokunun ve Geri tuşuna basılı tutun</string>
+    <!-- Screen pinning dialog description. (for devices without navbar and with gestures on fingerprint sensor) -->
+    <string name="screen_pinning_description_no_navbar_fpsensor">Bu işlem, siz sabitlemeyi kaldırana kadar ekranda görünür tutar. Sabitlemeyi kaldırmak için parmak izi sensörüne dokunun &amp; basılı tutun.</string>
+    <!-- Notify use that they are in Lock-to-app (for devices without navbar and with gestures on fingerprint sensor)-->
+    <string name="screen_pinning_toast_no_navbar_fpsensor">Bu ekran sabitlemesini kaldırmak için parmak izi sensörüne dokunun &amp; basılı tutun</string>
+    <!-- Face Unlock -->
+    <string name="face_unlock_recognizing">Yüz algılanıyor...</string>
+    <!-- Bluetooth dialog -->
+    <string name="turn_on_bluetooth">Bluetooth\'u kullan</string>
+    <string name="bluetooth_is_off">Bluetooth kapalı</string>
+    <string name="tap_a_device_to_connect">Bağlanmak için bir cihaza dokunun</string>
+    <string name="photos_not_allowed">Bu uygulama desteklenmiyor</string>
+    <!-- Preferred network tile -->
+    <string name="quick_settings_preferred_network_label">Tercih edilen ağ</string>
+    <string name="quick_settings_preferred_network_lte">4g / LTE</string>
+    <string name="quick_settings_preferred_network_nr">5g / NR</string>
+    <string name="quick_settings_preferred_network_unsupported">Desteklenmiyor</string>
 </resources>

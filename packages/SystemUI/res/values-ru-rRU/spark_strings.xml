@@ -4,6 +4,8 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Name of the clock in status bar [CHAR LIMIT=30] -->
+    <string name="clock">Часы</string>
     <!-- Screenshot delete action -->
     <!-- Label for UI element which allows deleting the screenshot [CHAR LIMIT=30] -->
     <string name="screenshot_delete_label">Удалить</string>
@@ -46,28 +48,26 @@
     <string name="global_action_restart_recovery">Рекавери</string>
     <string name="global_action_restart_bootloader">Режим Fastboot</string>
     <string name="global_action_restart_ui">Системный интерфейс</string>
-    <string name="global_action_onthego">On-The-Go</string>
+    <string name="global_action_onthego">Режим «На ходу»</string>
     <!-- On The Go -->
     <string name="onthego_notification_ticker">Режим «На ходу» включен</string>
     <string name="onthego_notification_title">Режим «На ходу» активен</string>
     <string name="onthego_notification_stop">Стоп</string>
     <string name="onthego_notification_options">Параметры</string>
-    <string name="onthego_notification_error">Не удаётся включить режим \"На ходу\"</string>
+    <string name="onthego_notification_error">Не удаётся включить режим «На ходу»</string>
     <string name="onthego_notification_restart">Перезапустить режим «На ходу»</string>
     <string name="onthego_notification_camera_changed">Режим камеры изменён</string>
-    <string name="onthego_transparency">Transparency</string>
+    <string name="onthego_transparency">Прозрачность</string>
     <string name="onthego_front_camera">Использовать переднюю камеру</string>
     <string name="onthego_service_toggle">Автоматический перезапуск службы</string>
-    <string name="onthego_channel_name">Main</string>
+    <string name="onthego_channel_name">На ходу</string>
     <!-- OnTheGo Tile -->
-    <string name="quick_settings_onthego_label">Main</string>
+    <string name="quick_settings_onthego_label">На ходу</string>
     <string name="accessibility_quick_settings_onthego_off">Режим «На ходу» выкл.</string>
     <string name="accessibility_quick_settings_onthego_on">Режим «На ходу» вкл.</string>
     <string name="accessibility_quick_settings_onthego_changed_off">Режим «На ходу» выключен</string>
     <string name="accessibility_quick_settings_onthego_changed_on">Режим «На ходу» включен</string>
     <!-- Text to use when the number in a notification info is too large -->
-    <!-- Name of the clock in status bar [CHAR LIMIT=30] -->
-    <string name="clock">Часы</string>
     <!-- Kill button in notification guts -->
     <string name="force_stop_dlg_title">Остановить принудительно?</string>
     <string name="force_stop_dlg_text">Принудительное закрытие приложения может отразиться на его функциональности.</string>
@@ -121,8 +121,8 @@
     <string name="qs_data_switch_label">Сменить сим-карту для передачи данных</string>
     <string name="qs_data_switch_toast_0">Нет SIM карты</string>
     <string name="qs_data_switch_toast_1">В настоящее время вставлена только одна SIM-карта</string>
-    <string name="qs_data_switch_changed_1">Using SIM 1 for Mobile data</string>
-    <string name="qs_data_switch_changed_2">Using SIM 2 for Mobile data</string>
+    <string name="qs_data_switch_changed_1">Используется SIM 1 для передачи данных.</string>
+    <string name="qs_data_switch_changed_2">Используется SIM 2 для передачи данных.</string>
     <!-- FPS Info tile -->
     <string name="quick_settings_fpsinfo_label">Информация о FPS</string>
     <string name="accessibility_quick_settings_fpsinfo_off">Информация о FPS выкл.</string>
@@ -201,21 +201,36 @@
     <string name="screenrecord_longer_timeout_switch_summary">Максимальный размер записи до 15 ГБ</string>
     <string name="screenrecord_skip_time_label">Пропуск времени ожидания</string>
     <string name="screenrecord_skip_time_summary">Убрать 3-х секундное ожидание</string>
-    <!-- Omnijaws Weather -->
-    <string name="omnijaws_service_error">Ошибка</string>
-    <string name="omnijaws_service_unkown">Нет данных о погоде</string>
-    <string name="omnijaws_service_error_long">Ошибка загрузки данных о погоде</string>
-    <string name="omnijaws_service_disabled">Служба отключена</string>
-    <string name="omnijaws_detail_header">Погода</string>
-    <string name="omnijaws_label_default">Погода</string>
-    <string name="omnijaws_current_text">Только что</string>
-    <string name="omnijaws_package_not_available">OmniJaws not available</string>
-    <string name="omnijaws_service_last_update">Последнее обновление:</string>
+    <string name="screenrecord_hevc_switch_label">Enable HEVC</string>
     <!-- QS InternetDialog: Summary for how many devices are connected to the hotspot -->
     <plurals name="quick_settings_internet_hotspot_summary_num_devices">
-        <item quantity="one">%d device connected</item>
-        <item quantity="few">%d devices connected</item>
-        <item quantity="many">%d devices connected</item>
-        <item quantity="other">%d devices connected</item>
+        <item quantity="one">%d устройство подключено</item>
+        <item quantity="few">%d устройств подключено</item>
+        <item quantity="many">%d устройств подключено</item>
+        <item quantity="other">%d устройств подключено</item>
     </plurals>
+    <!-- Data usage panel -->
+    <string name="total_internet_usage">Total internet usage (Since boot)</string>
+    <string name="cellular_usage">Mobile data usage</string>
+    <string name="wifi_usage">Wifi data usage</string>
+    <!-- Screen pinning dialog description. (for devices without navbar) -->
+    <string name="screen_pinning_description_no_navbar">This keeps it in view until you unpin. Touch &amp; hold Back to unpin.</string>
+    <!-- Notify use that they are in Lock-to-app (for devices without navbar)-->
+    <string name="screen_pinning_toast_no_navbar">To unpin this screen, touch &amp; hold Back button</string>
+    <!-- Screen pinning dialog description. (for devices without navbar and with gestures on fingerprint sensor) -->
+    <string name="screen_pinning_description_no_navbar_fpsensor">This keeps it in view until you unpin. Touch &amp; hold fingerprint sensor to unpin.</string>
+    <!-- Notify use that they are in Lock-to-app (for devices without navbar and with gestures on fingerprint sensor)-->
+    <string name="screen_pinning_toast_no_navbar_fpsensor">To unpin this screen, touch &amp; hold fingerprint sensor</string>
+    <!-- Face Unlock -->
+    <string name="face_unlock_recognizing">Recognizing face...</string>
+    <!-- Bluetooth dialog -->
+    <string name="turn_on_bluetooth">Use Bluetooth</string>
+    <string name="bluetooth_is_off">Bluetooth is off</string>
+    <string name="tap_a_device_to_connect">Tap a device to connect</string>
+    <string name="photos_not_allowed">This app isnt supported</string>
+    <!-- Preferred network tile -->
+    <string name="quick_settings_preferred_network_label">Preferred network</string>
+    <string name="quick_settings_preferred_network_lte">4g / LTE</string>
+    <string name="quick_settings_preferred_network_nr">5g / NR</string>
+    <string name="quick_settings_preferred_network_unsupported">Unsupported</string>
 </resources>

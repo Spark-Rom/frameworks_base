@@ -61,4 +61,8 @@
     <string name="aerr_show_details">Mostra dettagli</string>
     <!-- Parallel space badge -->
     <string name="parallel_space_badge_label">%1$s</string>
+    <!-- App lock -->
+    <string name="unlock_application">Sblocca <xliff:g id="label" example="Telegram">%1$s</xliff:g></string>
+    <!-- Face unlock -->
+    <string name="face_unlock_disabled_idle">Sblocco facciale disabilitato a causa dell\'inattività</string>
 </resources>
