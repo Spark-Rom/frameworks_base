@@ -165,6 +165,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 
     private View mBatteryBar;
 
+    private View mLeftLogo;
+
     private SignalCallback mSignalCallback = new SignalCallback() {
         @Override
         public void setIsAirplaneMode(@NonNull IconState icon) {
@@ -310,6 +312,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         showEndSideContent(false);
         mCenterClockView = mStatusBar.findViewById(R.id.clock_center);
         mRightClockView = mStatusBar.findViewById(R.id.clock_right);
+        mLeftLogo = mStatusBar.findViewById(R.id.statusbar_logo);
         showClock(false);
         initEmergencyCryptkeeperText();
         initOperatorName();
@@ -667,12 +670,14 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     }
 
     public void hideNotificationIconArea(boolean animate) {
+        animateHide(mLeftLogo, animate);
         animateHide(mNotificationIconAreaInner, animate);
         animateHide(mCustomIconArea, animate);
         animateHide(mCenterClockLayout, animate);
     }
 
     public void showNotificationIconArea(boolean animate) {
+        animateShow(mLeftLogo, animate);
         animateShow(mNotificationIconAreaInner, animate);
         animateShow(mCustomIconArea, animate);
         animateShow(mCenterClockLayout, animate);
