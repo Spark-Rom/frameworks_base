@@ -2342,7 +2342,11 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
             if (mWmService.mPowerManagerInternal != null && !BoostFramework.boostFrameworkJarExists) {
             	mWmService.mPowerManagerInternal.setPowerBoost(Boost.INTERACTION, POWER_BOOST_TIMEOUT_MS);
             }
-            acquireAppLaunchPerfLock(r);
+            if (r != null && r.isMainIntent(r.intent)) {
+                acquireAppLaunchPerfLock(r);
+            } else if (r == null) {
+                Slog.w(TAG, "Should not happen! Didn't apply launch boost");
+            }
         }
 
         final ActivityRecord idealMatchActivity = getItemFromTaskDisplayAreas(taskDisplayArea -> {
