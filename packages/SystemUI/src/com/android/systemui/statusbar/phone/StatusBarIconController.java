@@ -600,8 +600,7 @@ public interface StatusBarIconController {
                 // ModernStatusBarWifiView will automatically apply state based on its callbacks, so
                 // we don't need to call applyWifiState.
             } else {
-                throw new IllegalStateException("View at " + viewIndex + " must be of type "
-                        + "StatusBarWifiView or ModernStatusBarWifiView");
+                return;
             }
 
             if (mIsInDemoMode) {
@@ -610,14 +609,11 @@ public interface StatusBarIconController {
         }
 
         public void onSetMobileIcon(int viewIndex, MobileIconState state) {
-            StatusBarMobileView sbView;
             View view = mGroup.getChildAt(viewIndex);
-            sbView = null;
             if (view instanceof StatusBarMobileView) {
-                sbView = (StatusBarMobileView) view;
-            }
-            if (sbView != null) {
-                sbView.applyMobileState(state);
+                ((StatusBarMobileView) view).applyMobileState(state);
+            } else {
+                return;
             }
 
             if (mIsInDemoMode) {
@@ -633,14 +629,9 @@ public interface StatusBarIconController {
         }
 
         public void onSetBluetoothIcon(int viewIndex, BluetoothIconState state) {
-            StatusBarBluetoothView sbView;
             View view = mGroup.getChildAt(viewIndex);
-            sbView = null;
             if (view instanceof StatusBarBluetoothView) {
-                sbView = (StatusBarBluetoothView) view;
-            }
-            if (sbView != null) {
-                sbView.applyBluetoothState(state);
+                ((StatusBarBluetoothView) view).applyBluetoothState(state);
             }
         }
 
