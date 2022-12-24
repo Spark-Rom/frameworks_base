@@ -783,18 +783,6 @@ public class NotificationStackScrollLayout extends ViewGroup implements Dumpable
             }
         }
         return null;
-        
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        mCustomSettingsObserver.observe();
-        mCustomSettingsObserver.update();
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        mCustomSettingsObserver.stop();
     }
 
     @ShadeViewRefactor(RefactorComponent.SHADE_VIEW)
@@ -812,6 +800,19 @@ public class NotificationStackScrollLayout extends ViewGroup implements Dumpable
                 ((ActivatableNotificationView) child).updateBackgroundColors();
             }
         }
+    }
+    
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        mCustomSettingsObserver.observe();
+        mCustomSettingsObserver.update();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        mCustomSettingsObserver.stop();
     }
 
     @Override
