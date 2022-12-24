@@ -74,6 +74,7 @@ public class PixelPropsUtils {
             "com.breel.wallpapers20",
             PACKAGE_NETFLIX,
             "com.disney.disneyplus",
+            "com.microsoft.android.smsorganizer",
             "com.nhs.online.nhsonline",
             "in.startv.hotstar"
     };
