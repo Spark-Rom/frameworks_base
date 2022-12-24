@@ -118,7 +118,6 @@ class NotificationSectionsManager @Inject internal constructor(
         if (showHeaders == visible) return
         showHeaders = visible
         reinflateViews()
-        updateSectionBoundaries("headers toggled")
     }
 
     override fun beginsSection(view: View, previous: View?): Boolean =
