@@ -95,6 +95,8 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
 
     private final Handler mHandler = new Handler();
     public static final String QS_SHOW_INFO_HEADER = "qs_show_info_header";
+    private static final String QS_WEATHER_POSITION =
+            "system:" + Settings.System.QS_WEATHER_POSITION;
 
     private boolean mExpanded;
     private boolean mQsDisabled;
@@ -117,6 +119,9 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
     private View mStatusIconsView;
     private View mContainer;
 
+    private View mQsWeatherView;
+    private View mQsWeatherHeaderView; 
+
     private View mQSCarriers;
     private ViewGroup mClockContainer;
     private Clock mClockView;
@@ -131,6 +136,8 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
     private BatteryMeterView mBatteryIcon;
     private StatusIconContainer mIconContainer;
     private View mPrivacyChip;
+    
+    private int mQQSWeather;
 
     @Nullable
     private TintedIconManager mTintedIconManager;
@@ -202,6 +209,8 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         mPrivacyChip = findViewById(R.id.privacy_chip);
         mDateView = findViewById(R.id.date);
         mClockDateView = findViewById(R.id.date_clock);
+        mQsWeatherView = findViewById(R.id.qs_weather_view);
+        mQsWeatherHeaderView = findViewById(R.id.weather_view_header);
         mClockIconsSeparator = findViewById(R.id.separator);
         mRightLayout = findViewById(R.id.rightLayout);
         mDateContainer = findViewById(R.id.date_container);
@@ -241,7 +250,8 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                 QS_BATTERY_STYLE,
                 QS_BATTERY_LOCATION,
                 QS_SHOW_BATTERY_PERCENT,
-                QS_SHOW_BATTERY_ESTIMATE);
+                QS_SHOW_BATTERY_ESTIMATE,
+                QS_WEATHER_POSITION);
     }
 
     void onAttach(TintedIconManager iconManager,
@@ -551,6 +561,8 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                 .addFloat(mDateView, "alpha", 0, 0, 1)
                 .addFloat(mClockDateView, "alpha", 1, 0, 0)
                 .addFloat(mSystemInfoLayout, "alpha", 1, 1)
+                .addFloat(mQsWeatherHeaderView, "alpha", 0, 0, 1)
+                .addFloat(mQsWeatherView, "alpha", 1, 0, 0)
                 .addFloat(mQSCarriers, "alpha", 0, 1)
                 // Use statusbar paddings when collapsed,
                 // align with QS when expanded, and animate translation
@@ -827,6 +839,19 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         return mBatteryIcon;
     }
 
+    private void updateQSWeatherPosition() {
+        if (mQQSWeather == 0) {
+            mQsWeatherHeaderView.setVisibility(View.GONE);
+            mQsWeatherView.setVisibility(View.VISIBLE);
+        } else if (mQQSWeather == 1) {
+            mQsWeatherHeaderView.setVisibility(View.VISIBLE);
+            mQsWeatherView.setVisibility(View.GONE);
+        } else {
+            mQsWeatherHeaderView.setVisibility(View.VISIBLE);
+            mQsWeatherView.setVisibility(View.VISIBLE);
+        }
+    }
+
     @Override
     public void onTuningChanged(String key, String newValue) {
         switch (key) {
@@ -875,6 +900,11 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                 mBatteryIcon.setBatteryEstimate(
                         TunerService.parseInteger(newValue, 0));
                 setChipVisibility(mPrivacyChip.getVisibility() == View.VISIBLE);
+                break;
+            case QS_WEATHER_POSITION:
+                mQQSWeather =
+                       TunerService.parseInteger(newValue, 2);
+                updateQSWeatherPosition();
                 break;
             default:
                 break;
