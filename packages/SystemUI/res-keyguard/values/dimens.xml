@@ -52,8 +52,9 @@
     <dimen name="widget_title_line_height">24dp</dimen>
     <dimen name="header_icon_size">16dp</dimen>
     <!-- Slice subtitle -->
-    <dimen name="widget_label_font_size">16dp</dimen>
+    <dimen name="widget_label_font_size">18sp</dimen>
     <dimen name="widget_label_line_height">20dp</dimen>
+    <dimen name="widget_weather_font_size">16sp</dimen>
     <!-- Clock without header -->
     <dimen name="widget_big_font_size">54dp</dimen>
     <dimen name="bottom_text_spacing_digital">0dp</dimen>
