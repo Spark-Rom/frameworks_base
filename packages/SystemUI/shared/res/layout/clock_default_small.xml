@@ -26,7 +26,7 @@
     android:fontFamily="@*android:string/config_clockFontFamily"
     android:elegantTextHeight="false"
     android:ellipsize="none"
-    android:singleLine="true"
+    android:singleLine="false"
     android:fontFeatureSettings="pnum"
     chargeAnimationDelay="350"
     dozeWeight="200"
