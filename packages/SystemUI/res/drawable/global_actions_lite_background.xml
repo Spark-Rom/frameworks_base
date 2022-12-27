@@ -17,6 +17,6 @@
 */
 -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-  <solid android:color="@color/global_actions_lite_background"/>
+  <solid android:color="@drawable/color_surface_alpha_power"/>
   <corners android:radius="@dimen/global_actions_corner_radius" />
 </shape>
