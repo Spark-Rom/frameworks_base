@@ -17,7 +17,7 @@
 -->
 <resources>
     <!-- Clock maximum font size (dp is intentional, to prevent any further scaling) -->
-    <dimen name="large_clock_text_size">150sp</dimen>
+    <dimen name="large_clock_text_size">200sp</dimen>
     <dimen name="small_clock_text_size">110sp</dimen>
 
     <!-- Default line spacing multiplier between hours and minutes of the keyguard clock -->
