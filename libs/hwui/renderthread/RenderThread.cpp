@@ -266,7 +266,7 @@ void RenderThread::requireGlContext() {
     }
     mEglManager->initialize();
 
-    sk_sp<const GrGLInterface> glInterface(GrGLCreateNativeInterface());
+    sk_sp<const GrGLInterface> glInterface = GrGLMakeNativeInterface();
     LOG_ALWAYS_FATAL_IF(!glInterface.get());
 
     GrContextOptions options;
@@ -427,7 +427,7 @@ void RenderThread::requestVsync() {
 }
 
 bool RenderThread::threadLoop() {
-    setpriority(PRIO_PROCESS, 0, PRIORITY_DISPLAY);
+    setpriority(PRIO_PROCESS, 0, PRIORITY_URGENT_DISPLAY);
     Looper::setForThread(mLooper);
     if (gOnStartHook) {
         gOnStartHook("RenderThread");

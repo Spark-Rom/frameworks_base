@@ -176,6 +176,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -742,6 +743,7 @@ class StorageManagerService extends IStorageManager.Stub
     private static final int H_COMPLETE_UNLOCK_USER = 14;
     private static final int H_VOLUME_STATE_CHANGED = 15;
     private static final int H_CLOUD_MEDIA_PROVIDER_CHANGED = 16;
+    private static final int H_SECURE_KEYGUARD_STATE_CHANGED = 17;
 
     class StorageManagerServiceHandler extends Handler {
         public StorageManagerServiceHandler(Looper looper) {
@@ -878,6 +880,14 @@ class StorageManagerService extends IStorageManager.Stub
                                 (StorageManagerInternal.CloudProviderChangeListener) listener);
                     } else {
                         onCloudMediaProviderChangedAsync(msg.arg1);
+                    }
+                    break;
+                }
+                case H_SECURE_KEYGUARD_STATE_CHANGED: {
+                    try {
+                        mVold.onSecureKeyguardStateChanged((boolean) msg.obj);
+                    } catch (Exception e) {
+                        Slog.wtf(TAG, e);
                     }
                     break;
                 }
@@ -1365,12 +1375,10 @@ class StorageManagerService extends IStorageManager.Stub
     public void onKeyguardStateChanged(boolean isShowing) {
         // Push down current secure keyguard status so that we ignore malicious
         // USB devices while locked.
-        mSecureKeyguardShowing = isShowing
+        boolean isSecureKeyguardShowing = isShowing
                 && mContext.getSystemService(KeyguardManager.class).isDeviceSecure(mCurrentUserId);
-        try {
-            mVold.onSecureKeyguardStateChanged(mSecureKeyguardShowing);
-        } catch (Exception e) {
-            Slog.wtf(TAG, e);
+        if (mSecureKeyguardShowing != isSecureKeyguardShowing) {
+            mSecureKeyguardShowing = isSecureKeyguardShowing;
         }
     }
 
@@ -2122,19 +2130,27 @@ class StorageManagerService extends IStorageManager.Stub
     private void snapshotAndMonitorLegacyStorageAppOp(UserHandle user) {
         int userId = user.getIdentifier();
 
-        // TODO(b/149391976): Use mIAppOpsService.getPackagesForOps instead of iterating below
-        // It should improve performance but the AppOps method doesn't return any app here :(
-        // This operation currently takes about ~20ms on a freshly flashed device
+        List<AppOpsManager.PackageOps> pkgs = null;
+        try {
+            pkgs = mIAppOpsService.getPackagesForOps(new int[] { OP_LEGACY_STORAGE });
+        } catch(RemoteException e) {
+            Slog.e(TAG, "Failed to getPackagesForOps", e);
+        }
+        Set<String> legacyStoragePackages = new HashSet<>();
+        if (pkgs != null) {
+            for (AppOpsManager.PackageOps pkg : pkgs) {
+                for (AppOpsManager.OpEntry op : pkg.getOps()) {
+                    if (op.getMode() == MODE_ALLOWED) {
+                        legacyStoragePackages.add(pkg.getPackageName());
+                    }
+                }
+            }
+        }
         for (ApplicationInfo ai : mPmInternal.getInstalledApplications(MATCH_DIRECT_BOOT_AWARE
                         | MATCH_DIRECT_BOOT_UNAWARE | MATCH_UNINSTALLED_PACKAGES | MATCH_ANY_USER,
                         userId, Process.myUid())) {
-            try {
-                boolean hasLegacy = mIAppOpsService.checkOperation(OP_LEGACY_STORAGE, ai.uid,
-                        ai.packageName) == MODE_ALLOWED;
-                updateLegacyStorageApps(ai.packageName, ai.uid, hasLegacy);
-            } catch (RemoteException e) {
-                Slog.e(TAG, "Failed to check legacy op for package " + ai.packageName, e);
-            }
+            boolean hasLegacy = legacyStoragePackages.contains(ai.packageName);
+            updateLegacyStorageApps(ai.packageName, ai.uid, hasLegacy);
         }
 
         if (mPackageMonitorsForUser.get(userId) == null) {

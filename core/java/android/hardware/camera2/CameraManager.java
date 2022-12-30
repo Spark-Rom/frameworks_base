@@ -27,7 +27,6 @@ import android.app.ActivityThread;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
-import android.hardware.Camera;
 import android.hardware.CameraStatus;
 import android.hardware.ICameraService;
 import android.hardware.ICameraServiceListener;
@@ -136,9 +135,6 @@ public final class CameraManager {
     private HandlerThread mHandlerThread;
     private Handler mHandler;
     private FoldStateListener mFoldStateListener;
-    @GuardedBy("mLock")
-    private ArrayList<WeakReference<DeviceStateListener>> mDeviceStateListeners = new ArrayList<>();
-    private boolean mFoldedDeviceState;
 
     /**
      * @hide
@@ -147,31 +143,39 @@ public final class CameraManager {
         void onDeviceStateChanged(boolean folded);
     }
 
-    private final class FoldStateListener implements DeviceStateManager.DeviceStateCallback {
+    private static final class FoldStateListener implements DeviceStateManager.DeviceStateCallback {
         private final int[] mFoldedDeviceStates;
+
+        private ArrayList<WeakReference<DeviceStateListener>> mDeviceStateListeners =
+                new ArrayList<>();
+        private boolean mFoldedDeviceState;
 
         public FoldStateListener(Context context) {
             mFoldedDeviceStates = context.getResources().getIntArray(
                     com.android.internal.R.array.config_foldedDeviceStates);
         }
 
-        private void handleStateChange(int state) {
+        private synchronized void handleStateChange(int state) {
             boolean folded = ArrayUtils.contains(mFoldedDeviceStates, state);
-            synchronized (mLock) {
-                mFoldedDeviceState = folded;
-                ArrayList<WeakReference<DeviceStateListener>> invalidListeners = new ArrayList<>();
-                for (WeakReference<DeviceStateListener> listener : mDeviceStateListeners) {
-                    DeviceStateListener callback = listener.get();
-                    if (callback != null) {
-                        callback.onDeviceStateChanged(folded);
-                    } else {
-                        invalidListeners.add(listener);
-                    }
-                }
-                if (!invalidListeners.isEmpty()) {
-                    mDeviceStateListeners.removeAll(invalidListeners);
+
+            mFoldedDeviceState = folded;
+            ArrayList<WeakReference<DeviceStateListener>> invalidListeners = new ArrayList<>();
+            for (WeakReference<DeviceStateListener> listener : mDeviceStateListeners) {
+                DeviceStateListener callback = listener.get();
+                if (callback != null) {
+                    callback.onDeviceStateChanged(folded);
+                } else {
+                    invalidListeners.add(listener);
                 }
             }
+            if (!invalidListeners.isEmpty()) {
+                mDeviceStateListeners.removeAll(invalidListeners);
+            }
+        }
+
+        public synchronized void addDeviceStateListener(DeviceStateListener listener) {
+            listener.onDeviceStateChanged(mFoldedDeviceState);
+            mDeviceStateListeners.add(new WeakReference<>(listener));
         }
 
         @Override
@@ -195,9 +199,8 @@ public final class CameraManager {
     public void registerDeviceStateListener(@NonNull CameraCharacteristics chars) {
         synchronized (mLock) {
             DeviceStateListener listener = chars.getDeviceStateListener();
-            listener.onDeviceStateChanged(mFoldedDeviceState);
             if (mFoldStateListener != null) {
-                mDeviceStateListeners.add(new WeakReference<>(listener));
+                mFoldStateListener.addDeviceStateListener(listener);
             }
         }
     }
@@ -1686,10 +1689,8 @@ public final class CameraManager {
 
         private String[] extractCameraIdListLocked() {
             String[] cameraIds = null;
-            boolean exposeAuxCamera = Camera.shouldExposeAuxCamera();
-            int size = exposeAuxCamera ? mDeviceStatus.size() : 2;
             int idCount = 0;
-            for (int i = 0; i < size; i++) {
+            for (int i = 0; i < mDeviceStatus.size(); i++) {
                 int status = mDeviceStatus.valueAt(i);
                 if (status == ICameraServiceListener.STATUS_NOT_PRESENT
                         || status == ICameraServiceListener.STATUS_ENUMERATING) continue;
@@ -1697,7 +1698,7 @@ public final class CameraManager {
             }
             cameraIds = new String[idCount];
             idCount = 0;
-            for (int i = 0; i < size; i++) {
+            for (int i = 0; i < mDeviceStatus.size(); i++) {
                 int status = mDeviceStatus.valueAt(i);
                 if (status == ICameraServiceListener.STATUS_NOT_PRESENT
                         || status == ICameraServiceListener.STATUS_ENUMERATING) continue;
@@ -1960,14 +1961,6 @@ public final class CameraManager {
 
                 if (cameraId == null) {
                     throw new IllegalArgumentException("cameraId was null");
-                }
-
-                /* Force to expose only two cameras
-                 * if the package name does not falls in this bucket
-                 */
-                boolean exposeAuxCamera = Camera.shouldExposeAuxCamera();
-                if (exposeAuxCamera == false && (Integer.parseInt(cameraId) >= 2)) {
-                    throw new IllegalArgumentException("invalid cameraId");
                 }
 
                 ICameraService cameraService = getCameraService();
@@ -2237,11 +2230,6 @@ public final class CameraManager {
         }
 
         private void onStatusChangedLocked(int status, String id) {
-            if (!Camera.shouldExposeAuxCamera() && Integer.parseInt(id) >= 2) {
-                Log.w(TAG, "[soar.cts] ignore the status update of camera: " + id);
-                return;
-            }
-
             if (DEBUG) {
                 Log.v(TAG,
                         String.format("Camera id %s has status changed to 0x%x", id, status));
@@ -2372,16 +2360,6 @@ public final class CameraManager {
                 Log.v(TAG,
                         String.format("Camera id %s has torch status changed to 0x%x", id, status));
             }
-
-            /* Force to ignore the aux or composite camera torch status update
-             * if the package name does not falls in this bucket
-             */
-            boolean exposeAuxCamera = Camera.shouldExposeAuxCamera();
-            if (exposeAuxCamera == false && Integer.parseInt(id) >= 2) {
-                Log.w(TAG, "ignore the torch status update of camera: " + id);
-                return;
-            }
-
 
             if (!validTorchStatus(status)) {
                 Log.e(TAG, String.format("Ignoring invalid device %s torch status 0x%x", id,

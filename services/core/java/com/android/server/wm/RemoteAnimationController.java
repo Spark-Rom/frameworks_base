@@ -71,6 +71,7 @@ class RemoteAnimationController implements DeathRecipient {
     final ArrayList<NonAppWindowAnimationAdapter> mPendingNonAppAnimations = new ArrayList<>();
     private final Handler mHandler;
     private final Runnable mTimeoutRunnable = () -> cancelAnimation("timeoutRunnable");
+    private boolean mIsFinishing;
 
     private FinishedCallback mFinishedCallback;
     private final boolean mIsActivityEmbedding;
@@ -275,6 +276,7 @@ class RemoteAnimationController implements DeathRecipient {
                 mPendingAnimations.size());
         mHandler.removeCallbacks(mTimeoutRunnable);
         synchronized (mService.mGlobalLock) {
+            mIsFinishing = true;
             unlinkToDeathOfRunner();
             releaseFinishedCallback();
             mService.openSurfaceTransaction();
@@ -283,12 +285,14 @@ class RemoteAnimationController implements DeathRecipient {
                         "onAnimationFinished(): Notify animation finished:");
                 for (int i = mPendingAnimations.size() - 1; i >= 0; i--) {
                     final RemoteAnimationRecord adapters = mPendingAnimations.get(i);
-                    if (adapters.mAdapter != null) {
+                    if (adapters.mAdapter != null
+                            && adapters.mAdapter.mCapturedFinishCallback != null) {
                         adapters.mAdapter.mCapturedFinishCallback
                                 .onAnimationFinished(adapters.mAdapter.mAnimationType,
                                         adapters.mAdapter);
                     }
-                    if (adapters.mThumbnailAdapter != null) {
+                    if (adapters.mThumbnailAdapter != null
+                            && adapters.mThumbnailAdapter.mCapturedFinishCallback != null) {
                         adapters.mThumbnailAdapter.mCapturedFinishCallback
                                 .onAnimationFinished(adapters.mThumbnailAdapter.mAnimationType,
                                         adapters.mThumbnailAdapter);
@@ -300,16 +304,20 @@ class RemoteAnimationController implements DeathRecipient {
 
                 for (int i = mPendingWallpaperAnimations.size() - 1; i >= 0; i--) {
                     final WallpaperAnimationAdapter adapter = mPendingWallpaperAnimations.get(i);
-                    adapter.getLeashFinishedCallback().onAnimationFinished(
-                            adapter.getLastAnimationType(), adapter);
+                    if (adapter.getLeashFinishedCallback() != null) {
+                        adapter.getLeashFinishedCallback().onAnimationFinished(
+                                adapter.getLastAnimationType(), adapter);
+                    }
                     mPendingWallpaperAnimations.remove(i);
                     ProtoLog.d(WM_DEBUG_REMOTE_ANIMATIONS, "\twallpaper=%s", adapter.getToken());
                 }
 
                 for (int i = mPendingNonAppAnimations.size() - 1; i >= 0; i--) {
                     final NonAppWindowAnimationAdapter adapter = mPendingNonAppAnimations.get(i);
-                    adapter.getLeashFinishedCallback().onAnimationFinished(
-                            adapter.getLastAnimationType(), adapter);
+                    if (adapter.getLeashFinishedCallback() != null) {
+                        adapter.getLeashFinishedCallback().onAnimationFinished(
+                                adapter.getLastAnimationType(), adapter);
+                    }
                     mPendingNonAppAnimations.remove(i);
                     ProtoLog.d(WM_DEBUG_REMOTE_ANIMATIONS, "\tnonApp=%s",
                             adapter.getWindowContainer());
@@ -319,12 +327,13 @@ class RemoteAnimationController implements DeathRecipient {
                 throw e;
             } finally {
                 mService.closeSurfaceTransaction("RemoteAnimationController#finished");
+                mIsFinishing = false;
             }
+            // Reset input for all activities when the remote animation is finished.
+            final Consumer<ActivityRecord> updateActivities =
+                    activity -> activity.setDropInputForAnimation(false);
+            mDisplayContent.forAllActivities(updateActivities);
         }
-        // Reset input for all activities when the remote animation is finished.
-        final Consumer<ActivityRecord> updateActivities =
-                activity -> activity.setDropInputForAnimation(false);
-        mDisplayContent.forAllActivities(updateActivities);
         setRunningRemoteAnimation(false);
         ProtoLog.i(WM_DEBUG_REMOTE_ANIMATIONS, "Finishing remote animation");
     }
@@ -558,6 +567,9 @@ class RemoteAnimationController implements DeathRecipient {
 
         @Override
         public void onAnimationCancelled(SurfaceControl animationLeash) {
+            if (mIsFinishing) {
+                return;
+            }
             if (mRecord.mAdapter == this) {
                 mRecord.mAdapter = null;
             } else {

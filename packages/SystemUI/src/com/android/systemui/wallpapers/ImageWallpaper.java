@@ -18,8 +18,6 @@ package com.android.systemui.wallpapers;
 
 import static android.view.Display.DEFAULT_DISPLAY;
 
-import static com.android.systemui.flags.Flags.USE_CANVAS_RENDERER;
-
 import android.app.WallpaperColors;
 import android.app.WallpaperManager;
 import android.content.ComponentCallbacks2;
@@ -101,7 +99,7 @@ public class ImageWallpaper extends WallpaperService {
 
     @Override
     public Engine onCreateEngine() {
-        return mFeatureFlags.isEnabled(USE_CANVAS_RENDERER) ? new CanvasEngine() : new GLEngine();
+        return new GLEngine();
     }
 
     @Override
@@ -114,8 +112,8 @@ public class ImageWallpaper extends WallpaperService {
 
     class GLEngine extends Engine implements DisplayListener, TunerService.Tunable {
 
-        private static final String DISPLAY_SETTINGS_WALLPAPER_ZOOM =
-            "system:" + Settings.System.DISPLAY_SETTINGS_WALLPAPER_ZOOM;
+        private static final String DISPLAY_SETTINGS_WALLPAPER_ZOOM = 
+                Settings.Secure.DISPLAY_SETTINGS_WALLPAPER_ZOOM;
         private boolean mWallpaperZoomEnabled = true;
 
         // Surface is rejected if size below a threshold on some devices (ie. 8px on elfin)

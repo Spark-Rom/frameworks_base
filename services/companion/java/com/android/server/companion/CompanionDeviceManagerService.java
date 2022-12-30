@@ -507,7 +507,7 @@ public class CompanionDeviceManagerService extends SystemService {
 
             final int id = association.getId();
 
-            Slog.i(TAG, "Removing inactive self-managed association id=" + id);
+            if (DEBUG) Slog.i(TAG, "Removing inactive self-managed association id=" + id);
             disassociateInternal(id);
         }
     }
@@ -872,7 +872,7 @@ public class CompanionDeviceManagerService extends SystemService {
         final AssociationInfo association = new AssociationInfo(id, userId, packageName,
                 macAddress, displayName, deviceProfile, selfManaged,
                 /* notifyOnDeviceNearby */ false, /* revoked */ false, timestamp, Long.MAX_VALUE);
-        Slog.i(TAG, "New CDM association created=" + association);
+        if (DEBUG) Slog.i(TAG, "New CDM association created=" + association);
         mAssociationStore.addAssociation(association);
 
         // If the "Device Profile" is specified, make the companion application a holder of the

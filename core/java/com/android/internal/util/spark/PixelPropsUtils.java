@@ -72,8 +72,9 @@ public class PixelPropsUtils {
             "com.android.chrome",
             "com.android.vending",
             "com.breel.wallpapers20",
-            PACKAGE_NETFLIX,
+            "com.netflix.mediaclient",
             "com.disney.disneyplus",
+            "com.microsoft.android.smsorganizer",
             "com.nhs.online.nhsonline",
             "in.startv.hotstar"
     };

@@ -722,8 +722,8 @@ public final class ProcessList {
                     break;
                 case LMKD_RECONNECT_MSG:
                     if (!sLmkdConnection.connect()) {
-                        Slog.i(TAG, "Failed to connect to lmkd, retry after " +
-                                LMKD_RECONNECT_DELAY_MS + " ms");
+                        //Slog.i(TAG, "Failed to connect to lmkd, retry after " +
+                                //LMKD_RECONNECT_DELAY_MS + " ms");
                         // retry after LMKD_RECONNECT_DELAY_MS
                         sKillHandler.sendMessageDelayed(sKillHandler.obtainMessage(
                                 KillHandler.LMKD_RECONNECT_MSG), LMKD_RECONNECT_DELAY_MS);
@@ -2473,6 +2473,11 @@ public final class ProcessList {
                 Slog.w(TAG_PROCESSES, predecessor.toString() + " is attached to a previous process "
                         + predecessor.getDyingPid());
             }
+        }
+
+        if (!info.baseCodePathExists()) {
+            Slog.w(TAG, "APK " + info.getBaseCodePath() + " does not exist for " + processName);
+            return null;
         }
 
         if (app == null) {

@@ -5290,6 +5290,8 @@ public final class ViewRootImpl implements ViewParent,
             mWindowSession.remove(mWindow);
         } catch (RemoteException e) {
         }
+        mHandler.removeMessages(MSG_REPORT_KEEP_CLEAR_RECTS);
+
         // Dispose receiver would dispose client InputChannel, too. That could send out a socket
         // broken event, so we need to unregister the server InputChannel when removing window to
         // prevent server side receive the event and prompt error.
