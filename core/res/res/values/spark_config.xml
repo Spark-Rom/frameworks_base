@@ -290,4 +290,17 @@
 
     <!-- Fingerprint from stock ROM -->
     <string name="config_stockFingerprint" translatable="false"></string>
+
+    <!-- Parallel space whitelist -->
+    <string-array name="config_parallelSpaceWhitelist">
+        <item>com.android.settings</item>
+        <item>com.android.documentsui</item>
+        <item>com.android.google.documentsui</item>
+    </string-array>
+
+    <!-- Parallel space blocklist -->
+    <string-array name="config_parallelSpaceBlocklist">
+        <item>com.android.launcher3</item>
+        <item>com.google.android.apps.nexuslauncher</item>
+    </string-array>
 </resources>
