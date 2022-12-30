@@ -292,7 +292,7 @@ public class KeyguardSliceProvider extends SliceProvider implements
         }
         IconCompat weatherIcon = SliceViewUtil.createIconFromDrawable(mWeatherClient.getWeatherConditionImage(mWeatherData.conditionCode));
         RowBuilder weatherRowBuilder = new RowBuilder(mWeatherUri)
-                .setTitle(mWeatherData.temp + " " + mWeatherData.tempUnits + " " + mWeatherData.city)
+                .setTitle(mWeatherData.temp + " " + mWeatherData.tempUnits + " " )
                 .addEndItem(weatherIcon, ListBuilder.ICON_IMAGE);
         builder.addRow(weatherRowBuilder);
     }
