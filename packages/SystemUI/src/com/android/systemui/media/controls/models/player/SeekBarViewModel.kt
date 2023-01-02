@@ -231,8 +231,8 @@ constructor(
             NotificationMediaManager.isPlayingState(
                 playbackState?.state ?: PlaybackState.STATE_NONE
             )
-        val enableSquiggle = Settings.Secure.getIntForUser(context.getContentResolver(),
-                Settings.Secure.SHOW_MEDIA_SQUIGGLE_ANIMATION, 0, UserHandle.USER_CURRENT) != 0
+        val hideSquiggle = Settings.Secure.getIntForUser(context.getContentResolver(),
+                Settings.Secure.HIDE_MEDIA_SQUIGGLE_ANIMATION, 0, UserHandle.USER_CURRENT) != 0
         val enabled =
             if (
                 playbackState == null ||
@@ -241,7 +241,7 @@ constructor(
             )
                 false
             else true
-        _data = Progress(enabled, seekAvailable, playing, scrubbing, enableSquiggle, position, duration)
+        _data = Progress(enabled, seekAvailable, playing, scrubbing, hideSquiggle, position, duration)
         checkIfPollingNeeded()
     }
 
@@ -521,7 +521,7 @@ constructor(
         val seekAvailable: Boolean,
         val playing: Boolean,
         val scrubbing: Boolean,
-        val enableSquiggle: Boolean,
+        val hideSquiggle: Boolean,
         val elapsedTime: Int?,
         val duration: Int
     )

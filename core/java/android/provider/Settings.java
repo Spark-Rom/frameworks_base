@@ -12040,10 +12040,10 @@ public final class Settings {
 
         /**
          *  Toggle the media squiggle animation
-         *  0 = 0ff, 1 = on
+         *  0 = show, 1 = hide
          * @hide
          */
-        public static final String SHOW_MEDIA_SQUIGGLE_ANIMATION = "show_media_squiggle_animation";
+        public static final String HIDE_MEDIA_SQUIGGLE_ANIMATION = "hide_media_squiggle_animation";
 
         /**
          * Control whether communal mode is allowed on this device.
