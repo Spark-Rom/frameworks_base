@@ -37,7 +37,7 @@ import java.util.Locale
 import java.util.TimeZone
 import javax.inject.Inject
 
-import android.provider.Settings.Secure
+import android.provider.Settings.System
 
 private val TAG = DefaultClockProvider::class.simpleName
 const val DEFAULT_CLOCK_NAME = "Default Clock"
@@ -251,10 +251,10 @@ class DefaultClock(
     }
 
     private fun updateClockColor(clock: AnimatableClockView, isRegionDark: Boolean) {
-        val customClockColorEnabled = Secure.getIntForUser(ctx.getContentResolver(),
-                Secure.KG_CUSTOM_CLOCK_COLOR_ENABLED, 0, UserHandle.USER_CURRENT) != 0
-        val customClockColor = Secure.getIntForUser(ctx.getContentResolver(),
-                Secure.KG_CUSTOM_CLOCK_COLOR, 0xFFFFFFFF.toInt(), UserHandle.USER_CURRENT)
+        val customClockColorEnabled = System.getIntForUser(ctx.getContentResolver(),
+                System.KG_CUSTOM_CLOCK_COLOR_ENABLED, 0, UserHandle.USER_CURRENT) != 0
+        val customClockColor = System.getIntForUser(ctx.getContentResolver(),
+                System.KG_CUSTOM_CLOCK_COLOR, 0xFFFFFFFF.toInt(), UserHandle.USER_CURRENT)
         val color = if (isRegionDark) {
             if (customClockColorEnabled)
                 customClockColor.toInt()

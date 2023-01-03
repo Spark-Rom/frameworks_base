@@ -284,10 +284,10 @@ public class AnimatableClockController extends ViewController<AnimatableClockVie
 
     private void initColors() {
         if (!mRegionSamplingEnabled) {
-        boolean isCustomClockColorEnabled = Settings.Secure.getIntForUser(getContext().getContentResolver(),
-                Settings.Secure.KG_CUSTOM_CLOCK_COLOR_ENABLED, 0, UserHandle.USER_CURRENT) != 0;
-        int customClockColor = Settings.Secure.getIntForUser(getContext().getContentResolver(),
-                Settings.Secure.KG_CUSTOM_CLOCK_COLOR, 0xFFFFFFFF, UserHandle.USER_CURRENT);
+        boolean isCustomClockColorEnabled = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.KG_CUSTOM_CLOCK_COLOR_ENABLED, 0, UserHandle.USER_CURRENT) != 0;
+        int customClockColor = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.KG_CUSTOM_CLOCK_COLOR, 0xFFFFFFFF, UserHandle.USER_CURRENT);
           if (isCustomClockColorEnabled) {
               mLockScreenColor = customClockColor;
           } else {

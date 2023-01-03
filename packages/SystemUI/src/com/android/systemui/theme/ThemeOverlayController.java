@@ -463,9 +463,9 @@ public class ThemeOverlayController extends CoreStartable implements Dumpable {
                     }
                 },
                 UserHandle.USER_ALL);
-                
-        mSecureSettings.registerContentObserverForUser(
-                Settings.Secure.getUriFor(Settings.Secure.KG_CUSTOM_CLOCK_COLOR),
+
+        mSystemSettings.registerContentObserverForUser(
+                Settings.System.getUriFor(Settings.System.KG_CUSTOM_CLOCK_COLOR),
                 false,
                 new ContentObserver(mBgHandler) {
                     @Override
@@ -475,9 +475,9 @@ public class ThemeOverlayController extends CoreStartable implements Dumpable {
                     }
                 },
                 UserHandle.USER_ALL);
-                
-        mSecureSettings.registerContentObserverForUser(
-                Settings.Secure.getUriFor(Settings.Secure.KG_CUSTOM_CLOCK_COLOR_ENABLED),
+
+        mSystemSettings.registerContentObserverForUser(
+                Settings.System.getUriFor(Settings.System.KG_CUSTOM_CLOCK_COLOR_ENABLED),
                 false,
                 new ContentObserver(mBgHandler) {
                     @Override
