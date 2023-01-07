@@ -7217,6 +7217,16 @@ public final class Settings {
         public static final String HIDE_NOTIFICATION_ICONS = "hide_notification_icons";
 
         /**
+         * @hide
+         */
+        public static final String KG_CUSTOM_CLOCK_COLOR = "kg_custom_clock_color";
+
+        /**
+         * @hide
+         */
+        public static final String KG_CUSTOM_CLOCK_COLOR_ENABLED = "kg_custom_clock_color_enabled";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -12778,16 +12788,6 @@ public final class Settings {
          * @hide
          */
         public static final String ENABLE_COMBINED_SIGNAL_ICONS = "enable_combined_signal_icons";
-
-        /**
-         * @hide
-         */
-        public static final String KG_CUSTOM_CLOCK_COLOR = "kg_custom_clock_color";
-
-        /**
-         * @hide
-         */
-        public static final String KG_CUSTOM_CLOCK_COLOR_ENABLED = "kg_custom_clock_color_enabled";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
