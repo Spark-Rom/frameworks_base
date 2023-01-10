@@ -1285,16 +1285,14 @@ public class VolumeDialogImpl implements VolumeDialog,
 
     private void initSettingsH(int lockTaskModeState) {
         if (mSettingsView != null) {
-            mSettingsView.setVisibility(mDeviceProvisionedController.isCurrentUserSetup()
-                    && lockTaskModeState == LOCK_TASK_MODE_NONE
-                    && (isMediaControllerAvailable(getActiveLocalMediaController())
-                            || isBluetoothA2dpConnected())
-                    ? VISIBLE : GONE);
-            mSettingsViewSpacer.setVisibility(mDeviceProvisionedController.isCurrentUserSetup()
-                    && lockTaskModeState == LOCK_TASK_MODE_NONE
-                    && (isMediaControllerAvailable(getActiveLocalMediaController())
-                            || isBluetoothA2dpConnected())
-                    ? VISIBLE : GONE);
+            mSettingsView.setVisibility(
+                    mDeviceProvisionedController.isCurrentUserSetup() &&
+                            isMediaControllerAvailable() &&
+                            lockTaskModeState == LOCK_TASK_MODE_NONE ? VISIBLE : GONE);
+            mSettingsViewSpacer.setVisibility(
+                    mDeviceProvisionedController.isCurrentUserSetup() &&
+                            isMediaControllerAvailable() &&
+                            lockTaskModeState == LOCK_TASK_MODE_NONE ? VISIBLE : GONE);
         }
         if (mSettingsIcon != null) {
             mSettingsIcon.setOnClickListener(v -> {
@@ -1307,9 +1305,9 @@ public class VolumeDialogImpl implements VolumeDialog,
         }
 
         if (mExpandRowsView != null) {
-            mExpandRowsView.setVisibility(mDeviceProvisionedController.isCurrentUserSetup()
-                    && mActivityManager.getLockTaskModeState() == LOCK_TASK_MODE_NONE
-                    ? VISIBLE : GONE);
+            mExpandRowsView.setVisibility(
+                    mDeviceProvisionedController.isCurrentUserSetup() &&
+                            lockTaskModeState == LOCK_TASK_MODE_NONE ? VISIBLE : GONE);
         }
         if (mExpandRows != null) {
             mExpandRows.setOnClickListener(v -> {
