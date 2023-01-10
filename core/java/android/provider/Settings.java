@@ -5926,13 +5926,6 @@ public final class Settings {
         public static final String LOCK_POWER_MENU_DISABLED = "lockscreen_power_menu_disabled";
 
         /**
-         * Spark Idle Manager
-         * @hide
-         */
-        @Readable
-        public static final String SPARK_IDLE_MANAGER = "spark_idle_manager";
-
-        /**
          * Whether to enable DOZE only when charging
          * @hide
          */
@@ -7244,6 +7237,20 @@ public final class Settings {
          * @hide
          */ 
         public static final String VOLUME_PANEL_HAPTIC_FEEDBACK = "volume_panel_haptic_feedback";
+
+        /**
+         * Spark System Manager
+         * @hide
+         */
+        @Readable
+        public static final String SPARK_SYSTEM_MANAGER = "spark_system_manager";
+
+        /**
+         * SPARK System Manager System Boost
+         * @hide
+         */
+        @Readable
+        public static final String SPARK_SYSTEM_BOOST = "spark_system_boost";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
@@ -13127,6 +13134,55 @@ public final class Settings {
          */
         @Readable
         public static final String STATUS_BAR_SHOW_LYRIC = "status_bar_show_lyric";
+
+        /**
+         * Spark System Manager Aggressive Idle mode
+         * @hide
+         */
+        @Readable
+        public static final String SPARK_AGGRESSIVE_IDLE_MODE = "spark_aggressive_idle_mode";
+       
+        /**
+         * Spark System Manager Aggressive Idle mode trigger/callback
+         * @hide
+         */
+        @Readable
+        public static final String SPARK_AGGRESSIVE_IDLE_MODE_TRIGGER = "spark_aggressive_idle_mode_trigger";
+ 
+        /**
+         * Spark System Manager will automatically disable wifi
+         * @hide
+         */
+        @Readable
+        public static final String SPARK_AGGRESSIVE_IDLE_MODE_WIFI_TOGGLE = "spark_aggressive_idle_mode_wifi_toggle";
+        
+        /**
+         * SPARK System Manager will automatically disable bluetooth
+         * @hide
+         */
+        @Readable
+        public static final String SPARK_AGGRESSIVE_IDLE_MODE_BLUETOOTH_TOGGLE = "spark_aggressive_idle_mode_bluetooth_toggle";
+        
+        /**
+         * SPARK System Manager will automatically disable data
+         * @hide
+         */
+        @Readable
+        public static final String SPARK_AGGRESSIVE_IDLE_MODE_CELLULAR_TOGGLE = "spark_aggressive_idle_mode_cellular_toggle";
+        
+        /**
+         * SPARK System Manager will automatically disable location
+         * @hide
+         */
+        @Readable
+        public static final String SPARK_AGGRESSIVE_IDLE_MODE_LOCATION_TOGGLE = "spark_aggressive_idle_mode_location_toggle";
+
+        /**
+         * SPARK System Manager will override ringer mode
+         * @hide
+         */
+        @Readable
+        public static final String SPARK_AGGRESSIVE_IDLE_MODE_RINGER_MODE = "spark_aggressive_idle_mode_ringer_mode";
 
         /**
          * These entries are considered common between the personal and the managed profile,
