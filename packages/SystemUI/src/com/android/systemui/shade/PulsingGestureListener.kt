@@ -20,6 +20,7 @@ import android.hardware.display.AmbientDisplayConfiguration
 import android.os.SystemClock
 import android.os.UserHandle
 import android.provider.Settings
+import android.content.Context
 import android.view.GestureDetector
 import android.view.MotionEvent
 import com.android.systemui.Dumpable
@@ -53,7 +54,8 @@ class PulsingGestureListener @Inject constructor(
         private val ambientDisplayConfiguration: AmbientDisplayConfiguration,
         private val statusBarStateController: StatusBarStateController,
         tunerService: TunerService,
-        dumpManager: DumpManager
+        dumpManager: DumpManager,
+        context: Context
 ) : GestureDetector.SimpleOnGestureListener(), Dumpable {
     private var doubleTapEnabled = false
     private var singleTapEnabled = false
