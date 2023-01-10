@@ -152,7 +152,7 @@ import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
 import com.android.keyguard.ViewMediatorCallback;
 import com.android.systemui.ActivityIntentHelper;
-import com.android.systemui.spark.SparkIdleManager;
+import com.android.systemui.spark.SparkSystemManager;
 import com.android.systemui.AutoReinflateContainer;
 import com.android.systemui.CoreStartable;
 import com.android.systemui.DejankUtils;
@@ -571,8 +571,8 @@ public class CentralSurfacesImpl extends CoreStartable implements
     // notification window
     protected NotificationPanelViewController mNotificationPanelViewController;
 
-    // Spark Idle
-    private boolean isIdleManagerIstantiated = false;
+    // Spark Manager
+    private boolean isSystemManagerIstantiated = false;
 
     // settings
     private QSPanelController mQSPanelController;
@@ -4036,6 +4036,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
         @Override
         public void onStartedGoingToSleep() {
             String tag = "CentralSurfaces#onStartedGoingToSleep";
+
             DejankUtils.startDetectingBlockingIpcs(tag);
 
             //  cancel stale runnables that could put the device in the wrong state
@@ -4057,21 +4058,28 @@ public class CentralSurfacesImpl extends CoreStartable implements
 
             DejankUtils.stopDetectingBlockingIpcs(tag);
             if (Settings.System.getIntForUser(mContext.getContentResolver(),
-                                              Settings.System.SPARK_IDLE_MANAGER, 1,
-                                              mLockscreenUserManager.getCurrentUserId()) == 1) {
-                if (!isIdleManagerIstantiated) {
-                    SparkIdleManager.initManager(mContext);
-                    isIdleManagerIstantiated = true;
-                    SparkIdleManager.executeManager();
-                } else {
-                    SparkIdleManager.executeManager();
+                                    Settings.System.SPARK_SYSTEM_MANAGER, 0, mLockscreenUserManager.getCurrentUserId()) == 1) {
+                if (!isSystemManagerIstantiated) {
+                    SparkSystemManager.initializeSystemServices(mContext);
+                    isSystemManagerIstantiated = true;
                 }
-            }
+                SparkSystemManager.startSystemIdleServices();
+                SparkSystemManager.cacheCleaner(CentralSurfaces.getPackageManagerForUser(mContext, mLockscreenUserManager.getCurrentUserId()));
+                SparkSystemManager.startBoostingService(Settings.System.getIntForUser(mContext.getContentResolver(),
+                                Settings.System.SPARK_SYSTEM_BOOST, 0, mLockscreenUserManager.getCurrentUserId()) == 1);
+                if (Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                                        Settings.Secure.SPARK_AGGRESSIVE_IDLE_MODE, 0, mLockscreenUserManager.getCurrentUserId()) == 1) {
+                    Settings.Secure.putIntForUser(mContext.getContentResolver(),
+                                        Settings.Secure.SPARK_AGGRESSIVE_IDLE_MODE_TRIGGER, 1,
+                                        mLockscreenUserManager.getCurrentUserId());
+                }
+          }
         }
 
         @Override
         public void onStartedWakingUp() {
             String tag = "CentralSurfaces#onStartedWakingUp";
+
             DejankUtils.startDetectingBlockingIpcs(tag);
             mNotificationShadeWindowController.batchApplyWindowLayoutParams(()-> {
                 mDeviceInteractive = true;
@@ -4098,9 +4106,16 @@ public class CentralSurfacesImpl extends CoreStartable implements
             });
             DejankUtils.stopDetectingBlockingIpcs(tag);
             if (Settings.System.getIntForUser(mContext.getContentResolver(),
-                                              Settings.System.SPARK_IDLE_MANAGER, 1,
-                                              mLockscreenUserManager.getCurrentUserId()) == 1) {
-                SparkIdleManager.haltManager();
+                                    Settings.System.SPARK_SYSTEM_MANAGER, 0, mLockscreenUserManager.getCurrentUserId()) == 1) {
+                SparkSystemManager.stopManager(mContext);
+                SparkSystemManager.startBoostingService(Settings.System.getIntForUser(mContext.getContentResolver(),
+                                    Settings.System.SPARK_SYSTEM_BOOST, 0, mLockscreenUserManager.getCurrentUserId()) == 1);
+                if (Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                                            Settings.Secure.SPARK_AGGRESSIVE_IDLE_MODE, 0, mLockscreenUserManager.getCurrentUserId()) == 1) {
+                    Settings.Secure.putIntForUser(mContext.getContentResolver(),
+                                                Settings.Secure.SPARK_AGGRESSIVE_IDLE_MODE_TRIGGER, 0,
+                                                mLockscreenUserManager.getCurrentUserId());
+                }
             }
         }
 
