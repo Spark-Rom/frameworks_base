@@ -103,18 +103,14 @@
                     android:layout_height="8dp"
                     android:layout_width="1dp" />
 
-                <com.zhenxiang.blur.WindowBlurFrameLayout
+                <FrameLayout
                     android:id="@+id/expandable_indicator_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/volume_dialog_ringer_rows_padding"
                     android:paddingLeft="@dimen/volume_dialog_ringer_rows_padding"
                     android:paddingBottom="@dimen/volume_dialog_ringer_rows_padding"
-                    android:paddingRight="@dimen/volume_dialog_ringer_rows_padding"
-                    sysui:backgroundColour="@color/surface_aqua"
-                    sysui:cornerRadius="@dimen/volume_dialog_panel_width_half"
-                    sysui:blurRadius="@integer/background_blur_radius"
-                    sysui:blurBackgroundColourOpacity="@dimen/background_blur_colour_opacity">
+                    android:paddingRight="@dimen/volume_dialog_ringer_rows_padding">
                     <com.android.keyguard.AlphaOptimizedImageButton
                         android:id="@+id/expandable_indicator"
                         android:src="@drawable/volume_settings"
@@ -125,25 +121,21 @@
                         android:background="@drawable/ripple_drawable_20dp"
                         android:tint="?androidprv:attr/colorAccent"
                         android:soundEffectsEnabled="false" />
-                </com.zhenxiang.blur.WindowBlurFrameLayout>
+                </FrameLayout>
 
                 <View
                     android:id="@+id/app_volume_container_spacer"
                     android:layout_height="8dp"
                     android:layout_width="1dp" />
 
-                <com.zhenxiang.blur.WindowBlurFrameLayout
+                <FrameLayout
                     android:id="@+id/app_volume_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/volume_dialog_ringer_rows_padding"
                     android:paddingLeft="@dimen/volume_dialog_ringer_rows_padding"
                     android:paddingBottom="@dimen/volume_dialog_ringer_rows_padding"
-                    android:paddingRight="@dimen/volume_dialog_ringer_rows_padding"
-                    sysui:backgroundColour="@color/surface_aqua"
-                    sysui:cornerRadius="@dimen/volume_dialog_panel_width_half"
-                    sysui:blurRadius="@integer/background_blur_radius"
-                    sysui:blurBackgroundColourOpacity="@dimen/background_blur_colour_opacity">
+                    android:paddingRight="@dimen/volume_dialog_ringer_rows_padding">
                     <com.android.keyguard.AlphaOptimizedImageButton
                         android:id="@+id/app_volume"
                         android:src="@drawable/ic_app_volume"
@@ -154,14 +146,14 @@
                         android:background="@drawable/ripple_drawable_20dp"
                         android:tint="?androidprv:attr/colorAccent"
                         android:soundEffectsEnabled="false" />
-                </com.zhenxiang.blur.WindowBlurFrameLayout>
+                </FrameLayout>
                 
                 <View
                     android:id="@+id/settings_container_spacer"
                     android:layout_height="8dp"
                     android:layout_width="1dp" />
 
-                <com.zhenxiang.blur.WindowBlurFrameLayout
+                <FrameLayout
                     android:id="@+id/settings_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -169,10 +161,7 @@
                     android:paddingLeft="@dimen/volume_dialog_ringer_rows_padding"
                     android:paddingBottom="@dimen/volume_dialog_ringer_rows_padding"
                     android:paddingRight="@dimen/volume_dialog_ringer_rows_padding"
-                    sysui:backgroundColour="@color/surface_aqua"
-                    sysui:cornerRadius="@dimen/volume_dialog_panel_width_half"
-                    sysui:blurRadius="@integer/background_blur_radius"
-                    sysui:blurBackgroundColourOpacity="@dimen/background_blur_colour_opacity">
+                    sysui:backgroundColour="@color/surface_aqua">
                     <com.android.keyguard.AlphaOptimizedImageButton
                         android:id="@+id/settings"
                         android:src="@drawable/twotone_spatial_audio_24"
@@ -183,12 +172,12 @@
                         android:background="@drawable/ripple_drawable_20dp"
                         android:tint="?androidprv:attr/colorAccent"
                         android:soundEffectsEnabled="false" />
-                </com.zhenxiang.blur.WindowBlurFrameLayout>
+                </FrameLayout>
             </LinearLayout>
 
         </LinearLayout>
 
-        <com.zhenxiang.blur.WindowBlurFrameLayout
+        <FrameLayout
             android:id="@+id/odi_captions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -200,11 +189,7 @@
             android:paddingTop="@dimen/volume_dialog_ringer_rows_padding"
             android:paddingLeft="@dimen/volume_dialog_ringer_rows_padding"
             android:paddingBottom="@dimen/volume_dialog_ringer_rows_padding"
-            android:paddingRight="@dimen/volume_dialog_ringer_rows_padding"
-            sysui:backgroundColour="@color/surface_aqua"
-            sysui:cornerRadius="@dimen/volume_dialog_panel_width_half"
-            sysui:blurRadius="@integer/background_blur_radius"
-            sysui:blurBackgroundColourOpacity="@dimen/background_blur_colour_opacity">
+            android:paddingRight="@dimen/volume_dialog_ringer_rows_padding">
             <com.android.systemui.volume.CaptionsToggleImageButton
                 android:id="@+id/odi_captions_icon"
                 android:src="@drawable/ic_volume_odi_captions_disabled"
@@ -214,7 +199,7 @@
                 android:tint="?android:attr/colorAccent"
                 android:layout_gravity="center"
                 android:soundEffectsEnabled="false"/>
-        </com.zhenxiang.blur.WindowBlurFrameLayout>
+        </FrameLayout>
     </LinearLayout>
 
     <ViewStub
