@@ -202,34 +202,34 @@
     <string name="screenrecord_longer_timeout_switch_summary">Limitar o tamanho de gravação a 15 GB</string>
     <string name="screenrecord_skip_time_label">Ignorar temporizador</string>
     <string name="screenrecord_skip_time_summary">Remover espera de 3 segundos</string>
-    <string name="screenrecord_hevc_switch_label">Enable HEVC</string>
+    <string name="screenrecord_hevc_switch_label">Ativar HEVC</string>
     <!-- QS InternetDialog: Summary for how many devices are connected to the hotspot -->
     <plurals name="quick_settings_internet_hotspot_summary_num_devices">
         <item quantity="one">%d dispositivo conectado</item>
         <item quantity="other">%d dispositivos conectados</item>
     </plurals>
     <!-- Data usage panel -->
-    <string name="total_internet_usage">Total internet usage (Since boot)</string>
-    <string name="cellular_usage">Mobile data usage</string>
-    <string name="wifi_usage">Wifi data usage</string>
+    <string name="total_internet_usage">Uso total da internet (Desde a inicialização)</string>
+    <string name="cellular_usage">Uso de dados móveis</string>
+    <string name="wifi_usage">Uso de dados Wi-Fi</string>
     <!-- Screen pinning dialog description. (for devices without navbar) -->
-    <string name="screen_pinning_description_no_navbar">This keeps it in view until you unpin. Touch &amp; hold Back to unpin.</string>
+    <string name="screen_pinning_description_no_navbar">Isto mantém o item visível até o soltar. Mantenha premido o botão Voltar para soltá-lo.</string>
     <!-- Notify use that they are in Lock-to-app (for devices without navbar)-->
-    <string name="screen_pinning_toast_no_navbar">To unpin this screen, touch &amp; hold Back button</string>
+    <string name="screen_pinning_toast_no_navbar">Para soltar este ecrã, mantenha premido o botão Voltar</string>
     <!-- Screen pinning dialog description. (for devices without navbar and with gestures on fingerprint sensor) -->
-    <string name="screen_pinning_description_no_navbar_fpsensor">This keeps it in view until you unpin. Touch &amp; hold fingerprint sensor to unpin.</string>
+    <string name="screen_pinning_description_no_navbar_fpsensor">Isto mantém o item visível até o soltar. Mantenha o dedo no sensor de impressão digital para soltá-lo.</string>
     <!-- Notify use that they are in Lock-to-app (for devices without navbar and with gestures on fingerprint sensor)-->
-    <string name="screen_pinning_toast_no_navbar_fpsensor">To unpin this screen, touch &amp; hold fingerprint sensor</string>
+    <string name="screen_pinning_toast_no_navbar_fpsensor">Para soltar este ecrã, mantenha o dedo no sensor de impressão digital</string>
     <!-- Face Unlock -->
-    <string name="face_unlock_recognizing">Recognizing face...</string>
+    <string name="face_unlock_recognizing">A reconhecer o rosto...</string>
     <!-- Bluetooth dialog -->
-    <string name="turn_on_bluetooth">Use Bluetooth</string>
-    <string name="bluetooth_is_off">Bluetooth is off</string>
-    <string name="tap_a_device_to_connect">Tap a device to connect</string>
-    <string name="photos_not_allowed">This app isnt supported</string>
+    <string name="turn_on_bluetooth">Usar Bluetooth</string>
+    <string name="bluetooth_is_off">O Bluetooth está desligado</string>
+    <string name="tap_a_device_to_connect">Toque num dispositivo para conectar</string>
+    <string name="photos_not_allowed">Esta app não é suportada</string>
     <!-- Preferred network tile -->
-    <string name="quick_settings_preferred_network_label">Preferred network</string>
-    <string name="quick_settings_preferred_network_lte">4g / LTE</string>
-    <string name="quick_settings_preferred_network_nr">5g / NR</string>
-    <string name="quick_settings_preferred_network_unsupported">Unsupported</string>
+    <string name="quick_settings_preferred_network_label">Rede preferida</string>
+    <string name="quick_settings_preferred_network_lte">4G / LTE</string>
+    <string name="quick_settings_preferred_network_nr">5G / NR</string>
+    <string name="quick_settings_preferred_network_unsupported">Não suportada</string>
 </resources>
