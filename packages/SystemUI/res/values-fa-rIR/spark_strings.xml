@@ -48,7 +48,7 @@
     <string name="global_action_restart_recovery">ریکاوری</string>
     <string name="global_action_restart_bootloader">بوت لودر</string>
     <string name="global_action_restart_ui">رابط کاربری</string>
-    <string name="global_action_onthego">OnTheGo</string>
+    <string name="global_action_onthego">در حرکت</string>
     <!-- On The Go -->
     <string name="onthego_notification_ticker">ویژگی در حرکت فعال شد</string>
     <string name="onthego_notification_title">ویژگی در حرکت فعال است</string>
@@ -57,7 +57,7 @@
     <string name="onthego_notification_error">امکان فعال شدن ویژگی در حرکت نمی باشد</string>
     <string name="onthego_notification_restart">راه اندازی مجدد ویژگی در حرکت</string>
     <string name="onthego_notification_camera_changed">حالت دوربین تغییر کرده</string>
-    <string name="onthego_transparency">On-The-Go Transparency</string>
+    <string name="onthego_transparency">شفافیت در حال حرکت</string>
     <string name="onthego_front_camera">استفاده از دوربین جلو</string>
     <string name="onthego_service_toggle">راه اندازی مجدد سرویس به طور خودکار</string>
     <string name="onthego_channel_name">در حرکت</string>
@@ -65,8 +65,8 @@
     <string name="quick_settings_onthego_label">در حرکت</string>
     <string name="accessibility_quick_settings_onthego_off">خاموش شدن در حرکت</string>
     <string name="accessibility_quick_settings_onthego_on">روشن شدن در حرکت</string>
-    <string name="accessibility_quick_settings_onthego_changed_off">On-The-Go turned off</string>
-    <string name="accessibility_quick_settings_onthego_changed_on">On-The-Go turned on</string>
+    <string name="accessibility_quick_settings_onthego_changed_off">در حرکت خاموش شد</string>
+    <string name="accessibility_quick_settings_onthego_changed_on">در حرکت روشن شد</string>
     <!-- Text to use when the number in a notification info is too large -->
     <!-- Kill button in notification guts -->
     <string name="force_stop_dlg_title">توقف اجباری؟</string>
@@ -74,8 +74,8 @@
     <string name="guts_force_close_app">بستن برنامه</string>
     <!-- AOD QS tile -->
     <string name="quick_settings_aod_label">صفحه نمایش همیشه روشن</string>
-    <string name="quick_settings_aod_on_charge_label">AOD on charge</string>
-    <string name="quick_settings_aod_off_label">AOD off</string>
+    <string name="quick_settings_aod_on_charge_label">تغییر بر AOD</string>
+    <string name="quick_settings_aod_off_label">AOD خاموش</string>
     <string name="quick_settings_aod_off_powersave_label">نمایشگر همیشه روشن، غیرفعال\nحالت ذخیره‌ی انرژی</string>
     <!-- PowerShare QS tile -->
     <string name="quick_settings_powershare_label">اشتراک‌گذاری بی‌سیم نیرو</string>
@@ -172,7 +172,7 @@
     <string name="refresh_rate_tile_label">نرخ تازه‌سازی</string>
     <string name="refresh_rate_auto_mode_placeholder">        خودکار (<xliff:g id="min_refresh_rate" example="60">%1$d</xliff:g> - <xliff:g id="max_refresh_rate" example="60">%2$d</xliff:g> هرتز)
     </string>
-    <string name="refresh_rate_forced_mode_placeholder"><xliff:g id="refresh_rate" example="60">%1$d</xliff:g> Hz</string>
+    <string name="refresh_rate_forced_mode_placeholder"><xliff:g id="refresh_rate" example="60">%1$d</xliff:g> هرتز</string>
     <!-- Google Lens Screenshot string -->
     <string name="lensss">لنز</string>
     <!-- Smart Pixels QS Tile -->
@@ -202,26 +202,26 @@
     <string name="screenrecord_longer_timeout_switch_summary">محدود کردن اندازه ضبط به ۱۵ گیگابایت</string>
     <string name="screenrecord_skip_time_label">رد کردن زمان‌سنج</string>
     <string name="screenrecord_skip_time_summary">حذف صبر ۳ ثانیه‌ای</string>
-    <string name="screenrecord_hevc_switch_label">Enable HEVC</string>
+    <string name="screenrecord_hevc_switch_label">فعال سازی انکد سخت افزاری ویدیو</string>
     <!-- QS InternetDialog: Summary for how many devices are connected to the hotspot -->
     <plurals name="quick_settings_internet_hotspot_summary_num_devices">
         <item quantity="one">%d دستگاه وصل است</item>
-        <item quantity="other">%d devices connected</item>
+        <item quantity="other">%d دستگاه های متصل</item>
     </plurals>
     <!-- Data usage panel -->
-    <string name="total_internet_usage">Total internet usage (Since boot)</string>
+    <string name="total_internet_usage">مصرف اینترنت(از زمان روشن شدن دستگاه)</string>
     <string name="cellular_usage">مصرف اینترنت همراه</string>
     <string name="wifi_usage">مصرف وای فای</string>
     <!-- Screen pinning dialog description. (for devices without navbar) -->
-    <string name="screen_pinning_description_no_navbar">This keeps it in view until you unpin. Touch &amp; hold Back to unpin.</string>
+    <string name="screen_pinning_description_no_navbar">تا زمانی که پین ​​را بردارید، آن را در معرض دید قرار می‌دهد. لمس &amp; برای برداشتن پین، کلید برگشت را نگه دارید.</string>
     <!-- Notify use that they are in Lock-to-app (for devices without navbar)-->
-    <string name="screen_pinning_toast_no_navbar">To unpin this screen, touch &amp; hold Back button</string>
+    <string name="screen_pinning_toast_no_navbar">برای از سنجاق درآوردن دکمه &amp; بازگشت را نگه دارید</string>
     <!-- Screen pinning dialog description. (for devices without navbar and with gestures on fingerprint sensor) -->
-    <string name="screen_pinning_description_no_navbar_fpsensor">This keeps it in view until you unpin. Touch &amp; hold fingerprint sensor to unpin.</string>
+    <string name="screen_pinning_description_no_navbar_fpsensor">این صفحه تا زمانی که آن را از سنجاق در نیاورید نمایش میدهد. &amp; را لمس کنید; برای از سنجاق درآوردن، سنسور اثرانگشت را نگه دارید.</string>
     <!-- Notify use that they are in Lock-to-app (for devices without navbar and with gestures on fingerprint sensor)-->
-    <string name="screen_pinning_toast_no_navbar_fpsensor">To unpin this screen, touch &amp; hold fingerprint sensor</string>
+    <string name="screen_pinning_toast_no_navbar_fpsensor">برای از سنجاق درآوردن دکمه &amp; بازگشت را نگه دارید</string>
     <!-- Face Unlock -->
-    <string name="face_unlock_recognizing">Recognizing face...</string>
+    <string name="face_unlock_recognizing">درحال شناسایی چهره...</string>
     <!-- Bluetooth dialog -->
     <string name="turn_on_bluetooth">استفاده از بلوتوث</string>
     <string name="bluetooth_is_off">بلوتوث خاموش است</string>
