@@ -2638,6 +2638,11 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
         public void showPowerOptionsMenu() {
             mPowerOptionsDialog = GlobalActionsPowerDialog.create(mContext, mPowerOptionsAdapter);
             mPowerOptionsDialog.show();
+            float bgAlpha = 0.88f;
+            if (mBlurUtils.supportsBlursOnWindows()) {
+                bgAlpha = 0.54f;
+            }
+            mPowerOptionsDialog.setDimAmount(bgAlpha);
         }
 
         protected void showPowerOverflowMenu() {
