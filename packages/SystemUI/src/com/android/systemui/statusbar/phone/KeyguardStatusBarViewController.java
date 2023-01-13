@@ -384,7 +384,7 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
 
     /** Should be called when the theme changes. */
     public void onThemeChanged() {
-        mView.onThemeChanged(mTintedIconManager);
+        mView.onThemeChanged(mTintedIconManager, mInsetsProvider);
     }
 
     /** Sets whether user switcher is enabled. */
@@ -468,6 +468,7 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
      */
     public void updateViewState() {
         if (!isKeyguardShowing()) {
+            mView.setVisibility(View.GONE);
             return;
         }
 

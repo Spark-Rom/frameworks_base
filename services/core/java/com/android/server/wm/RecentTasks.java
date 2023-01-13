@@ -70,6 +70,10 @@ import android.util.SparseBooleanArray;
 import android.view.MotionEvent;
 import android.view.WindowManagerPolicyConstants.PointerEventListener;
 
+import android.hardware.power.Boost;
+import android.os.PowerManagerInternal;
+import com.android.server.LocalServices;
+
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.protolog.common.ProtoLog;
 import com.android.internal.util.function.pooled.PooledLambda;
@@ -203,6 +207,7 @@ class RecentTasks {
     private final HashMap<ComponentName, ActivityInfo> mTmpAvailActCache = new HashMap<>();
     private final HashMap<String, ApplicationInfo> mTmpAvailAppCache = new HashMap<>();
     private final SparseBooleanArray mTmpQuietProfileUserIds = new SparseBooleanArray();
+    private final PowerManagerInternal mLocalPowerManager = LocalServices.getService(PowerManagerInternal.class);
 
     // TODO(b/127498985): This is currently a rough heuristic for interaction inside an app
     private final PointerEventListener mListener = new PointerEventListener() {
@@ -979,7 +984,7 @@ class RecentTasks {
                 continue;
             }
 
-            res.add(createRecentTaskInfo(task, true /* stripExtras */));
+            res.add(createRecentTaskInfo(task, true /* stripExtras */, getTasksAllowed));
         }
         return res;
     }
@@ -1207,6 +1212,11 @@ class RecentTasks {
     void remove(Task task) {
         mTasks.remove(task);
         notifyTaskRemoved(task, false /* wasTrimmed */, false /* killProcess */);
+        final int POWER_BOOST_TIMEOUT_MS = Integer.parseInt(
+            SystemProperties.get("persist.sys.powerhal.interaction.max", "200"));
+        if (mLocalPowerManager != null) {
+           mLocalPowerManager.setPowerBoost(Boost.INTERACTION, POWER_BOOST_TIMEOUT_MS);
+        }
     }
 
     /**
@@ -1898,7 +1908,8 @@ class RecentTasks {
     /**
      * Creates a new RecentTaskInfo from a Task.
      */
-    ActivityManager.RecentTaskInfo createRecentTaskInfo(Task tr, boolean stripExtras) {
+    ActivityManager.RecentTaskInfo createRecentTaskInfo(Task tr, boolean stripExtras,
+            boolean getTasksAllowed) {
         final ActivityManager.RecentTaskInfo rti = new ActivityManager.RecentTaskInfo();
         // If the recent Task is detached, we consider it will be re-attached to the default
         // TaskDisplayArea because we currently only support recent overview in the default TDA.
@@ -1910,6 +1921,9 @@ class RecentTasks {
         rti.id = rti.isRunning ? rti.taskId : INVALID_TASK_ID;
         rti.persistentId = rti.taskId;
         rti.lastSnapshotData.set(tr.mLastTaskSnapshotData);
+        if (!getTasksAllowed) {
+            Task.trimIneffectiveInfo(tr, rti);
+        }
 
         // Fill in organized child task info for the task created by organizer.
         if (tr.mCreatedByOrganizer) {

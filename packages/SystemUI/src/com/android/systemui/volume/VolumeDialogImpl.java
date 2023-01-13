@@ -81,6 +81,7 @@ import android.os.SystemClock;
 import android.os.Trace;
 import android.os.VibrationEffect;
 import android.os.UserHandle;
+import static android.view.HapticFeedbackConstants.CLOCK_TICK;
 import android.provider.Settings;
 import android.provider.Settings.Global;
 import android.text.InputFilter;
@@ -653,7 +654,7 @@ public class VolumeDialogImpl implements VolumeDialog,
         mSettingsView = mDialog.findViewById(R.id.settings_container);
         mSettingsViewSpacer = mDialog.findViewById(R.id.settings_container_spacer);
         mSettingsIcon = mDialog.findViewById(R.id.settings);
-
+        mSettingsIcon.setOnLongClickListener(this);
         mExpandRowsView = mDialog.findViewById(R.id.expandable_indicator_container);
         mExpandRows = mDialog.findViewById(R.id.expandable_indicator);
         mExpandRows.setOnLongClickListener(this);
@@ -1276,54 +1277,37 @@ public class VolumeDialogImpl implements VolumeDialog,
         return localController;
     }
 
-    private boolean isMediaControllerAvailable(MediaController mediaController) {
-        return mediaController != null && !TextUtils.isEmpty(mediaController.getPackageName());
-    }
-
-    private boolean isBluetoothA2dpConnected() {
-        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        return mBluetoothAdapter != null && mBluetoothAdapter.isEnabled()
-                && mBluetoothAdapter.getProfileConnectionState(BluetoothProfile.A2DP)
-                == BluetoothProfile.STATE_CONNECTED;
+    private boolean isMediaControllerAvailable() {
+        final MediaController mediaController = getActiveLocalMediaController();
+          return mediaController != null &&
+                !TextUtils.isEmpty(mediaController.getPackageName());
     }
 
     private void initSettingsH(int lockTaskModeState) {
         if (mSettingsView != null) {
-            mSettingsView.setVisibility(mDeviceProvisionedController.isCurrentUserSetup()
-                    && lockTaskModeState == LOCK_TASK_MODE_NONE
-                    && (isMediaControllerAvailable(getActiveLocalMediaController())
-                            || isBluetoothA2dpConnected())
-                    ? VISIBLE : GONE);
-            mSettingsViewSpacer.setVisibility(mDeviceProvisionedController.isCurrentUserSetup()
-                    && lockTaskModeState == LOCK_TASK_MODE_NONE
-                    && (isMediaControllerAvailable(getActiveLocalMediaController())
-                            || isBluetoothA2dpConnected())
-                    ? VISIBLE : GONE);
+            mSettingsView.setVisibility(
+                    mDeviceProvisionedController.isCurrentUserSetup() &&
+                            isMediaControllerAvailable() &&
+                            lockTaskModeState == LOCK_TASK_MODE_NONE ? VISIBLE : GONE);
+            mSettingsViewSpacer.setVisibility(
+                    mDeviceProvisionedController.isCurrentUserSetup() &&
+                            isMediaControllerAvailable() &&
+                            lockTaskModeState == LOCK_TASK_MODE_NONE ? VISIBLE : GONE);
         }
         if (mSettingsIcon != null) {
             mSettingsIcon.setOnClickListener(v -> {
                 Events.writeEvent(Events.EVENT_SETTINGS_CLICK);
-                final MediaController mediaController = getActiveLocalMediaController();
-                String packageName = isMediaControllerAvailable(mediaController)
-                        ? mediaController.getPackageName()
-                        : "";
-                mMediaOutputDialogFactory.create(packageName, true, mDialogView); 
+                String packageName = isMediaControllerAvailable()
+                        ? getActiveLocalMediaController().getPackageName() : "";
+                mMediaOutputDialogFactory.create(packageName, true, mDialogView);
                 dismissH(DISMISS_REASON_SETTINGS_CLICKED);
-                mMediaOutputDialogFactory.dismiss();
-                if (FeatureFlagUtils.isEnabled(mContext,
-                        FeatureFlagUtils.SETTINGS_VOLUME_PANEL_IN_SYSTEMUI)) {
-                    mVolumePanelFactory.create(true /* aboveStatusBar */, null);
-                } else {
-                    mActivityStarter.startActivity(new Intent(Settings.Panel.ACTION_VOLUME),
-                            true /* dismissShade */);
-                }
             });
         }
 
         if (mExpandRowsView != null) {
-            mExpandRowsView.setVisibility(mDeviceProvisionedController.isCurrentUserSetup()
-                    && mActivityManager.getLockTaskModeState() == LOCK_TASK_MODE_NONE
-                    ? VISIBLE : GONE);
+            mExpandRowsView.setVisibility(
+                    mDeviceProvisionedController.isCurrentUserSetup() &&
+                            lockTaskModeState == LOCK_TASK_MODE_NONE ? VISIBLE : GONE);
         }
         if (mExpandRows != null) {
             mExpandRows.setOnClickListener(v -> {
@@ -2806,6 +2790,11 @@ public class VolumeDialogImpl implements VolumeDialog,
                     Events.writeEvent(Events.EVENT_TOUCH_LEVEL_CHANGED, mRow.stream,
                             userLevel);
                 }
+            }
+            final boolean doVibrate = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.VOLUME_PANEL_HAPTIC_FEEDBACK, 1) != 0;
+            if (doVibrate) {
+            seekBar.performHapticFeedback(CLOCK_TICK);
             }
         }
 

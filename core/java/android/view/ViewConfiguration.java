@@ -17,6 +17,7 @@
 package android.view;
 
 import android.annotation.FloatRange;
+import android.annotation.MainThread;
 import android.annotation.NonNull;
 import android.annotation.TestApi;
 import android.annotation.UiContext;
@@ -40,6 +41,7 @@ import android.util.TypedValue;
 /**
  * Contains methods to standard constants used in the UI for timeouts, sizes, and distances.
  */
+@MainThread
 public class ViewConfiguration {
     private static final String TAG = "ViewConfiguration";
 
@@ -218,12 +220,12 @@ public class ViewConfiguration {
     /**
      * Minimum velocity to initiate a fling, as measured in dips per second
      */
-    private static final int MINIMUM_FLING_VELOCITY = 60;
+    private static final int MINIMUM_FLING_VELOCITY = 70;
 
     /**
      * Maximum velocity to initiate a fling, as measured in dips per second
      */
-    private static final int MAXIMUM_FLING_VELOCITY = 16000;
+    private static final int MAXIMUM_FLING_VELOCITY = 21000;
 
     /**
      * Delay before dispatching a recurring accessibility event in milliseconds.
@@ -244,7 +246,7 @@ public class ViewConfiguration {
      * The coefficient of friction applied to flings/scrolls.
      */
     @UnsupportedAppUsage
-    private static final float SCROLL_FRICTION = 0.006f;
+    private static final float SCROLL_FRICTION = 0.009f;
 
     /**
      * Max distance in dips to overscroll for edge effects
@@ -349,6 +351,7 @@ public class ViewConfiguration {
     private final int mSmartSelectionInitializedTimeout;
     private final int mSmartSelectionInitializingTimeout;
     private final boolean mPreferKeepClearForFocusEnabled;
+    private static final Object sLock = new Object();
 
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 123768915)
     private boolean sHasPermanentMenuKey;
@@ -579,11 +582,15 @@ public class ViewConfiguration {
 
         final DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         final int density = (int) (100.0f * metrics.density);
+	
+	ViewConfiguration configuration;
 
-        ViewConfiguration configuration = sConfigurations.get(density);
-        if (configuration == null) {
-            configuration = new ViewConfiguration(context);
-            sConfigurations.put(density, configuration);
+	synchronized (sLock) {
+           configuration = sConfigurations.get(density);
+           if (configuration == null) {
+              configuration = new ViewConfiguration(context);
+              sConfigurations.put(density, configuration);
+          }
         }
 
         return configuration;

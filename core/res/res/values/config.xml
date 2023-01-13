@@ -140,17 +140,17 @@
     <bool name="config_disableTransitionAnimation">false</bool>
 
     <!-- The duration (in milliseconds) of a short animation. -->
-    <integer name="config_shortAnimTime">100</integer>
+    <integer name="config_shortAnimTime">200</integer>
 
     <!-- The duration (in milliseconds) of a medium-length animation. -->
-    <integer name="config_mediumAnimTime">200</integer>
+    <integer name="config_mediumAnimTime">400</integer>
 
     <!-- The duration (in milliseconds) of a long animation. -->
-    <integer name="config_longAnimTime">250</integer>
+    <integer name="config_longAnimTime">500</integer>
 
     <!-- The duration (in milliseconds) of the activity open/close and fragment open/close animations. -->
-    <integer name="config_activityShortDur">75</integer>
-    <integer name="config_activityDefaultDur">110</integer>
+    <integer name="config_activityShortDur">150</integer>
+    <integer name="config_activityDefaultDur">220</integer>
 
     <!-- Fade out time for screen rotation -->
     <integer name="config_screen_rotation_fade_out">116</integer>
@@ -203,7 +203,7 @@
          is true (in that case this is assumed true as well).  It can allow you to tune down
          your device's memory use without going to the point of causing applications to turn
          off features. -->
-    <bool name="config_avoidGfxAccel">true</bool>
+    <bool name="config_avoidGfxAccel">false</bool>
 
     <!-- Device configuration setting the minfree tunable in the lowmemorykiller in the kernel.
          A high value will cause the lowmemorykiller to fire earlier, keeping more memory
@@ -2622,10 +2622,10 @@
     <item name="config_ambiguousGestureMultiplier" format="float" type="dimen">2.0</item>
 
     <!-- Minimum velocity to initiate a fling, as measured in dips per second. -->
-    <dimen name="config_viewMinFlingVelocity">50dp</dimen>
+    <dimen name="config_viewMinFlingVelocity">70dp</dimen>
 
     <!-- Maximum velocity to initiate a fling, as measured in dips per second. -->
-    <dimen name="config_viewMaxFlingVelocity">8000dp</dimen>
+    <dimen name="config_viewMaxFlingVelocity">21000dp</dimen>
 
     <!-- Amount of time in ms the user needs to press the relevant key to bring up the
          global actions dialog -->
@@ -4348,7 +4348,7 @@
     <integer translatable="false" name="config_storageManagerDaystoRetainDefault">90</integer>
 
     <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
-    <string name="config_headlineFontFamily" translatable="false">@string/config_bodyFontFamily</string>
+    <string name="config_headlineFontFamily" translatable="false">sans-serif</string>
     <!-- Allows setting custom fontFeatureSettings on specific text. -->
     <string name="config_headlineFontFeatureSettings" translatable="false"></string>
 
@@ -4420,20 +4420,20 @@
     <!-- Corner radius of system buttons -->
     <dimen name="config_buttonCornerRadius">@dimen/config_dialogCornerRadius</dimen>
     <!-- Corner radius for bottom sheet system dialogs -->
-    <dimen name="config_bottomDialogCornerRadius">@dimen/config_dialogCornerRadius</dimen>
+    <dimen name="config_bottomDialogCornerRadius">16dp</dimen>
     <!-- Corner radius of system progress bars -->
     <dimen name="config_progressBarCornerRadius">1000dp</dimen>
     <!-- Controls whether system buttons use all caps for text -->
     <bool name="config_buttonTextAllCaps">true</bool>
     <!-- Name of the font family used for system surfaces where the font should use medium weight -->
-    <string name="config_headlineFontFamilyMedium" translateable="false">@string/config_bodyFontFamilyMedium</string>
+    <string name="config_headlineFontFamilyMedium" translateable="false">sans-serif-medium</string>
     <!-- Name of a font family to use for body text. -->
     <string name="config_bodyFontFamily" translatable="false">sans-serif</string>
     <!-- Name of a font family to use for medium body text. -->
     <string name="config_bodyFontFamilyMedium" translatable="false">sans-serif-medium</string>
 
     <!-- Name of the font family to use in the default lockscreen clock -->
-    <string name="config_clockFontFamily" translatable="false">monospace</string>
+    <string name="config_clockFontFamily" translatable="false">sans-serif</string>
 
     <!-- Size of icon shown beside a preference locked by admin -->
     <dimen name="config_restrictedIconSize">@dimen/restricted_icon_size_material</dimen>
@@ -5620,7 +5620,7 @@
     </string-array>
 
     <!-- the number of the max cached processes in the system. -->
-    <integer name="config_customizedMaxCachedProcesses">32</integer>
+    <integer name="config_customizedMaxCachedProcesses">48</integer>
 
     <!-- Whether this device should support taking app snapshots on closure -->
     <bool name="config_disableTaskSnapshots">false</bool>

@@ -465,6 +465,54 @@ public class ThemeOverlayController extends CoreStartable implements Dumpable {
                 UserHandle.USER_ALL);
 
         mSystemSettings.registerContentObserverForUser(
+                Settings.System.getUriFor(Settings.System.KG_CUSTOM_CLOCK_COLOR),
+                false,
+                new ContentObserver(mBgHandler) {
+                    @Override
+                    public void onChange(boolean selfChange, Collection<Uri> collection, int flags,
+                            int userId) {
+                        reevaluateSystemTheme(true /* forceReload */);
+                    }
+                },
+                UserHandle.USER_ALL);
+
+        mSystemSettings.registerContentObserverForUser(
+                Settings.System.getUriFor(Settings.System.KG_CUSTOM_CLOCK_COLOR_ENABLED),
+                false,
+                new ContentObserver(mBgHandler) {
+                    @Override
+                    public void onChange(boolean selfChange, Collection<Uri> collection, int flags,
+                            int userId) {
+                        reevaluateSystemTheme(true /* forceReload */);
+                    }
+                },
+                UserHandle.USER_ALL);
+
+        mSystemSettings.registerContentObserverForUser(
+                Settings.System.getUriFor(Settings.System.KG_SHOW_WEATHER_TEMP),
+                false,
+                new ContentObserver(mBgHandler) {
+                    @Override
+                    public void onChange(boolean selfChange, Collection<Uri> collection, int flags,
+                            int userId) {
+                        reevaluateSystemTheme(true /* forceReload */);
+                    }
+                },
+                UserHandle.USER_ALL);
+
+        mSystemSettings.registerContentObserverForUser(
+                Settings.System.getUriFor(Settings.System.QS_SHOW_WEATHER_TEMP),
+                false,
+                new ContentObserver(mBgHandler) {
+                    @Override
+                    public void onChange(boolean selfChange, Collection<Uri> collection, int flags,
+                            int userId) {
+                        reevaluateSystemTheme(true /* forceReload */);
+                    }
+                },
+                UserHandle.USER_ALL);
+
+        mSystemSettings.registerContentObserverForUser(
                 Settings.System.getUriFor(Settings.System.HIDE_IME_SPACE_ENABLE),
                 false,
                 new ContentObserver(mBgHandler) {
@@ -491,6 +539,29 @@ public class ThemeOverlayController extends CoreStartable implements Dumpable {
         mUserTracker.addCallback(mUserTrackerCallback, mMainExecutor);
 
         mDeviceProvisionedController.addCallback(mDeviceProvisionedListener);
+        mSystemSettings.registerContentObserverForUser(
+                Settings.System.getUriFor(Settings.System.STATUS_BAR_CLOCK_SIZE),
+                false,
+                new ContentObserver(mBgHandler) {
+                    @Override
+                    public void onChange(boolean selfChange, Collection<Uri> collection, int flags,
+                            int userId) {
+                        reevaluateSystemTheme(true /* forceReload */);
+                    }
+                },
+                UserHandle.USER_ALL);
+
+        mSystemSettings.registerContentObserverForUser(
+                Settings.System.getUriFor(Settings.System.QS_HEADER_CLOCK_SIZE),
+                false,
+                new ContentObserver(mBgHandler) {
+                    @Override
+                    public void onChange(boolean selfChange, Collection<Uri> collection, int flags,
+                            int userId) {
+                        reevaluateSystemTheme(true /* forceReload */);
+                    }
+                },
+                UserHandle.USER_ALL);
 
         // All wallpaper color and keyguard logic only applies when Monet is enabled.
         if (!mIsMonetEnabled) {

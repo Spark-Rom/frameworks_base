@@ -16,8 +16,10 @@ package com.android.systemui.shared.clocks
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.icu.text.NumberFormat
+import android.os.UserHandle
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.widget.FrameLayout
@@ -35,10 +37,12 @@ import java.util.Locale
 import java.util.TimeZone
 import javax.inject.Inject
 
+import android.provider.Settings.System
+
 private val TAG = DefaultClockProvider::class.simpleName
 const val DEFAULT_CLOCK_NAME = "Default Clock"
 const val DEFAULT_CLOCK_ID = "DEFAULT"
-
+ 
 /** Provides the default system clock */
 class DefaultClockProvider @Inject constructor(
     val ctx: Context,
@@ -72,7 +76,7 @@ class DefaultClockProvider @Inject constructor(
  * AnimatableClockView used by the existing lockscreen clock.
  */
 class DefaultClock(
-        ctx: Context,
+        val ctx: Context,
         private val layoutInflater: LayoutInflater,
         private val resources: Resources
 ) : Clock {
@@ -85,6 +89,8 @@ class DefaultClock(
     private val burmeseLineSpacing =
         resources.getFloat(R.dimen.keyguard_clock_line_spacing_scale_burmese)
     private val defaultLineSpacing = resources.getFloat(R.dimen.keyguard_clock_line_spacing_scale)
+    
+    private var currFont = ctx.getString(com.android.internal.R.string.config_clockFontFamily);
 
     override val events: ClockEvents
     override lateinit var animations: ClockAnimations
@@ -135,14 +141,27 @@ class DefaultClock(
             clocks.forEach { it.onTimeZoneChanged(timeZone) }
 
         override fun onFontSettingChanged() {
+            smallClock.setTypeface(
+                Typeface.create(
+                resources.getString(com.android.internal.R.string.config_clockFontFamily), Typeface.NORMAL)
+            )
             smallClock.setTextSize(
                 TypedValue.COMPLEX_UNIT_PX,
                 resources.getDimensionPixelSize(R.dimen.small_clock_text_size).toFloat()
+            )
+            largeClock.setTypeface(
+                Typeface.create(
+                resources.getString(com.android.internal.R.string.config_clockFontFamily), Typeface.NORMAL)
             )
             largeClock.setTextSize(
                 TypedValue.COMPLEX_UNIT_PX,
                 resources.getDimensionPixelSize(R.dimen.large_clock_text_size).toFloat()
             )
+            currFont = resources.getString(com.android.internal.R.string.config_clockFontFamily)
+            if (!currFont.toString().toLowerCase().contains("sans")) {
+            smallClock.setLineSpacingScale(0.9f)
+            largeClock.setLineSpacingScale(0.9f)
+            }
             recomputePadding()
         }
 
@@ -153,18 +172,21 @@ class DefaultClock(
         ) {
             if (smallRegionDarkness != smallClockIsDark) {
                 smallRegionDarkness = smallClockIsDark
-                updateClockColor(smallClock, smallClockIsDark)
             }
+            updateClockColor(smallClock, smallRegionDarkness)
             if (largeRegionDarkness != largeClockIsDark) {
                 largeRegionDarkness = largeClockIsDark
-                updateClockColor(largeClock, largeClockIsDark)
             }
+            updateClockColor(largeClock, largeRegionDarkness)
         }
 
         override fun onLocaleChanged(locale: Locale) {
             val nf = NumberFormat.getInstance(locale)
+            currFont = resources.getString(com.android.internal.R.string.config_clockFontFamily)
             if (nf.format(FORMAT_NUMBER.toLong()) == burmeseNumerals) {
                 clocks.forEach { it.setLineSpacingScale(burmeseLineSpacing) }
+            } else if (!currFont.toString().toLowerCase().contains("sans")) {
+                clocks.forEach { it.setLineSpacingScale(0.9f) }
             } else {
                 clocks.forEach { it.setLineSpacingScale(defaultLineSpacing) }
             }
@@ -229,10 +251,20 @@ class DefaultClock(
     }
 
     private fun updateClockColor(clock: AnimatableClockView, isRegionDark: Boolean) {
+        val customClockColorEnabled = System.getIntForUser(ctx.getContentResolver(),
+                System.KG_CUSTOM_CLOCK_COLOR_ENABLED, 0, UserHandle.USER_CURRENT) != 0
+        val customClockColor = System.getIntForUser(ctx.getContentResolver(),
+                System.KG_CUSTOM_CLOCK_COLOR, 0xFFFFFFFF.toInt(), UserHandle.USER_CURRENT)
         val color = if (isRegionDark) {
-            resources.getColor(android.R.color.system_accent1_100)
+            if (customClockColorEnabled)
+                customClockColor.toInt()
+            else
+                resources.getColor(android.R.color.system_accent1_100)
         } else {
-            resources.getColor(android.R.color.system_accent2_600)
+            if (customClockColorEnabled)
+                customClockColor.toInt()
+            else
+                resources.getColor(android.R.color.system_accent2_600)
         }
         clock.setColors(DOZE_COLOR, color)
         clock.animateAppearOnLockscreen()

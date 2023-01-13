@@ -3385,9 +3385,26 @@ public final class Settings {
                     }
                 }
 
-                // Fetch all flags for the namespace at once for caching purposes
-                Bundle b = cp.call(cr.getAttributionSource(),
-                        mProviderHolder.mUri.getAuthority(), mCallListCommand, null, args);
+                Bundle b;
+                // b/252663068: if we're in system server and the caller did not call
+                // clearCallingIdentity, the read would fail due to mismatched AttributionSources.
+                // TODO(b/256013480): remove this bypass after fixing the callers in system server.
+                if (namespace.equals(DeviceConfig.NAMESPACE_DEVICE_POLICY_MANAGER)
+                        && Settings.isInSystemServer()
+                        && Binder.getCallingUid() != Process.myUid()) {
+                    final long token = Binder.clearCallingIdentity();
+                    try {
+                        // Fetch all flags for the namespace at once for caching purposes
+                        b = cp.call(cr.getAttributionSource(),
+                                mProviderHolder.mUri.getAuthority(), mCallListCommand, null, args);
+                    } finally {
+                        Binder.restoreCallingIdentity(token);
+                    }
+                } else {
+                    // Fetch all flags for the namespace at once for caching purposes
+                    b = cp.call(cr.getAttributionSource(),
+                            mProviderHolder.mUri.getAuthority(), mCallListCommand, null, args);
+                }
                 if (b == null) {
                     // Invalid response, return an empty map
                     return keyValues;
@@ -6346,6 +6363,18 @@ public final class Settings {
          */
         public static final String SHOW_QS_DATE = "show_qs_date";
 
+	/**
+         * Keyguard weather temperature
+         * 0: Hide the temperature
+         * 1: Display the temperature with scale and image
+         * 2: Display the temperature without scale and with image
+         * 3: Display the temparature with scale and without image
+         * 4: Display the temperature without scale and without image
+         * 5: Display the temperature image
+         * @hide
+         */
+	public static final String KG_SHOW_WEATHER_TEMP = "kg_show_weather_temp";
+
         /**
          * Force full screen for devices with cutout
          * @hide
@@ -7159,6 +7188,50 @@ public final class Settings {
          */
         public static final String AMBIENT_CUSTOM_IMAGE = "ambient_custom_image";
 
+	/**
+         * QS weather temperature
+         * 0: Hide the temperature
+         * 1: Display the temperature with scale and image
+         * 2: Display the temperature without scale and with image
+         * 3: Display the temparature with scale and without image
+         * 4: Display the temperature without scale and without image
+         * 5: Display the temperature image
+         * @hide
+         */
+	public static final String QS_SHOW_WEATHER_TEMP = "qs_show_weather_temp";
+
+	/**
+         * @hide
+         */
+        public static final String OMNIJAWS_WEATHER_ICON_PACK = "omnijaws_weather_icon_pack";
+
+        /**
+         * Date font size QS
+         * @hide
+         */
+        public static final String QS_WEATHER_POSITION = "qs_weather_position";
+
+        /**
+         * @hide
+         */
+        public static final String HIDE_NOTIFICATION_ICONS = "hide_notification_icons";
+
+        /**
+         * @hide
+         */
+        public static final String KG_CUSTOM_CLOCK_COLOR = "kg_custom_clock_color";
+
+        /**
+         * @hide
+         */
+        public static final String KG_CUSTOM_CLOCK_COLOR_ENABLED = "kg_custom_clock_color_enabled";
+        
+        /**        
+         * Haptic feedback on volume panel
+         * @hide
+         */ 
+        public static final String VOLUME_PANEL_HAPTIC_FEEDBACK = "volume_panel_haptic_feedback";
+
         /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
@@ -7311,6 +7384,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(QS_SYSTEM_INFO);
             PRIVATE_SETTINGS.add(AMBIENT_TEXT_COLOR);
             PRIVATE_SETTINGS.add(AMBIENT_TEXT_TYPE_COLOR);
+	    PRIVATE_SETTINGS.add(OMNIJAWS_WEATHER_ICON_PACK);
         }
 
         /**
@@ -12835,6 +12909,13 @@ public final class Settings {
          */
         public static final String DEVICE_STATE_ROTATION_LOCK =
                 "device_state_rotation_lock";
+
+        /**
+         *  Toggle the media squiggle animation
+         *  0 = show, 1 = hide
+         * @hide
+         */
+        public static final String HIDE_MEDIA_SQUIGGLE_ANIMATION = "hide_media_squiggle_animation";
 
         /**
          * Control whether communal mode is allowed on this device.

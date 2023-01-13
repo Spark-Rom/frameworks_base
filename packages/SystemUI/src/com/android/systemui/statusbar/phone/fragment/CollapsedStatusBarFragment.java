@@ -110,6 +110,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private static final String STATUSBAR_CLOCK_CHIP =
             "system:" + Settings.System.STATUSBAR_CLOCK_CHIP;
 
+    private static final String HIDE_NOTIFICATION_ICONS =
+            "system:" + Settings.System.HIDE_NOTIFICATION_ICONS;
+
     private static final String STATUS_BAR_SHOW_LYRIC =
             "secure:" + Settings.Secure.STATUS_BAR_SHOW_LYRIC;
 
@@ -154,6 +157,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private final DumpManager mDumpManager;
     private ClockController mClockController;
     private boolean mShowSBClockBg;
+    private boolean mHideNotificationIcons;
     private BatteryMeterView mBatteryMeterView;
     private StatusIconContainer mStatusIcons;
     private int mSignalClusterEndPadding = 0;
@@ -164,6 +168,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private Map<Startable, Startable.State> mStartableStates = new ArrayMap<>();
 
     private View mBatteryBar;
+
+    private View mLeftLogo;
 
     private SignalCallback mSignalCallback = new SignalCallback() {
         @Override
@@ -310,6 +316,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         showEndSideContent(false);
         mCenterClockView = mStatusBar.findViewById(R.id.clock_center);
         mRightClockView = mStatusBar.findViewById(R.id.clock_right);
+        mLeftLogo = mStatusBar.findViewById(R.id.statusbar_logo);
         showClock(false);
         initEmergencyCryptkeeperText();
         initOperatorName();
@@ -375,6 +382,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 
         Dependency.get(TunerService.class).addTunable(this, STATUSBAR_CLOCK_CHIP);
         Dependency.get(TunerService.class).addTunable(this, STATUS_BAR_SHOW_LYRIC);
+        Dependency.get(TunerService.class).addTunable(this, HIDE_NOTIFICATION_ICONS);
 
         mSecureSettings.registerContentObserverForUser(
                 Settings.Secure.getUriFor(Settings.Secure.STATUS_BAR_SHOW_VIBRATE_ICON),
@@ -428,6 +436,11 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
                         mLyricController.setEnabled(TunerService.parseIntegerSwitch(newValue, false));
                 }
                 break;
+             case HIDE_NOTIFICATION_ICONS:
+                 mHideNotificationIcons =
+                        TunerService.parseIntegerSwitch(newValue, false);
+                 initNotificationIconArea();
+                 break;
             default:
                 break;
          }
@@ -472,6 +485,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 
         // #disable should have already been called, so use the disable values to set visibility.
         updateNotificationIconAreaAndCallChip(mDisabled1, false);
+        if (mStatusBar != null) notificationIconArea.setVisibility(mHideNotificationIcons ? View.INVISIBLE : View.VISIBLE);
     }
 
     /**
@@ -667,12 +681,14 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     }
 
     public void hideNotificationIconArea(boolean animate) {
+        animateHide(mLeftLogo, animate);
         animateHide(mNotificationIconAreaInner, animate);
         animateHide(mCustomIconArea, animate);
         animateHide(mCenterClockLayout, animate);
     }
 
     public void showNotificationIconArea(boolean animate) {
+        animateShow(mLeftLogo, animate);
         animateShow(mNotificationIconAreaInner, animate);
         animateShow(mCustomIconArea, animate);
         animateShow(mCenterClockLayout, animate);
