@@ -117,5 +117,6 @@ public class SystemSettings {
         Settings.System.QS_DATA_USAGE_PANEL,
         Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL,
         Settings.System.HEADS_UP_NOTIFICATIONS_THRESHOLD,
+        Settings.System.KEYGUARD_QUICK_TOGGLES,
     };
 }

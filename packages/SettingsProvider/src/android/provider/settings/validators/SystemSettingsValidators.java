@@ -34,6 +34,8 @@ import android.provider.Settings.System;
 import android.util.ArrayMap;
 import android.text.TextUtils;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -298,5 +300,35 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.QS_DATA_USAGE_PANEL, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.FINGERPRINT_WAKE_UNLOCK, NON_NEGATIVE_INTEGER_VALIDATOR);
         VALIDATORS.put(System.STATUS_BAR_BRIGHTNESS_CONTROL, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.KEYGUARD_QUICK_TOGGLES,
+                new Validator() {
+                    @Override
+                    public boolean validate(String value) {
+                        if (value == null) return true;
+                        if (!value.contains(";")) return false;
+                        final List<String> valid = Arrays.asList(
+                            "home",
+                            "wallet",
+                            "qr",
+                            "camera",
+                            "flashlight"
+                        );
+                        final String[] split = value.split(";");
+                        if (split.length != 2) return false;
+                        if (!split[0].equals("none")) {
+                            String[] args = split[0].split(",");
+                            for (String arg : args)
+                                if (!valid.contains(arg))
+                                    return false;
+                        }
+                        if (!split[1].equals("none")) {
+                            String[] args = split[1].split(",");
+                            for (String arg : args)
+                                if (!valid.contains(arg))
+                                    return false;
+                        }
+                        return true;
+                    }
+                });
     }
 }
