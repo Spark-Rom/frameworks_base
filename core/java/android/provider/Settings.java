@@ -12608,6 +12608,12 @@ public final class Settings {
         public static final String SYSTEM_MANAGER_AGGRESSIVE_IDLE_MODE_RINGER_MODE = "system_manager_aggressive_idle_mode_ringer_mode";
         
         /**
+         * Whether to always show the time on media controls
+         * @hide
+         */
+        public static final String MEDIA_CONTROLS_ALWAYS_SHOW_TIME = "media_controls_always_show_time";
+
+        /**
          * These entries are considered common between the personal and the managed profile,
          * since the managed profile doesn't get to change them.
          */
