@@ -66,8 +66,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
-import com.android.internal.util.spark.PixelPropsUtils;
 import com.android.internal.util.spark.AttestationHooks;
+import com.android.internal.util.spark.PixelPropsUtils;
 
 /**
  * Base class for implementing application instrumentation code.  When running

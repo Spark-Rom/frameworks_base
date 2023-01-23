@@ -42,7 +42,7 @@ public class PixelPropsUtils {
     private static final String PACKAGE_GMS = "com.google.android.gms";
     private static final String PACKAGE_NETFLIX = "com.netflix.mediaclient";
     private static final String PACKAGE_PS = "com.android.vending";
-    private static final String PACKAGE_SETTINGS_SERVICES = "com.google.android.settings.intelligence";
+    private static final String PACKAGE_SI = "com.google.android.settings.intelligence";
     private static final String SAMSUNG = "com.samsung.android.";
     private static final String SPOOF_MUSIC_APPS = "persist.sys.disguise_props_for_music_app";
 
@@ -201,7 +201,7 @@ public class PixelPropsUtils {
 
     static {
         propsToKeep = new HashMap<>();
-        propsToKeep.put(PACKAGE_SETTINGS_SERVICES, new ArrayList<>(Collections.singletonList("FINGERPRINT")));
+        propsToKeep.put(PACKAGE_SI, new ArrayList<>(Collections.singletonList("FINGERPRINT")));
         propsToChange = new HashMap<>();
         propsToChangePixel7Pro = new HashMap<>();
         propsToChangePixel7Pro.put("BRAND", "google");
@@ -300,7 +300,7 @@ public class PixelPropsUtils {
                 }
             }
             // Set proper indexing fingerprint
-            if (packageName.equals(PACKAGE_SETTINGS_SERVICES)) {
+            if (packageName.equals(PACKAGE_SI)) {
                 setPropValue("FINGERPRINT", String.valueOf(Build.TIME));
             }
         } else {
