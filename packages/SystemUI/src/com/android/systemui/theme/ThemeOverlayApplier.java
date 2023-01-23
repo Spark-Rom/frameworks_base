@@ -116,6 +116,10 @@ public class ThemeOverlayApplier implements Dumpable {
     static final String OVERLAY_CATEGORY_NAVBAR =
             "android.theme.customization.navbar";
 
+    @VisibleForTesting
+    static final String OVERLAY_CATEGORY_DATA =
+            "android.customization.sb_data";
+
     static final String OVERLAY_BRIGHTNESS_SLIDER_FILLED =
             "com.android.systemui.brightness_slider.filled";
     static final String OVERLAY_BRIGHTNESS_SLIDER_THIN =
@@ -169,7 +173,8 @@ public class ThemeOverlayApplier implements Dumpable {
             OVERLAY_CATEGORY_ICON_THEME_PICKER,
             OVERLAY_CATEGORY_ICON_SIGNAL,
             OVERLAY_CATEGORY_ICON_WIFI,
-            OVERLAY_CATEGORY_NAVBAR);
+            OVERLAY_CATEGORY_NAVBAR,
+            OVERLAY_CATEGORY_DATA);
 
     /* Categories that need to be applied to the current user as well as the system user. */
     @VisibleForTesting
@@ -202,7 +207,8 @@ public class ThemeOverlayApplier implements Dumpable {
             OVERLAY_BRIGHTNESS_SLIDER_LINE,
             OVERLAY_BRIGHTNESS_SLIDER_LIGHTY,
             OVERLAY_BRIGHTNESS_SLIDER_BANG,
-            OVERLAY_BRIGHTNESS_SLIDER_ACUN);
+            OVERLAY_BRIGHTNESS_SLIDER_ACUN,
+            OVERLAY_CATEGORY_DATA);
 
     /* Allowed overlay categories for each target package. */
     private final Map<String, Set<String>> mTargetPackageToCategories = new ArrayMap<>();
@@ -246,6 +252,7 @@ public class ThemeOverlayApplier implements Dumpable {
         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_ICON_SIGNAL, SYSUI_PACKAGE);
         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_ICON_WIFI, SYSUI_PACKAGE);
         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_NAVBAR, SYSUI_PACKAGE);
+        mCategoryToTargetPackage.put(OVERLAY_CATEGORY_DATA, SYSUI_PACKAGE);
 
         dumpManager.registerDumpable(TAG, this);
     }
