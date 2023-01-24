@@ -91,6 +91,8 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
             "system:" + Settings.System.VOLTE_ICON_STYLE;
     private static final String VOWIFI_ICON_STYLE =
             "system:" + Settings.System.VOWIFI_ICON_STYLE;
+    private static final String SHOW_FIVEG_ICON =
+            "system:" + Settings.System.SHOW_FIVEG_ICON;
 
     private static final int IMS_TYPE_WWAN = 1;
     private static final int IMS_TYPE_WLAN = 2;
@@ -276,6 +278,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         Dependency.get(TunerService.class).addTunable(this, DATA_DISABLED_ICON);
         Dependency.get(TunerService.class).addTunable(this, VOLTE_ICON_STYLE);
         Dependency.get(TunerService.class).addTunable(this, VOWIFI_ICON_STYLE);
+        Dependency.get(TunerService.class).addTunable(this, SHOW_FIVEG_ICON);
     }
 
     @Override
@@ -306,6 +309,11 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
             case VOWIFI_ICON_STYLE:
                 mVoWifiIconStyle =
                     TunerService.parseInteger(newValue, 1);
+                mConfig = Config.readConfig(mContext);
+                setConfiguration(mConfig);
+                notifyListeners();
+                break;
+            case SHOW_FIVEG_ICON:
                 mConfig = Config.readConfig(mContext);
                 setConfiguration(mConfig);
                 notifyListeners();
