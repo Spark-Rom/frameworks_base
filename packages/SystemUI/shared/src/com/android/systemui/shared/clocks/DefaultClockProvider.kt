@@ -38,6 +38,7 @@ import java.util.TimeZone
 import javax.inject.Inject
 
 import android.provider.Settings.System
+import android.provider.Settings.Secure
 
 private val TAG = DefaultClockProvider::class.simpleName
 const val DEFAULT_CLOCK_NAME = "Default Clock"
