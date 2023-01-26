@@ -15,11 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.android.internal.util.spark;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.Build;
+import android.os.Build.VERSION;
 import android.os.SystemProperties;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.lang.reflect.Field;
@@ -36,7 +40,6 @@ public class PixelPropsUtils {
     private static final String TAG = PixelPropsUtils.class.getSimpleName();
     private static final String DEVICE = "ro.product.device";
     private static final boolean DEBUG = false;
-    public static final String PACKAGE_NETFLIX = "com.netflix.mediaclient";
 
     private static final Map<String, Object> propsToChange;
     private static final Map<String, Object> propsToChangePixel7Pro;
@@ -72,9 +75,11 @@ public class PixelPropsUtils {
             "com.android.chrome",
             "com.android.vending",
             "com.breel.wallpapers20",
-            PACKAGE_NETFLIX,
             "com.disney.disneyplus",
+            "com.microsoft.android.smsorganizer",
+            "com.netflix.mediaclient",
             "com.nhs.online.nhsonline",
+            "com.nothing.smartcenter",
             "in.startv.hotstar"
     };
 
@@ -146,6 +151,7 @@ public class PixelPropsUtils {
             "com.ea.gp.apexlegendsmobilefps",
             "com.levelinfinite.hotta.gp",
             "com.mobile.legends",
+            "com.supercell.clashofclans",
             "com.tencent.tmgp.sgame",
             "com.vng.mlbbvn"
     };
@@ -249,11 +255,6 @@ public class PixelPropsUtils {
         if (Arrays.asList(packagesToKeep).contains(packageName)) {
             return;
         }
-        if (packageName.equals(PACKAGE_NETFLIX) && !SystemProperties.getBoolean(
-                "persist.pixelpropsutils.spoof_netflix", false)) {
-            if (DEBUG) Log.d(TAG, "Netflix spoofing disabled by system prop");
-            return;
-        }
         if (packageName.startsWith("com.google.")
                 || packageName.startsWith(SAMSUNG)
                 || Arrays.asList(extraPackagesToChange).contains(packageName)) {
@@ -267,15 +268,15 @@ public class PixelPropsUtils {
                     if (isPixelDevice) return;
                     propsToChange.putAll(propsToChangePixel5);
                 }
-            } else if (isPixelDevice) {
+            } else if (packageName.equals("com.netflix.mediaclient") &&
+                    !SystemProperties.getBoolean("persist.sys.pixelprops.netflix", false)) {
+                if (DEBUG) Log.d(TAG, "Netflix spoofing disabled by system prop");
                 return;
             } else if (packageName.equals("com.android.vending")) {
                 sIsFinsky = true;
                 return;
-            } else {
-                if ((Arrays.asList(packagesToChangePixel7Pro).contains(packageName))
-                        || packageName.startsWith(SAMSUNG)
-                        || Arrays.asList(extraPackagesToChange).contains(packageName)) {
+            } else if (!isPixelDevice) {
+                if ((Arrays.asList(packagesToChangePixel7Pro).contains(packageName))) {
                     propsToChange.putAll(propsToChangePixel7Pro);
                 } else {
                     propsToChange.putAll(propsToChangePixel5);
@@ -297,8 +298,7 @@ public class PixelPropsUtils {
                 final String processName = Application.getProcessName();
                 if (processName.equals("com.google.android.gms.unstable")) {
                     sIsGms = true;
-                    setPropValue("FINGERPRINT", "google/angler/angler:6.0/MDB08L/2343525:user/release-keys");
-                    setPropValue("MODEL", "angler");
+                    spoofBuildGms();
                 }
                 return;
             }
@@ -384,6 +384,45 @@ public class PixelPropsUtils {
         } catch (NoSuchFieldException | IllegalAccessException e) {
             Log.e(TAG, "Failed to set prop " + key, e);
         }
+    }
+
+    private static void setBuildField(String key, String value) {
+        try {
+            // Unlock
+            Field field = Build.class.getDeclaredField(key);
+            field.setAccessible(true);
+
+            // Edit
+            field.set(null, value);
+
+            // Lock
+            field.setAccessible(false);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            Log.e(TAG, "Failed to spoof Build." + key, e);
+        }
+    }
+
+    private static void setVersionField(String key, Integer value) {
+        try {
+            // Unlock
+            Field field = Build.VERSION.class.getDeclaredField(key);
+            field.setAccessible(true);
+
+            // Edit
+            field.set(null, value);
+
+            // Lock
+            field.setAccessible(false);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            Log.e(TAG, "Failed to spoof Build." + key, e);
+        }
+    }
+
+    private static void spoofBuildGms() {
+        // Alter model name and fingerprint to avoid hardware attestation enforcement
+        setBuildField("FINGERPRINT", "google/angler/angler:6.0/MDB08L/2343525:user/release-keys");
+        setBuildField("MODEL", Build.MODEL + "\u200b");
+        setVersionField("DEVICE_INITIAL_SDK_INT", Build.VERSION_CODES.S);
     }
 
     private static boolean isCallerSafetyNet() {
