@@ -70,6 +70,8 @@ import com.android.systemui.qs.tiles.RefreshRateTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.ScreenRecordTile;
 import com.android.systemui.qs.tiles.ScreenshotTile;
+import com.android.systemui.qs.tiles.SparkIdleManagerTile;
+import com.android.systemui.qs.tiles.SparkBoostManagerTile;
 import com.android.systemui.qs.tiles.SmartPixelsTile;
 import com.android.systemui.qs.tiles.SoundSearchTile;
 import com.android.systemui.qs.tiles.SoundTile;
@@ -144,6 +146,8 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<RefreshRateTile> mRefreshRateTileProvider;
     private final Provider<PreferredNetworkTile> mPreferredNetworkTileProvider;
     private final Provider<ScreenshotTile> mScreenshotTileProvider;
+    private final Provider<SparkIdleManagerTile> mSparkIdleManagerTileProvider;
+    private final Provider<SparkBoostManagerTile> mSparkBoostManagerTileProvider;
 
     private final Lazy<QSHost> mQsHostLazy;
     private final Provider<CustomTile.Builder> mCustomTileBuilderProvider;
@@ -204,10 +208,12 @@ public class QSFactoryImpl implements QSFactory {
             Provider<SmartPixelsTile> smartPixelsTileProvider,
             Provider<RefreshRateTile> refreshRateTileProvider,
             Provider<PreferredNetworkTile> preferredNetworkTileProvider,
-            Provider<ScreenshotTile> screenshotTileProvider) {
+            Provider<ScreenshotTile> screenshotTileProvider,
+            Provider<SparkIdleManagerTile> sparkIdleManagerTileProvider,
+            Provider<SparkBoostManagerTile> sparkBoostManagerTileProvider) {
         mQsHostLazy = qsHostLazy;
         mCustomTileBuilderProvider = customTileBuilderProvider;
-
+    
         mWifiTileProvider = wifiTileProvider;
         mInternetTileProvider = internetTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
@@ -261,6 +267,8 @@ public class QSFactoryImpl implements QSFactory {
         mRefreshRateTileProvider = refreshRateTileProvider;
         mPreferredNetworkTileProvider = preferredNetworkTileProvider;
         mScreenshotTileProvider = screenshotTileProvider;
+        mSparkIdleManagerTileProvider = sparkIdleManagerTileProvider;
+        mSparkBoostManagerTileProvider = sparkBoostManagerTileProvider;
     }
 
     /** Creates a tile with a type based on {@code tileSpec} */
@@ -382,6 +390,10 @@ public class QSFactoryImpl implements QSFactory {
                 return mPreferredNetworkTileProvider.get();
             case "screenshot":
                 return mScreenshotTileProvider.get();
+            case "spark_idle":
+                return mSparkIdleManagerTileProvider.get();
+            case "spark_boost":
+                return mSparkBoostManagerTileProvider.get();
         }
         // Custom tiles
         if (tileSpec.startsWith(CustomTile.PREFIX)) {

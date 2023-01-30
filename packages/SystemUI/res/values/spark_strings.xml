@@ -294,4 +294,12 @@
     <!-- Screenshot Tile -->
     <string name="screenshot_long_press">Long press - selected region</string>
 
+    <!-- Spark QS Tiles -->
+    <string name="quick_settings_spark_boost_mode_label">System Boost</string>
+    <string name="quick_settings_spark_services_unavailable">System Manager Disabled</string>
+    <string name="quick_settings_spark_boost_mode_enabled">Boost Active</string>
+    <string name="quick_settings_spark_boost_mode_disabled">Boost Inactive</string>
+    <string name="quick_settings_spark_idle_mode_label">Aggressive Idle Manager</string>
+    <string name="quick_settings_spark_idle_mode_enabled">Agrressive Idle Active</string>
+    <string name="quick_settings_spark_idle_mode_disabled">Agrressive Idle Inactive</string>
 </resources>
