@@ -4065,8 +4065,6 @@ public class CentralSurfacesImpl extends CoreStartable implements
                 }
                 SparkSystemManager.startSystemIdleServices();
                 SparkSystemManager.cacheCleaner(CentralSurfaces.getPackageManagerForUser(mContext, mLockscreenUserManager.getCurrentUserId()));
-                SparkSystemManager.startBoostingService(Settings.System.getIntForUser(mContext.getContentResolver(),
-                                Settings.System.SPARK_SYSTEM_BOOST, 0, mLockscreenUserManager.getCurrentUserId()) == 1);
                 if (Settings.Secure.getIntForUser(mContext.getContentResolver(),
                                         Settings.Secure.SPARK_AGGRESSIVE_IDLE_MODE, 0, mLockscreenUserManager.getCurrentUserId()) == 1) {
                     Settings.Secure.putIntForUser(mContext.getContentResolver(),
@@ -4108,8 +4106,6 @@ public class CentralSurfacesImpl extends CoreStartable implements
             if (Settings.System.getIntForUser(mContext.getContentResolver(),
                                     Settings.System.SPARK_SYSTEM_MANAGER, 0, mLockscreenUserManager.getCurrentUserId()) == 1) {
                 SparkSystemManager.stopManager(mContext);
-                SparkSystemManager.startBoostingService(Settings.System.getIntForUser(mContext.getContentResolver(),
-                                    Settings.System.SPARK_SYSTEM_BOOST, 0, mLockscreenUserManager.getCurrentUserId()) == 1);
                 if (Settings.Secure.getIntForUser(mContext.getContentResolver(),
                                             Settings.Secure.SPARK_AGGRESSIVE_IDLE_MODE, 0, mLockscreenUserManager.getCurrentUserId()) == 1) {
                     Settings.Secure.putIntForUser(mContext.getContentResolver(),
