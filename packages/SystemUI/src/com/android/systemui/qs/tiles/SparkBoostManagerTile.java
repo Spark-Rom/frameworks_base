@@ -46,7 +46,7 @@ import com.android.systemui.qs.SettingObserver;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.logging.QSLogger;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
-import com.android.systemui.SparkSystemManager;
+import com.android.systemui.spark.SparkSystemManager;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.util.settings.SystemSettings;
 
