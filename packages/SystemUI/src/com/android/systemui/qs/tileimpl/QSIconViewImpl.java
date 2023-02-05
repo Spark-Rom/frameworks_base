@@ -250,6 +250,7 @@ public class QSIconViewImpl extends QSIconView {
         (mRandomColor.nextInt(256) / 2f + 0.5),
          mRandomColor.nextInt(256),
          mRandomColor.nextInt(256));
+        int mWhiteTint = Color.WHITE; 
 
         if (state.disabledByPolicy || state.state == Tile.STATE_UNAVAILABLE) {
             return Utils.getColorAttrDefaultColor(
@@ -260,11 +261,13 @@ public class QSIconViewImpl extends QSIconView {
                 if(qsPanelStyle == 2 || qsPanelStyle == 3)
                 return Utils.getColorAttrDefaultColor(context,
                         android.R.attr.colorAccent);
-                else if (qsPanelStyle == 4)
-                return mRandomTint;
-                else
-                return Utils.getColorAttrDefaultColor(context,
-                        android.R.attr.textColorPrimaryInverse);
+              else if (qsPanelStyle == 4)
+               return mRandomTint;
+              else if (qsPanelStyle == 5 || qsPanelStyle == 7 || qsPanelStyle == 10)
+               return mWhiteTint;
+              else
+              return Utils.getColorAttrDefaultColor(context,
+                      android.R.attr.textColorPrimaryInverse);
         } else {
             Log.e("QSIconView", "Invalid state " + state);
             return 0;
