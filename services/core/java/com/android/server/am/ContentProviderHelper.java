@@ -497,6 +497,13 @@ public class ContentProviderHelper {
                                     PROVIDER_ACQUISITION_EVENT_REPORTED__PROC_START_TYPE__PROCESS_START_TYPE_WARM);
                         } else {
                             checkTime(startTime, "getContentProviderImpl: before start process");
+			    final int allowed = mService.getAppStartModeLOSP(cpr.appInfo.uid, cpr.appInfo.packageName,
+									     cpr.appInfo.targetSdkVersion,
+									     Binder.getCallingPid(),
+									     false, false, false);
+			    if (allowed != ActivityManager.APP_START_MODE_NORMAL) {
+				return null;
+			    }
                             proc = mService.startProcessLocked(
                                     cpi.processName, cpr.appInfo, false, 0,
                                     new HostingRecord(HostingRecord.HOSTING_TYPE_CONTENT_PROVIDER,
