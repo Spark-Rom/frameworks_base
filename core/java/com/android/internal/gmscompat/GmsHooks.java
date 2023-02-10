@@ -60,6 +60,7 @@ import android.webkit.WebView;
 
 import com.android.internal.gmscompat.client.ClientPriorityManager;
 import com.android.internal.gmscompat.flags.GmsFlag;
+import com.android.internal.gmscompat.flags.GmsPhenotypeFlagsCursor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -330,11 +331,9 @@ public final class GmsHooks {
     // ContentResolver#query(Uri, String[], Bundle, CancellationSignal)
     public static Cursor maybeModifyQueryResult(Uri uri, @Nullable String[] projection, @Nullable Bundle queryArgs,
                                                 Cursor origCursor) {
-        String uriString = uri.toString();
-
         Consumer<ArrayMap<String, String>> mutator = null;
 
-        if (GmsFlag.GSERVICES_URI.equals(uriString)) {
+        if (GmsFlag.GSERVICES_URI.equals(uri.toString())) {
             if (queryArgs == null) {
                 return null;
             }
@@ -356,26 +355,6 @@ public final class GmsHooks {
                             break;
                         }
                     }
-                }
-            };
-        } else if (uriString.startsWith(GmsFlag.PHENOTYPE_URI_PREFIX)) {
-            List<String> path = uri.getPathSegments();
-            if (path.size() != 1) {
-                Log.e(TAG, "unknown phenotype uri " + uriString, new Throwable());
-                return null;
-            }
-
-            String namespace = path.get(0);
-
-            ArrayMap<String, GmsFlag> nsFlags = config().flags.get(namespace);
-
-            if (nsFlags == null) {
-                return null;
-            }
-
-            mutator = map -> {
-                for (GmsFlag f : nsFlags.values()) {
-                    f.applyToPhenotypeMap(map);
                 }
             };
         }
@@ -479,8 +458,8 @@ public final class GmsHooks {
     }
 
     private static boolean hasNearbyDevicesPermission() {
-        // "Nearby devices" user-facing permission grants multiple underlying permissions,
-        // checking one is enough
+        // "Nearby devices" permission grants
+        // BLUETOOTH_CONNECT, BLUETOOTH_ADVERTISE and BLUETOOTH_SCAN, checking one is enough
         return GmsCompat.hasPermission(Manifest.permission.BLUETOOTH_SCAN);
     }
 
@@ -554,8 +533,54 @@ public final class GmsHooks {
             return false;
         }
 
-        StubDef stub = StubDef.find(e, config());
+        StackTraceElement[] steArr = e.getStackTrace();
+        ClassLoader defaultClassLoader = GmsCompat.appContext().getClassLoader();
 
+        // first 2 elements are guaranteed to be inside the Parcel class
+        final int firstIndex = 2;
+
+        StackTraceElement targetMethod = null;
+
+        // To find out which API call caused the exception, iterate through the stack trace until
+        // the first app's class (app's classes are loaded with PathClassLoader)
+        for (int i = firstIndex; i < steArr.length; ++i) {
+            StackTraceElement ste = steArr[i];
+            String className = ste.getClassName();
+            Class class_;
+            try {
+                class_ = Class.forName(className, false, defaultClassLoader);
+            } catch (ClassNotFoundException cnfe) {
+                return false;
+            }
+
+            ClassLoader classLoader = class_.getClassLoader();
+            if (classLoader == null) {
+                return false;
+            }
+
+            String clName = classLoader.getClass().getName();
+
+            if ("java.lang.BootClassLoader".equals(clName)) {
+                continue;
+            }
+
+            if (!"dalvik.system.PathClassLoader".equals(clName)) {
+                return false;
+            }
+
+            if (i == firstIndex) {
+                return false;
+            }
+
+            targetMethod = steArr[i - 1];
+            break;
+        }
+
+        if (targetMethod == null) {
+            return false;
+        }
+
+        StubDef stub = StubDef.find(targetMethod.getClassName(), targetMethod.getMethodName(), config());
         if (stub == null) {
             return false;
         }
@@ -588,6 +613,28 @@ public final class GmsHooks {
 
     private static volatile SQLiteOpenHelper phenotypeDb;
     public static SQLiteOpenHelper getPhenotypeDb() { return phenotypeDb; }
+
+    // SQLiteDatabase#queryWithFactory
+    @Nullable
+    public static CursorWrapper maybeWrapSqlCursor(SQLiteDatabase db, String table,
+                                                   String selection, String[] selectionArgs, Cursor cursor) {
+        if (cursor == null) {
+            return null;
+        }
+
+        if (GmsCompat.isGmsCore()) {
+            String dbPath = db.getPath();
+            if (dbPath.endsWith("/phenotype.db")) {
+                switch (table) {
+                    case "Flags":
+                    case "FlagOverrides":
+                        return GmsPhenotypeFlagsCursor.maybeCreate(selection, selectionArgs, cursor);
+                }
+            }
+        }
+
+        return null;
+    }
 
     private GmsHooks() {}
 }

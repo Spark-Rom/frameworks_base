@@ -314,7 +314,7 @@ public class LocationManagerService extends ILocationManager.Stub implements
         return getLocationProviderManager(providerName, false /* ignorePassive */);
     }
 
-    private LocationProviderManager getLocationProviderManager(final String providerName, final boolean ignorePassive) {
+    private LocationProviderManager getLocationProviderManager(String providerName, boolean ignorePassive) {
         if (providerName == null) {
             return null;
         }

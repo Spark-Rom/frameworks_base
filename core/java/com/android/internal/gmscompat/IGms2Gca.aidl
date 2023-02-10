@@ -24,8 +24,6 @@ interface IGms2Gca {
 
     oneway void showGmsMissingNearbyDevicesPermissionGeneric(String callerPkg);
 
-    oneway void maybeShowContactsSyncNotification();
-
     void onUncaughtException(in ApplicationErrorReport aer);
 
     @nullable String privSettingsGetString(String ns, String key);
