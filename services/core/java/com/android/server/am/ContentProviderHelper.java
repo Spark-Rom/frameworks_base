@@ -503,6 +503,9 @@ public class ContentProviderHelper {
 									     Binder.getCallingPid(),
 									     false, false, caller_is_bg);
 			    if (caller_is_bg && allowed != ActivityManager.APP_START_MODE_NORMAL) {
+				Slog.d(TAG, "Stopped " + r.info.packageName +
+				       " from starting content provider in "
+				       + cpr.appInfo.packageName);
 				return null;
 			    }
                             proc = mService.startProcessLocked(
