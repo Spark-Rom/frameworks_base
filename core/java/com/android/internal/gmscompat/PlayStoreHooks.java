@@ -16,18 +16,16 @@
 
 package com.android.internal.gmscompat;
 
-import android.Manifest;
 import android.app.Activity;
-import android.app.ActivityThread;
 import android.app.PendingIntent;
 import android.app.compat.gms.GmsCompat;
 import android.app.usage.StorageStats;
 import android.content.BroadcastReceiver;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
+import android.content.pm.GosPackageState;
 import android.content.pm.IPackageDataObserver;
 import android.content.pm.IPackageDeleteObserver;
 import android.content.pm.PackageInstaller;
@@ -40,12 +38,12 @@ import android.os.storage.StorageManager;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.android.internal.gmscompat.util.GmcActivityUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BiConsumer;
 
@@ -55,7 +53,6 @@ public final class PlayStoreHooks {
     // accessed only from the main thread, no need for synchronization
     static ArrayDeque<Intent> pendingConfirmationIntents;
     static PackageManager packageManager;
-    static Executor commitExecutor;
 
     public static void init() {
         pendingConfirmationIntents = new ArrayDeque<>();
@@ -64,104 +61,45 @@ public final class PlayStoreHooks {
         playStoreObbDir = obbDir + '/' + GmsInfo.PACKAGE_PLAY_STORE;
         File.mkdirsFailedHook = PlayStoreHooks::mkdirsFailed;
         packageManager = GmsCompat.appContext().getPackageManager();
-        commitExecutor = Executors.newSingleThreadExecutor();
+    }
+
+    // PackageInstaller#createSession
+    public static void adjustSessionParams(PackageInstaller.SessionParams params) {
+        String pkg = Objects.requireNonNull(params.appPackageName);
+
+        switch (pkg) {
+            case GmsInfo.PACKAGE_GMS_CORE:
+            case GmsInfo.PACKAGE_PLAY_STORE:
+                String updateRequestReason = "Play Store created PackageInstaller SessionParams for " + pkg;
+                GmsCompatConfig config;
+                try {
+                    config = GmsCompatApp.iGms2Gca().requestConfigUpdate(updateRequestReason);
+                } catch (RemoteException e) {
+                    throw GmsCompatApp.callFailed(e);
+                }
+                if (GmsHooks.config().version != config.version) {
+                    GmsHooks.setConfig(config);
+                }
+                break;
+        }
+
+        switch (pkg) {
+            case GmsInfo.PACKAGE_GMS_CORE:
+                params.maxAllowedVersion = GmsHooks.config().maxGmsCoreVersion;
+                break;
+            case GmsInfo.PACKAGE_PLAY_STORE:
+                params.maxAllowedVersion = GmsHooks.config().maxPlayStoreVersion;
+                break;
+        }
     }
 
     // PackageInstaller.Session#commit(IntentSender)
-    public static IntentSender commitSession(PackageInstaller.Session session, IntentSender statusReceiver) {
-        if (!session.isMultiPackage()) {
-            return PackageInstallerStatusForwarder.register((intent, extras) -> sendIntent(intent, statusReceiver))
-                    .getIntentSender();
-        }
-
-        // multiPackage sessions do not work without the privileged INSTALL_PACKAGES permission,
-        // commit their children separately instead.
-
-        // Chrome {Stable, Beta, Dev, Canary} (and their "Android System WebView" counterparts)
-        // are the only known users of multiPackage sessions, enable this workaround only for them.
-        // Installing a Chrome variant or its WebView counterpart installs Trichrome static shared
-        // library together in a single multiPackage session. Committing child sessions separately
-        // should be fully safe (despite broken atomicity) given that:
-        // - PackageManager will not allow installation of Chrome if Trichrome of the right version
-        // isn't installed yet
-        // - multiple versions of static shared libraries can be installed at the same time, so
-        // installing a Trichrome update will not break the current Chrome + Trichrome combination:
-        // both previous and new versions of Trichrome will be present after update completes
-        // - when Chrome is updated in the subsequent session, older version of Trichrome will
-        // become unused and will be deleted by the OS automatically after an OS-defined delay
-
-        // Note that unprivileged package installers can't remove static shared libraries.
-        // Privileged Play Store, despite being able to through the DELETE_PACKAGES permission,
-        // doesn't do this either, relying on the OS instead.
-
-        int[] sessionIds = session.getChildSessionIds();
-        Deque<PackageInstaller.Session> sessions = new ArrayDeque<>(sessionIds.length);
-        PackageInstaller installer = packageManager.getPackageInstaller();
-
-        boolean trichromelibraryFound = false;
-        for (int id : sessionIds) {
-            session.removeChildSessionId(id);
-
-            PackageInstaller.Session childSession;
-            String[] names;
-            try {
-                childSession = installer.openSession(id);
-                names = childSession.getNames();
-            } catch (IOException e) {
-                // child sessions should be already opened by the Play Store
-                throw new IllegalStateException(e);
-            }
-            if (names.length == 1 && names[0].contains("com.google.android.trichromelibrary")) {
-                if (trichromelibraryFound) {
-                    throw new IllegalStateException("trichromelibrary already found");
-                }
-                trichromelibraryFound = true;
-                sessions.addFirst(childSession);
-            } else {
-                sessions.addLast(childSession);
-            }
-        }
-        if (!trichromelibraryFound) {
-            // this approach breaks atomicity of multiPackage sessions, restrict it to installs
-            // of Chrome and "Android System WebView";
-            // there are no other known users of multiPackage sessions as of August 2022
-            throw new IllegalStateException("trichromelibrary not found");
-        }
-
-        session.abandon();
-        multiCommitStep(sessions, statusReceiver);
-
-        // commit of the parent session is a no-op
-        return null;
+    public static IntentSender wrapCommitStatusReceiver(PackageInstaller.Session session, IntentSender statusReceiver) {
+        return PackageInstallerStatusForwarder.register((intent, extras) -> sendIntent(intent, statusReceiver))
+                .getIntentSender();
     }
 
-    static void multiCommitStep(Deque<PackageInstaller.Session> sessions, IntentSender finalCallback) {
-        PackageInstaller.Session session = sessions.removeFirst();
-        PendingIntent pi = PackageInstallerStatusForwarder.register(multiCommitListener(sessions, finalCallback));
-
-        // commitInner will block if getSilentUpdateWaitMillis() is > 0
-        commitExecutor.execute(() -> session.commitInner(pi.getIntentSender()));
-    }
-
-    private static BiConsumer<Intent, Bundle> multiCommitListener(Deque<PackageInstaller.Session> sessions, IntentSender finalCallback) {
-        return (intent, extras) -> {
-            if (sessions.size() == 0) {
-                sendIntent(intent, finalCallback);
-            } else {
-                if (getIntFromBundle(extras, PackageInstaller.EXTRA_STATUS) == PackageInstaller.STATUS_SUCCESS) {
-                    multiCommitStep(sessions, finalCallback);
-                } else {
-                    for (PackageInstaller.Session s : sessions) {
-                        s.abandon();
-                    }
-                    sendIntent(intent, finalCallback);
-                }
-            }
-        };
-    }
-
-    // call at the end of Activity#onResume()
-    public static void activityResumed(Activity activity) {
+    public static void onActivityResumed(Activity activity) {
         if (pendingConfirmationIntents.size() != 0) {
             Intent i = pendingConfirmationIntents.removeLast();
             activity.startActivity(i);
@@ -195,7 +133,7 @@ public final class PlayStoreHooks {
                     PendingIntent.FLAG_CANCEL_CURRENT |
                         PendingIntent.FLAG_MUTABLE);
 
-            context.registerReceiver(sf, new IntentFilter(intentAction));
+            context.registerReceiver(sf, new IntentFilter(intentAction), Context.RECEIVER_NOT_EXPORTED);
             return sf.pendingIntent;
         }
 
@@ -206,15 +144,24 @@ public final class PlayStoreHooks {
             if (status == PackageInstaller.STATUS_PENDING_USER_ACTION) {
                 Intent confirmationIntent = intent.getParcelableExtra(Intent.EXTRA_INTENT);
 
-                // there is no public API that I'm aware of (as of API 31)
-                // that would allow to *reliably* find this out
-                if (ActivityThread.currentActivityThread().hasAtLeastOneResumedActivity()) {
-                    confirmationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(confirmationIntent);
+                String packageName = null;
+
+                if (extras.containsKey(PackageInstaller.EXTRA_SESSION_ID)) {
+                    int sessionId = getIntFromBundle(extras, PackageInstaller.EXTRA_SESSION_ID);
+                    PackageInstaller pkgInstaller = packageManager.getPackageInstaller();
+                    PackageInstaller.SessionInfo si = pkgInstaller.getSessionInfo(sessionId);
+                    if (si != null) {
+                        packageName = si.getAppPackageName();
+                    }
+                }
+
+                Activity activity = GmcActivityUtils.getMostRecentVisibleActivity();
+                if (activity != null) {
+                    activity.startActivity(confirmationIntent);
                 } else {
                     pendingConfirmationIntents.addLast(confirmationIntent);
                     try {
-                        GmsCompatApp.iGms2Gca().showPlayStorePendingUserActionNotification();
+                        GmsCompatApp.iGms2Gca().showPlayStorePendingUserActionNotification(packageName);
                     } catch (RemoteException e) {
                         GmsCompatApp.callFailed(e);
                     }
@@ -234,45 +181,76 @@ public final class PlayStoreHooks {
         if (flags != 0) {
             throw new IllegalStateException("unexpected flags: " + flags);
         }
-        PendingIntent pi = PackageInstallerStatusForwarder.register(uninstallListener(packageName, observer));
+
+        // Play Store expects call to deletePackage() to always succeed, which almost always happens
+        // when it has the privileged DELETE_PACKAGES permission.
+        // This is not the case when Play Store has only the unprivileged REQUEST_DELETE_PACKAGES
+        // permission, which requires confirmation from the user.
+        // There are two difficulties:
+        // - user may reject the confirmation prompt, which produces DELETE_FAILED_ABORTED error code,
+        // which Play Store ignores
+        // - user may dismiss the confirmation prompt without making a choice, which doesn't make
+        // any callback at all
+        // In both cases, Play Store remains stuck in "Uninstalling..." state for that package.
+        // This state is written to persistent storage, it remains stuck even after device reboot.
+        //
+        // To work-around all these issues, pretend that the package was uninstalled and then installed
+        // again, which moves the package state from "Uninstalling..." to "Installed" state, and
+        // launch the uninstall request separately.
+
+        PendingIntent pi = PackageInstallerStatusForwarder.register((BiConsumer<Intent, Bundle>) (intent, extras) -> {
+            Log.d(TAG, "uninstall status " + extras.getString(PackageInstaller.EXTRA_STATUS_MESSAGE));
+        });
         pm.getPackageInstaller().uninstall(packageName, pi.getIntentSender());
-    }
 
-    private static BiConsumer<Intent, Bundle> uninstallListener(String packageName, IPackageDeleteObserver target) {
-        return (intent, extras) -> {
-            // EXTRA_STATUS returns PackageInstaller constant,
-            // EXTRA_LEGACY_STATUS returns PackageManager constant
-            int status = getIntFromBundle(extras, PackageInstaller.EXTRA_LEGACY_STATUS);
-
+        GmsCompat.appContext().getMainThreadHandler().postDelayed(() -> {
             try {
-                target.packageDeleted(packageName, status);
+                // Play Store ignores this callback as of version 33.6.13, but provide it anyway
+                // in case it's fixed
+                observer.packageDeleted(packageName, PackageManager.DELETE_FAILED_ABORTED);
             } catch (RemoteException e) {
                 throw e.rethrowAsRuntimeException();
             }
 
-            if (status != PackageManager.DELETE_SUCCEEDED) {
-                // Play Store doesn't expect uninstallation to fail
-                // and ends up in an inconsistent UI state if the following workaround isn't applied
+            resetPackageState(packageName);
+        }, 100L); // delay the callback for to workaround a race condition in Play Store
+    }
 
-                String[] broadcasts = { Intent.ACTION_PACKAGE_REMOVED, Intent.ACTION_PACKAGE_ADDED };
+    // If state transition that is expected to never fail by Play Store does fail, it may get stuck
+    // in the old state. This happens, for example, when package uninstall fails.
+    // To work-around this, pretend that the package was removed and installed again
+    public static void resetPackageState(String packageName) {
+        updatePackageState(packageName, Intent.ACTION_PACKAGE_REMOVED, Intent.ACTION_PACKAGE_ADDED);
+    }
 
-                Context context = GmsCompat.appContext();
+    public static void updatePackageState(String packageName, String... broadcasts) {
+        Context context = GmsCompat.appContext();
 
-                // default ClassLoader fails to load the needed class
-                ClassLoader cl = context.getClassLoader();
-                try {
-                    Class cls = Class.forName("com.google.android.finsky.packagemanager.impl.PackageMonitorReceiverImpl$RegisteredReceiver", true, cl);
+        // default ClassLoader fails to load the needed class
+        ClassLoader cl = context.getClassLoader();
 
-                    for (String action : broadcasts) {
-                        // don't reuse BroadcastReceiver, it's expected that a new instance is made each time
-                        BroadcastReceiver br = (BroadcastReceiver) cls.newInstance();
-                        br.onReceive(context, new Intent(action, packageUri(packageName)));
-                    }
-                } catch (ReflectiveOperationException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+        // Depending on Play Store version, target class can be in packagemonitor or in
+        // packagemanager package, support both
+        String[] classNames = {
+            "com.google.android.finsky.packagemonitor.impl.PackageMonitorReceiverImpl$RegisteredReceiver",
+            "com.google.android.finsky.packagemanager.impl.PackageMonitorReceiverImpl$RegisteredReceiver",
         };
+
+        for (String className : classNames) {
+            try {
+                Class cls = Class.forName(className, true, cl);
+
+                for (String action : broadcasts) {
+                    // don't reuse BroadcastReceiver, it's expected that a new instance is made each time
+                    BroadcastReceiver br = (BroadcastReceiver) cls.newInstance();
+                    br.onReceive(context, new Intent(action, packageUri(packageName)));
+                }
+            } catch (ReflectiveOperationException e) {
+                Log.d(TAG, "", e);
+                continue;
+            }
+            break;
+        }
     }
 
     // Called during self-update sequence because PackageManager requires
@@ -312,7 +290,7 @@ public final class PlayStoreHooks {
     // ApplicationPackageManager#setApplicationEnabledSetting
     public static void setApplicationEnabledSetting(String packageName, int newState) {
         if (newState == PackageManager.COMPONENT_ENABLED_STATE_ENABLED
-                    && ActivityThread.currentActivityThread().hasAtLeastOneResumedActivity())
+                    && GmcActivityUtils.getMostRecentVisibleActivity() != null)
         {
             openAppSettings(packageName);
         }
@@ -326,7 +304,10 @@ public final class PlayStoreHooks {
         String path = file.getPath();
 
         if (path.startsWith(obbDir) && !path.startsWith(playStoreObbDir)) {
-            if (!GmsCompat.hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            GosPackageState ps = GosPackageState.get(GmsCompat.appContext().getPackageName());
+            boolean hasObbAccess = ps != null && ps.hasFlag(GosPackageState.FLAG_ALLOW_ACCESS_TO_OBB_DIRECTORY);
+
+            if (!hasObbAccess) {
                 try {
                     GmsCompatApp.iGms2Gca().showPlayStoreMissingObbPermissionNotification();
                 } catch (RemoteException e) {
@@ -359,26 +340,6 @@ public final class PlayStoreHooks {
             target.sendIntent(GmsCompat.appContext(), 0, intent, null, null);
         } catch (IntentSender.SendIntentException e) {
             Log.d(TAG, "", e);
-        }
-    }
-
-    static void setupGservicesFlags(GmsCompatConfig config) {
-        ContentResolver cr = GmsCompat.appContext().getContentResolver();
-        final String prefPrefix = "gmscompat_play_store_unrestrict_pkg_";
-
-        // Disables auto updates of GMS Core, not of all GMS components.
-        // Updates that don't change version of GMS Core (eg downloading a new APK split
-        // for new device locale) and manual updates are allowed
-        if (Settings.Secure.getInt(cr, prefPrefix + GmsInfo.PACKAGE_GMS_CORE, 0) != 1) {
-            config.addGservicesFlag("finsky.AutoUpdateCodegen__gms_auto_update_enabled", "0");
-        }
-
-        if (Settings.Secure.getInt(cr, prefPrefix + GmsInfo.PACKAGE_PLAY_STORE, 0) != 1) {
-            // prevent auto-updates of Play Store, self-update files are still downloaded
-            config.addGservicesFlag("finsky.SelfUpdate__do_not_install", "1");
-            // don't re-download update files after failed self-update
-            config.addGservicesFlag("finsky.SelfUpdate__self_update_download_max_valid_time_ms",
-                    "" + Long.MAX_VALUE);
         }
     }
 

@@ -22,12 +22,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningAppProcessInfo;
-import android.app.ActivityThread;
 import android.app.Application;
 import android.app.ApplicationErrorReport;
 import android.app.BroadcastOptions;
 import android.app.PendingIntent;
 import android.app.RemoteServiceException;
+import android.app.Service;
 import android.app.compat.gms.GmsCompat;
 import android.content.ComponentName;
 import android.content.ContentResolver;
@@ -37,9 +37,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.database.CursorWrapper;
 import android.database.MatrixCursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Build;
@@ -59,11 +57,16 @@ import android.util.SparseArray;
 import android.webkit.WebView;
 
 import com.android.internal.gmscompat.client.ClientPriorityManager;
+import com.android.internal.gmscompat.client.GmsCompatClientService;
 import com.android.internal.gmscompat.flags.GmsFlag;
+import com.android.internal.gmscompat.util.GmcActivityUtils;
+import com.android.internal.gmscompat.util.GmsCoreActivityLauncher;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 import static com.android.internal.gmscompat.GmsInfo.PACKAGE_GMS_CORE;
@@ -75,6 +78,7 @@ public final class GmsHooks {
 
     public static final String PERSISTENT_GmsCore_PROCESS = PACKAGE_GMS_CORE + ".persistent";
     public static boolean inPersistentGmsCoreProcess;
+    public static final String UI_GmsCore_PROCESS = PACKAGE_GMS_CORE + ".ui";
 
     public static GmsCompatConfig config() {
         // thread-safe: immutable after publication
@@ -92,6 +96,7 @@ public final class GmsHooks {
 
         if (GmsCompat.isGmsCore()) {
             inPersistentGmsCoreProcess = processName.equals(PERSISTENT_GmsCore_PROCESS);
+            GmsCoreActivityLauncher.maybeRegister(processName, ctx);
         }
 
         if (GmsCompat.isPlayStore()) {
@@ -114,10 +119,6 @@ public final class GmsHooks {
     static Object configUpdateLock;
 
     static void setConfig(GmsCompatConfig c) {
-        if (GmsCompat.isPlayStore()) {
-            PlayStoreHooks.setupGservicesFlags(c);
-        }
-
         // configUpdateLock should never be null at this point, it's initialized before GmsCompatApp
         // gets a handle to BinderGca2Gms that is used for updating GmsCompatConfig
         synchronized (configUpdateLock) {
@@ -429,16 +430,36 @@ public final class GmsHooks {
         return result;
     }
 
+    // SharedPreferencesImpl#getAll
+    public static void maybeModifySharedPreferencesValues(String name, HashMap<String, Object> map) {
+        // some PhenotypeFlags are stored in SharedPreferences instead of phenotype.db database
+        ArrayMap<String, GmsFlag> flags = GmsHooks.config().flags.get(name);
+        if (flags == null) {
+            return;
+        }
+
+        for (GmsFlag f : flags.values()) {
+            f.applyToPhenotypeMap(map);
+        }
+    }
+
     // Instrumentation#execStartActivity(Context, IBinder, IBinder, Activity, Intent, int, Bundle)
-    public static void onActivityStart(int resultCode, Intent intent, Bundle options) {
+    public static void onActivityStart(int resultCode, Intent intent, int requestCode, Bundle options) {
         if (resultCode != ActivityManager.START_ABORTED) {
             return;
         }
 
         // handle background activity starts, which normally require a privileged permission
 
-        Context ctx = GmsCompat.appContext();
+        if (requestCode >= 0) {
+            Log.d(TAG, "attempt to call startActivityForResult() from the background " + intent, new Throwable());
+            return;
+        }
 
+        // needed to prevent invalid reuse of PendingIntents, see PendingIntent doc
+        intent.setIdentifier(UUID.randomUUID().toString());
+
+        Context ctx = GmsCompat.appContext();
         PendingIntent pendingIntent = PendingIntent.getActivity(ctx, 0, intent,
                 PendingIntent.FLAG_IMMUTABLE, options);
         try {
@@ -486,10 +507,12 @@ public final class GmsHooks {
 
     // NfcAdapter#enable()
     public static void enableNfc() {
-        if (ActivityThread.currentActivityThread().hasAtLeastOneResumedActivity()) {
-            Intent i = new Intent(Settings.ACTION_NFC_SETTINGS);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            GmsCompat.appContext().startActivity(i);
+        Activity activity = GmcActivityUtils.getMostRecentVisibleActivity();
+        if (activity != null) {
+            activity.runOnUiThread(() -> {
+                Intent i = new Intent(Settings.ACTION_NFC_SETTINGS);
+                activity.startActivity(i);
+            });
         }
     }
 
@@ -554,7 +577,7 @@ public final class GmsHooks {
             return false;
         }
 
-        StubDef stub = StubDef.find(e, config());
+        StubDef stub = StubDef.find(e.getStackTrace(), config(), StubDef.FIND_MODE_Parcel);
 
         if (stub == null) {
             return false;
@@ -584,6 +607,19 @@ public final class GmsHooks {
                 }
             }
         }
+    }
+
+    @Nullable
+    public static Service maybeInstantiateService(String className) {
+        if (GmsCompatClientService.class.getName().equals(className)) {
+            return new GmsCompatClientService();
+        }
+
+        if (GmcMediaProjectionService.class.getName().equals(className)) {
+            return new GmcMediaProjectionService();
+        }
+
+        return null;
     }
 
     private static volatile SQLiteOpenHelper phenotypeDb;

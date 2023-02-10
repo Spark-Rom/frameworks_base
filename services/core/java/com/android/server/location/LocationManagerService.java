@@ -314,7 +314,7 @@ public class LocationManagerService extends ILocationManager.Stub implements
         return getLocationProviderManager(providerName, false /* ignorePassive */);
     }
 
-    private LocationProviderManager getLocationProviderManager(final String providerName, final boolean ignorePassive) {
+    private LocationProviderManager getLocationProviderManager(String providerName, boolean ignorePassive) {
         if (providerName == null) {
             return null;
         }
@@ -325,8 +325,10 @@ public class LocationManagerService extends ILocationManager.Stub implements
             }
         }
 
-        if (!ignorePassive && NETWORK_PROVIDER.equals(providerName)) {
-            Log.d(TAG, "replaced NETWORK with the PASSIVE provider for uid " + Binder.getCallingUid());
+        // Exempt system code in order to allow registering a real network provider
+        int uid = Binder.getCallingUid();
+        if (uid != Process.SYSTEM_UID && NETWORK_PROVIDER.equals(providerName)) {
+            Log.d(TAG, "replaced NETWORK with the PASSIVE provider for uid " + uid);
             return mPassiveManager;
         }
 

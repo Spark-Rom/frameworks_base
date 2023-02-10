@@ -19,14 +19,18 @@ package android.app.compat.gms;
 import android.Manifest;
 import android.annotation.NonNull;
 import android.annotation.SystemApi;
-import android.app.ActivityThread;
+import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
 import android.os.Build;
 import android.os.RemoteException;
 import android.util.Log;
 
 import com.android.internal.gmscompat.GmsCompatApp;
+import com.android.internal.gmscompat.util.GmsCoreActivityLauncher;
 import com.android.internal.gmscompat.GmsHooks;
 import com.android.internal.gmscompat.StubDef;
+import com.android.internal.gmscompat.util.GmcActivityUtils;
 
 /**
  * Hooks that are accessed from APEX modules.
@@ -39,21 +43,29 @@ public class GmsModuleHooks {
 
     // BluetoothAdapter#enable()
     // BluetoothAdapter#enableBLE()
-    public static boolean canEnableBluetoothAdapter() {
-        if (GmsCompat.hasPermission(Manifest.permission.BLUETOOTH_CONNECT)) {
-            return true;
-        }
+    public static void enableBluetoothAdapter() {
+        Activity activity = GmcActivityUtils.getMostRecentVisibleActivity();
 
-        if (ActivityThread.currentActivityThread().hasAtLeastOneResumedActivity()) {
-            String pkgName = GmsCompat.appContext().getPackageName();
-            try {
-                GmsCompatApp.iGms2Gca().showGmsMissingNearbyDevicesPermissionGeneric(pkgName);
-            } catch (RemoteException e) {
-                GmsCompatApp.callFailed(e);
+        if (activity != null) {
+            if (GmsCompat.hasPermission(Manifest.permission.BLUETOOTH_CONNECT)) {
+                activity.startActivity(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE));
+            } else {
+                String pkgName = GmsCompat.appContext().getPackageName();
+                try {
+                    GmsCompatApp.iGms2Gca().showGmsMissingNearbyDevicesPermissionGeneric(pkgName);
+                } catch (RemoteException e) {
+                    GmsCompatApp.callFailed(e);
+                }
             }
         } // else don't bother the user
+    }
 
-        return false;
+    // BluetoothAdapter#setScanMode()
+    public static void makeBluetoothAdapterDiscoverable() {
+        Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+        // Currently used only by Nearby Share.
+        // Ignore other requests, if there are any, to prevent spamming the user with these requests.
+        GmsCoreActivityLauncher.maybeLaunch(intent, ".+nearby\\.sharing.+");
     }
 
     // com.android.modules.utils.SynchronousResultReceiver.Result#getValue()
@@ -64,7 +76,7 @@ public class GmsModuleHooks {
 
         // origException contains service-side stack trace, need to obtain an app-side one
         var stackTrace = new Throwable();
-        StubDef stub = StubDef.find(stackTrace, GmsHooks.config());
+        StubDef stub = StubDef.find(stackTrace.getStackTrace(), GmsHooks.config(), StubDef.FIND_MODE_SynchronousResultReceiver);
 
         if (stub == null) {
             return false;
