@@ -24,6 +24,7 @@
     <string name="statusbar_items_title">ステータスバーのアイコン</string>
     <!-- Name of the VPN status bar icon. -->
     <string name="status_bar_vpn">VPN</string>
+    <string name="status_bar_firewall">Firewall</string>
     <!-- Sb Data Saver icon -->
     <string name="status_bar_data_saver">データセーバー</string>
     <!-- Sb Call Strength icon -->
@@ -106,11 +107,11 @@
     <string name="quick_settings_sound_vibrate">振動</string>
     <string name="quick_settings_sound_mute">ミュート</string>
     <!-- Heads Up QS Tile -->
-    <string name="quick_settings_heads_up_label">Heads Up</string>
-    <string name="accessibility_quick_settings_heads_up_off">Heads Up OFF</string>
-    <string name="accessibility_quick_settings_heads_up_on">Heads Up ON</string>
-    <string name="accessibility_quick_settings_heads_up_changed_off">Heads Up を OFF にしました</string>
-    <string name="accessibility_quick_settings_heads_up_changed_on">Heads Up を ON にしました</string>
+    <string name="quick_settings_heads_up_label">ポップアップ通知</string>
+    <string name="accessibility_quick_settings_heads_up_off">ポップアップ通知 OFF</string>
+    <string name="accessibility_quick_settings_heads_up_on">ポップアップ通知 ON</string>
+    <string name="accessibility_quick_settings_heads_up_changed_off">ポップアップ通知を OFF にしました</string>
+    <string name="accessibility_quick_settings_heads_up_changed_on">ポップアップ通知を ON にしました</string>
     <!-- Poweroff/Reboot/Recovery QS tile -->
     <string name="quick_settings_poweroff_label">電源を切る</string>
     <string name="quick_settings_reboot_label">再起動</string>
@@ -202,15 +203,15 @@
     <string name="screenrecord_longer_timeout_switch_summary">録画サイズを15GBに制限する</string>
     <string name="screenrecord_skip_time_label">タイマーをスキップ</string>
     <string name="screenrecord_skip_time_summary">3秒間の待機を削除する</string>
-    <string name="screenrecord_hevc_switch_label">Enable HEVC</string>
+    <string name="screenrecord_hevc_switch_label">HEVC を有効化</string>
     <!-- QS InternetDialog: Summary for how many devices are connected to the hotspot -->
     <plurals name="quick_settings_internet_hotspot_summary_num_devices">
         <item quantity="other">%d個のデバイスが接続されています</item>
     </plurals>
     <!-- Data usage panel -->
-    <string name="total_internet_usage">Total internet usage (Since boot)</string>
-    <string name="cellular_usage">Mobile data usage</string>
-    <string name="wifi_usage">Wifi data usage</string>
+    <string name="total_internet_usage">通信使用量の合計 (起動後)</string>
+    <string name="cellular_usage">モバイルデータ使用量</string>
+    <string name="wifi_usage">Wi-Fi データ使用量</string>
     <!-- Screen pinning dialog description. (for devices without navbar) -->
     <string name="screen_pinning_description_no_navbar">This keeps it in view until you unpin. Touch &amp; hold Back to unpin.</string>
     <!-- Notify use that they are in Lock-to-app (for devices without navbar)-->
@@ -220,15 +221,29 @@
     <!-- Notify use that they are in Lock-to-app (for devices without navbar and with gestures on fingerprint sensor)-->
     <string name="screen_pinning_toast_no_navbar_fpsensor">To unpin this screen, touch &amp; hold fingerprint sensor</string>
     <!-- Face Unlock -->
-    <string name="face_unlock_recognizing">Recognizing face...</string>
+    <string name="face_unlock_recognizing">顔を認識しています...</string>
     <!-- Bluetooth dialog -->
-    <string name="turn_on_bluetooth">Use Bluetooth</string>
-    <string name="bluetooth_is_off">Bluetooth is off</string>
-    <string name="tap_a_device_to_connect">Tap a device to connect</string>
-    <string name="photos_not_allowed">This app isnt supported</string>
+    <string name="turn_on_bluetooth">Bluetooth を使用</string>
+    <string name="bluetooth_is_off">Bluetooth は OFF です</string>
+    <string name="tap_a_device_to_connect">デバイスをタップして接続</string>
+    <string name="photos_not_allowed">このアプリはサポートされていません</string>
     <!-- Preferred network tile -->
-    <string name="quick_settings_preferred_network_label">Preferred network</string>
-    <string name="quick_settings_preferred_network_lte">4g / LTE</string>
-    <string name="quick_settings_preferred_network_nr">5g / NR</string>
-    <string name="quick_settings_preferred_network_unsupported">Unsupported</string>
+    <string name="quick_settings_preferred_network_label">優先ネットワーク</string>
+    <string name="quick_settings_preferred_network_lte">4G / LTE</string>
+    <string name="quick_settings_preferred_network_nr">5G / NR</string>
+    <string name="quick_settings_preferred_network_unsupported">対応していません</string>
+    <!-- Screenshot Tile -->
+    <string name="screenshot_long_press">Long press - selected region</string>
+    <!-- Spark QS Tiles -->
+    <string name="quick_settings_spark_boost_mode_label">System Boost</string>
+    <string name="quick_settings_spark_services_unavailable">System Manager Disabled</string>
+    <string name="quick_settings_spark_boost_mode_enabled">Boost Active</string>
+    <string name="quick_settings_spark_boost_mode_disabled">Boost Inactive</string>
+    <string name="quick_settings_spark_idle_mode_label">Aggressive Idle Manager</string>
+    <string name="quick_settings_spark_idle_mode_enabled">Agrressive Idle Active</string>
+    <string name="quick_settings_spark_idle_mode_disabled">Agrressive Idle Inactive</string>
+    <!-- Data usage info in QS footer -->
+    <string name="usage_data">used today</string>
+    <string name="usage_data_default_suffix">Data</string>
+    <string name="usage_wifi_default_suffix">Wi-Fi</string>
 </resources>

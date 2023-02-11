@@ -24,6 +24,7 @@
     <string name="statusbar_items_title">Ícones da barra de estado</string>
     <!-- Name of the VPN status bar icon. -->
     <string name="status_bar_vpn">VPN</string>
+    <string name="status_bar_firewall">Firewall</string>
     <!-- Sb Data Saver icon -->
     <string name="status_bar_data_saver">Poupança de dados</string>
     <!-- Sb Call Strength icon -->
@@ -232,4 +233,18 @@
     <string name="quick_settings_preferred_network_lte">4G / LTE</string>
     <string name="quick_settings_preferred_network_nr">5G / NR</string>
     <string name="quick_settings_preferred_network_unsupported">Não suportada</string>
+    <!-- Screenshot Tile -->
+    <string name="screenshot_long_press">Long press - selected region</string>
+    <!-- Spark QS Tiles -->
+    <string name="quick_settings_spark_boost_mode_label">System Boost</string>
+    <string name="quick_settings_spark_services_unavailable">System Manager Disabled</string>
+    <string name="quick_settings_spark_boost_mode_enabled">Boost Active</string>
+    <string name="quick_settings_spark_boost_mode_disabled">Boost Inactive</string>
+    <string name="quick_settings_spark_idle_mode_label">Aggressive Idle Manager</string>
+    <string name="quick_settings_spark_idle_mode_enabled">Agrressive Idle Active</string>
+    <string name="quick_settings_spark_idle_mode_disabled">Agrressive Idle Inactive</string>
+    <!-- Data usage info in QS footer -->
+    <string name="usage_data">used today</string>
+    <string name="usage_data_default_suffix">Data</string>
+    <string name="usage_wifi_default_suffix">Wi-Fi</string>
 </resources>
