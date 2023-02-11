@@ -54,6 +54,9 @@ public interface NavigationEdgeBackPlugin extends Plugin {
     /** Specifies if vibration is enabled for back gesture. */
     default void setEdgeHapticEnabled(boolean edgeHapticEnabled) {}
 
+    /** Specifies if the edge haptic intensity for back gesture. */
+    default void setEdgeHapticIntensity(int edgeHapticIntensity) {}
+
     /** Sets the base LayoutParams for the UI. */
     void setLayoutParams(WindowManager.LayoutParams layoutParams);
 

@@ -76,6 +76,7 @@ import android.media.AudioSystem;
 import android.media.session.MediaController;
 import android.media.session.MediaSessionManager;
 import android.media.session.PlaybackState;
+import android.os.AsyncTask;
 import android.os.Debug;
 import android.os.Handler;
 import android.os.Looper;
@@ -3006,6 +3007,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                             userLevel);
                 }
             }
+            triggerVibration();
         }
 
         @Override
@@ -3027,6 +3029,31 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                         USER_ATTEMPT_GRACE_PERIOD);
             }
         }
+    }
+
+    private void triggerVibration() {
+        int vibrateIntensity = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.VOLUME_SLIDER_HAPTICS_INTENSITY, 1);
+        if (mController == null || vibrateIntensity == 0) {
+            return;
+        }
+            VibrationEffect effect;
+            switch (vibrateIntensity) {
+                case 1:
+                    effect = VibrationEffect.createPredefined(VibrationEffect.EFFECT_TEXTURE_TICK);
+                    break;
+                case 2:
+                    effect = VibrationEffect.createPredefined(VibrationEffect.EFFECT_TICK);
+                    break;
+                case 3:
+                    effect = VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK);
+                    break;
+                default:
+                    effect = VibrationEffect.createPredefined(VibrationEffect.EFFECT_TEXTURE_TICK);
+                    break;
+            }
+
+        AsyncTask.execute(() -> mController.vibrate(effect));
     }
 
     private final class Accessibility extends AccessibilityDelegate {
