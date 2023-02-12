@@ -110,11 +110,11 @@ public class AmbientText extends FrameLayout {
             lp.gravity = Gravity.START | Gravity.TOP;
             break;
           case 1:
-            textView.setGravity(Gravity.START|Gravity.CENTER_VERTICAL);
+            textView.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
             lp.gravity = Gravity.START | Gravity.CENTER_VERTICAL;
             break;
           case 2:
-            textView.setGravity(Gravity.START|Gravity.BOTTOM);
+            textView.setGravity(Gravity.START | Gravity.BOTTOM);
             lp.gravity = Gravity.START | Gravity.BOTTOM;
             break;
           case 3:
@@ -123,16 +123,24 @@ public class AmbientText extends FrameLayout {
             lp.gravity = Gravity.CENTER;
             break;
           case 4:
-            textView.setGravity(Gravity.END|Gravity.TOP);
+            textView.setGravity(Gravity.END | Gravity.TOP);
             lp.gravity = Gravity.END | Gravity.TOP;
             break;
           case 5:
-            textView.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);
+            textView.setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
             lp.gravity = Gravity.END | Gravity.CENTER_VERTICAL;
             break;
           case 6:
-            textView.setGravity(Gravity.END|Gravity.BOTTOM);
+            textView.setGravity(Gravity.END | Gravity.BOTTOM);
             lp.gravity = Gravity.END | Gravity.BOTTOM;
+            break;
+          case 7:
+            textView.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
+            lp.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
+            break;
+          case 8:
+            textView.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
+            lp.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
             break;
       }
       textView.setLayoutParams(lp);
