@@ -345,6 +345,7 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
     private final Consumer<Boolean> mOnIsInPipStateChangedListener =
             (isInPip) -> mIsInPip = isInPip;
     private boolean mBlockedGesturalNavigation;
+    private boolean mEdgeHapticEnabled;
 
     EdgeBackGestureHandler(
             Context context,
@@ -455,6 +456,7 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
         mIsBackGestureAllowed =
                 !mGestureNavigationSettingsObserver.areNavigationButtonForcedVisible();
         mIsBackGestureArrowEnabled = mGestureNavigationSettingsObserver.getBackArrowGesture();
+        mEdgeHapticEnabled = mGestureNavigationSettingsObserver.getEdgeHaptic();
 
         mTimeout = mGestureNavigationSettingsObserver.getLongSwipeTimeOut();
         mLeftLongSwipeAction = mGestureNavigationSettingsObserver.getLeftLongSwipeAction();
@@ -952,6 +954,7 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
             if (mAllowGesture) {
                 mEdgeBackPlugin.setIsLeftPanel(mIsOnLeftEdge);
                 mEdgeBackPlugin.setBackArrowVisibility(mIsBackGestureArrowEnabled);
+                mEdgeBackPlugin.setEdgeHapticEnabled(mEdgeHapticEnabled);
                 mEdgeBackPlugin.onMotionEvent(ev);
                 dispatchToBackAnimation(ev);
             }
