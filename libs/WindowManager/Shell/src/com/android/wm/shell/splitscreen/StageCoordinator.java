@@ -1101,8 +1101,12 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
     }
 
     void getStageBounds(Rect outTopOrLeftBounds, Rect outBottomOrRightBounds) {
-        outTopOrLeftBounds.set(mSplitLayout.getBounds1());
-        outBottomOrRightBounds.set(mSplitLayout.getBounds2());
+        if (mSplitLayout == null) return;
+        Rect topLeftBounds = mSplitLayout.getBounds1();
+        Rect bottomRightBounds = mSplitLayout.getBounds2();
+        if (topLeftBounds == null && bottomRightBounds == null) return;
+        outTopOrLeftBounds.set(topLeftBounds);
+        outBottomOrRightBounds.set(bottomRightBounds);
     }
 
     @SplitPosition
