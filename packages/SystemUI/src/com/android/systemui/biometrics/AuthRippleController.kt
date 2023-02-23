@@ -24,8 +24,7 @@ import android.graphics.Point
 import android.provider.Settings;
 import android.hardware.biometrics.BiometricFingerprintConstants
 import android.hardware.biometrics.BiometricSourceType
-import android.os.UserHandle
-import android.provider.Settings
+import android.os.UserHandle;
 import androidx.annotation.VisibleForTesting
 import com.android.keyguard.KeyguardUpdateMonitor
 import com.android.keyguard.KeyguardUpdateMonitorCallback
