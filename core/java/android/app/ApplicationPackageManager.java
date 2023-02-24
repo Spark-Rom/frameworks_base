@@ -861,7 +861,6 @@ public class ApplicationPackageManager extends PackageManager {
                 SystemProperties.getBoolean("persist.sys.pixelprops.gphotos", true)) {
             if (Arrays.asList(featuresPixel).contains(name)) return false;
             if (Arrays.asList(featuresNexus).contains(name)) return true;
-            if (Arrays.asList(featuresP21).contains(name)) return false;
         }
         return mHasSystemFeatureCache.query(new HasSystemFeatureQuery(name, version));
     }
