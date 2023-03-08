@@ -6844,12 +6844,6 @@ public final class Settings {
                 "high_touch_sensitivity_enable";
 
         /**
-         * Whether or not to vibrate when back gesture is used
-         * @hide
-         */
-        public static final String BACK_GESTURE_HAPTIC = "back_gesture_haptic";
-
-        /**
          * Statusbar logo
          * @hide
          */
@@ -7478,7 +7472,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(FLASHLIGHT_ON_CALL);
             PRIVATE_SETTINGS.add(FLASHLIGHT_ON_CALL_IGNORE_DND);
             PRIVATE_SETTINGS.add(FLASHLIGHT_ON_CALL_RATE);
-            PRIVATE_SETTINGS.add(BACK_GESTURE_HAPTIC);
             PRIVATE_SETTINGS.add(SENSOR_BLOCK);
             PRIVATE_SETTINGS.add(QS_SYSTEM_INFO);
             PRIVATE_SETTINGS.add(AMBIENT_TEXT_COLOR);
