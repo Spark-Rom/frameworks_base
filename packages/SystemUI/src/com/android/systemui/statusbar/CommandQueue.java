@@ -303,7 +303,7 @@ public class CommandQueue extends IStatusBar.Stub implements
         default void showPinningEnterExitToast(boolean entering) { }
         default void showPinningEscapeToast() { }
         default void handleShowGlobalActionsMenu() { }
-        default void handleShowShutdownUi(boolean isReboot, String reason, boolean advancedReboot) { }
+        default void handleShowShutdownUi(boolean isReboot, String reason) { }
 
         default void showWirelessChargingAnimation(int batteryLevel) {  }
 
@@ -913,10 +913,10 @@ public class CommandQueue extends IStatusBar.Stub implements
     }
 
     @Override
-    public void showShutdownUi(boolean isReboot, String reason, boolean advancedReboot) {
+    public void showShutdownUi(boolean isReboot, String reason) {
         synchronized (mLock) {
             mHandler.removeMessages(MSG_SHOW_SHUTDOWN_UI);
-            mHandler.obtainMessage(MSG_SHOW_SHUTDOWN_UI, isReboot ? 1 : 0, advancedReboot ? 1 : 0, reason)
+            mHandler.obtainMessage(MSG_SHOW_SHUTDOWN_UI, isReboot ? 1 : 0, 0, reason)
                     .sendToTarget();
         }
     }
@@ -1505,7 +1505,7 @@ public class CommandQueue extends IStatusBar.Stub implements
                     break;
                 case MSG_SHOW_SHUTDOWN_UI:
                     for (int i = 0; i < mCallbacks.size(); i++) {
-                        mCallbacks.get(i).handleShowShutdownUi(msg.arg1 != 0, (String) msg.obj, msg.arg2 != 0);
+                        mCallbacks.get(i).handleShowShutdownUi(msg.arg1 != 0, (String) msg.obj);
                     }
                     break;
                 case MSG_SET_TOP_APP_HIDES_STATUS_BAR:
