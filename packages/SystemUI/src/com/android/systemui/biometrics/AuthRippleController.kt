@@ -82,7 +82,7 @@ class AuthRippleController @Inject constructor(
     var lightRevealScrimAnimator: ValueAnimator? = null
     var fingerprintSensorLocation: Point? = null
     private var faceSensorLocation: Point? = null
-    private var circleReveal: CircleReveal? = null
+    private var circleReveal: LightRevealEffect? = null
 
     private var udfpsController: UdfpsController? = null
     private var udfpsRadius: Float = -1f
@@ -134,7 +134,6 @@ class AuthRippleController @Inject constructor(
         if (biometricSourceType == BiometricSourceType.FINGERPRINT) {
             fingerprintSensorLocation?.let {
                 mView.setFingerprintSensorLocation(it, udfpsRadius)
-            if (circleReveal == null || circleReveal!!.centerX != it.x || circleReveal!!.centerY != it.y) {
                 circleReveal = CircleReveal(
                         it.x,
                         it.y,
@@ -144,7 +143,6 @@ class AuthRippleController @Inject constructor(
                                 Math.max(it.y, centralSurfaces.displayHeight.toInt() - it.y)
                         )
                 )
-                }
                 showUnlockedRipple()
             }
         } else if (biometricSourceType == BiometricSourceType.FACE) {
