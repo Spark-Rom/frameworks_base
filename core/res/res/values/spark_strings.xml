@@ -71,4 +71,8 @@
     <string name="aerr_copy">Copy crash log URL</string>
     <string name="url_copy_success">URL copied successfully</string>
     <string name="url_copy_failed">An error occured while uploading the log to Memochō</string>
+
+    <!-- Title & summary of notification letting users know that battery saver is now on [CHAR_LIMIT=80] -->
+    <string name="battery_saver_on_notification_title">Battery Saver turned on</string>
+    <string name="battery_saver_on_notification_summary">By schedule. Press to review settings.</string>
 </resources>

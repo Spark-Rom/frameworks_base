@@ -215,4 +215,8 @@
     <java-symbol type="style" name="Animation.Toast.Translucent" />
     <java-symbol type="style" name="Animation.Toast.SlideRightLeft" />
     <java-symbol type="style" name="Animation.Toast.SlideLeftRight" />
+
+    <!-- Title & summary of notification letting users know that battery saver is now on -->
+    <java-symbol type="string" name="battery_saver_on_notification_title" />
+    <java-symbol type="string" name="battery_saver_on_notification_summary" />
 </resources>
