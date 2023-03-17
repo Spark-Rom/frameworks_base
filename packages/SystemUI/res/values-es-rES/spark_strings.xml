@@ -44,12 +44,6 @@
     <string name="tristate_rotation_0">Vertical</string>
     <string name="tristate_rotation_90">Horizontal (90°)</string>
     <string name="tristate_rotation_270">Horizontal (270°)</string>
-    <!-- Advanced Reboot -->
-    <string name="global_action_restart_advanced">Avanzado</string>
-    <string name="global_action_restart_recovery">Recovery</string>
-    <string name="global_action_restart_bootloader">Bootloader</string>
-    <string name="global_action_restart_ui">SystemUI</string>
-    <string name="global_action_onthego">OnTheGo</string>
     <!-- On The Go -->
     <string name="onthego_notification_ticker">OnTheGo activado</string>
     <string name="onthego_notification_title">On-The-Go activado</string>
@@ -62,6 +56,7 @@
     <string name="onthego_front_camera">Usar cámara frontal</string>
     <string name="onthego_service_toggle">Reiniciar servicio automáticamente</string>
     <string name="onthego_channel_name">OnTheGo</string>
+    <string name="global_action_onthego">OnTheGo</string>
     <!-- OnTheGo Tile -->
     <string name="quick_settings_onthego_label">OnTheGo</string>
     <string name="accessibility_quick_settings_onthego_off">OnTheGo desactivado</string>
@@ -247,4 +242,31 @@
     <string name="usage_data">usado hoy</string>
     <string name="usage_data_default_suffix">Datos</string>
     <string name="usage_wifi_default_suffix">Wi-Fi</string>
+    <!-- Advanced restart menu -->
+    <!-- Button to indicate more options -->
+    <string name="global_action_restart_more">Reiniciar\u2026</string>
+    <!-- Button to restart the device, within the Restart Options dialog -->
+    <string name="global_action_restart_system">Sistema</string>
+    <!-- Button to restart the device into recovery mode, within the Restart Options dialog -->
+    <string name="global_action_restart_recovery">Recovery</string>
+    <!-- Button to restart the device into bootloader mode, within the Restart Options dialog -->
+    <string name="global_action_restart_bootloader">Bootloader</string>
+    <!-- Button to restart the device into download mode, within the Restart Options dialog -->
+    <string name="global_action_restart_download">Download</string>
+    <!-- Button to restart the device into fastboot mode, within the Restart Options dialog -->
+    <string name="global_action_restart_fastboot">Fastbootd</string>
+    <!-- Restart progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_progress">Reiniciando\u2026</string>
+    <!-- Restart to recovery mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_recovery_progress">Reiniciando en modo recovery\u2026</string>
+    <!-- Restart to bootloader mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_bootloader_progress">Reiniciando al bootloader\u2026</string>
+    <!-- Restart to download mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_download_progress">Reiniciando en modo Download\u2026</string>
+    <!-- Restart to fastboot mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_fastboot_progress">Reiniciando en modo Fastbootd\u2026</string>
+    <!-- Label for current user in power menu options dialog -->
+    <string name="global_action_current_user">Actual</string>
+    <string name="global_action_users">Usuarios</string>
+    <string name="global_action_restart_systemui">SystemUI</string>
 </resources>

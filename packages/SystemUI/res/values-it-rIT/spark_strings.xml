@@ -44,12 +44,6 @@
     <string name="tristate_rotation_0">Verticale</string>
     <string name="tristate_rotation_90">Orizzontale (90°)</string>
     <string name="tristate_rotation_270">Orizzontale (270°)</string>
-    <!-- Advanced Reboot -->
-    <string name="global_action_restart_advanced">Avanzate</string>
-    <string name="global_action_restart_recovery">Recovery</string>
-    <string name="global_action_restart_bootloader">Bootloader</string>
-    <string name="global_action_restart_ui">SystemUI</string>
-    <string name="global_action_onthego">On-The-Go</string>
     <!-- On The Go -->
     <string name="onthego_notification_ticker">On-The-Go attivato</string>
     <string name="onthego_notification_title">On-The-Go è attivo</string>
@@ -62,6 +56,7 @@
     <string name="onthego_front_camera">Usa fotocamera frontale</string>
     <string name="onthego_service_toggle">Riavvia automaticamente il servizio</string>
     <string name="onthego_channel_name">On-The-Go</string>
+    <string name="global_action_onthego">On-The-Go</string>
     <!-- OnTheGo Tile -->
     <string name="quick_settings_onthego_label">On-The-Go</string>
     <string name="accessibility_quick_settings_onthego_off">On-The-Go disattivato</string>
@@ -234,17 +229,44 @@
     <string name="quick_settings_preferred_network_nr">5g / NR</string>
     <string name="quick_settings_preferred_network_unsupported">Non supportato</string>
     <!-- Screenshot Tile -->
-    <string name="screenshot_long_press">Long press - selected region</string>
+    <string name="screenshot_long_press">Tieni premuto per selezionare la porzione di schermo</string>
     <!-- Spark QS Tiles -->
-    <string name="quick_settings_spark_boost_mode_label">System Boost</string>
-    <string name="quick_settings_spark_services_unavailable">System Manager Disabled</string>
-    <string name="quick_settings_spark_boost_mode_enabled">Boost Active</string>
-    <string name="quick_settings_spark_boost_mode_disabled">Boost Inactive</string>
-    <string name="quick_settings_spark_idle_mode_label">Aggressive Idle Manager</string>
-    <string name="quick_settings_spark_idle_mode_enabled">Agrressive Idle Active</string>
-    <string name="quick_settings_spark_idle_mode_disabled">Agrressive Idle Inactive</string>
+    <string name="quick_settings_spark_boost_mode_label">Boost di sistema</string>
+    <string name="quick_settings_spark_services_unavailable">Gestore di sistema disabilitato</string>
+    <string name="quick_settings_spark_boost_mode_enabled">Boost attivo</string>
+    <string name="quick_settings_spark_boost_mode_disabled">Boost disattivo</string>
+    <string name="quick_settings_spark_idle_mode_label">Gestore Idle Aggressivo</string>
+    <string name="quick_settings_spark_idle_mode_enabled">Idle aggressivo attivo</string>
+    <string name="quick_settings_spark_idle_mode_disabled">Idle aggressivo disattivo</string>
     <!-- Data usage info in QS footer -->
-    <string name="usage_data">used today</string>
-    <string name="usage_data_default_suffix">Data</string>
+    <string name="usage_data">usati oggi</string>
+    <string name="usage_data_default_suffix">Dati</string>
     <string name="usage_wifi_default_suffix">Wi-Fi</string>
+    <!-- Advanced restart menu -->
+    <!-- Button to indicate more options -->
+    <string name="global_action_restart_more">Restart\u2026</string>
+    <!-- Button to restart the device, within the Restart Options dialog -->
+    <string name="global_action_restart_system">Sistema</string>
+    <!-- Button to restart the device into recovery mode, within the Restart Options dialog -->
+    <string name="global_action_restart_recovery">Recovery</string>
+    <!-- Button to restart the device into bootloader mode, within the Restart Options dialog -->
+    <string name="global_action_restart_bootloader">Bootloader</string>
+    <!-- Button to restart the device into download mode, within the Restart Options dialog -->
+    <string name="global_action_restart_download">Download</string>
+    <!-- Button to restart the device into fastboot mode, within the Restart Options dialog -->
+    <string name="global_action_restart_fastboot">Fastbootd</string>
+    <!-- Restart progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_progress">Restarting\u2026</string>
+    <!-- Restart to recovery mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_recovery_progress">Restarting to recovery mode\u2026</string>
+    <!-- Restart to bootloader mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_bootloader_progress">Restarting to bootloader mode\u2026</string>
+    <!-- Restart to download mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_download_progress">Restarting to download mode\u2026</string>
+    <!-- Restart to fastboot mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_fastboot_progress">Restarting to fastbootd mode\u2026</string>
+    <!-- Label for current user in power menu options dialog -->
+    <string name="global_action_current_user">Current</string>
+    <string name="global_action_users">Users</string>
+    <string name="global_action_restart_systemui">SystemUI</string>
 </resources>

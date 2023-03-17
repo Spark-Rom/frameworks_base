@@ -44,12 +44,6 @@
     <string name="tristate_rotation_0">Portret</string>
     <string name="tristate_rotation_90">Krajobraz (90°)</string>
     <string name="tristate_rotation_270">Krajobraz (270°)</string>
-    <!-- Advanced Reboot -->
-    <string name="global_action_restart_advanced">Zaawansowane</string>
-    <string name="global_action_restart_recovery">Recovery</string>
-    <string name="global_action_restart_bootloader">Bootloader</string>
-    <string name="global_action_restart_ui">SystemUI</string>
-    <string name="global_action_onthego">\"W ruchu\"</string>
     <!-- On The Go -->
     <string name="onthego_notification_ticker">Tryb \"W ruchu\" aktywowany</string>
     <string name="onthego_notification_title">Tryb \"W ruchu\" jest aktywny</string>
@@ -62,6 +56,7 @@
     <string name="onthego_front_camera">Użyj przedniej kamery</string>
     <string name="onthego_service_toggle">Automatycznie uruchom usługę ponownie</string>
     <string name="onthego_channel_name">Główny</string>
+    <string name="global_action_onthego">Główny</string>
     <!-- OnTheGo Tile -->
     <string name="quick_settings_onthego_label">W ruchu</string>
     <string name="accessibility_quick_settings_onthego_off">\"W ruchu\" wył</string>
@@ -218,7 +213,7 @@
     <!-- Screen pinning dialog description. (for devices without navbar) -->
     <string name="screen_pinning_description_no_navbar">Pozostawia to widok dopóki nie odepniesz. Dotknij &amp; przytrzymaj Wstecz, aby odpiąć.</string>
     <!-- Notify use that they are in Lock-to-app (for devices without navbar)-->
-    <string name="screen_pinning_toast_no_navbar">To unpin this screen, touch &amp; hold Back button</string>
+    <string name="screen_pinning_toast_no_navbar">Aby odpiąć ten ekran, naciśnij &amp; i przytrzymaj przycisk wstecz</string>
     <!-- Screen pinning dialog description. (for devices without navbar and with gestures on fingerprint sensor) -->
     <string name="screen_pinning_description_no_navbar_fpsensor">This keeps it in view until you unpin. Touch &amp; hold fingerprint sensor to unpin.</string>
     <!-- Notify use that they are in Lock-to-app (for devices without navbar and with gestures on fingerprint sensor)-->
@@ -243,10 +238,37 @@
     <string name="quick_settings_spark_boost_mode_enabled">Przyspieszenie aktywne</string>
     <string name="quick_settings_spark_boost_mode_disabled">Przyspieszenie nieaktywne</string>
     <string name="quick_settings_spark_idle_mode_label">Agresywny Menedżer bezczynności</string>
-    <string name="quick_settings_spark_idle_mode_enabled">Agrressive Idle Active</string>
-    <string name="quick_settings_spark_idle_mode_disabled">Agrressive Idle Inactive</string>
+    <string name="quick_settings_spark_idle_mode_enabled">Agresywny bezczynność aktywna</string>
+    <string name="quick_settings_spark_idle_mode_disabled">Agresywny bezczynność nieaktywna</string>
     <!-- Data usage info in QS footer -->
     <string name="usage_data">użyto dziś</string>
     <string name="usage_data_default_suffix">Dane</string>
     <string name="usage_wifi_default_suffix">Wi-Fi</string>
+    <!-- Advanced restart menu -->
+    <!-- Button to indicate more options -->
+    <string name="global_action_restart_more">Zrestartuj\u2026</string>
+    <!-- Button to restart the device, within the Restart Options dialog -->
+    <string name="global_action_restart_system">System</string>
+    <!-- Button to restart the device into recovery mode, within the Restart Options dialog -->
+    <string name="global_action_restart_recovery">Recovery</string>
+    <!-- Button to restart the device into bootloader mode, within the Restart Options dialog -->
+    <string name="global_action_restart_bootloader">Bootloader</string>
+    <!-- Button to restart the device into download mode, within the Restart Options dialog -->
+    <string name="global_action_restart_download">Pobierz</string>
+    <!-- Button to restart the device into fastboot mode, within the Restart Options dialog -->
+    <string name="global_action_restart_fastboot">Fastboot</string>
+    <!-- Restart progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_progress">Ponowne uruchamianie\u2026</string>
+    <!-- Restart to recovery mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_recovery_progress">Ponowne uruchamianie w trybie recovery\u2026</string>
+    <!-- Restart to bootloader mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_bootloader_progress">Ponowne uruchamianie w trybie bootloader\u2026</string>
+    <!-- Restart to download mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_download_progress">Ponowne uruchamianie w trybie download\u2026</string>
+    <!-- Restart to fastboot mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_fastboot_progress">Ponowne uruchamianie w trybie fastboot\u2026</string>
+    <!-- Label for current user in power menu options dialog -->
+    <string name="global_action_current_user">Obecny</string>
+    <string name="global_action_users">Users</string>
+    <string name="global_action_restart_systemui">SystemUI</string>
 </resources>

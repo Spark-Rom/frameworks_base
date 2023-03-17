@@ -6,13 +6,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Cycle through ringer modes -->
     <string name="volume_dialog_ringer_guidance_normal">تماس‌ها و اعلان‌ها زنگ خواهند خورند</string>
-    <!-- Advanced reboot -->
-    <string name="reboot_to_recovery_title">ریکاوری</string>
-    <string name="reboot_to_recovery_message">در حال راه‌اندازی مجدد به ریکاوری</string>
-    <string name="reboot_to_bootloader_title">بوت لودر</string>
-    <string name="reboot_to_bootloader_message">راه اندازی مجدد به bootloader</string>
-    <string name="reboot_title">راه‌اندازی مجدد</string>
-    <string name="reboot_message">درحال راه اندازی مجدد سیستم</string>
     <!-- Button that copies the url to the log of a crashed application -->
     <string name="aerr_copy">کپی کردن لینک گزارش خرابی</string>
     <string name="url_copy_success">آدرس با موفقیت کپی شد</string>

@@ -24,7 +24,7 @@
     <string name="statusbar_items_title">ステータスバーのアイコン</string>
     <!-- Name of the VPN status bar icon. -->
     <string name="status_bar_vpn">VPN</string>
-    <string name="status_bar_firewall">Firewall</string>
+    <string name="status_bar_firewall">ファイアウォール</string>
     <!-- Sb Data Saver icon -->
     <string name="status_bar_data_saver">データセーバー</string>
     <!-- Sb Call Strength icon -->
@@ -32,7 +32,7 @@
     <!-- Alert slider extras -->
     <string name="volume_ringer_priority_only">優先</string>
     <string name="volume_ringer_alarms_only">アラーム</string>
-    <string name="volume_ringer_dnd">DND</string>
+    <string name="volume_ringer_dnd">おやすみモード</string>
     <string name="tristate_flashlight">トーチ</string>
     <string name="tristate_flashlight_on">トーチ ON</string>
     <string name="tristate_flashlight_off">トーチ OFF</string>
@@ -44,12 +44,6 @@
     <string name="tristate_rotation_0">縦向き</string>
     <string name="tristate_rotation_90">横向き (90°)</string>
     <string name="tristate_rotation_270">横向き (270°)</string>
-    <!-- Advanced Reboot -->
-    <string name="global_action_restart_advanced">高度な再起動</string>
-    <string name="global_action_restart_recovery">リカバリー</string>
-    <string name="global_action_restart_bootloader">ブートローダー</string>
-    <string name="global_action_restart_ui">システム UI</string>
-    <string name="global_action_onthego">On-The-Go</string>
     <!-- On The Go -->
     <string name="onthego_notification_ticker">On-The-Go が有効化されました</string>
     <string name="onthego_notification_title">On-The-Go が有効です</string>
@@ -62,6 +56,7 @@
     <string name="onthego_front_camera">フロントカメラを使用</string>
     <string name="onthego_service_toggle">自動でサービスを再始動</string>
     <string name="onthego_channel_name">On-The-Go</string>
+    <string name="global_action_onthego">On-The-Go</string>
     <!-- OnTheGo Tile -->
     <string name="quick_settings_onthego_label">On-The-Go</string>
     <string name="accessibility_quick_settings_onthego_off">On-The-Go OFF</string>
@@ -233,17 +228,44 @@
     <string name="quick_settings_preferred_network_nr">5G / NR</string>
     <string name="quick_settings_preferred_network_unsupported">対応していません</string>
     <!-- Screenshot Tile -->
-    <string name="screenshot_long_press">Long press - selected region</string>
+    <string name="screenshot_long_press">長押し - 選択した範囲</string>
     <!-- Spark QS Tiles -->
-    <string name="quick_settings_spark_boost_mode_label">System Boost</string>
-    <string name="quick_settings_spark_services_unavailable">System Manager Disabled</string>
-    <string name="quick_settings_spark_boost_mode_enabled">Boost Active</string>
-    <string name="quick_settings_spark_boost_mode_disabled">Boost Inactive</string>
-    <string name="quick_settings_spark_idle_mode_label">Aggressive Idle Manager</string>
-    <string name="quick_settings_spark_idle_mode_enabled">Agrressive Idle Active</string>
-    <string name="quick_settings_spark_idle_mode_disabled">Agrressive Idle Inactive</string>
+    <string name="quick_settings_spark_boost_mode_label">システムブースト</string>
+    <string name="quick_settings_spark_services_unavailable">システムマネージャーが無効</string>
+    <string name="quick_settings_spark_boost_mode_enabled">ブーストを有効</string>
+    <string name="quick_settings_spark_boost_mode_disabled">ブーストを無効</string>
+    <string name="quick_settings_spark_idle_mode_label">アグレッシブアイドルマネージャー</string>
+    <string name="quick_settings_spark_idle_mode_enabled">アグレッシブアイドルモードを有効</string>
+    <string name="quick_settings_spark_idle_mode_disabled">アグレッシブアイドルモードを無効</string>
     <!-- Data usage info in QS footer -->
-    <string name="usage_data">used today</string>
-    <string name="usage_data_default_suffix">Data</string>
+    <string name="usage_data">今日の使用量</string>
+    <string name="usage_data_default_suffix">データ</string>
     <string name="usage_wifi_default_suffix">Wi-Fi</string>
+    <!-- Advanced restart menu -->
+    <!-- Button to indicate more options -->
+    <string name="global_action_restart_more">Restart\u2026</string>
+    <!-- Button to restart the device, within the Restart Options dialog -->
+    <string name="global_action_restart_system">システム</string>
+    <!-- Button to restart the device into recovery mode, within the Restart Options dialog -->
+    <string name="global_action_restart_recovery">リカバリー</string>
+    <!-- Button to restart the device into bootloader mode, within the Restart Options dialog -->
+    <string name="global_action_restart_bootloader">ブートローダー</string>
+    <!-- Button to restart the device into download mode, within the Restart Options dialog -->
+    <string name="global_action_restart_download">Download</string>
+    <!-- Button to restart the device into fastboot mode, within the Restart Options dialog -->
+    <string name="global_action_restart_fastboot">Fastbootd</string>
+    <!-- Restart progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_progress">Restarting\u2026</string>
+    <!-- Restart to recovery mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_recovery_progress">Restarting to recovery mode\u2026</string>
+    <!-- Restart to bootloader mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_bootloader_progress">Restarting to bootloader mode\u2026</string>
+    <!-- Restart to download mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_download_progress">Restarting to download mode\u2026</string>
+    <!-- Restart to fastboot mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_fastboot_progress">Restarting to fastbootd mode\u2026</string>
+    <!-- Label for current user in power menu options dialog -->
+    <string name="global_action_current_user">Current</string>
+    <string name="global_action_users">Users</string>
+    <string name="global_action_restart_systemui">SystemUI</string>
 </resources>
