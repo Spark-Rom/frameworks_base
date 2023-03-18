@@ -6,13 +6,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Cycle through ringer modes -->
     <string name="volume_dialog_ringer_guidance_normal">Aramalar ve bildirimler çalacak</string>
-    <!-- Advanced reboot -->
-    <string name="reboot_to_recovery_title">Kurtarma</string>
-    <string name="reboot_to_recovery_message">Kurtarma modunda başlatılıyor</string>
-    <string name="reboot_to_bootloader_title">Ön yükleyici</string>
-    <string name="reboot_to_bootloader_message">Ön yükleyici modunda başlatılıyor</string>
-    <string name="reboot_title">Yeniden başlat</string>
-    <string name="reboot_message">Sistem yeniden başlatılıyor</string>
     <!-- Button that copies the url to the log of a crashed application -->
     <string name="aerr_copy">Çökme günlüğü URL\' sini kopyala</string>
     <string name="url_copy_success">URL başarıyla kopyalandı</string>
