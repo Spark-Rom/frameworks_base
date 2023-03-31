@@ -1466,7 +1466,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                 mAppVolumeIcon.setImageDrawable(icon);
                 mAppVolumeIcon.getLayoutParams().height = mTargetTapSize;
                 mAppVolumeIcon.getLayoutParams().width = mTargetTapSize;
-                mAppVolumeIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                mAppVolumeIcon.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 mAppVolumeIcon.setPadding(
                         mAppVolumeView.getPaddingLeft(),
                         mAppVolumeView.getPaddingTop(),
