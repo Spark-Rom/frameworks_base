@@ -334,6 +334,7 @@ public final class Choreographer {
         synchronized(this) {
             mTouchMoveNum = touchMoveNum;
             mMotionEventType = motionEventType;
+            ScrollOptimizer.setMotionType(mMotionEventType);
         }
     }
 
@@ -1284,6 +1285,7 @@ public final class Choreographer {
                 mFrame = frame;
                 ScrollOptimizer.setVsyncTime(mTimestampNanos);
                 mLastVsyncEventData = vsyncEventData;
+                ScrollOptimizer.setVsyncTime(mTimestampNanos);
                 Message msg = Message.obtain(mHandler, this);
                 msg.setAsynchronous(true);
                 mHandler.sendMessageAtTime(msg, timestampNanos / TimeUtils.NANOS_PER_MS);
