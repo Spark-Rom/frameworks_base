@@ -6316,6 +6316,11 @@ public final class Settings {
         /**
          * @hide
          */
+        public static final String QS_PANEL_STYLE = "qs_panel_style";
+
+        /**
+         * @hide
+         */
         public static final String QS_TILE_LABEL_HIDE = "qs_tile_label_hide";
 
         /**
