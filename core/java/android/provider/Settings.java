@@ -12075,6 +12075,16 @@ public final class Settings {
         /**
          * @hide
          */
+        public static final String KG_CUSTOM_CLOCK_COLOR = "kg_custom_clock_color";
+
+        /**
+         * @hide
+         */
+        public static final String KG_CUSTOM_CLOCK_COLOR_ENABLED = "kg_custom_clock_color_enabled";
+
+        /**
+         * @hide
+         */
         public static final String BACK_GESTURE_HAPTIC_INTENSITY = "back_gesture_haptic_intensity";
 
         /**
