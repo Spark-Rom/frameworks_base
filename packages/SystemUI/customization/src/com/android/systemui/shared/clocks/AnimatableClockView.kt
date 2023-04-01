@@ -62,7 +62,7 @@ class AnimatableClockView @JvmOverloads constructor(
 
     private val dozingWeightInternal: Int
     private val lockScreenWeightInternal: Int
-    private val isSingleLineInternal: Boolean
+    private var isSingleLineInternal: Boolean
 
     private var format: CharSequence? = null
     private var descFormat: CharSequence? = null
@@ -94,6 +94,12 @@ class AnimatableClockView @JvmOverloads constructor(
      * Burmese, this space can be significant and should be accounted for when computing layout.
      */
     val bottom get() = paint?.fontMetrics?.bottom ?: 0f
+
+    private fun getClockFormat(): Int = Settings.System.getIntForUser(context.contentResolver, 
+    Settings.System.CLOCK_USE_CUSTOM_FORMAT, 0,  UserHandle.USER_CURRENT)
+
+    private fun isClockSingleLine(): Boolean = Settings.System.getIntForUser(context.contentResolver, 
+    Settings.System.CLOCK_USE_CUSTOM_FORMAT, 0,  UserHandle.USER_CURRENT) == 1
 
     init {
         val animatableClockViewAttributes = context.obtainStyledAttributes(
@@ -127,6 +133,11 @@ class AnimatableClockView @JvmOverloads constructor(
             } finally {
                 textViewAttributes.recycle()
             }
+
+	if (getClockFormat() > 0) {
+	  setSingleLine(isClockSingleLine()) 
+          isSingleLineInternal = isClockSingleLine()
+        }
 
         refreshFormat()
     }
