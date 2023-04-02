@@ -41,6 +41,7 @@ import com.android.systemui.demomode.DemoModeController
 import com.android.systemui.dump.DumpManager
 import com.android.systemui.flags.FeatureFlags
 import com.android.systemui.flags.Flags
+import com.android.systemui.plugins.ActivityStarter
 import com.android.systemui.qs.ChipVisibilityListener
 import com.android.systemui.qs.HeaderPrivacyIconsController
 import com.android.systemui.qs.carrier.QSCarrierGroup
@@ -148,6 +149,7 @@ class LargeScreenShadeHeaderControllerCombinedTest : SysuiTestCase() {
     private lateinit var largeScreenConstraints: ConstraintSet
     @Mock private lateinit var demoModeController: DemoModeController
     @Mock private lateinit var qsBatteryModeController: QsBatteryModeController
+    @Mock private lateinit var activityStarter: ActivityStarter
 
     @JvmField @Rule
     val mockitoRule = MockitoJUnit.rule()
@@ -212,6 +214,7 @@ class LargeScreenShadeHeaderControllerCombinedTest : SysuiTestCase() {
                 combinedShadeHeadersConstraintManager,
                 demoModeController,
                 qsBatteryModeController,
+                activityStarter,
         )
         whenever(view.isAttachedToWindow).thenReturn(true)
         controller.init()
