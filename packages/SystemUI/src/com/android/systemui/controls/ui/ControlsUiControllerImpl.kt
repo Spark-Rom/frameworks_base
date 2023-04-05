@@ -278,7 +278,7 @@ class ControlsUiControllerImpl @Inject constructor (
     }
 
     private fun showSeedingView(items: List<SelectionItem>) {
-        val inflater = LayoutInflater.from(context)
+        val inflater = LayoutInflater.from(activityContext ?: context)
         inflater.inflate(R.layout.controls_no_favorites, parent, true)
         val subtitle = parent.requireViewById<TextView>(R.id.controls_subtitle)
         subtitle.setText(context.resources.getString(R.string.controls_seeding_in_progress))
@@ -290,7 +290,7 @@ class ControlsUiControllerImpl @Inject constructor (
             onDismiss.run()
             return
         }
-        val inflater = LayoutInflater.from(context)
+        val inflater = LayoutInflater.from(activityContext ?: context)
         inflater.inflate(R.layout.controls_no_favorites, parent, true)
         val viewGroup = parent.requireViewById(R.id.controls_no_favorites_group) as ViewGroup
         viewGroup.setOnClickListener { v: View ->
@@ -563,7 +563,7 @@ class ControlsUiControllerImpl @Inject constructor (
     }
 
     private fun createControlsSpaceFrame() {
-        val inflater = LayoutInflater.from(activityContext)
+        val inflater = LayoutInflater.from(activityContext ?: context)
         inflater.inflate(R.layout.controls_with_favorites, parent, true)
 
         if (controlActionCoordinator.activityContext == null) {
@@ -581,7 +581,7 @@ class ControlsUiControllerImpl @Inject constructor (
     private fun createListView(selected: SelectionItem) {
         if (selectedItem !is SelectedItem.StructureItem) return
         val selectedStructure = (selectedItem as SelectedItem.StructureItem).structure
-        val inflater = LayoutInflater.from(activityContext)
+        val inflater = LayoutInflater.from(activityContext ?: context)
 
         val maxColumns = ControlAdapter.findMaxColumns(context.resources)
 
