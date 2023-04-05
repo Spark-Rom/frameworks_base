@@ -52,6 +52,9 @@
     <!-- Text size for user name in user switcher -->
     <dimen name="kg_user_switcher_text_size">18sp</dimen>
 
+    <!-- TODO(himanshujaju) - add comments -->
+    <dimen name="global_actions_wallet_top_margin">5dp</dimen>
+
     <dimen name="global_actions_grid_item_layout_height">80dp</dimen>
 
     <dimen name="qs_brightness_margin_bottom">16dp</dimen>
@@ -62,7 +65,6 @@
     <dimen name="qs_security_footer_background_inset">0dp</dimen>
 
     <dimen name="qs_panel_padding_top">8dp</dimen>
-    <dimen name="qs_panel_padding_top_combined_headers">@dimen/qs_panel_padding_top</dimen>
 
     <!-- The width of large/content heavy dialogs (e.g. Internet, Media output, etc) -->
     <dimen name="large_dialog_width">472dp</dimen>
