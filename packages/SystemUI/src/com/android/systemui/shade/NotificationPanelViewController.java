@@ -70,10 +70,12 @@ import android.graphics.Region;
 import android.graphics.drawable.Drawable;
 import android.hardware.biometrics.SensorLocationInternal;
 import android.hardware.fingerprint.FingerprintSensorPropertiesInternal;
+import android.hardware.power.Boost;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.os.Process;
+import android.os.PowerManagerInternal;
 import android.os.Trace;
 import android.os.UserHandle;
 import android.os.UserManager;
@@ -113,6 +115,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.android.server.LocalServices;
 
 import androidx.constraintlayout.widget.ConstraintSet;
 
@@ -739,6 +743,7 @@ public final class NotificationPanelViewController implements Dumpable {
      * For PanelView fling perflock call
      */
     private BoostFramework mPerf = null;
+    private final PowerManagerInternal mLocalPowerManager;
 
     private final String[] mAppExceptions;
 
@@ -1055,6 +1060,7 @@ public final class NotificationPanelViewController implements Dumpable {
                 });
         dumpManager.registerDumpable(this);
         mPerf = new BoostFramework();
+        mLocalPowerManager = LocalServices.getService(PowerManagerInternal.class);
     }
 
     private void unlockAnimationFinished() {
@@ -2192,6 +2198,9 @@ public final class NotificationPanelViewController implements Dumpable {
             if (mFixedDuration != NO_FIXED_DURATION) {
                 animator.setDuration(mFixedDuration);
             }
+        }
+        if (mLocalPowerManager != null && !BoostFramework.boostFrameworkJarExists) {
+            mLocalPowerManager.setPowerBoost(Boost.DISPLAY_UPDATE_IMMINENT, 200);
         }
         if (mPerf != null) {
             String currentPackage = mView.getContext().getPackageName();
