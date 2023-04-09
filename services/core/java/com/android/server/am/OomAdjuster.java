@@ -1423,12 +1423,12 @@ public class OomAdjuster {
             // No users have been unlocked.
             return !mConstants.mNoKillCachedProcessesUntilBootCompleted;
         }
-        final long noKillCachedProcessesPostBootCompletedDurationMillis =
-                mConstants.mNoKillCachedProcessesPostBootCompletedDurationMillis;
-        if ((lastUserUnlockingUptime + noKillCachedProcessesPostBootCompletedDurationMillis)
-                > nowUptime) {
-            return false;
-        }
+        //final long noKillCachedProcessesPostBootCompletedDurationMillis =
+               // mConstants.mNoKillCachedProcessesPostBootCompletedDurationMillis;
+        //if ((lastUserUnlockingUptime + noKillCachedProcessesPostBootCompletedDurationMillis)
+             //   > nowUptime) {
+           // return false;
+        //}
         return true;
     }
 
