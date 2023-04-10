@@ -36,6 +36,7 @@ import android.os.UserHandle;
 import android.os.PowerManagerInternal;
 import android.provider.Settings;
 
+import com.android.internal.util.spark.SparkUtils.SystemManagerController;
 import com.android.server.LocalServices;
 import com.android.systemui.Dependency;
 
@@ -48,43 +49,36 @@ public class SystemManagerUtils {
     static Handler h = new Handler();
     static Runnable mStartManagerInstance;
     static Runnable mStopManagerInstance;
+    static SystemManagerController mSysManagerController;
     static List<ActivityManager.RunningAppProcessInfo> RunningServices;
     static ActivityManager localActivityManager;
-    static Context imContext;
-    static ContentResolver mContentResolver;
-    static List<String> killablePackages;
-    static final long IDLE_TIME_NEEDED = 10000;
-    static int ultraSaverStatus;
+    static final long IDLE_TIME_NEEDED = 20000;
 
-    public static void initSystemManager(Context mContext) {
-        imContext = mContext;
-        killablePackages = new ArrayList<>();
-        localActivityManager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
-        mContentResolver = mContext.getContentResolver();
+    public static void initSystemManager(Context context) {
+   	mSysManagerController = new SystemManagerController(context);
 
         mStartManagerInstance = new Runnable() {
             public void run() {
-                    powerSaverHandler(true);
-                    killBackgroundProcesses();
+                    idleModeHandler(true);
+                    killBackgroundProcesses(context);
             }
         };
+
         mStopManagerInstance = new Runnable() {
             public void run() {
-                cancelIdleService(mContext);
+                cancelIdleService();
             }
         };
     }
 
-    public static void startIdleService() {
-        RunningServices = localActivityManager.getRunningAppProcesses();
-
-        if (IDLE_TIME_NEEDED > timeBeforeAlarm(imContext) && timeBeforeAlarm(imContext) != 0) {
+    public static void startIdleService(Context context) {
+        if (IDLE_TIME_NEEDED > timeBeforeAlarm(context) && timeBeforeAlarm(context) != 0) {
             h.postDelayed(mStartManagerInstance,100);
         } else {
             h.postDelayed(mStartManagerInstance,IDLE_TIME_NEEDED /*10ms*/);
         }
-        if (timeBeforeAlarm(imContext) != 0) {
-            h.postDelayed(mStopManagerInstance,(timeBeforeAlarm(imContext) - 900000));
+        if (timeBeforeAlarm(context) != 0) {
+            h.postDelayed(mStopManagerInstance,(timeBeforeAlarm(context) - 900000));
         }
     }
 
@@ -95,37 +89,91 @@ public class SystemManagerUtils {
         }
     }
 
-    public static void powerSaverHandler(boolean enable) {
+    public static void idleModeHandler(boolean idle) {
         PowerManagerInternal mLocalPowerManager = LocalServices.getService(PowerManagerInternal.class);
         if (mLocalPowerManager != null) {
-          mLocalPowerManager.setPowerMode(Mode.DEVICE_IDLE, enable);
+          mLocalPowerManager.setPowerMode(Mode.DEVICE_IDLE, idle);
         }
     }
 
-    public static void cancelIdleService(Context mContext) {
-        h.removeCallbacks(mStartManagerInstance);
-        onScreenWake(mContext);
-    }
-
-     public static void boostingServiceHandler(boolean enable) {
+    public static void runtimePowerModeHandler(boolean awake, int mode) {
         PowerManagerInternal mLocalPowerManager = LocalServices.getService(PowerManagerInternal.class);
         if (mLocalPowerManager != null) {
-          mLocalPowerManager.setPowerMode(Mode.SUSTAINED_PERFORMANCE, enable);
+            switch (mode) {
+            	case 0:
+              	    // reset power modes
+                    mLocalPowerManager.setPowerMode(Mode.LOW_POWER, false);
+                    mLocalPowerManager.setPowerMode(Mode.SUSTAINED_PERFORMANCE, false);
+                    mLocalPowerManager.setPowerMode(Mode.INTERACTIVE, false);
+                    mLocalPowerManager.setPowerMode(Mode.FIXED_PERFORMANCE, false);
+                    break;
+                case 1:
+              	    // low power
+                    mLocalPowerManager.setPowerMode(Mode.LOW_POWER, awake);
+                    break;
+                case 2:
+                    // sustained performance
+                    mLocalPowerManager.setPowerMode(Mode.SUSTAINED_PERFORMANCE, awake);
+                    break;
+                case 3:
+                    // interactive
+                    mLocalPowerManager.setPowerMode(Mode.INTERACTIVE, awake);
+                    break;
+                case 4:
+                    // aggressive
+                    mLocalPowerManager.setPowerMode(Mode.FIXED_PERFORMANCE, awake);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    public static void cancelIdleService() {
+        h.removeCallbacks(mStartManagerInstance);
+        onScreenWake();
+    }
+
+     public static void boostingServiceHandler(boolean enable, int boostingLevel) {
+        PowerManagerInternal mLocalPowerManager = LocalServices.getService(PowerManagerInternal.class);
+        if (mLocalPowerManager != null) {
+            switch (boostingLevel) {
+            	case 0:
+              	    // reset power modes
+                    mLocalPowerManager.setPowerMode(Mode.SUSTAINED_PERFORMANCE, false);
+                    mLocalPowerManager.setPowerMode(Mode.INTERACTIVE, false);
+                    mLocalPowerManager.setPowerMode(Mode.FIXED_PERFORMANCE, false);
+                    break;
+                case 1:
+              	    // low
+                    mLocalPowerManager.setPowerMode(Mode.SUSTAINED_PERFORMANCE, enable);
+                    break;
+                case 2:
+              	    // moderate
+                    mLocalPowerManager.setPowerMode(Mode.INTERACTIVE, enable);
+                    break;
+                case 3:
+                    // agrressive
+                    mLocalPowerManager.setPowerMode(Mode.FIXED_PERFORMANCE, enable);
+                    break;
+                default:
+                    break;
+          }
         }
      }
 
-    public static void onScreenWake(Context mContext) {
+    public static void onScreenWake() {
         h.removeCallbacks(mStopManagerInstance);
-        powerSaverHandler(false);
+        idleModeHandler(false);
         PowerManagerInternal mLocalPowerManager = LocalServices.getService(PowerManagerInternal.class);
         if (mLocalPowerManager != null) {
           mLocalPowerManager.setPowerBoost(Boost.DISPLAY_UPDATE_IMMINENT, 200);
         }
     }
 
-    public static long timeBeforeAlarm(Context imContext) {
+    public static long timeBeforeAlarm(Context context) {
         AlarmManager.AlarmClockInfo info =
-                ((AlarmManager)imContext.getSystemService(Context.ALARM_SERVICE)).getNextAlarmClock();
+                ((AlarmManager)context.getSystemService(Context.ALARM_SERVICE)).getNextAlarmClock();
         if (info != null) {
             long alarmTime = info.getTriggerTime();
             long realTime = alarmTime - System.currentTimeMillis();
@@ -135,12 +183,12 @@ public class SystemManagerUtils {
         }
     }
 
-    public static void killBackgroundProcesses() {
-        localActivityManager = (ActivityManager) imContext.getSystemService(Context.ACTIVITY_SERVICE);
+    public static void killBackgroundProcesses(Context context) {
+        localActivityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         RunningServices = localActivityManager.getRunningAppProcesses();
         for (int i=0; i < RunningServices.size(); i++) {
             if (!RunningServices.get(i).pkgList[0].toString().toLowerCase().contains("com.android.") &&
-                !RunningServices.get(i).pkgList[0].toString().toLowerCase().contains("org.rising") &&
+                !RunningServices.get(i).pkgList[0].toString().toLowerCase().contains("com.spark") &&
                 !RunningServices.get(i).pkgList[0].toString().toLowerCase().equals("android") &&
                 !RunningServices.get(i).pkgList[0].toString().toLowerCase().contains("launcher") &&
                 !RunningServices.get(i).pkgList[0].toString().toLowerCase().contains("ims") &&
