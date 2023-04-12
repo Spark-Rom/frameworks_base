@@ -497,6 +497,17 @@ public class ContentProviderHelper {
                                     PROVIDER_ACQUISITION_EVENT_REPORTED__PROC_START_TYPE__PROCESS_START_TYPE_WARM);
                         } else {
                             checkTime(startTime, "getContentProviderImpl: before start process");
+			    final boolean caller_is_bg = ActivityManager.isProcStateBackground(r.mState.getCurProcState());
+			    final int allowed = mService.getAppStartModeLOSP(cpr.appInfo.uid, cpr.appInfo.packageName,
+									     cpr.appInfo.targetSdkVersion,
+									     Binder.getCallingPid(),
+									     false, false, caller_is_bg);
+			    if (caller_is_bg && allowed != ActivityManager.APP_START_MODE_NORMAL) {
+				Slog.d(TAG, "Stopped " + r.info.packageName +
+				       " from starting content provider in "
+				       + cpr.appInfo.packageName);
+				return null;
+			    }
                             proc = mService.startProcessLocked(
                                     cpi.processName, cpr.appInfo, false, 0,
                                     new HostingRecord(HostingRecord.HOSTING_TYPE_CONTENT_PROVIDER,
