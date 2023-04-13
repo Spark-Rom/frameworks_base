@@ -16,6 +16,7 @@
 package com.android.systemui.tuner;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.preference.PreferenceFragment;
 
@@ -24,6 +25,13 @@ import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.systemui.R;
 
 public class StatusBarTuner extends PreferenceFragment {
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(true);
+        getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -40,5 +48,14 @@ public class StatusBarTuner extends PreferenceFragment {
     public void onPause() {
         super.onPause();
         MetricsLogger.visibility(getContext(), MetricsEvent.TUNER, false);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            getActivity().onBackPressed();
+            return true;
+        }
+        return false;
     }
 }
