@@ -119,7 +119,7 @@ public class KGWeatherText extends TextView implements
     public void updateSettings(boolean onChange) {
         ContentResolver resolver = mContext.getContentResolver();
         mQsWeatherEnabled = Settings.System.getIntForUser(
-                resolver, Settings.System.KG_SHOW_WEATHER_TEMP, 6,
+                resolver, Settings.System.KG_SHOW_WEATHER_TEMP, 0,
                 UserHandle.USER_CURRENT);
         if ((mQsWeatherEnabled != 0 && mQsWeatherEnabled != 5)) {
             mWeatherClient.setOmniJawsEnabled(true);
