@@ -545,4 +545,16 @@ applications that come with the platform
     <privapp-permissions package="com.android.calllogbackup">
         <permission name="com.android.voicemail.permission.READ_VOICEMAIL"/>
     </privapp-permissions>
+    
+    <privapp-permissions package="com.google.android.apps.restore">
+        <permission name="android.permission.BACKUP"/>
+        <permission name="android.permission.MANAGE_USB"/>
+        <permission name="android.permission.MANAGE_USERS"/>
+        <permission name="android.permission.MANAGE_WIFI_NETWORK_SELECTION"/>
+        <permission name="android.permission.READ_PRIVILEGED_PHONE_STATE"/>
+        <permission name="android.permission.SUBSTITUTE_NOTIFICATION_APP_NAME"/>
+        <permission name="android.permission.WRITE_EMBEDDED_SUBSCRIPTIONS"/>
+        <permission name="android.permission.WRITE_SECURE_SETTINGS"/>
+    </privapp-permissions>
+
 </permissions>
