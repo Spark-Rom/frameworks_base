@@ -28,6 +28,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.ArrayMap;
 import android.util.AttributeSet;
@@ -81,6 +82,9 @@ public class QSPanel extends LinearLayout implements Tunable {
     public static final String QS_TILE_ANIMATION_INTERPOLATOR =
             "system:" + Settings.System.QS_TILE_ANIMATION_INTERPOLATOR;
 
+    public static final String QS_UI_STYLE =
+            "system:" + Settings.System.QS_UI_STYLE;
+
     private static final String TAG = "QSPanel";
 
     protected final Context mContext;
@@ -122,7 +126,12 @@ public class QSPanel extends LinearLayout implements Tunable {
     private PageIndicator mFooterPageIndicator;
     private int mContentMarginStart;
     private int mContentMarginEnd;
-    private boolean mUsingHorizontalLayout;
+    private int mMaxColumnsLandscape;
+    private int mMaxColumnsPortrait;
+    private int mMaxColumnsMediaPlayer;
+    private int mMaxRowsPortrait;
+    protected boolean mUsingHorizontalLayout;
+    
 
     @Nullable
     private LinearLayout mHorizontalLinearLayout;
@@ -155,6 +164,10 @@ public class QSPanel extends LinearLayout implements Tunable {
                 R.dimen.quick_settings_bottom_margin_media);
         mMediaTopMargin = getResources().getDimensionPixelSize(
                 R.dimen.qs_tile_margin_vertical);
+        mMaxColumnsLandscape = getResources().getInteger(R.integer.quick_qs_panel_num_columns_landscape);
+        mMaxColumnsMediaPlayer = getResources().getInteger(R.integer.quick_qs_panel_num_columns_media);
+        mMaxColumnsPortrait = getResources().getInteger(R.integer.quick_settings_num_columns_custom);
+        mMaxRowsPortrait = getResources().getInteger(R.integer.quick_settings_max_rows_custom);
         mContext = context;
 
         setOrientation(VERTICAL);
@@ -217,6 +230,7 @@ public class QSPanel extends LinearLayout implements Tunable {
         mClippingRect.left = 0;
         mClippingRect.top = -1000;
         mHorizontalContentContainer.setClipBounds(mClippingRect);
+        updateColumns();
     }
 
     /**
@@ -702,6 +716,20 @@ public class QSPanel extends LinearLayout implements Tunable {
         }
     }
 
+    public void updateColumns() {
+    	final Resources res = mContext.getResources();
+        boolean isLandscape = res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+
+        int mColumnsMediaPlayer = mUsingHorizontalLayout ?
+            mMaxColumnsMediaPlayer :
+            mMaxColumnsLandscape;
+            
+        int mRowsMediaPlayer = mUsingHorizontalLayout ? 2 : 1;
+
+	mTileLayout.setMinRows(isLandscape ? mRowsMediaPlayer : mMaxRowsPortrait);
+        mTileLayout.setMaxColumns(isLandscape ? mColumnsMediaPlayer : mMaxColumnsPortrait);
+    }
+
     void setUsingHorizontalLayout(boolean horizontal, ViewGroup mediaHostView, boolean force) {
         if (horizontal != mUsingHorizontalLayout || force) {
             Log.d(getDumpableTag(), "setUsingHorizontalLayout: " + horizontal + ", " + force);
@@ -714,8 +742,7 @@ public class QSPanel extends LinearLayout implements Tunable {
             }
             reAttachMediaHost(mediaHostView, horizontal);
             if (needsDynamicRowsAndColumns()) {
-                mTileLayout.setMinRows(horizontal ? 2 : 1);
-                mTileLayout.setMaxColumns(horizontal ? 2 : 6);
+                updateColumns();
             }
             updateMargins(mediaHostView);
             if (mHorizontalLinearLayout == null) return;

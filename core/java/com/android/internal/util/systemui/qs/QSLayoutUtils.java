@@ -46,6 +46,12 @@ public class QSLayoutUtils {
                 14, UserHandle.USER_CURRENT);
     }
 
+   public static int getQsUiStyle(Context context) {
+       return Settings.System.getIntForUser(context.getContentResolver(),
+         Settings.System.QS_UI_STYLE,
+         0, UserHandle.USER_CURRENT);
+   }
+
    public static boolean updateLayout(Context context) {
        final IOverlayManager overlayManager = IOverlayManager.Stub.asInterface(ServiceManager.getService(
           	Context.OVERLAY_SERVICE));

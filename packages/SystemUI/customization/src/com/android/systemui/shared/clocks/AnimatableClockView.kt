@@ -22,6 +22,8 @@ import android.annotation.IntRange
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
+import android.os.UserHandle
+import android.provider.Settings
 import android.graphics.Rect
 import android.text.Layout
 import android.text.TextUtils
