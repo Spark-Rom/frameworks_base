@@ -96,39 +96,6 @@ public class SystemManagerUtils {
         }
     }
 
-    public static void runtimePowerModeHandler(boolean awake, int mode) {
-        PowerManagerInternal mLocalPowerManager = LocalServices.getService(PowerManagerInternal.class);
-        if (mLocalPowerManager != null) {
-            switch (mode) {
-            	case 0:
-              	    // reset power modes
-                    mLocalPowerManager.setPowerMode(Mode.LOW_POWER, false);
-                    mLocalPowerManager.setPowerMode(Mode.SUSTAINED_PERFORMANCE, false);
-                    mLocalPowerManager.setPowerMode(Mode.INTERACTIVE, false);
-                    mLocalPowerManager.setPowerMode(Mode.FIXED_PERFORMANCE, false);
-                    break;
-                case 1:
-              	    // low power
-                    mLocalPowerManager.setPowerMode(Mode.LOW_POWER, awake);
-                    break;
-                case 2:
-                    // sustained performance
-                    mLocalPowerManager.setPowerMode(Mode.SUSTAINED_PERFORMANCE, awake);
-                    break;
-                case 3:
-                    // interactive
-                    mLocalPowerManager.setPowerMode(Mode.INTERACTIVE, awake);
-                    break;
-                case 4:
-                    // aggressive
-                    mLocalPowerManager.setPowerMode(Mode.FIXED_PERFORMANCE, awake);
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
     public static void cancelIdleService() {
         h.removeCallbacks(mStartManagerInstance);
         onScreenWake();
