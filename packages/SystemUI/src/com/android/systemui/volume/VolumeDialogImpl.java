@@ -693,7 +693,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                 // corners, and then extend the container's background later to fill in the bottom
                 // corners when the drawer is closed.
                 mRingerAndDrawerContainer.setBackgroundDrawable(
-                        mContext.getDrawable(R.drawable.volume_background_top_rounded));
+                        mContext.getDrawable(customVolumeStyles >= 3 ? R.drawable.volume_background_top_rounded_two_tone : R.drawable.volume_background_top_rounded));
             }
 
             // Post to wait for layout so that the background bounds are set.
@@ -1005,12 +1005,16 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
         row.iconMuteRes = iconMuteRes;
         row.important = important;
         row.defaultStream = defaultStream;
-	    if (customVolumeStyles == 0) {
+        if (customVolumeStyles == 0) {
            row.view = mDialog.getLayoutInflater().inflate(R.layout.volume_dialog_row_aosp, null);
         } else if (customVolumeStyles == 1) {
            row.view = mDialog.getLayoutInflater().inflate(R.layout.volume_dialog_row_rui, null);
-        } else {
+        } else if (customVolumeStyles == 2) {
            row.view = mDialog.getLayoutInflater().inflate(R.layout.volume_dialog_row_rice, null);
+        } else if (customVolumeStyles == 3) {
+           row.view = mDialog.getLayoutInflater().inflate(R.layout.volume_dialog_row_two_tone, null);
+        } else {
+           row.view = mDialog.getLayoutInflater().inflate(R.layout.volume_dialog_row_two_tone_thin, null);
         }
         row.view.setId(row.stream);
         row.view.setTag(row);
@@ -1029,14 +1033,20 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
 	final LayerDrawable seekbarDrawable;
 	
 	if (customVolumeStyles == 0) {
-          seekbarDrawable =
+            seekbarDrawable =
                   (LayerDrawable) mContext.getDrawable(R.drawable.volume_row_seekbar_aosp);
 	} else if (customVolumeStyles == 1) {
-          seekbarDrawable =
+            seekbarDrawable =
                   (LayerDrawable) mContext.getDrawable(R.drawable.volume_row_seekbar_rui);
-	} else {
-          seekbarDrawable =
+        } else if (customVolumeStyles == 2) {
+            seekbarDrawable =
                   (LayerDrawable) mContext.getDrawable(R.drawable.volume_row_seekbar_rice);
+        } else if (customVolumeStyles == 3) {
+            seekbarDrawable =
+                  (LayerDrawable) mContext.getDrawable(R.drawable.volume_row_seekbar_two_tone);
+        } else {
+            seekbarDrawable =
+                  (LayerDrawable) mContext.getDrawable(R.drawable.volume_row_seekbar_two_tone_thin);
 	}
 
         final LayerDrawable seekbarProgressDrawable = (LayerDrawable)
@@ -1987,7 +1997,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                 // Set the background on each of the rows. We'll remove this from the last row after
                 // the loop, since the last row's background is drawn by the main volume container.
                 row.view.setBackgroundDrawable(
-                        mContext.getDrawable(R.drawable.volume_row_rounded_background));
+                        mContext.getDrawable(customVolumeStyles >= 3 ? R.drawable.volume_row_rounded_background_two_tone : R.drawable.volume_row_rounded_background));
             }
 
             if (row.view.isShown() || isExpandableRow) {
@@ -2016,7 +2026,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                 // Add a solid background to the outmost row temporary so that other rows animate
                 // behind it
                 lastVisibleChild.setBackgroundDrawable(
-                        mContext.getDrawable(R.drawable.volume_row_rounded_background));
+                        mContext.getDrawable(customVolumeStyles >= 3 ? R.drawable.volume_row_rounded_background_two_tone : R.drawable.volume_row_rounded_background));
             }
 
             int[] lastVisibleChildLocation = new int[2];

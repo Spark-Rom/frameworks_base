@@ -22,16 +22,16 @@
     android:paddingMode="stack" >
     <item android:id="@android:id/background"
         android:gravity="center_vertical|fill_horizontal">
-             <shape android:tint="?android:attr/colorAccent" android:alpha="0.8">
-                <size android:height="@dimen/volume_dialog_slider_width_bg" />
-                <corners android:radius="@dimen/volume_dialog_slider_corner_radius" />
-                <solid android:color="#80626161" />
-            </shape>
+        <shape android:shape="rectangle">
+            <size android:height="@dimen/volume_dialog_slider_width_aosp" />
+            <corners android:radius="@dimen/volume_dialog_slider_corner_radius" />
+            <solid android:color="@*android:color/qs_translucent_brightness_bg" />
+        </shape>
     </item>
     <item android:id="@android:id/progress"
         android:gravity="center_vertical|fill_horizontal">
         <com.android.systemui.util.RoundedCornerProgressDrawable
-            android:drawable="@drawable/volume_row_seekbar_progress_rice"
+            android:drawable="@drawable/volume_row_seekbar_progress_two_tone"
             />
     </item>
 </layer-list>
