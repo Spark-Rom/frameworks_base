@@ -113,4 +113,7 @@
     <!-- A11 QS style -->  
     <dimen name="custom_qs_panel_padding_top">0dp</dimen>
     <dimen name="custom_notification_row_padding">16dp</dimen>
+
+    <!-- Volume app icon -->  
+    <dimen name="volume_app_icon_max_size">108dp</dimen>
 </resources>
