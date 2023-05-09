@@ -138,9 +138,6 @@ public class QSPanelController extends QSPanelControllerBase<QSPanel> {
             refreshAllTiles();
         }
         switchTileLayout(true);
-        if (mView != null) {
-            mView.updateColumns();
-        }
         mBrightnessMirrorHandler.onQsPanelAttached();
         PagedTileLayout pagedTileLayout= ((PagedTileLayout) mView.getOrCreateTileLayout());
         pagedTileLayout.setOnTouchListener(mTileLayoutTouchListener);
@@ -170,7 +167,6 @@ public class QSPanelController extends QSPanelControllerBase<QSPanel> {
     protected void onConfigurationChanged() {
     	if (mView != null) {
             mView.updateResources();
-            mView.updateColumns();
         }
         if (mView.isListening()) {
             refreshAllTiles();
