@@ -12085,6 +12085,11 @@ public final class Settings {
         /**
          * @hide
          */
+        public static final String KG_CUSTOM_CLOCK_TOP_MARGIN = "kg_custom_clock_top_margin";
+
+        /**
+         * @hide
+         */
         public static final String BACK_GESTURE_HAPTIC_INTENSITY = "back_gesture_haptic_intensity";
 
         /**
