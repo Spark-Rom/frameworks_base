@@ -397,6 +397,7 @@ public class KeyguardClockSwitchController extends ViewController<KeyguardClockS
         if (clock != null && animate && appeared && clockSize == LARGE) {
             clock.getAnimations().enter();
         }
+        mClockEventController.updateAll();
     }
 
     /**
@@ -421,6 +422,7 @@ public class KeyguardClockSwitchController extends ViewController<KeyguardClockS
             clock.getSmallClock().getEvents().onTimeTick();
             clock.getLargeClock().getEvents().onTimeTick();
         }
+        mClockEventController.updateAll();
     }
 
     /**

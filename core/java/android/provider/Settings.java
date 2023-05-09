@@ -12090,6 +12090,16 @@ public final class Settings {
         /**
          * @hide
          */
+        public static final String KG_LARGE_CLOCK_TEXT_SIZE = "kg_large_clock_text_size";
+
+        /**
+         * @hide
+         */
+        public static final String KG_SMALL_CLOCK_TEXT_SIZE = "kg_small_clock_text_size";
+
+        /**
+         * @hide
+         */
         public static final String BACK_GESTURE_HAPTIC_INTENSITY = "back_gesture_haptic_intensity";
 
         /**
