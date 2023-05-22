@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2019-2022 Spark
-     SPDX-License-Identifier: Apache-2.0
+     Copyright (C) 2021-2023 Spark Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- Cycle through ringer modes -->
-    <string name="volume_dialog_ringer_guidance_normal">تماس‌ها و اعلان‌ها زنگ خواهند خورند</string>
-    <!-- Button that copies the url to the log of a crashed application -->
-    <string name="aerr_copy">کپی کردن لینک گزارش خرابی</string>
-    <string name="url_copy_success">آدرس با موفقیت کپی شد</string>
-    <string name="url_copy_failed">مشکلی در حین آپلود کردن گزارش به hastebin رخداد</string>
-    <!-- SystemUI Restart -->
-    <string name="systemui_restart_title">رابط کاربری نیازمندِ راه‌اندازی مجدد است</string>
-    <string name="systemui_restart_message">برای اعمال کامل تغییرات باید رابط کاربری سیستم ریست شود، آیا مایلید هم‌اکنون دستگاه ریست شود؟</string>
     <!-- Pocket Lock -->
     <string name="pocket_lock_message_long_press">کلید پاور را برای بازکردن فشار داده و نگه دارید</string>
     <string name="pocket_view_title">حالت جیب روشن است</string>
@@ -21,41 +23,19 @@
     <string name="pocket_view_top_tag_cancel2">برای خروج اجباری از حالت جیب، دکمه پاور را به مدت طولانی فشار دهید.</string>
     <string name="pocket_view_top_tag_number1">1.\u0020</string>
     <string name="pocket_view_top_tag_number2">2.\u0020</string>
-    <!-- LiveDisplay strings -->
-    <string name="live_display_auto">خودکار</string>
-    <string name="live_display_auto_summary">تنظیم خودکار شدت رنگ صفحه نمایش پس از طلوع و غروب آفتاب</string>
-    <string name="live_display_off">خاموش</string>
-    <string name="live_display_off_summary">غیر فعال کردن تمامی تغییرات</string>
-    <string name="live_display_day">روز</string>
-    <string name="live_display_day_summary">فقط استفاده از تنظیمات روز</string>
-    <string name="live_display_night">شب</string>
-    <string name="live_display_night_summary">فقط استفاده از تنظیمات شب</string>
-    <string name="live_display_outdoor">فضای باز (آفتاب شدید)</string>
-    <string name="live_display_outdoor_summary">فقط استفاده از تنظیمات فضای باز</string>
-    <string name="live_display_hint">صفحه پویا می تواند خستگی چشم را کاهش داده و به خواب شما کمک کند. کلیک کنید و آن را امتحان کنید!</string>
-    <string name="accessibility_quick_settings_live_display_off">صفحه پویا خاموش است.</string>
-    <string name="accessibility_quick_settings_live_display_auto">صفحه پویا: حالت خودکار.</string>
-    <string name="accessibility_quick_settings_live_display_day">صفحه پویا: حالت روز.</string>
-    <string name="accessibility_quick_settings_live_display_night">صفحه پویا: حالت شب.</string>
-    <string name="accessibility_quick_settings_live_display_outdoor">صفحه پویا: حالت فضای باز.</string>
-    <string name="accessibility_quick_settings_live_display_changed_off">صفحه پویا خاموش شده.</string>
-    <string name="accessibility_quick_settings_live_display_changed_auto">صفحه پویا به حالت خودکار تغییر کرد.</string>
-    <string name="accessibility_quick_settings_live_display_changed_day">صفحه پویا به حالت روز تغییر کرد.</string>
-    <string name="accessibility_quick_settings_live_display_changed_night">صفحه پویا به حالت شب تغییر کرد.</string>
-    <string name="accessibility_quick_settings_live_display_changed_outdoor">صفحه پویا به حالت فضای باز تغییر کرد.</string>
-    <!-- Vendor mismatch fingerprint warning [CHAR LIMIT=NONE] -->
-    <string name="system_error_vendorprint">فایل vendor نصب شده فعلی با سیستم هم‌خوانی ندارد. لطفا این فایل ایمیج vendor مخصوص دستگاه خود را فلش کنید <xliff:g id="string">%s</xliff:g></string>
+    <!-- Face unlock -->
+    <string name="face_unlock_disabled_idle">بازگشایی قفل با چهره به دلیل عدم حرکت، غیرفعال شد</string>
+    <!-- Parallel space badge -->
+    <!-- Message for updating an existing app -->
+    <string name="old_version_number">Installed version: <xliff:g id="old_version">%1$s</xliff:g></string>
+    <!-- Message for updating an existing system app -->
+    <string name="new_version_number">To be installed: <xliff:g id="new_version">%1$s</xliff:g></string>
+    <!-- App lock -->
+    <string name="unlock_application">بازگشایی <xliff:g id="label" example="Telegram">%1$s</xliff:g></string>
     <!-- Settings Restart -->
     <string name="settings_restart_title">رابط کاربری نیازمندِ راه‌اندازی مجدد است</string>
     <string name="settings_restart_message">برای اعمال کامل تغییرات باید رابط کاربری سیستم ریست شود، آیا مایلید هم‌اکنون دستگاه ریست شود؟</string>
-    <!-- Aerr strings -->
-    <string name="aerr_disable">غیرفعال کردن برنامه</string>
-    <!-- Button that opens the screen with details of an application error -->
-    <string name="aerr_show_details">نمایش جزئیات</string>
-    <!-- Parallel space badge -->
-    <string name="parallel_space_badge_label">%1$s</string>
-    <!-- App lock -->
-    <string name="unlock_application">بازگشایی <xliff:g id="label" example="Telegram">%1$s</xliff:g></string>
-    <!-- Face unlock -->
-    <string name="face_unlock_disabled_idle">بازگشایی قفل با چهره به دلیل عدم حرکت، غیرفعال شد</string>
+    <!-- System Reboot -->
+    <string name="system_restart_title">System restart required</string>
+    <string name="system_restart_message">For all the changes to take effect, a system restart is required. Perform system restart now?</string>
 </resources>

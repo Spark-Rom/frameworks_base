@@ -1,35 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2019-2022 Spark
-     SPDX-License-Identifier: Apache-2.0
+     Copyright (C) 2021-2023 Spark Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- Name of the clock in status bar [CHAR LIMIT=30] -->
-    <string name="clock">Jam</string>
-    <!-- Screenshot delete action -->
-    <!-- Label for UI element which allows deleting the screenshot [CHAR LIMIT=30] -->
-    <string name="screenshot_delete_label">Hapus</string>
-    <!-- Content description indicating that tapping the element will allow deleting the screenshot [CHAR LIMIT=NONE] -->
-    <string name="screenshot_delete_description">Hapus tangkapan layar</string>
-    <!-- Name of the nfc status bar icon. -->
-    <string name="status_bar_nfc">NFC</string>
-    <!-- Accessibility label for nfc icon (not shown on screen) [CHAR LIMIT=NONE] -->
-    <string name="accessibility_status_bar_nfc">Nfc</string>
+    <!-- Button to restart SystemUI, within the Restart Options dialog -->
+    <string name="global_action_restart_systemui">Sistem UI</string>
+    <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">Suara</string>
+    <string name="quick_settings_sound_ring">Dering</string>
+    <string name="quick_settings_sound_vibrate">Getar</string>
+    <string name="quick_settings_sound_dnd">Do not disturb</string>
     <!-- Screen record delete action -->
     <!-- Label for notification action to delete a screen recording file [CHAR LIMIT=35] -->
     <string name="screenrecord_delete_label">Hapus</string>
     <!-- A toast message shown after successfully deleting a screen recording [CHAR LIMIT=NONE] -->
     <string name="screenrecord_delete_description">Rekaman layar dihapus</string>
-    <!-- Statusbar tuner -->
-    <string name="statusbar_items_title">Ikon bilah status</string>
-    <!-- Name of the VPN status bar icon. -->
+    <!-- Screen record -->
+    <string name="screenrecord_stopdot_label">Tampilkan titik berhenti</string>
+    <string name="screenrecord_stopdot_summary">Tekan lama untuk memindahkannya</string>
+    <string name="screenrecord_lowquality_label">Kualitas rendah</string>
+    <string name="screenrecord_lowquality_summary">Untuk ukuran file yang lebih kecil</string>
+    <string name="screenrecord_longer_timeout_switch_label">Batas ukuran file lebih besar</string>
+    <string name="screenrecord_longer_timeout_switch_summary">Batasi ukuran perekaman hingga 15 GB</string>
+    <string name="screenrecord_skip_time_label">Lewati penghitung waktu</string>
+    <string name="screenrecord_skip_time_summary">Hapus 3 detik menunggu</string>
+    <string name="screenrecord_hevc_switch_label">Aktifkan HEVC</string>
+    <string name="screenrecord_hevc_switch_summary">Use more efficient HEVC video encoding</string>
+    <!-- Label for UI element which allows deleting the screenshot [CHAR LIMIT=30] -->
+    <string name="screenshot_delete_label">Hapus</string>
+    <!-- Content description indicating that tapping the element will allow deleting the screenshot [CHAR LIMIT=NONE] -->
+    <string name="screenshot_delete_description">Hapus tangkapan layar</string>
+    <!-- Statusbar Icons -->
+    <string name="status_bar_nfc">NFC</string>
     <string name="status_bar_vpn">VPN</string>
-    <string name="status_bar_firewall">Firewall</string>
-    <!-- Sb Data Saver icon -->
     <string name="status_bar_data_saver">Penghemat Data</string>
-    <!-- Sb Call Strength icon -->
     <string name="status_bar_call_strength">Kekuatan panggilan</string>
-    <!-- Alert slider extras -->
+    <string name="status_bar_ims">VoLTE/VoWiFi</string>
+    <!-- Text to use when the number in a notification info is too large -->
+    <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • Pengisian daya cepat (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> hingga penuh)</string>
+    <string name="keyguard_plugged_in_dash_charging"><xliff:g id="percentage">%s</xliff:g> • Pengisian daya cepat</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with a warp charger. Should match keyguard_plugged_in_warp_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_warp_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • Pengisian Warp (<xliff:g id="charging_time_left" example="4 jam 2 menit">%1$s</xliff:g> hingga penuh)</string>
+    <string name="keyguard_plugged_in_warp_charging"><xliff:g id="percentage">%s</xliff:g> • Pengisian Warp</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with a VOOC charger. Should match keyguard_plugged_in_vooc_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_vooc_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • Pengisian VOOC (<xliff:g id="charging_time_left" example="4 jam 2 menit">%1$s</xliff:g> hingga penuh)</string>
+    <string name="keyguard_plugged_in_vooc_charging"><xliff:g id="percentage">%s</xliff:g> • Pengisian VOOC</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_turbo_power_time"><xliff:g id="percentage">%2$s</xliff:g> • Pengisian Turbo (<xliff:g id="charging_time_left" example="4 jam 2 menit">%1$s</xliff:g> hingga penuh)</string>
+    <string name="keyguard_plugged_in_turbo_charging"><xliff:g id="percentage">%s</xliff:g> • Pengisian Turbo</string>
+    <!-- Data usage info in QS footer -->
+    <string name="usage_data">digunakan hari ini</string>
+    <string name="usage_data_default_suffix">Data</string>
+    <string name="usage_wifi_default_suffix">Wi-Fi</string>
+    <!-- On The Go -->
+    <string name="onthego_notif_ticker">On-The-Go diaktifkan</string>
+    <string name="onthego_notif_title">On-The-Go sedang aktif</string>
+    <string name="onthego_notif_stop">Berhenti</string>
+    <string name="onthego_notif_options">Opsi</string>
+    <string name="onthego_notif_error">Tidak dapat memulai On-The-Go</string>
+    <string name="onthego_notif_restart">Mulai ulang On-The-Go</string>
+    <string name="onthego_notif_camera_changed">Mode kamera berubah</string>
+    <string name="onthego_transparency">Transparansi On-The-Go</string>
+    <string name="onthego_front_camera">Gunakan kamera depan</string>
+    <string name="onthego_service_toggle">Mulai ulang layanan secara otomatis</string>
+    <string name="onthego_channel_name">On-The-Go</string>
+    <string name="global_action_onthego">On-The-Go</string>
+    <!-- OnTheGo Tile -->
+    <string name="quick_settings_onthego_label">On-The-Go</string>
+    <!-- CPUInfo tile -->
+    <string name="quick_settings_cpuinfo_label">Info CPU</string>
+    <!-- FPS Info tile -->
+    <string name="quick_settings_fpsinfo_label">Info FPS</string>
+    <!-- FPS view text placeholder -->
+    <string name="fps_text_placeholder"><xliff:g id="fps" example="90">%1$d</xliff:g></string>
+    <!-- Compass QS Tile -->
+    <string name="quick_settings_compass_label">Kompas</string>
+    <string name="quick_settings_compass_value"><xliff:g id="derajat">%1$.0f</xliff:g>\u00b0<xliff:g id="arah">%2$s</xliff:g></string>
+    <string name="quick_settings_compass_init">Menginisialisasi\u2026</string>
+    <string name="quick_settings_compass_N">U</string>
+    <string name="quick_settings_compass_NE">TL</string>
+    <string name="quick_settings_compass_E">T</string>
+    <string name="quick_settings_compass_SE">TG</string>
+    <string name="quick_settings_compass_S">S</string>
+    <string name="quick_settings_compass_SW">BD</string>
+    <string name="quick_settings_compass_W">B</string>
+    <string name="quick_settings_compass_NW">BL</string>
+    <!-- DataSwitch Tile -->
+    <string name="qs_data_switch_label">Ganti kartu data</string>
+    <!-- Volume panel QS tile -->
+    <string name="quick_settings_volume_panel_label">Panel volume</string>
+    <!-- Alert slide extras -->
     <string name="volume_ringer_priority_only">Prioritas</string>
     <string name="volume_ringer_alarms_only">Alarm</string>
     <string name="volume_ringer_dnd">DND</string>
@@ -44,228 +117,29 @@
     <string name="tristate_rotation_0">Potret</string>
     <string name="tristate_rotation_90">Lanskap (90°)</string>
     <string name="tristate_rotation_270">Lanskap (270°)</string>
-    <!-- On The Go -->
-    <string name="onthego_notification_ticker">On-The-Go diaktifkan</string>
-    <string name="onthego_notification_title">On-The-Go sedang aktif</string>
-    <string name="onthego_notification_stop">Berhenti</string>
-    <string name="onthego_notification_options">Opsi</string>
-    <string name="onthego_notification_error">Tidak dapat memulai On-The-Go</string>
-    <string name="onthego_notification_restart">Mulai ulang On-The-Go</string>
-    <string name="onthego_notification_camera_changed">Mode kamera berubah</string>
-    <string name="onthego_transparency">Transparansi On-The-Go</string>
-    <string name="onthego_front_camera">Gunakan kamera depan</string>
-    <string name="onthego_service_toggle">Mulai ulang layanan secara otomatis</string>
-    <string name="onthego_channel_name">On-The-Go</string>
-    <string name="global_action_onthego">On-The-Go</string>
-    <!-- OnTheGo Tile -->
-    <string name="quick_settings_onthego_label">On-The-Go</string>
-    <string name="accessibility_quick_settings_onthego_off">On-The-Go nonaktif</string>
-    <string name="accessibility_quick_settings_onthego_on">On-The-Go aktif</string>
-    <string name="accessibility_quick_settings_onthego_changed_off">On-The-Go dinonaktifkan</string>
-    <string name="accessibility_quick_settings_onthego_changed_on">On-The-Go diaktifkan</string>
-    <!-- Text to use when the number in a notification info is too large -->
-    <!-- Kill button in notification guts -->
-    <string name="force_stop_dlg_title">Paksa berhenti?</string>
-    <string name="force_stop_dlg_text">Jika Anda menghentikan paksa aplikasi, kemungkinan akan terjadi gagal fungsi.</string>
-    <string name="guts_force_close_app">Tutup Aplikasi</string>
-    <!-- AOD QS tile -->
-    <string name="quick_settings_aod_label">AOD</string>
-    <string name="quick_settings_aod_on_charge_label">AOD saat cas</string>
-    <string name="quick_settings_aod_off_label">AOD mati</string>
-    <string name="quick_settings_aod_off_powersave_label">AOD nonaktif\nPenghemat baterai</string>
-    <!-- PowerShare QS tile -->
-    <string name="quick_settings_powershare_label">PowerShare Nirkabel</string>
-    <string name="quick_settings_powershare_off_powersave_label">PowerShare Nirkabel nonaktif\nPenghemat baterai</string>
-    <string name="quick_settings_powershare_off_low_battery_label">PowerShare Nirkabel nonaktif\nBaterai terlalu lemah</string>
-    <string name="quick_settings_powershare_enabled_label">PowerShare Nirkabel diaktifkan</string>
-    <!-- Caffeine tile -->
-    <string name="quick_settings_caffeine_label">Kafein</string>
-    <string name="accessibility_quick_settings_caffeine_off">Kafein nonaktif</string>
-    <string name="accessibility_quick_settings_caffeine_on">Kafein aktif</string>
-    <!-- Ambient display QS tile -->
-    <string name="quick_settings_ambient_display_label">Tampilan Ambien</string>
-    <string name="accessibility_quick_settings_ambient_display_off">Tampilan Ambien nonaktif.</string>
-    <string name="accessibility_quick_settings_ambient_display_on">Tampilan Ambien aktif.</string>
-    <string name="accessibility_quick_settings_ambient_display_changed_off">Tampilan Ambien dinonaktifkan.</string>
-    <string name="accessibility_quick_settings_ambient_display_changed_on">Tampilan Ambien diaktifkan.</string>
-    <!-- USB tethering QS tile -->
-    <string name="quick_settings_usb_tether_label">Tethering USB</string>
-    <!-- Sync QS Tile -->
-    <string name="quick_settings_sync_label">Sinkronisasi</string>
-    <string name="accessibility_quick_settings_sync_off">Sinkronisasi nonaktif</string>
-    <string name="accessibility_quick_settings_sync_on">Sinkronisasi aktif</string>
-    <string name="accessibility_quick_settings_sync_changed_off">Sinkronisasi dinonaktifkan</string>
-    <string name="accessibility_quick_settings_sync_changed_on">Sinkronisasi diaktifkan</string>
-    <!-- Sound QS Tile -->
-    <string name="quick_settings_sound_label">Suara</string>
-    <string name="quick_settings_sound_ring">Dering</string>
-    <string name="quick_settings_sound_vibrate">Getar</string>
-    <string name="quick_settings_sound_mute">Senyap</string>
-    <!-- Heads Up QS Tile -->
-    <string name="quick_settings_heads_up_label">Notifikasi mengambang</string>
-    <string name="accessibility_quick_settings_heads_up_off">Notifikasi mengambang nonaktif.</string>
-    <string name="accessibility_quick_settings_heads_up_on">Notifikasi mengambang aktif.</string>
-    <string name="accessibility_quick_settings_heads_up_changed_off">Notifikasi mengambang dinonaktifkan.</string>
-    <string name="accessibility_quick_settings_heads_up_changed_on">Notifikasi mengambang diaktifkan.</string>
-    <!-- Poweroff/Reboot/Recovery QS tile -->
-    <string name="quick_settings_poweroff_label">Matikan daya</string>
-    <string name="quick_settings_reboot_label">Mulai ulang</string>
-    <string name="quick_settings_reboot_recovery_label">Pemulihan</string>
-    <!-- Volume panel QS tile -->
-    <string name="quick_settings_volume_panel_label">Panel volume</string>
-    <!-- DataSwitch Tile -->
-    <string name="qs_data_switch_label">Ganti kartu data</string>
-    <string name="qs_data_switch_toast_0">Tidak ada kartu SIM yang terpasang saat ini</string>
-    <string name="qs_data_switch_toast_1">Hanya satu kartu SIM yang terpasang saat ini</string>
-    <string name="qs_data_switch_changed_1">Gunakan SIM 1 untuk Data Seluler</string>
-    <string name="qs_data_switch_changed_2">Gunakan SIM 2 untuk Data Seluler</string>
-    <!-- FPS Info tile -->
-    <string name="quick_settings_fpsinfo_label">Info FPS</string>
-    <string name="accessibility_quick_settings_fpsinfo_off">Info FPS nonaktif</string>
-    <string name="accessibility_quick_settings_fpsinfo_on">Info FPS aktif</string>
-    <!-- FPS view text placeholder -->
-    <string name="fps_text_placeholder"><xliff:g id="fps" example="90">%1$d</xliff:g></string>
-    <!-- Navigation bar dpad -->
-    <string name="accessibility_dpad_left">Kursor kiri</string>
-    <string name="accessibility_dpad_right">Kursor kanan</string>
-    <!-- Reader mode QS tile -->
-    <string name="quick_settings_reading_mode">Mode membaca</string>
-    <string name="accessibility_quick_settings_reading_mode_on">Mode membaca aktif.</string>
-    <string name="accessibility_quick_settings_reading_mode_off">Mode membaca nonaktif.</string>
-    <string name="accessibility_quick_settings_reading_mode_changed_on">Mode membaca diaktifkan.</string>
-    <string name="accessibility_quick_settings_reading_mode_changed_off">Mode membaca dinonaktifkan.</string>
-    <!-- Kill foreground app -->
-    <string name="task_helper_app_killed">%1$s berhentikan paksa</string>
-    <string name="empty_app_killed">Aplikasi</string>
-    <!-- Anti flicker QS tile -->
-    <string name="quick_settings_anti_flicker">Anti kerlip</string>
-    <!-- Advanced nav gestures -->
-    <string name="app_picker_dialog_title">Pilih aplikasi</string>
-    <string name="active_edge_app_select_title">Pilih aplikasi</string>
-    <string name="active_edge_activity_select_title">Pilih aktivitas</string>
-    <!-- Compass QS Tile -->
-    <string name="quick_settings_compass_label">Kompas</string>
-    <string name="quick_settings_compass_value"><xliff:g id="derajat">%1$.0f</xliff:g>\u00b0<xliff:g id="arah">%2$s</xliff:g></string>
-    <string name="quick_settings_compass_init">Menginisialisasi\u2026</string>
-    <string name="accessibility_quick_settings_compass_off">Kompas nonaktif</string>
-    <string name="accessibility_quick_settings_compass_on">Kompas aktif</string>
-    <string name="accessibility_quick_settings_compass_changed_off">Kompas dinonaktifkan</string>
-    <string name="accessibility_quick_settings_compass_changed_on">Kompas diaktifkan</string>
-    <string name="quick_settings_compass_N">U</string>
-    <string name="quick_settings_compass_NE">TL</string>
-    <string name="quick_settings_compass_E">T</string>
-    <string name="quick_settings_compass_SE">TG</string>
-    <string name="quick_settings_compass_S">S</string>
-    <string name="quick_settings_compass_SW">BD</string>
-    <string name="quick_settings_compass_W">B</string>
-    <string name="quick_settings_compass_NW">BL</string>
-    <!-- CPUInfo tile -->
-    <string name="quick_settings_cpuinfo_label">Info CPU</string>
-    <!-- SoundSearch Tile -->
-    <string name="quick_settings_sound_search">Pencarian suara</string>
-    <string name="quick_settings_sound_search_no_app">Maaf, tapi ini tidak akan berfungsi jika tidak ada aplikasi pencarian suara.</string>
-    <!-- Refresh Rate Tile -->
-    <string name="refresh_rate_tile_label">Kecepatan refresh</string>
-    <string name="refresh_rate_auto_mode_placeholder">        Otomatis (<xliff:g id="min_refresh_rate" example="60">%1$d</xliff:g> - <xliff:g id="max_refresh_rate" example="60">%2$d</xliff:g> Hz)
-    </string>
-    <string name="refresh_rate_forced_mode_placeholder"><xliff:g id="refresh_rate" example="60">%1$d</xliff:g> Hz</string>
-    <!-- Google Lens Screenshot string -->
-    <string name="lensss">Lens</string>
-    <!-- Smart Pixels QS Tile -->
-    <string name="quick_settings_smart_pixels">Piksel Cerdas</string>
-    <string name="quick_settings_smart_pixels_on_power_save">Aktifkan otomatis Piksel Cerdas</string>
-    <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_dash_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • Pengisian daya cepat (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> hingga penuh)</string>
-    <string name="keyguard_plugged_in_dash_charging"><xliff:g id="percentage">%s</xliff:g> • Pengisian daya cepat</string>
-    <!-- Indication on the keyguard that is shown when the device is charging with a warp charger. Should match keyguard_plugged_in_warp_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_warp_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • Pengisian Warp (<xliff:g id="charging_time_left" example="4 jam 2 menit">%1$s</xliff:g> hingga penuh)</string>
-    <string name="keyguard_plugged_in_warp_charging"><xliff:g id="percentage">%s</xliff:g> • Pengisian Warp</string>
-    <!-- Indication on the keyguard that is shown when the device is charging with a VOOC charger. Should match keyguard_plugged_in_vooc_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_vooc_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • Pengisian VOOC (<xliff:g id="charging_time_left" example="4 jam 2 menit">%1$s</xliff:g> hingga penuh)</string>
-    <string name="keyguard_plugged_in_vooc_charging"><xliff:g id="percentage">%s</xliff:g> • Pengisian VOOC</string>
-    <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_turbo_power_time"><xliff:g id="percentage">%2$s</xliff:g> • Pengisian Turbo (<xliff:g id="charging_time_left" example="4 jam 2 menit">%1$s</xliff:g> hingga penuh)</string>
-    <string name="keyguard_plugged_in_turbo_charging"><xliff:g id="percentage">%s</xliff:g> • Pengisian Turbo</string>
-    <!-- Indication on the keyguard that is shown when the device is charging with an oem fast power charger. Should match keyguard_plugged_in_turbo_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_oem_power_time"><xliff:g id="percentage">%2$s</xliff:g> • Pengisian Cepat (<xliff:g id="charging_time_left" example="4 jam 2 menit">%1$s</xliff:g> hingga penuh)</string>
-    <string name="keyguard_plugged_in_oem_charging"><xliff:g id="percentage">%s</xliff:g> • Pengisian Cepat</string>
-    <!-- Screen record -->
-    <string name="screenrecord_stopdot_label">Tampilkan titik berhenti</string>
-    <string name="screenrecord_stopdot_summary">Tekan lama untuk memindahkannya</string>
-    <string name="screenrecord_lowquality_label">Kualitas rendah</string>
-    <string name="screenrecord_lowquality_summary">Untuk ukuran file yang lebih kecil</string>
-    <string name="screenrecord_longer_timeout_switch_label">Batas ukuran file lebih besar</string>
-    <string name="screenrecord_longer_timeout_switch_summary">Batasi ukuran perekaman hingga 15 GB</string>
-    <string name="screenrecord_skip_time_label">Lewati penghitung waktu</string>
-    <string name="screenrecord_skip_time_summary">Hapus 3 detik menunggu</string>
-    <string name="screenrecord_hevc_switch_label">Aktifkan HEVC</string>
-    <!-- QS InternetDialog: Summary for how many devices are connected to the hotspot -->
+    <!-- QuickSettings: InternetDialog: Summary for how many devices are connected to the hotspot [CHAR LIMIT=NONE] -->
     <plurals name="quick_settings_internet_hotspot_summary_num_devices">
         <item quantity="other">%d perangkat terhubung</item>
     </plurals>
-    <!-- Data usage panel -->
-    <string name="total_internet_usage">Total penggunaan internet (Sejak boot)</string>
-    <string name="cellular_usage">Penggunaan data seluler</string>
-    <string name="wifi_usage">Penggunaan Wi-Fi</string>
-    <!-- Screen pinning dialog description. (for devices without navbar) -->
-    <string name="screen_pinning_description_no_navbar">Hal ini membuatnya tetap dalam pandangan sampai Anda melepas sematan. Sentuh &amp; tahan tombol Kembali untuk melepas sematan.</string>
-    <!-- Notify use that they are in Lock-to-app (for devices without navbar)-->
-    <string name="screen_pinning_toast_no_navbar">Untuk melepaskan sematan layar ini, sentuh &amp; tahan tombol Kembali</string>
-    <!-- Screen pinning dialog description. (for devices without navbar and with gestures on fingerprint sensor) -->
-    <string name="screen_pinning_description_no_navbar_fpsensor">Hal ini membuatnya tetap ditampilkan sampai Anda melepas sematan. Sentuh &amp; tahan sensor sidik jari untuk melepas sematan.</string>
-    <!-- Notify use that they are in Lock-to-app (for devices without navbar and with gestures on fingerprint sensor)-->
-    <string name="screen_pinning_toast_no_navbar_fpsensor">Untuk melepas sematan pada layar ini, sentuh &amp; tahan sensor sidik jari</string>
+    <!-- Kill button in notification guts -->
+    <string name="force_stop_dlg_title">Paksa berhenti?</string>
+    <string name="force_stop_dlg_text">Jika Anda menghentikan paksa aplikasi, kemungkinan akan terjadi gagal fungsi.</string>
+    <!-- Smart Pixels QS Tile -->
+    <string name="quick_settings_smart_pixels">Piksel Cerdas</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Aktifkan otomatis Piksel Cerdas</string>
     <!-- Face Unlock -->
     <string name="face_unlock_recognizing">Mengenali wajah...</string>
+    <!-- Status bar network traffic monitor strings -->
+    <string name="kilobitspersecond_short">kb/s</string>
+    <string name="megabitspersecond_short">Mb/s</string>
+    <string name="gigabitspersecond_short">Gb/s</string>
+    <string name="kilobytespersecond_short">kB/s</string>
+    <string name="megabytespersecond_short">MB/s</string>
+    <string name="gigabytespersecond_short">GB/s</string>
+    <!-- Google lens screenshot notification -->
+    <string name="lens">Lens</string>
     <!-- Bluetooth dialog -->
     <string name="turn_on_bluetooth">Gunakan Bluetooth</string>
     <string name="bluetooth_is_off">Bluetooth nonaktif</string>
     <string name="tap_a_device_to_connect">Ketuk perangkat untuk menghubungkan</string>
-    <string name="photos_not_allowed">Aplikasi ini tidak didukung</string>
-    <!-- Preferred network tile -->
-    <string name="quick_settings_preferred_network_label">Jaringan pilihan</string>
-    <string name="quick_settings_preferred_network_lte">4G / LTE</string>
-    <string name="quick_settings_preferred_network_nr">5G / NR</string>
-    <string name="quick_settings_preferred_network_unsupported">Tidak didukung</string>
-    <!-- Screenshot Tile -->
-    <string name="screenshot_long_press">Tekan lama - wilayah yang dipilih</string>
-    <!-- Spark QS Tiles -->
-    <string name="quick_settings_spark_boost_mode_label">Peningkatan Sistem</string>
-    <string name="quick_settings_spark_services_unavailable">Manajer Sistem Dinonaktifkan</string>
-    <string name="quick_settings_spark_boost_mode_enabled">Meningkatkan Aktif</string>
-    <string name="quick_settings_spark_boost_mode_disabled">Meningkatkan Nonaktif</string>
-    <string name="quick_settings_spark_idle_mode_label">Manajer Menganggur Agresif</string>
-    <string name="quick_settings_spark_idle_mode_enabled">Menganggur Agresif Aktif</string>
-    <string name="quick_settings_spark_idle_mode_disabled">Menganggur Agresif Nonaktif</string>
-    <!-- Data usage info in QS footer -->
-    <string name="usage_data">digunakan hari ini</string>
-    <string name="usage_data_default_suffix">Data</string>
-    <string name="usage_wifi_default_suffix">Wi-Fi</string>
-    <!-- Advanced restart menu -->
-    <!-- Button to indicate more options -->
-    <string name="global_action_restart_more">Mulai ulang\u2026</string>
-    <!-- Button to restart the device, within the Restart Options dialog -->
-    <string name="global_action_restart_system">Sistem</string>
-    <!-- Button to restart the device into recovery mode, within the Restart Options dialog -->
-    <string name="global_action_restart_recovery">Pemulihan</string>
-    <!-- Button to restart the device into bootloader mode, within the Restart Options dialog -->
-    <string name="global_action_restart_bootloader">Bootloader</string>
-    <!-- Button to restart the device into download mode, within the Restart Options dialog -->
-    <string name="global_action_restart_download">Unduh</string>
-    <!-- Button to restart the device into fastboot mode, within the Restart Options dialog -->
-    <string name="global_action_restart_fastboot">Fastboot</string>
-    <!-- Restart progress dialog. This is shown if the user chooses to restart the device. -->
-    <string name="global_action_restart_progress">Memulai ulang\u2026</string>
-    <!-- Restart to recovery mode progress dialog. This is shown if the user chooses to restart the device. -->
-    <string name="global_action_restart_recovery_progress">Memulai ulang ke mode recovery\u2026</string>
-    <!-- Restart to bootloader mode progress dialog. This is shown if the user chooses to restart the device. -->
-    <string name="global_action_restart_bootloader_progress">Memulai ulang ke mode bootloader\u2026</string>
-    <!-- Restart to download mode progress dialog. This is shown if the user chooses to restart the device. -->
-    <string name="global_action_restart_download_progress">Memulai ulang ke mode download\u2026</string>
-    <!-- Restart to fastboot mode progress dialog. This is shown if the user chooses to restart the device. -->
-    <string name="global_action_restart_fastboot_progress">Memulai ulang ke mode fastboot\u2026</string>
-    <!-- Label for current user in power menu options dialog -->
-    <string name="global_action_current_user">Saat ini</string>
-    <string name="global_action_users">Pengguna</string>
-    <string name="global_action_restart_systemui">Sistem UI</string>
 </resources>

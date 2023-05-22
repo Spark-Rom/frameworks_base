@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2019-2022 Spark
-     SPDX-License-Identifier: Apache-2.0
+     Copyright (C) 2021-2023 Spark Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- Cycle through ringer modes -->
-    <string name="volume_dialog_ringer_guidance_normal">Panggilan dan notifikasi akan berdering</string>
-    <!-- Button that copies the url to the log of a crashed application -->
-    <string name="aerr_copy">Salin URL log kerusakan</string>
-    <string name="url_copy_success">URL berhasil disalin</string>
-    <string name="url_copy_failed">Terjadi kesalahan saat mengunggah log ke hastebin</string>
-    <!-- SystemUI Restart -->
-    <string name="systemui_restart_title">Mulai ulang SistemUI diperlukan</string>
-    <string name="systemui_restart_message">Untuk melihat semua perubahan, diperlukan memulai ulang SistemUI. Mulai ulang sekarang?</string>
     <!-- Pocket Lock -->
     <string name="pocket_lock_message_long_press">Tekan dan tahan tombol daya untuk membuka kunci</string>
     <string name="pocket_view_title">Mode saku aktif</string>
@@ -21,41 +23,19 @@
     <string name="pocket_view_top_tag_cancel2">Tekan lama tombol daya untuk memaksa keluar dari mode saku.</string>
     <string name="pocket_view_top_tag_number1">1.\u0020</string>
     <string name="pocket_view_top_tag_number2">2.\u0020</string>
-    <!-- LiveDisplay strings -->
-    <string name="live_display_auto">Otomatis</string>
-    <string name="live_display_auto_summary">Otomatis sesuaikan temperatur warna layar setelah matahari terbenam dan matahari terbit</string>
-    <string name="live_display_off">Nonaktif</string>
-    <string name="live_display_off_summary">Nonaktifkan semua penyesuaian</string>
-    <string name="live_display_day">Siang</string>
-    <string name="live_display_day_summary">Hanya menggunakan setelan siang hari</string>
-    <string name="live_display_night">Malam</string>
-    <string name="live_display_night_summary">Hanya menggunakan setelan malam hari</string>
-    <string name="live_display_outdoor">Luar ruangan (matahari terang)</string>
-    <string name="live_display_outdoor_summary">Hanya menggunakan setelan luar ruangan</string>
-    <string name="live_display_hint">LiveDisplay dapat membantu mengurangi kelelahan mata dan membantu Anda tidur di malam hari. Klik di sini untuk mencobanya!</string>
-    <string name="accessibility_quick_settings_live_display_off">LiveDisplay nonaktif.</string>
-    <string name="accessibility_quick_settings_live_display_auto">LiveDisplay: mode otomatis.</string>
-    <string name="accessibility_quick_settings_live_display_day">LiveDisplay: mode siang.</string>
-    <string name="accessibility_quick_settings_live_display_night">LiveDisplay: mode malam.</string>
-    <string name="accessibility_quick_settings_live_display_outdoor">LiveDisplay: mode luar ruangan.</string>
-    <string name="accessibility_quick_settings_live_display_changed_off">LiveDisplay dinonaktifkan.</string>
-    <string name="accessibility_quick_settings_live_display_changed_auto">LiveDisplay diubah ke mode otomatis.</string>
-    <string name="accessibility_quick_settings_live_display_changed_day">LiveDisplay diubah ke mode siang hari.</string>
-    <string name="accessibility_quick_settings_live_display_changed_night">LiveDisplay diubah ke mode malam hari.</string>
-    <string name="accessibility_quick_settings_live_display_changed_outdoor">LiveDisplay diubah menjadi mode luar ruangan.</string>
-    <!-- Vendor mismatch fingerprint warning [CHAR LIMIT=NONE] -->
-    <string name="system_error_vendorprint">Gambar vendor Anda tidak sesuai dengan sistem. Silakan flash gambar vendor <xliff:g id="string">%s</xliff:g> untuk perangkat Anda</string>
+    <!-- Face unlock -->
+    <string name="face_unlock_disabled_idle">Face unlock dinonaktifkan karena tidak aktif</string>
+    <!-- Parallel space badge -->
+    <!-- Message for updating an existing app -->
+    <string name="old_version_number">Installed version: <xliff:g id="old_version">%1$s</xliff:g></string>
+    <!-- Message for updating an existing system app -->
+    <string name="new_version_number">To be installed: <xliff:g id="new_version">%1$s</xliff:g></string>
+    <!-- App lock -->
+    <string name="unlock_application">Buka <xliff:g id="label" example="Telegram">%1$s</xliff:g></string>
     <!-- Settings Restart -->
     <string name="settings_restart_title">Mulai ulang Setelan diperlukan</string>
     <string name="settings_restart_message">Untuk melihat semua perubahan, diperlukan memulai ulang Setelan. Mulai ulang Setelan sekarang?</string>
-    <!-- Aerr strings -->
-    <string name="aerr_disable">Nonaktifkan aplikasi</string>
-    <!-- Button that opens the screen with details of an application error -->
-    <string name="aerr_show_details">Tampilkan rincian</string>
-    <!-- Parallel space badge -->
-    <string name="parallel_space_badge_label">%1$s</string>
-    <!-- App lock -->
-    <string name="unlock_application">Buka <xliff:g id="label" example="Telegram">%1$s</xliff:g></string>
-    <!-- Face unlock -->
-    <string name="face_unlock_disabled_idle">Face unlock dinonaktifkan karena tidak aktif</string>
+    <!-- System Reboot -->
+    <string name="system_restart_title">System restart required</string>
+    <string name="system_restart_message">For all the changes to take effect, a system restart is required. Perform system restart now?</string>
 </resources>

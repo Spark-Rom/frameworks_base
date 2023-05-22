@@ -16,15 +16,15 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Pocket Lock -->
-    <string name="pocket_lock_message_long_press">Naciśnij i przytrzymaj przycisk zasilania, aby odblokować</string>
-    <string name="pocket_view_title">Tryb kieszeniowy jest włączony</string>
-    <string name="pocket_view_title_cancel">Aby użyć telefonu:</string>
-    <string name="pocket_view_top_tag_cancel">Sprawdź, czy niebieska część telefonu jest czysta i nie jest przysłonięta.</string>
-    <string name="pocket_view_top_tag_cancel2">Przytrzymaj przycisk zasilania, aby wymusić wyjście z trybu kieszeniowego.</string>
+    <string name="pocket_lock_message_long_press">Press and hold power button to unlock</string>
+    <string name="pocket_view_title">Pocket mode is on</string>
+    <string name="pocket_view_title_cancel">To use your phone:</string>
+    <string name="pocket_view_top_tag_cancel">Check if the blue area of your phone is clear of any obstructions, and clean off any dirt or dust.</string>
+    <string name="pocket_view_top_tag_cancel2">Long press the power button to force quit pocket mode.</string>
     <string name="pocket_view_top_tag_number1">1.\u0020</string>
     <string name="pocket_view_top_tag_number2">2.\u0020</string>
     <!-- Face unlock -->
-    <string name="face_unlock_disabled_idle">Rozpoznawanie twarzy wyłączone z powodu braku aktywności</string>
+    <string name="face_unlock_disabled_idle">Face unlock disabled due to inactivity</string>
     <!-- Parallel space badge -->
     <!-- Message for updating an existing app -->
     <string name="old_version_number">Installed version: <xliff:g id="old_version">%1$s</xliff:g></string>
@@ -33,8 +33,8 @@
     <!-- App lock -->
     <string name="unlock_application">Unlock <xliff:g id="label" example="Telegram">%1$s</xliff:g></string>
     <!-- Settings Restart -->
-    <string name="settings_restart_title">Wymagany restart ustawień</string>
-    <string name="settings_restart_message">Aby wszystkie zmiany zostały wprowadzone, wymagany jest restart SystemUI. Zrestartować SystemUI teraz?</string>
+    <string name="settings_restart_title">Settings restart required</string>
+    <string name="settings_restart_message">For all changes to take effect, a Settings app restart is required. Restart Settings app now?</string>
     <!-- System Reboot -->
     <string name="system_restart_title">System restart required</string>
     <string name="system_restart_message">For all the changes to take effect, a system restart is required. Perform system restart now?</string>

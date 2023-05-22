@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2019-2022 Spark
-     SPDX-License-Identifier: Apache-2.0
+     Copyright (C) 2021-2023 Spark Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- Cycle through ringer modes -->
-    <string name="volume_dialog_ringer_guidance_normal">കോളുകളും അറിയിപ്പുകളും ശബ്ദിക്കും</string>
-    <!-- Button that copies the url to the log of a crashed application -->
-    <string name="aerr_copy">ക്രാഷ് ലോഗ് ലിങ്ക് പകർത്തുക</string>
-    <string name="url_copy_success">URL വിജയകരമായി പകർതീരിക്കുന്നു</string>
-    <string name="url_copy_failed">ലോഗ്  ഡോഗ്‌ബിനിലേക്കു അപ്‌ലോഡു ചെയ്യുനിടെയെല്  ഒരു പിശക്  സംഭവിച്ചു</string>
-    <!-- SystemUI Restart -->
-    <string name="systemui_restart_title">SystemUI റീസ്റ്റാർട് ചെയ്യേണ്ടത് അനിവാര്യമാണ്</string>
-    <string name="systemui_restart_message">മാറ്റങ്ങൾ വരുത്താൻ സിസ്റ്റം UI റീസ്റ്റാർട് അനിവാര്യമാണ്. അങ്ങനെ ചെയ്യട്ടെ?</string>
     <!-- Pocket Lock -->
     <string name="pocket_lock_message_long_press">അൺലോക്കുചെയ്യാൻ പവർ ബട്ടൺ അമർത്തിപ്പിടിക്കുക</string>
     <string name="pocket_view_title">പോക്കറ്റ് മോഡ് ഓണാണ്</string>
@@ -21,41 +23,19 @@
     <string name="pocket_view_top_tag_cancel2">പോക്കറ്റ് മോഡ് നിർത്താൻ പവർ ബട്ടൺ ദീർഘനേരം അമർത്തുക.</string>
     <string name="pocket_view_top_tag_number1">1.\u0020</string>
     <string name="pocket_view_top_tag_number2">2.\u0020</string>
-    <!-- LiveDisplay strings -->
-    <string name="live_display_auto">ഓട്ടോമാറ്റിക്</string>
-    <string name="live_display_auto_summary">സൂര്യാസ്തമയത്തിനും സൂര്യോദയത്തിനും ശേഷം സ്ക്രീനിന്റെ കളര്‍ താപനില സ്വയം ക്രമീകരിക്കുക</string>
-    <string name="live_display_off">ഓഫ്</string>
-    <string name="live_display_off_summary">എല്ലാ ക്രമീകരണങ്ങളും അപ്രാപ്തമാക്കുക</string>
-    <string name="live_display_day">പകല്‍</string>
-    <string name="live_display_day_summary">പകല്‍ ക്രമീകരണങ്ങൾ മാത്രം ഉപയോഗിക്കുക</string>
-    <string name="live_display_night">രാത്രി</string>
-    <string name="live_display_night_summary">രാത്രി ക്രമീകരണങ്ങൾ മാത്രം ഉപയോഗിക്കുക</string>
-    <string name="live_display_outdoor">ഔട്ട്ഡോർ (തെളിഞ്ഞ സൂര്യൻ)</string>
-    <string name="live_display_outdoor_summary">ഔട്ട്ഡോർ ക്രമീകരണങ്ങൾ മാത്രം ഉപയോഗിക്കുക</string>
-    <string name="live_display_hint">ലൈവ്ഡിസ്പ്ലേ നിങ്ങളുടെ കണ്ണിന്റെ സമ്മര്‍ദ്ദം കുറയ്ക്കുകയും രാത്രി ഉറങ്ങാൻ നിങ്ങളെ സഹായിക്കുകയും ചെയ്യുന്നു. ഇത് പരീക്ഷിക്കാൻ ഇവിടെ ക്ലിക്ക് ചെയ്യുക!</string>
-    <string name="accessibility_quick_settings_live_display_off">ലൈവ്ഡിസ്പ്ലേ ഓഫ്.</string>
-    <string name="accessibility_quick_settings_live_display_auto">ലൈവ്ഡിസ്പ്ലേ: ഓട്ടോ മോഡ്.</string>
-    <string name="accessibility_quick_settings_live_display_day">ലൈവ്ഡിസ്പ്ലേ: ഡേ മോഡ്.</string>
-    <string name="accessibility_quick_settings_live_display_night">ലൈവ്ഡിസ്പ്ലേ: നൈറ്റ് മോഡ്.</string>
-    <string name="accessibility_quick_settings_live_display_outdoor">ലൈവ്ഡിസ്പ്ലേ: ഔട്ഡോർ മോഡ്.</string>
-    <string name="accessibility_quick_settings_live_display_changed_off">ലൈവ്ഡിസ്പ്ലേ ഓഫ് ചെയ്തു.</string>
-    <string name="accessibility_quick_settings_live_display_changed_auto">ലൈവ്ഡിസ്പ്ലേ ഓട്ടോ മോഡിലേക്ക് മാറ്റിയിരിക്കുന്നു.</string>
-    <string name="accessibility_quick_settings_live_display_changed_day">ലൈവ്ഡിസ്പ്ലേ ഡേ മോഡിലേക്ക് മാറ്റിയിരിക്കുന്നു.</string>
-    <string name="accessibility_quick_settings_live_display_changed_night">ലൈവ്ഡിസ്പ്ലേ നൈറ്റ് മോഡിലേക്ക് മാറ്റിയിരിക്കുന്നു.</string>
-    <string name="accessibility_quick_settings_live_display_changed_outdoor">ലൈവ്ഡിസ്പ്ലേ ഔട്ട്ഡോർ മോഡിലേക്ക് മാറ്റിയിരിക്കുന്നു.</string>
-    <!-- Vendor mismatch fingerprint warning [CHAR LIMIT=NONE] -->
-    <string name="system_error_vendorprint">നിങ്ങളുടെ വെണ്ടർ ഇമേജ് സിസ്റ്റത്തിൽ പൊരുത്തപ്പെടുന്നില്ല.ദയവ് ചെയ്തു നിങ്ങളുടെ ഡിവൈസിനുള്ള <xliff:g id="string">%s</xliff:g> വെണ്ടർ ഇമേജ് ഫ്ലാഷ് ചെയ്യുക</string>
+    <!-- Face unlock -->
+    <string name="face_unlock_disabled_idle">നിഷ്‌ക്രിയത്വം കാരണം ഫെയ്‌സ് അൺലോക്ക് പ്രവർത്തനരഹിതമാക്കി</string>
+    <!-- Parallel space badge -->
+    <!-- Message for updating an existing app -->
+    <string name="old_version_number">Installed version: <xliff:g id="old_version">%1$s</xliff:g></string>
+    <!-- Message for updating an existing system app -->
+    <string name="new_version_number">To be installed: <xliff:g id="new_version">%1$s</xliff:g></string>
+    <!-- App lock -->
+    <string name="unlock_application">Unlock <xliff:g id="label" example="Telegram">%1$s</xliff:g></string>
     <!-- Settings Restart -->
     <string name="settings_restart_title">SystemUI റീസ്റ്റാർട് ചെയ്യേണ്ടത് അനിവാര്യമാണ്</string>
     <string name="settings_restart_message">എല്ലാ മാറ്റങ്ങളും പ്രാബല്യത്തിൽ വരുന്നതിന്, ഒരു ക്രമീകരണം പുനരാരംഭിക്കേണ്ടതുണ്ട്. ക്രമീകരണങ്ങൾ ഇപ്പോൾ പുനരാരംഭിക്കണോ?</string>
-    <!-- Aerr strings -->
-    <string name="aerr_disable">ആപ്പ് പ്രവർത്തനരഹിതമാക്കുക</string>
-    <!-- Button that opens the screen with details of an application error -->
-    <string name="aerr_show_details">വിശദാംശങ്ങള് കാണിക്കുക</string>
-    <!-- Parallel space badge -->
-    <string name="parallel_space_badge_label">%1$s</string>
-    <!-- App lock -->
-    <string name="unlock_application">Unlock <xliff:g id="label" example="Telegram">%1$s</xliff:g></string>
-    <!-- Face unlock -->
-    <string name="face_unlock_disabled_idle">നിഷ്‌ക്രിയത്വം കാരണം ഫെയ്‌സ് അൺലോക്ക് പ്രവർത്തനരഹിതമാക്കി</string>
+    <!-- System Reboot -->
+    <string name="system_restart_title">System restart required</string>
+    <string name="system_restart_message">For all the changes to take effect, a system restart is required. Perform system restart now?</string>
 </resources>

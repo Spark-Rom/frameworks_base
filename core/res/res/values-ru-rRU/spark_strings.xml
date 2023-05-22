@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2019-2022 Spark
-     SPDX-License-Identifier: Apache-2.0
+     Copyright (C) 2021-2023 Spark Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- Cycle through ringer modes -->
-    <string name="volume_dialog_ringer_guidance_normal">Звонки и уведомления</string>
-    <!-- Button that copies the url to the log of a crashed application -->
-    <string name="aerr_copy">Скопировать ссылку лога ошибки</string>
-    <string name="url_copy_success">URL-адрес успешно скопирован</string>
-    <string name="url_copy_failed">Произошла ошибка во время загрузки лога на Hastebin</string>
-    <!-- SystemUI Restart -->
-    <string name="systemui_restart_title">Необходима перезагрузка системного интерфейса</string>
-    <string name="systemui_restart_message">Чтобы все изменения вступили в силу, требуется перезагрузка системного интерфейса. Перезагрузить сейчас?</string>
     <!-- Pocket Lock -->
     <string name="pocket_lock_message_long_press">Нажмите и удерживайте кнопку питания, чтобы разблокировать</string>
     <string name="pocket_view_title">Карманный режим включен</string>
@@ -21,41 +23,19 @@
     <string name="pocket_view_top_tag_cancel2">Нажмите и удерживайте кнопку питания, чтобы принудительно выйти из карманного режима.</string>
     <string name="pocket_view_top_tag_number1">1.\u0020</string>
     <string name="pocket_view_top_tag_number2">2.\u0020</string>
-    <!-- LiveDisplay strings -->
-    <string name="live_display_auto">Автоматически</string>
-    <string name="live_display_auto_summary">Автоматически регулировать температуру цвета после заката и восхода солнца</string>
-    <string name="live_display_off">Выкл.</string>
-    <string name="live_display_off_summary">Отключить автоподстройку</string>
-    <string name="live_display_day">День</string>
-    <string name="live_display_day_summary">Использовать только дневные настройки</string>
-    <string name="live_display_night">Ночь</string>
-    <string name="live_display_night_summary">Использовать только ночные настройки</string>
-    <string name="live_display_outdoor">На улице (яркое солнце)</string>
-    <string name="live_display_outdoor_summary">Только режим «При ярком солнце»</string>
-    <string name="live_display_hint">LiveDisplay может помочь уменьшить напряжение глаз. Нажмите здесь, чтобы попробовать!</string>
-    <string name="accessibility_quick_settings_live_display_off">LiveDisplay выкл.</string>
-    <string name="accessibility_quick_settings_live_display_auto">LiveDisplay: автоматический режим.</string>
-    <string name="accessibility_quick_settings_live_display_day">LiveDisplay: дневной режим</string>
-    <string name="accessibility_quick_settings_live_display_night">LiveDisplay: ночной режим.</string>
-    <string name="accessibility_quick_settings_live_display_outdoor">LiveDisplay: режим \"На улице\".</string>
-    <string name="accessibility_quick_settings_live_display_changed_off">LiveDisplay выключен.</string>
-    <string name="accessibility_quick_settings_live_display_changed_auto">LiveDisplay переключен в автоматический режим.</string>
-    <string name="accessibility_quick_settings_live_display_changed_day">LiveDisplay переключен в дневной режим.</string>
-    <string name="accessibility_quick_settings_live_display_changed_night">LiveDisplay переключен в ночной режим.</string>
-    <string name="accessibility_quick_settings_live_display_changed_outdoor">LiveDisplay переключен в режим «на улице».</string>
-    <!-- Vendor mismatch fingerprint warning [CHAR LIMIT=NONE] -->
-    <string name="system_error_vendorprint">Образ вашего поставщика не соответствует системе. Пожалуйста, прошейте <xliff:g id="string">%s</xliff:g> Vendor поставщика для вашего устройства</string>
+    <!-- Face unlock -->
+    <string name="face_unlock_disabled_idle">Разблокировка по лицу отключена из-за бездействия</string>
+    <!-- Parallel space badge -->
+    <!-- Message for updating an existing app -->
+    <string name="old_version_number">Installed version: <xliff:g id="old_version">%1$s</xliff:g></string>
+    <!-- Message for updating an existing system app -->
+    <string name="new_version_number">To be installed: <xliff:g id="new_version">%1$s</xliff:g></string>
+    <!-- App lock -->
+    <string name="unlock_application">Разблокировать <xliff:g id="label" example="Telegram">%1$s</xliff:g></string>
     <!-- Settings Restart -->
     <string name="settings_restart_title">Необходима перезагрузка системного интерфейса</string>
     <string name="settings_restart_message">Чтобы все изменения вступили в силу, требуется перезагрузка системного интерфейса. Перезагрузить сейчас?</string>
-    <!-- Aerr strings -->
-    <string name="aerr_disable">Отключить приложение</string>
-    <!-- Button that opens the screen with details of an application error -->
-    <string name="aerr_show_details">Подробнее</string>
-    <!-- Parallel space badge -->
-    <string name="parallel_space_badge_label">%1$s</string>
-    <!-- App lock -->
-    <string name="unlock_application">Разблокировать <xliff:g id="label" example="Telegram">%1$s</xliff:g></string>
-    <!-- Face unlock -->
-    <string name="face_unlock_disabled_idle">Разблокировка по лицу отключена из-за бездействия</string>
+    <!-- System Reboot -->
+    <string name="system_restart_title">System restart required</string>
+    <string name="system_restart_message">For all the changes to take effect, a system restart is required. Perform system restart now?</string>
 </resources>
