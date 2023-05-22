@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2019-2022 Spark
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Cycle through ringer modes -->
+    <string name="volume_dialog_ringer_guidance_normal">المكالمات والإشعارات ستصدر رنيناً</string>
+    <!-- Button that copies the url to the log of a crashed application -->
+    <string name="aerr_copy">نسخ رابط سجل الاعطال</string>
+    <string name="url_copy_success">تم نسخ عنوان URL بنجاح</string>
+    <string name="url_copy_failed">An error occured while uploading the log to hastebin</string>
+    <!-- SystemUI Restart -->
+    <string name="systemui_restart_title">مطلوب إعادة تشغيل واجهة النظام</string>
+    <string name="systemui_restart_message">لتطبيق كل التغييرات، اعادة تشغيل واجهة المستخدم مطلوبة لكي يتم تطبيق التعديلات، هل تريد اعادة التشغيل الان؟</string>
+    <!-- Pocket Lock -->
+    <string name="pocket_lock_message_long_press">اضغط مع الاستمرار على زر الطاقة للفتح</string>
+    <string name="pocket_view_title">وضع الجيب قيد التشغيل</string>
+    <string name="pocket_view_title_cancel">لاستخدام هاتفك:</string>
+    <string name="pocket_view_top_tag_cancel">تحقق مما إذا كانت المنطقة الزرقاء في هاتفك خالية من أي عوائق، وقم بتنظيف أي تراب أو غبار.</string>
+    <string name="pocket_view_top_tag_cancel2">اضغط مطولاً على زر الطاقة لفرض الخروج عن وضع الجيب.</string>
+    <string name="pocket_view_top_tag_number1">1.\u0020</string>
+    <string name="pocket_view_top_tag_number2">2.\u0020</string>
+    <!-- LiveDisplay strings -->
+    <string name="live_display_auto">تلقائي</string>
+    <string name="live_display_auto_summary">ضبط درجة الحرارة اللونية للشاشة تلقائياً بعد غروب الشمس وشروق الشمس</string>
+    <string name="live_display_off">متوقف</string>
+    <string name="live_display_off_summary">تعطيل جميع التعديلات</string>
+    <string name="live_display_day">نهار</string>
+    <string name="live_display_day_summary">استخدام إعدادات النهار فقط</string>
+    <string name="live_display_night">ليل</string>
+    <string name="live_display_night_summary">استخدام إعدادات الليل فقط</string>
+    <string name="live_display_outdoor">خارج المنزل ( شمس ساطعة)</string>
+    <string name="live_display_outdoor_summary">استخدم إعدادات خارج المنزل فقط</string>
+    <string name="live_display_hint">يمكن أن تساعد ميزة العرض الحي في تقليل إجهاد العين ومساعدتك على النوم في الليل. انقر هنا لتجربتها!</string>
+    <string name="accessibility_quick_settings_live_display_off">إيقاف تشغيل العرض الحي.</string>
+    <string name="accessibility_quick_settings_live_display_auto">العرض الحي: الوضع التلقائي.</string>
+    <string name="accessibility_quick_settings_live_display_day">العرض الحي: الوضع النهاري.</string>
+    <string name="accessibility_quick_settings_live_display_night">العرض الحي: الوضع الليلي.</string>
+    <string name="accessibility_quick_settings_live_display_outdoor">العرض الحي: وضع الخارج.</string>
+    <string name="accessibility_quick_settings_live_display_changed_off">تم إيقاف تشغيل العرض الحي.</string>
+    <string name="accessibility_quick_settings_live_display_changed_auto">تم تغيير العرض الحي إلى الوضع التلقائي.</string>
+    <string name="accessibility_quick_settings_live_display_changed_day">تم تغيير العرض الحي إلى الوضع النهاري.</string>
+    <string name="accessibility_quick_settings_live_display_changed_night">تم تغيير العرض الحي إلى الوضع الليلي.</string>
+    <string name="accessibility_quick_settings_live_display_changed_outdoor">تم تغيير العرض الحي إلى وضع الخارج.</string>
+    <!-- Vendor mismatch fingerprint warning [CHAR LIMIT=NONE] -->
+    <string name="system_error_vendorprint">صورة موردك لا تطابق النظام. الرجاء تنصيب<xliff:g id="string">%s</xliff:g> صورة مورد جهازك</string>
+    <!-- Settings Restart -->
+    <string name="settings_restart_title">مطلوب إعادة تشغيل واجهة النظام</string>
+    <string name="settings_restart_message">لتكون كافة التغييرات نافذة المفعول، مطلوب إعادة تشغيل واجهة النظام. إعادة تشغيل واجهة النظام الآن؟</string>
+    <!-- Aerr strings -->
+    <string name="aerr_disable">إيقاف التطبيق</string>
+    <!-- Button that opens the screen with details of an application error -->
+    <string name="aerr_show_details">Show details</string>
+    <!-- Parallel space badge -->
+    <string name="parallel_space_badge_label">%1$s</string>
+    <!-- App lock -->
+    <string name="unlock_application">Unlock <xliff:g id="label" example="Telegram">%1$s</xliff:g></string>
+    <!-- Face unlock -->
+    <string name="face_unlock_disabled_idle">Face unlock disabled due to inactivity</string>
+</resources>

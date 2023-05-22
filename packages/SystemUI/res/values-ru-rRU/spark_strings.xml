@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2019-2022 Spark
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Name of the clock in status bar [CHAR LIMIT=30] -->
+    <string name="clock">Часы</string>
+    <!-- Screenshot delete action -->
+    <!-- Label for UI element which allows deleting the screenshot [CHAR LIMIT=30] -->
+    <string name="screenshot_delete_label">Удалить</string>
+    <!-- Content description indicating that tapping the element will allow deleting the screenshot [CHAR LIMIT=NONE] -->
+    <string name="screenshot_delete_description">Удалить снимок экрана</string>
+    <!-- Name of the nfc status bar icon. -->
+    <string name="status_bar_nfc">Модуль NFC</string>
+    <!-- Accessibility label for nfc icon (not shown on screen) [CHAR LIMIT=NONE] -->
+    <string name="accessibility_status_bar_nfc">NFC</string>
+    <!-- Screen record delete action -->
+    <!-- Label for notification action to delete a screen recording file [CHAR LIMIT=35] -->
+    <string name="screenrecord_delete_label">Удалить</string>
+    <!-- A toast message shown after successfully deleting a screen recording [CHAR LIMIT=NONE] -->
+    <string name="screenrecord_delete_description">Запись видео с экрана удалена</string>
+    <!-- Statusbar tuner -->
+    <string name="statusbar_items_title">Statusbar icon</string>
+    <!-- Name of the VPN status bar icon. -->
+    <string name="status_bar_vpn">VPN</string>
+    <string name="status_bar_firewall">Брандмауэр</string>
+    <!-- Sb Data Saver icon -->
+    <string name="status_bar_data_saver">Экономия трафика</string>
+    <!-- Sb Call Strength icon -->
+    <string name="status_bar_call_strength">Уровень сигнала</string>
+    <!-- Alert slider extras -->
+    <string name="volume_ringer_priority_only">Приоритет</string>
+    <string name="volume_ringer_alarms_only">Будильники</string>
+    <string name="volume_ringer_dnd">Не беспокоить</string>
+    <string name="tristate_flashlight">Фонарик</string>
+    <string name="tristate_flashlight_on">Фонарик вкл.</string>
+    <string name="tristate_flashlight_off">Фонарик выкл.</string>
+    <string name="tristate_flashlight_blink">Мигание фонарика</string>
+    <string name="tristate_brightness_bright">Максимальная яркость</string>
+    <string name="tristate_brightness_dark">Минимальная яркость</string>
+    <string name="tristate_brightness_auto">Автоматическая яркость</string>
+    <string name="tristate_rotation_auto">Автоповорот</string>
+    <string name="tristate_rotation_0">Портретная ориентация</string>
+    <string name="tristate_rotation_90">Горизонтальная ориентация (90°)</string>
+    <string name="tristate_rotation_270">Горизонтальная ориентация (270°)</string>
+    <!-- On The Go -->
+    <string name="onthego_notification_ticker">Режим «На ходу» включен</string>
+    <string name="onthego_notification_title">Режим «На ходу» активен</string>
+    <string name="onthego_notification_stop">Стоп</string>
+    <string name="onthego_notification_options">Параметры</string>
+    <string name="onthego_notification_error">Не удаётся включить режим «На ходу»</string>
+    <string name="onthego_notification_restart">Перезапустить режим «На ходу»</string>
+    <string name="onthego_notification_camera_changed">Режим камеры изменён</string>
+    <string name="onthego_transparency">Прозрачность</string>
+    <string name="onthego_front_camera">Использовать переднюю камеру</string>
+    <string name="onthego_service_toggle">Автоматический перезапуск службы</string>
+    <string name="onthego_channel_name">На ходу</string>
+    <string name="global_action_onthego">На ходу</string>
+    <!-- OnTheGo Tile -->
+    <string name="quick_settings_onthego_label">На ходу</string>
+    <string name="accessibility_quick_settings_onthego_off">Режим «На ходу» выкл.</string>
+    <string name="accessibility_quick_settings_onthego_on">Режим «На ходу» вкл.</string>
+    <string name="accessibility_quick_settings_onthego_changed_off">Режим «На ходу» выключен</string>
+    <string name="accessibility_quick_settings_onthego_changed_on">Режим «На ходу» включен</string>
+    <!-- Text to use when the number in a notification info is too large -->
+    <!-- Kill button in notification guts -->
+    <string name="force_stop_dlg_title">Остановить принудительно?</string>
+    <string name="force_stop_dlg_text">Принудительное закрытие приложения может отразиться на его функциональности.</string>
+    <string name="guts_force_close_app">Закрыть приложение</string>
+    <!-- AOD QS tile -->
+    <string name="quick_settings_aod_label">Всегда активный экран</string>
+    <string name="quick_settings_aod_on_charge_label">Всегда активный экран при зарядке</string>
+    <string name="quick_settings_aod_off_label">Всегда активный экран выкл.</string>
+    <string name="quick_settings_aod_off_powersave_label">Всегда активный экран\n выкл.</string>
+    <!-- PowerShare QS tile -->
+    <string name="quick_settings_powershare_label">Беспроводная зарядка PowerShare</string>
+    <string name="quick_settings_powershare_off_powersave_label">PowerShare выключен\n Экономия энергии</string>
+    <string name="quick_settings_powershare_off_low_battery_label">PowerShare выключен.\n Низкий заряд батареи</string>
+    <string name="quick_settings_powershare_enabled_label">Беспроводная PowerShare включена</string>
+    <!-- Caffeine tile -->
+    <string name="quick_settings_caffeine_label">Запрет сна</string>
+    <string name="accessibility_quick_settings_caffeine_off">Запрет сна выкл.</string>
+    <string name="accessibility_quick_settings_caffeine_on">Запрет сна вкл.</string>
+    <!-- Ambient display QS tile -->
+    <string name="quick_settings_ambient_display_label">Индикация событий</string>
+    <string name="accessibility_quick_settings_ambient_display_off">Индикация событий выкл.</string>
+    <string name="accessibility_quick_settings_ambient_display_on">Индикация событий вкл.</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_off">Индикация событий выключена.</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_on">Индикация событий включена.</string>
+    <!-- USB tethering QS tile -->
+    <string name="quick_settings_usb_tether_label">USB модем</string>
+    <!-- Sync QS Tile -->
+    <string name="quick_settings_sync_label">Синхронизация</string>
+    <string name="accessibility_quick_settings_sync_off">Синхронизация выкл.</string>
+    <string name="accessibility_quick_settings_sync_on">Синхронизация вкл.</string>
+    <string name="accessibility_quick_settings_sync_changed_off">Синхронизация отключена</string>
+    <string name="accessibility_quick_settings_sync_changed_on">Синхронизация включена</string>
+    <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">Звук</string>
+    <string name="quick_settings_sound_ring">Звонок</string>
+    <string name="quick_settings_sound_vibrate">Вибрация</string>
+    <string name="quick_settings_sound_mute">Без звука</string>
+    <!-- Heads Up QS Tile -->
+    <string name="quick_settings_heads_up_label">Всплывающие уведомления</string>
+    <string name="accessibility_quick_settings_heads_up_off">Всплывающие уведомления выкл.</string>
+    <string name="accessibility_quick_settings_heads_up_on">Всплывающие уведомления вкл.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_off">Всплывающие уведомления выкл.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_on">Всплывающие уведомления вкл.</string>
+    <!-- Poweroff/Reboot/Recovery QS tile -->
+    <string name="quick_settings_poweroff_label">Выключить</string>
+    <string name="quick_settings_reboot_label">Перезагрузка</string>
+    <string name="quick_settings_reboot_recovery_label">Рекавери</string>
+    <!-- Volume panel QS tile -->
+    <string name="quick_settings_volume_panel_label">Панель громкости</string>
+    <!-- DataSwitch Tile -->
+    <string name="qs_data_switch_label">Сменить сим-карту для передачи данных</string>
+    <string name="qs_data_switch_toast_0">Нет SIM карты</string>
+    <string name="qs_data_switch_toast_1">В настоящее время вставлена только одна SIM-карта</string>
+    <string name="qs_data_switch_changed_1">Используется SIM 1 для передачи данных.</string>
+    <string name="qs_data_switch_changed_2">Используется SIM 2 для передачи данных.</string>
+    <!-- FPS Info tile -->
+    <string name="quick_settings_fpsinfo_label">Информация о FPS</string>
+    <string name="accessibility_quick_settings_fpsinfo_off">Информация о FPS выкл.</string>
+    <string name="accessibility_quick_settings_fpsinfo_on">Информация о FPS вкл.</string>
+    <!-- FPS view text placeholder -->
+    <string name="fps_text_placeholder">Fps: <xliff:g id="fps" example="90">%1$d</xliff:g></string>
+    <!-- Navigation bar dpad -->
+    <string name="accessibility_dpad_left">Курсор влево</string>
+    <string name="accessibility_dpad_right">Курсор вправо</string>
+    <!-- Reader mode QS tile -->
+    <string name="quick_settings_reading_mode">Режим чтения</string>
+    <string name="accessibility_quick_settings_reading_mode_on">Включить режим чтения.</string>
+    <string name="accessibility_quick_settings_reading_mode_off">Режим чтения выключен.</string>
+    <string name="accessibility_quick_settings_reading_mode_changed_on">Режим чтения включен.</string>
+    <string name="accessibility_quick_settings_reading_mode_changed_off">Режим чтения выключен.</string>
+    <!-- Kill foreground app -->
+    <string name="task_helper_app_killed">%1$s принудительно остановлено</string>
+    <string name="empty_app_killed">Приложение</string>
+    <!-- Anti flicker QS tile -->
+    <string name="quick_settings_anti_flicker">Устранение мерцания</string>
+    <!-- Advanced nav gestures -->
+    <string name="app_picker_dialog_title">Выберите приложение</string>
+    <string name="active_edge_app_select_title">Выберите приложение</string>
+    <string name="active_edge_activity_select_title">Выберите действие</string>
+    <!-- Compass QS Tile -->
+    <string name="quick_settings_compass_label">Компас</string>
+    <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
+    <string name="quick_settings_compass_init">Инициализация\u2026</string>
+    <string name="accessibility_quick_settings_compass_off">Компас выключен</string>
+    <string name="accessibility_quick_settings_compass_on">Компас включен</string>
+    <string name="accessibility_quick_settings_compass_changed_off">Компас выключен</string>
+    <string name="accessibility_quick_settings_compass_changed_on">Компас включен</string>
+    <string name="quick_settings_compass_N">С</string>
+    <string name="quick_settings_compass_NE">СВ</string>
+    <string name="quick_settings_compass_E">В</string>
+    <string name="quick_settings_compass_SE">ЮВ</string>
+    <string name="quick_settings_compass_S">Ю</string>
+    <string name="quick_settings_compass_SW">ЮВ</string>
+    <string name="quick_settings_compass_W">В</string>
+    <string name="quick_settings_compass_NW">СЗ</string>
+    <!-- CPUInfo tile -->
+    <string name="quick_settings_cpuinfo_label">Информация о процессоре</string>
+    <!-- SoundSearch Tile -->
+    <string name="quick_settings_sound_search">Поиск музыки</string>
+    <string name="quick_settings_sound_search_no_app">Извините, но это не работает без приложения для поиска музыки.</string>
+    <!-- Refresh Rate Tile -->
+    <string name="refresh_rate_tile_label">Частота обновления</string>
+    <string name="refresh_rate_auto_mode_placeholder">Авто (<xliff:g id="min_refresh_rate" example="60">%1$d</xliff:g> - <xliff:g id="max_refresh_rate" example="60">%2$d</xliff:g> Hz)    </string>
+    <string name="refresh_rate_forced_mode_placeholder"><xliff:g id="refresh_rate" example="60">%1$d</xliff:g> Гц</string>
+    <!-- Google Lens Screenshot string -->
+    <string name="lensss">Объектив</string>
+    <!-- Smart Pixels QS Tile -->
+    <string name="quick_settings_smart_pixels">Умные пиксели</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Автоматическое включение умных пикселей</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • Быстрая зарядка (<xliff:g id="charging_time_left" example="4 часа и 2 минуты">%1$s</xliff:g> до полной)</string>
+    <string name="keyguard_plugged_in_dash_charging"><xliff:g id="percentage">%s</xliff:g> • Быстрая зарядка</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with a warp charger. Should match keyguard_plugged_in_warp_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_warp_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • Быстрая зарядка (<xliff:g id="charging_time_left" example="4 часа и 2 минуты">%1$s</xliff:g> до полной)</string>
+    <string name="keyguard_plugged_in_warp_charging"><xliff:g id="percentage">%s</xliff:g> • Быстрая зарядка</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with a VOOC charger. Should match keyguard_plugged_in_vooc_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_vooc_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • VOOC зарядка (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> до полной зарядки)</string>
+    <string name="keyguard_plugged_in_vooc_charging"><xliff:g id="percentage">%s</xliff:g> • VOOC зарядка</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_turbo_power_time"><xliff:g id="percentage">%2$s</xliff:g> • Турбо зарядка (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> до полной)</string>
+    <string name="keyguard_plugged_in_turbo_charging"><xliff:g id="percentage">%s</xliff:g> • Быстрая зарядка</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with an oem fast power charger. Should match keyguard_plugged_in_turbo_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_oem_power_time"><xliff:g id="percentage">%2$s</xliff:g> • Быстрая зарядка (<xliff:g id="charging_time_left" example="4 часа и 2 минуты">%1$s</xliff:g> до полной)</string>
+    <string name="keyguard_plugged_in_oem_charging"><xliff:g id="percentage">%s</xliff:g> • Быстрая зарядка</string>
+    <!-- Screen record -->
+    <string name="screenrecord_stopdot_label">Показать точку остановки</string>
+    <string name="screenrecord_stopdot_summary">Удерживайте, чтобы переместить</string>
+    <string name="screenrecord_lowquality_label">Низкое качество</string>
+    <string name="screenrecord_lowquality_summary">Для меньшего размера файла</string>
+    <string name="screenrecord_longer_timeout_switch_label">Максимальный размер файла</string>
+    <string name="screenrecord_longer_timeout_switch_summary">Максимальный размер записи до 15 ГБ</string>
+    <string name="screenrecord_skip_time_label">Пропуск времени ожидания</string>
+    <string name="screenrecord_skip_time_summary">Убрать 3-х секундное ожидание</string>
+    <string name="screenrecord_hevc_switch_label">Включить HEVC</string>
+    <!-- QS InternetDialog: Summary for how many devices are connected to the hotspot -->
+    <plurals name="quick_settings_internet_hotspot_summary_num_devices">
+        <item quantity="one">%d устройство подключено</item>
+        <item quantity="few">%d устройств подключено</item>
+        <item quantity="many">%d устройств подключено</item>
+        <item quantity="other">%d устройств подключено</item>
+    </plurals>
+    <!-- Data usage panel -->
+    <string name="total_internet_usage">Использование данных (С момента включения)</string>
+    <string name="cellular_usage">Использование мобильной сети</string>
+    <string name="wifi_usage">Использование данных Wi-Fi</string>
+    <!-- Screen pinning dialog description. (for devices without navbar) -->
+    <string name="screen_pinning_description_no_navbar">Приложение останется активным, пока вы не отмените блокировку долгим нажатием кнопки «Назад».</string>
+    <!-- Notify use that they are in Lock-to-app (for devices without navbar)-->
+    <string name="screen_pinning_toast_no_navbar">Чтобы открепить экран, нажмите и удерживайте кнопку «Назад»</string>
+    <!-- Screen pinning dialog description. (for devices without navbar and with gestures on fingerprint sensor) -->
+    <string name="screen_pinning_description_no_navbar_fpsensor">Приложение остаётся активным, до тех пор, пока вы не отмените блокировку. Нажмите и удерживайте палец на сканере отпечатков, чтобы отменить блокировку.</string>
+    <!-- Notify use that they are in Lock-to-app (for devices without navbar and with gestures on fingerprint sensor)-->
+    <string name="screen_pinning_toast_no_navbar_fpsensor">Что бы открепить этот экран, нажмите и удерживайте сканер отпечатка пальца</string>
+    <!-- Face Unlock -->
+    <string name="face_unlock_recognizing">Распознавание лица...</string>
+    <!-- Bluetooth dialog -->
+    <string name="turn_on_bluetooth">Использовать Bluetooth</string>
+    <string name="bluetooth_is_off">Bluetooth отключен</string>
+    <string name="tap_a_device_to_connect">Коснитесь устройства для подключения</string>
+    <string name="photos_not_allowed">Это приложение не поддерживается</string>
+    <!-- Preferred network tile -->
+    <string name="quick_settings_preferred_network_label">Предпочтительный тип сети</string>
+    <string name="quick_settings_preferred_network_lte">4G / LTE</string>
+    <string name="quick_settings_preferred_network_nr">5G / NR</string>
+    <string name="quick_settings_preferred_network_unsupported">Не поддерживается</string>
+    <!-- Screenshot Tile -->
+    <string name="screenshot_long_press">Долгое нажатие - выбранная область</string>
+    <!-- Spark QS Tiles -->
+    <string name="quick_settings_spark_boost_mode_label">Ускорение системы</string>
+    <string name="quick_settings_spark_services_unavailable">Системный менеджер отключен</string>
+    <string name="quick_settings_spark_boost_mode_enabled">Ускорение активно</string>
+    <string name="quick_settings_spark_boost_mode_disabled">Ускорение неактивно</string>
+    <string name="quick_settings_spark_idle_mode_label">Агрессивный менеджер бездействия</string>
+    <string name="quick_settings_spark_idle_mode_enabled">Агрессивный режим бездействия активен</string>
+    <string name="quick_settings_spark_idle_mode_disabled">Агрессивный режим бездействия</string>
+    <!-- Data usage info in QS footer -->
+    <string name="usage_data">использовано сегодня</string>
+    <string name="usage_data_default_suffix">Данные</string>
+    <string name="usage_wifi_default_suffix">Wi-Fi</string>
+    <!-- Advanced restart menu -->
+    <!-- Button to indicate more options -->
+    <string name="global_action_restart_more">Перезагрузка\u2026</string>
+    <!-- Button to restart the device, within the Restart Options dialog -->
+    <string name="global_action_restart_system">Система</string>
+    <!-- Button to restart the device into recovery mode, within the Restart Options dialog -->
+    <string name="global_action_restart_recovery">Рекавери</string>
+    <!-- Button to restart the device into bootloader mode, within the Restart Options dialog -->
+    <string name="global_action_restart_bootloader">Режим Fastboot</string>
+    <!-- Button to restart the device into download mode, within the Restart Options dialog -->
+    <string name="global_action_restart_download">Скачивание</string>
+    <!-- Button to restart the device into fastboot mode, within the Restart Options dialog -->
+    <string name="global_action_restart_fastboot">Быстрый запуск</string>
+    <!-- Restart progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_progress">Перезагрузка\u2026</string>
+    <!-- Restart to recovery mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_recovery_progress">Перезагрузка в режим восстановления\u2026</string>
+    <!-- Restart to bootloader mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_bootloader_progress">Перезагрузка в режим загрузчика\u2026</string>
+    <!-- Restart to download mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_download_progress">Перезагрузка в режим загрузки\u2026</string>
+    <!-- Restart to fastboot mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_fastboot_progress">Перезагрузка в режим быстрого запуска\u2026</string>
+    <!-- Label for current user in power menu options dialog -->
+    <string name="global_action_current_user">Текущий</string>
+    <string name="global_action_users">Пользователи</string>
+    <string name="global_action_restart_systemui">Системный интерфейс</string>
+</resources>

@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2019-2022 Spark
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Name of the clock in status bar [CHAR LIMIT=30] -->
+    <string name="clock">ساعت</string>
+    <!-- Screenshot delete action -->
+    <!-- Label for UI element which allows deleting the screenshot [CHAR LIMIT=30] -->
+    <string name="screenshot_delete_label">حذف</string>
+    <!-- Content description indicating that tapping the element will allow deleting the screenshot [CHAR LIMIT=NONE] -->
+    <string name="screenshot_delete_description">حذف عکس صفحه</string>
+    <!-- Name of the nfc status bar icon. -->
+    <string name="status_bar_nfc">ان‌اف‌سی</string>
+    <!-- Accessibility label for nfc icon (not shown on screen) [CHAR LIMIT=NONE] -->
+    <string name="accessibility_status_bar_nfc">ان اف سی</string>
+    <!-- Screen record delete action -->
+    <!-- Label for notification action to delete a screen recording file [CHAR LIMIT=35] -->
+    <string name="screenrecord_delete_label">حذف</string>
+    <!-- A toast message shown after successfully deleting a screen recording [CHAR LIMIT=NONE] -->
+    <string name="screenrecord_delete_description">فیلم ضبط صفحه حذف شد</string>
+    <!-- Statusbar tuner -->
+    <string name="statusbar_items_title">آیکون‌های نوار وضعیت</string>
+    <!-- Name of the VPN status bar icon. -->
+    <string name="status_bar_vpn">فیلترشکن</string>
+    <string name="status_bar_firewall">Firewall</string>
+    <!-- Sb Data Saver icon -->
+    <string name="status_bar_data_saver">صرفه‌جویی در مصرف دیتا</string>
+    <!-- Sb Call Strength icon -->
+    <string name="status_bar_call_strength">قدرت تماس</string>
+    <!-- Alert slider extras -->
+    <string name="volume_ringer_priority_only">اولویت</string>
+    <string name="volume_ringer_alarms_only">هشدار ها</string>
+    <string name="volume_ringer_dnd">مزاحم نشو</string>
+    <string name="tristate_flashlight">چراغ قوه</string>
+    <string name="tristate_flashlight_on">چراغ قوه روشن</string>
+    <string name="tristate_flashlight_off">چراغ قوه خاموش</string>
+    <string name="tristate_flashlight_blink">چشمک زدن</string>
+    <string name="tristate_brightness_bright">حداکثر روشنایی</string>
+    <string name="tristate_brightness_dark">حداقل روشنایی</string>
+    <string name="tristate_brightness_auto">تنظیم روشنایی خودکار</string>
+    <string name="tristate_rotation_auto">چرخش خودکار</string>
+    <string name="tristate_rotation_0">عمودی</string>
+    <string name="tristate_rotation_90">افقی(90 درجه)</string>
+    <string name="tristate_rotation_270">افقی(270 درجه)</string>
+    <!-- On The Go -->
+    <string name="onthego_notification_ticker">ویژگی در حرکت فعال شد</string>
+    <string name="onthego_notification_title">ویژگی در حرکت فعال است</string>
+    <string name="onthego_notification_stop">توقف</string>
+    <string name="onthego_notification_options">تنظیمات</string>
+    <string name="onthego_notification_error">امکان فعال شدن ویژگی در حرکت نمی باشد</string>
+    <string name="onthego_notification_restart">راه اندازی مجدد ویژگی در حرکت</string>
+    <string name="onthego_notification_camera_changed">حالت دوربین تغییر کرده</string>
+    <string name="onthego_transparency">شفافیت در حال حرکت</string>
+    <string name="onthego_front_camera">استفاده از دوربین جلو</string>
+    <string name="onthego_service_toggle">راه اندازی مجدد سرویس به طور خودکار</string>
+    <string name="onthego_channel_name">در حرکت</string>
+    <string name="global_action_onthego">در حرکت</string>
+    <!-- OnTheGo Tile -->
+    <string name="quick_settings_onthego_label">در حرکت</string>
+    <string name="accessibility_quick_settings_onthego_off">خاموش شدن در حرکت</string>
+    <string name="accessibility_quick_settings_onthego_on">روشن شدن در حرکت</string>
+    <string name="accessibility_quick_settings_onthego_changed_off">در حرکت خاموش شد</string>
+    <string name="accessibility_quick_settings_onthego_changed_on">در حرکت روشن شد</string>
+    <!-- Text to use when the number in a notification info is too large -->
+    <!-- Kill button in notification guts -->
+    <string name="force_stop_dlg_title">توقف اجباری؟</string>
+    <string name="force_stop_dlg_text">اگر برنامه‌ای را به اجبار متوقف کنید، ممکن است درست کار نکند.</string>
+    <string name="guts_force_close_app">بستن برنامه</string>
+    <!-- AOD QS tile -->
+    <string name="quick_settings_aod_label">صفحه نمایش همیشه روشن</string>
+    <string name="quick_settings_aod_on_charge_label">تغییر بر AOD</string>
+    <string name="quick_settings_aod_off_label">AOD خاموش</string>
+    <string name="quick_settings_aod_off_powersave_label">نمایشگر همیشه روشن، غیرفعال\nحالت ذخیره‌ی انرژی</string>
+    <!-- PowerShare QS tile -->
+    <string name="quick_settings_powershare_label">اشتراک‌گذاری بی‌سیم نیرو</string>
+    <string name="quick_settings_powershare_off_powersave_label">اشتراک‌گذاری بی‌سیم نیرو خاموش\nحالت ذخیره‌ی نیرو</string>
+    <string name="quick_settings_powershare_off_low_battery_label">اشتراک‌گذاری بی‌سیم نیرو خاموش\nباتری خیلی ضعیف است</string>
+    <string name="quick_settings_powershare_enabled_label">اشتراک‌گذاری بی‌سیم نیرو روشن است</string>
+    <!-- Caffeine tile -->
+    <string name="quick_settings_caffeine_label">حالت کافئین</string>
+    <string name="accessibility_quick_settings_caffeine_off">حالت کافئین خاموش</string>
+    <string name="accessibility_quick_settings_caffeine_on">حالت کافئین روشن</string>
+    <!-- Ambient display QS tile -->
+    <string name="quick_settings_ambient_display_label">نمایشگر حساس به محیط</string>
+    <string name="accessibility_quick_settings_ambient_display_off">نمایش حساس به محیط خاموش.</string>
+    <string name="accessibility_quick_settings_ambient_display_on">نمایش حساس به محیط روشن.</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_off">نمایش حساس به محیط خاموش شد.</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_on">نمایش حساس به محیط روشن شد.</string>
+    <!-- USB tethering QS tile -->
+    <string name="quick_settings_usb_tether_label">نقطه اتصال USB</string>
+    <!-- Sync QS Tile -->
+    <string name="quick_settings_sync_label">همگام سازی</string>
+    <string name="accessibility_quick_settings_sync_off">همگام سازی خاموش</string>
+    <string name="accessibility_quick_settings_sync_on">همگام‌سازی روشن</string>
+    <string name="accessibility_quick_settings_sync_changed_off">همگام‌سازی خاموش شد</string>
+    <string name="accessibility_quick_settings_sync_changed_on">همگام‌سازی روشن شد</string>
+    <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">صدا</string>
+    <string name="quick_settings_sound_ring">زنگ</string>
+    <string name="quick_settings_sound_vibrate">ﻟﺮﺯﺵ</string>
+    <string name="quick_settings_sound_mute">بی‌صدا</string>
+    <!-- Heads Up QS Tile -->
+    <string name="quick_settings_heads_up_label">اعلان فوری</string>
+    <string name="accessibility_quick_settings_heads_up_off">اعلان فوری خاموش.</string>
+    <string name="accessibility_quick_settings_heads_up_on">اعلان فوری روشن.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_off">اعلان فوری خاموش شد.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_on">اعلان فوری روشن شد.</string>
+    <!-- Poweroff/Reboot/Recovery QS tile -->
+    <string name="quick_settings_poweroff_label">خاموش کردن</string>
+    <string name="quick_settings_reboot_label">راه‌اندازی مجدد</string>
+    <string name="quick_settings_reboot_recovery_label">ریکاوری</string>
+    <!-- Volume panel QS tile -->
+    <string name="quick_settings_volume_panel_label">پنل صدا</string>
+    <!-- DataSwitch Tile -->
+    <string name="qs_data_switch_label">تعویض سیم کارت دیتا</string>
+    <string name="qs_data_switch_toast_0">درحال حاضر هیچ سیم‌کارتی وارد نشده است</string>
+    <string name="qs_data_switch_toast_1">درحال حاضر فقط یک سیم‌کارت وارد شده است</string>
+    <string name="qs_data_switch_changed_1">تغییر داده به سیم کارت ۱.</string>
+    <string name="qs_data_switch_changed_2">تغییر داده به سیم کارت ۲.</string>
+    <!-- FPS Info tile -->
+    <string name="quick_settings_fpsinfo_label">اطلاعات FPS</string>
+    <string name="accessibility_quick_settings_fpsinfo_off">نمایش اطلاعات FPS خاموش</string>
+    <string name="accessibility_quick_settings_fpsinfo_on">نمایش اطلاعات FPS روشن</string>
+    <!-- FPS view text placeholder -->
+    <string name="fps_text_placeholder"><xliff:g id="fps" example="90">%1$d</xliff:g></string>
+    <!-- Navigation bar dpad -->
+    <string name="accessibility_dpad_left">نشانگر چپ</string>
+    <string name="accessibility_dpad_right">نشانگر راست</string>
+    <!-- Reader mode QS tile -->
+    <string name="quick_settings_reading_mode">حالت مطالعه</string>
+    <string name="accessibility_quick_settings_reading_mode_on">حالت مطالعه روشن.</string>
+    <string name="accessibility_quick_settings_reading_mode_off">حالت مطالعه خاموش.</string>
+    <string name="accessibility_quick_settings_reading_mode_changed_on">حالت مطالعه روشن شد.</string>
+    <string name="accessibility_quick_settings_reading_mode_changed_off">حالت مطالعه خاموش شد.</string>
+    <!-- Kill foreground app -->
+    <string name="task_helper_app_killed">%1$s اجباری متوقف شد</string>
+    <string name="empty_app_killed">برنامه ها</string>
+    <!-- Anti flicker QS tile -->
+    <string name="quick_settings_anti_flicker">تصویر بدون پرش</string>
+    <!-- Advanced nav gestures -->
+    <string name="app_picker_dialog_title">یک برنامه را انتخاب کنید</string>
+    <string name="active_edge_app_select_title">انتخاب برنامه</string>
+    <string name="active_edge_activity_select_title">انتخاب نوع فعالیت</string>
+    <!-- Compass QS Tile -->
+    <string name="quick_settings_compass_label">قطب‌نما</string>
+    <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
+    <string name="quick_settings_compass_init">مقداردهی اولیه\u2026</string>
+    <string name="accessibility_quick_settings_compass_off">قطب نما خاموش</string>
+    <string name="accessibility_quick_settings_compass_on">قطب‌نما روشن</string>
+    <string name="accessibility_quick_settings_compass_changed_off">قطب نما خاموش شد</string>
+    <string name="accessibility_quick_settings_compass_changed_on">قطب نما روشن شد</string>
+    <string name="quick_settings_compass_N">شمال</string>
+    <string name="quick_settings_compass_NE">شمال شرقی</string>
+    <string name="quick_settings_compass_E">شرق</string>
+    <string name="quick_settings_compass_SE">جنوب شرقی</string>
+    <string name="quick_settings_compass_S">جنوب</string>
+    <string name="quick_settings_compass_SW">جنوب غربی</string>
+    <string name="quick_settings_compass_W">غرب</string>
+    <string name="quick_settings_compass_NW">شمال غربی</string>
+    <!-- CPUInfo tile -->
+    <string name="quick_settings_cpuinfo_label">اطلاعات پردازنده</string>
+    <!-- SoundSearch Tile -->
+    <string name="quick_settings_sound_search">جستجو صدا</string>
+    <string name="quick_settings_sound_search_no_app">متاسفیم، ولی بدون برنامه جستجو موسیقی این قابلیت کار نمیکند.</string>
+    <!-- Refresh Rate Tile -->
+    <string name="refresh_rate_tile_label">نرخ تازه‌سازی</string>
+    <string name="refresh_rate_auto_mode_placeholder">        خودکار (<xliff:g id="min_refresh_rate" example="60">%1$d</xliff:g> - <xliff:g id="max_refresh_rate" example="60">%2$d</xliff:g> هرتز)
+    </string>
+    <string name="refresh_rate_forced_mode_placeholder"><xliff:g id="refresh_rate" example="60">%1$d</xliff:g> هرتز</string>
+    <!-- Google Lens Screenshot string -->
+    <string name="lensss">لنز</string>
+    <!-- Smart Pixels QS Tile -->
+    <string name="quick_settings_smart_pixels">پیکسل های هوشمند</string>
+    <string name="quick_settings_smart_pixels_on_power_save">پیکسل هوشمند درحالت خودکار</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • شارژ سریع (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> مانده تا کامل شود)</string>
+    <string name="keyguard_plugged_in_dash_charging"><xliff:g id="percentage">%s</xliff:g> • شارژ سریع</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with a warp charger. Should match keyguard_plugged_in_warp_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_warp_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • شارژ نامنظم (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> مانده تا کامل شود)</string>
+    <string name="keyguard_plugged_in_warp_charging"><xliff:g id="percentage">%s</xliff:g> • Wشارژ بی‌سیم</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with a VOOC charger. Should match keyguard_plugged_in_vooc_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_vooc_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • شارژ فوق سریع (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> تا کامل شود)</string>
+    <string name="keyguard_plugged_in_vooc_charging"><xliff:g id="percentage">%s</xliff:g> • شارژ سریع</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_turbo_power_time"><xliff:g id="percentage">%2$s</xliff:g> • شارژ سریع (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> تا کامل شود)</string>
+    <string name="keyguard_plugged_in_turbo_charging"><xliff:g id="percentage">%s</xliff:g> • شارژ سریع</string>
+    <!-- Indication on the keyguard that is shown when the device is charging with an oem fast power charger. Should match keyguard_plugged_in_turbo_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_oem_power_time"><xliff:g id="percentage">%2$s</xliff:g> • شارژ سریع (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> مانده تا کامل شود)</string>
+    <string name="keyguard_plugged_in_oem_charging"><xliff:g id="percentage">%s</xliff:g> • شارژ سریع</string>
+    <!-- Screen record -->
+    <string name="screenrecord_stopdot_label">نشان دادن نقطه توقف</string>
+    <string name="screenrecord_stopdot_summary">برای جابجایی، مدتی نگه دارید</string>
+    <string name="screenrecord_lowquality_label">کیفیت کمتر</string>
+    <string name="screenrecord_lowquality_summary">برای انداره کوچیک تر فایل</string>
+    <string name="screenrecord_longer_timeout_switch_label">محدودیت اندازه فایل بزرگتر</string>
+    <string name="screenrecord_longer_timeout_switch_summary">محدود کردن اندازه ضبط به ۱۵ گیگابایت</string>
+    <string name="screenrecord_skip_time_label">رد کردن زمان‌سنج</string>
+    <string name="screenrecord_skip_time_summary">حذف صبر ۳ ثانیه‌ای</string>
+    <string name="screenrecord_hevc_switch_label">فعال سازی انکد سخت افزاری ویدیو</string>
+    <!-- QS InternetDialog: Summary for how many devices are connected to the hotspot -->
+    <plurals name="quick_settings_internet_hotspot_summary_num_devices">
+        <item quantity="one">%d دستگاه وصل است</item>
+        <item quantity="other">%d دستگاه های متصل</item>
+    </plurals>
+    <!-- Data usage panel -->
+    <string name="total_internet_usage">مصرف اینترنت(از زمان روشن شدن دستگاه)</string>
+    <string name="cellular_usage">مصرف اینترنت همراه</string>
+    <string name="wifi_usage">مصرف وای فای</string>
+    <!-- Screen pinning dialog description. (for devices without navbar) -->
+    <string name="screen_pinning_description_no_navbar">تا زمانی که پین ​​را بردارید، آن را در معرض دید قرار می‌دهد. لمس &amp; برای برداشتن پین، کلید برگشت را نگه دارید.</string>
+    <!-- Notify use that they are in Lock-to-app (for devices without navbar)-->
+    <string name="screen_pinning_toast_no_navbar">برای از سنجاق درآوردن دکمه &amp; بازگشت را نگه دارید</string>
+    <!-- Screen pinning dialog description. (for devices without navbar and with gestures on fingerprint sensor) -->
+    <string name="screen_pinning_description_no_navbar_fpsensor">این صفحه تا زمانی که آن را از سنجاق در نیاورید نمایش میدهد. &amp; را لمس کنید; برای از سنجاق درآوردن، سنسور اثرانگشت را نگه دارید.</string>
+    <!-- Notify use that they are in Lock-to-app (for devices without navbar and with gestures on fingerprint sensor)-->
+    <string name="screen_pinning_toast_no_navbar_fpsensor">برای از سنجاق درآوردن دکمه &amp; بازگشت را نگه دارید</string>
+    <!-- Face Unlock -->
+    <string name="face_unlock_recognizing">درحال شناسایی چهره...</string>
+    <!-- Bluetooth dialog -->
+    <string name="turn_on_bluetooth">استفاده از بلوتوث</string>
+    <string name="bluetooth_is_off">بلوتوث خاموش است</string>
+    <string name="tap_a_device_to_connect">برای اتصال به شبکه روی آن ضربه بزنید</string>
+    <string name="photos_not_allowed">این برنامه پشتیبانی نمی‌شود</string>
+    <!-- Preferred network tile -->
+    <string name="quick_settings_preferred_network_label">شبکه برتر</string>
+    <string name="quick_settings_preferred_network_lte">4g / LTE</string>
+    <string name="quick_settings_preferred_network_nr">5g / NR</string>
+    <string name="quick_settings_preferred_network_unsupported">پشتیبانی نشده</string>
+    <!-- Screenshot Tile -->
+    <string name="screenshot_long_press">Long press - selected region</string>
+    <!-- Spark QS Tiles -->
+    <string name="quick_settings_spark_boost_mode_label">System Boost</string>
+    <string name="quick_settings_spark_services_unavailable">System Manager Disabled</string>
+    <string name="quick_settings_spark_boost_mode_enabled">Boost Active</string>
+    <string name="quick_settings_spark_boost_mode_disabled">Boost Inactive</string>
+    <string name="quick_settings_spark_idle_mode_label">Aggressive Idle Manager</string>
+    <string name="quick_settings_spark_idle_mode_enabled">Agrressive Idle Active</string>
+    <string name="quick_settings_spark_idle_mode_disabled">Agrressive Idle Inactive</string>
+    <!-- Data usage info in QS footer -->
+    <string name="usage_data">used today</string>
+    <string name="usage_data_default_suffix">Data</string>
+    <string name="usage_wifi_default_suffix">Wi-Fi</string>
+    <!-- Advanced restart menu -->
+    <!-- Button to indicate more options -->
+    <string name="global_action_restart_more">Restart\u2026</string>
+    <!-- Button to restart the device, within the Restart Options dialog -->
+    <string name="global_action_restart_system">سیستم</string>
+    <!-- Button to restart the device into recovery mode, within the Restart Options dialog -->
+    <string name="global_action_restart_recovery">ریکاوری</string>
+    <!-- Button to restart the device into bootloader mode, within the Restart Options dialog -->
+    <string name="global_action_restart_bootloader">بوت لودر</string>
+    <!-- Button to restart the device into download mode, within the Restart Options dialog -->
+    <string name="global_action_restart_download">Download</string>
+    <!-- Button to restart the device into fastboot mode, within the Restart Options dialog -->
+    <string name="global_action_restart_fastboot">Fastbootd</string>
+    <!-- Restart progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_progress">Restarting\u2026</string>
+    <!-- Restart to recovery mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_recovery_progress">Restarting to recovery mode\u2026</string>
+    <!-- Restart to bootloader mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_bootloader_progress">Restarting to bootloader mode\u2026</string>
+    <!-- Restart to download mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_download_progress">Restarting to download mode\u2026</string>
+    <!-- Restart to fastboot mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_fastboot_progress">Restarting to fastbootd mode\u2026</string>
+    <!-- Label for current user in power menu options dialog -->
+    <string name="global_action_current_user">Current</string>
+    <string name="global_action_users">Users</string>
+    <string name="global_action_restart_systemui">SystemUI</string>
+</resources>
