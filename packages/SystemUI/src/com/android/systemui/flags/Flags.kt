@@ -268,7 +268,7 @@ object Flags {
     // 500 - quick settings
 
     // TODO(b/254512321): Tracking Bug
-    @JvmField val COMBINED_QS_HEADERS = resourceBooleanFlag(501, R.bool.flag_combined_qs_headers, "combined_qs_headers")
+    @JvmField val COMBINED_QS_HEADERS = sysPropBooleanFlag(501, "persist.sys.flags.combined_qs_headers", default = true)
     val PEOPLE_TILE = resourceBooleanFlag(502, R.bool.flag_conversations, "people_tile")
 
     @JvmField
