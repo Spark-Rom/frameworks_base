@@ -30,6 +30,8 @@ import android.graphics.drawable.Drawable;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -77,7 +79,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
     public static final int MODE_DEFAULT = 0;
     public static final int MODE_ON = 1;
     public static final int MODE_OFF = 2;
-    public static final int MODE_ESTIMATE = 3;
+    public static final int MODE_ESTIMATE = 3; // Not to be used
 
     private final AccessorizedBatteryDrawable mAccessorizedDrawable;
     private final CircleBatteryDrawable mCircleDrawable;
@@ -102,6 +104,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
 
     private int mBatteryStyle = BATTERY_STYLE_PORTRAIT;
     private int mShowBatteryPercent;
+    private int mShowBatteryEstimate = 0;
     private boolean mBatteryPercentCharging;
 
     private DualToneHandler mDualToneHandler;
@@ -213,16 +216,27 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
         updateVisibility();
     }
 
-    protected void setBatteryPercent(int showBatteryPercent) {
+    public void setBatteryPercent(int showBatteryPercent) {
         if (showBatteryPercent == mShowBatteryPercent) return;
         mShowBatteryPercent = showBatteryPercent;
         updatePercentView();
     }
 
-    protected void setBatteryPercentCharging(boolean batteryPercentCharging) {
+    public void setBatteryPercentCharging(boolean batteryPercentCharging) {
         if (batteryPercentCharging == mBatteryPercentCharging) return;
         mBatteryPercentCharging = batteryPercentCharging;
         updatePercentView();
+    }
+
+    public int getBatteryEstimate() {
+        return mShowBatteryEstimate;
+    }
+
+    public void setBatteryEstimate(int showBatteryEstimate) {
+        if (showBatteryEstimate == mShowBatteryEstimate) return;
+        mShowBatteryEstimate = showBatteryEstimate;
+        updatePercentView();
+        updateVisibility();
     }
 
     public void setForceShowPercent(boolean show) {
@@ -357,7 +371,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
         
         mEstimateText = null;
 
-        if (mBatteryEstimateFetcher != null && mShowPercentMode == MODE_ESTIMATE && !mCharging) {
+        if (mBatteryEstimateFetcher != null && mShowBatteryEstimate != 0 && !mCharging) {
                 mBatteryEstimateFetcher.fetchBatteryTimeRemainingEstimate(
                         (String estimate) -> {
                 if (mBatteryPercentView == null) {
@@ -388,7 +402,6 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
                 mBatteryPercentView.setText(percentText);
             }
         }
-
         updateContentDescription();
     }
 
@@ -398,7 +411,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
         String contentDescription;
         if (mBatteryStateUnknown) {
             contentDescription = context.getString(R.string.accessibility_battery_unknown);
-        } else if (mShowPercentMode == MODE_ESTIMATE && !TextUtils.isEmpty(mEstimateText)) {
+        } else if (mShowBatteryEstimate != 0 && !TextUtils.isEmpty(mEstimateText)) {
             contentDescription = context.getString(
                     mIsOverheated
                             ? R.string.accessibility_battery_level_charging_paused_with_estimate
@@ -433,7 +446,6 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
                                     || mShowPercentMode == MODE_ON;
         showPercent = showPercent && !mBatteryStateUnknown
                                     && mBatteryStyle != BATTERY_STYLE_HIDDEN;
-
         mAccessorizedDrawable.showPercent(drawPercentInside);
         mCircleDrawable.setShowPercent(drawPercentInside);
         mFullCircleDrawable.setShowPercent(drawPercentInside);
@@ -441,7 +453,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
         mLandscapeDrawable.setShowPercent(drawPercentInside);
 
         if (showPercent || (mBatteryPercentCharging && mCharging)
-                || mShowPercentMode == MODE_ESTIMATE) {
+                || mShowBatteryEstimate != 0) {
             if (mBatteryPercentView == null) {
                 mBatteryPercentView = loadPercentView();
                 if (mPercentageStyleId != 0) { // Only set if specified as attribute
