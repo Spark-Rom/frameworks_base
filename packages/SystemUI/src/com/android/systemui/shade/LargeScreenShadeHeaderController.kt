@@ -634,7 +634,7 @@ class LargeScreenShadeHeaderController @Inject constructor(
 
     private fun setSystemInfoVisible(visible: Boolean) {
         val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-        systeminfo.setAlpha(if (visible && !isLandscape) 1f else 0f)
+        systeminfo.setAlpha(if ((visible && !isLandscape) || !combinedHeaders) 1f else 0f)
     }
 
 
