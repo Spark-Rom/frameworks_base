@@ -235,39 +235,6 @@ public class AmbientText extends FrameLayout {
             case 24:
                 textView.setTypeface(Typeface.create("serif", Typeface.BOLD_ITALIC));
                 break;
-            case 25:
-                textView.setTypeface(Typeface.create("gobold-light-sys", Typeface.NORMAL));
-                break;
-            case 26:
-                textView.setTypeface(Typeface.create("roadrage-sys", Typeface.NORMAL));
-                break;
-            case 27:
-                textView.setTypeface(Typeface.create("snowstorm-sys", Typeface.NORMAL));
-                break;
-            case 28:
-                textView.setTypeface(Typeface.create("googlesans-sys", Typeface.NORMAL));
-                break;
-            case 29:
-                textView.setTypeface(Typeface.create("neoneon-sys", Typeface.NORMAL));
-                break;
-            case 30:
-                textView.setTypeface(Typeface.create("themeable-sys", Typeface.NORMAL));
-                break;
-            case 31:
-                textView.setTypeface(Typeface.create("samsung-sys", Typeface.NORMAL));
-                break;
-            case 32:
-                textView.setTypeface(Typeface.create("mexcellent-sys", Typeface.NORMAL));
-                break;
-            case 33:
-                textView.setTypeface(Typeface.create("burnstown-sys", Typeface.NORMAL));
-                break;
-            case 34:
-                textView.setTypeface(Typeface.create("dumbledor-sys", Typeface.NORMAL));
-                break;
-            case 35:
-                textView.setTypeface(Typeface.create("phantombold-sys", Typeface.NORMAL));
-                break;
         }
     }
 
