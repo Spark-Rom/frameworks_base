@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
@@ -38,6 +39,7 @@ import android.view.ViewGroup;
 import android.view.WindowInsets;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import com.android.internal.util.spark.ImageHelper;
 import android.widget.LinearLayout;
 import android.widget.Space;
 
@@ -74,6 +76,10 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
             "system:" + Settings.System.SHOW_QS_CLOCK;
     private static final String QS_HEADER_IMAGE =
             "system:" + Settings.System.QS_HEADER_IMAGE;
+    private static final String QS_HEADER_IMAGE_STYLES =
+            "system:" + Settings.System.QS_HEADER_IMAGE_STYLES;
+    private static final String QS_HEADER_IMAGE_BLUR_RADIUS =
+            "system:" + Settings.System.QS_HEADER_IMAGE_BLUR_RADIUS;
     public static final String STATUS_BAR_BATTERY_STYLE =
             "system:" + Settings.System.STATUS_BAR_BATTERY_STYLE;
     public static final String QS_BATTERY_STYLE =
@@ -128,6 +134,8 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
     private View mQsHeaderLayout;
     private boolean mHeaderImageEnabled;
     private int mHeaderImageValue;
+    private int mHeaderImageStyle;
+    private static float mHeaderImageBlurRadius = 4f;
 
     // Qs System Info
     private View mSystemInfoLayout;
@@ -216,7 +224,10 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         updateResources();
         mSystemInfoText.updateSystemInfoText();
         Dependency.get(TunerService.class).addTunable(this,
-                SHOW_QS_CLOCK, QS_HEADER_IMAGE,
+                SHOW_QS_CLOCK,
+                QS_HEADER_IMAGE,
+                QS_HEADER_IMAGE_STYLES,
+                QS_HEADER_IMAGE_BLUR_RADIUS,
                 STATUS_BAR_BATTERY_STYLE,
                 QS_BATTERY_STYLE,
                 QS_BATTERY_LOCATION,
@@ -377,7 +388,25 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                 Color.BLACK : Color.WHITE, 30 / 100f);
             int resId = getResources().getIdentifier("qs_header_image_" +
                 String.valueOf(mHeaderImageValue), "drawable", "com.android.systemui");
-            mQsHeaderImageView.setImageResource(resId);
+            Bitmap bitmap = ImageHelper.drawableToBitmap(getResources().getDrawable(resId));
+            if (bitmap != null) {
+                switch (mHeaderImageStyle) {
+                    case 1:
+                        mQsHeaderImageView.setImageBitmap(ImageHelper.toGrayscale(bitmap));
+                        break;
+                    case 2:
+                        mQsHeaderImageView.setImageBitmap(ImageHelper.getBlurredImage(mContext, bitmap, mHeaderImageBlurRadius));
+                        break;
+                    case 3:
+                        mQsHeaderImageView.setImageBitmap(ImageHelper.getGrayscaleBlurredImage(mContext, bitmap, mHeaderImageBlurRadius));
+                        break;
+                    default:
+                        mQsHeaderImageView.setImageResource(resId);
+                        break;
+                }
+            } else {
+                mQsHeaderImageView.setImageResource(resId);
+            }
             mQsHeaderImageView.setColorFilter(fadeFilter, PorterDuff.Mode.SRC_ATOP);
             mQsHeaderLayout.setVisibility(View.VISIBLE);
         } else {
@@ -713,6 +742,14 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                 mHeaderImageEnabled = mHeaderImageValue != 0;
                 updateResources();
                 break;
+            case QS_HEADER_IMAGE_STYLES:
+                mHeaderImageStyle =
+                       TunerService.parseInteger(newValue, 0);
+                updateResources();
+                break;
+            case QS_HEADER_IMAGE_BLUR_RADIUS:
+                setCustomBlurRadius(TunerService.parseInteger(newValue, 4));
+                break;
             case QS_BATTERY_STYLE:
                 mQSBatteryStyle =
                         TunerService.parseInteger(newValue, -1);
@@ -757,6 +794,11 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
             default:
                 break;
         }
+    }
+
+    private void setCustomBlurRadius(int value) {
+        mHeaderImageBlurRadius = (float) value / 1f;
+        updateResources();
     }
 
     private void setBatteryRemainingOnClick(boolean enable) {

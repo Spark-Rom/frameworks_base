@@ -52,6 +52,10 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
+import android.renderscript.Element;
+import android.renderscript.Allocation;
+import android.renderscript.ScriptIntrinsicBlur;
+import android.renderscript.RenderScript;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -351,6 +355,47 @@ public class ImageHelper {
             return null;
         }
         return Uri.fromFile(imageFile);
+    }
+
+    public static Bitmap getBlurredImage(Context context, Bitmap image) {
+        return getBlurredImage(context, image, 4f);
+    }
+
+    public static Bitmap getBlurredImage(Context context, Bitmap image, float radius) {
+        try {
+            image = RGB565toARGB888(image);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Bitmap bitmap = Bitmap.createBitmap(
+                image.getWidth(), image.getHeight(),
+                Bitmap.Config.ARGB_8888);
+        RenderScript renderScript = RenderScript.create(context);
+        Allocation blurInput = Allocation.createFromBitmap(renderScript, image);
+        Allocation blurOutput = Allocation.createFromBitmap(renderScript, bitmap);
+
+        ScriptIntrinsicBlur blur = ScriptIntrinsicBlur.create(renderScript,
+                Element.U8_4(renderScript));
+        blur.setInput(blurInput);
+        blur.setRadius(radius); // radius must be 0 < r <= 25
+        blur.forEach(blurOutput);
+        blurOutput.copyTo(bitmap);
+        renderScript.destroy();
+
+        return bitmap;
+    }
+
+    public static Bitmap getGrayscaleBlurredImage(Context context, Bitmap image) {
+        return getGrayscaleBlurredImage(context, image, 4f);
+    }
+
+    public static Bitmap getGrayscaleBlurredImage(Context context, Bitmap image, float radius) {
+        Bitmap finalImage = Bitmap.createBitmap(
+                image.getWidth(), image.getHeight(),
+                Bitmap.Config.ARGB_8888);
+        finalImage = toGrayscale(getBlurredImage(context, image, radius));
+        return finalImage;
     }
 
     private static Bitmap RGB565toARGB888(Bitmap img) throws Exception {

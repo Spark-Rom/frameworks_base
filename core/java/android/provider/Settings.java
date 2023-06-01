@@ -6218,6 +6218,18 @@ public final class Settings {
         public static final String QS_HEADER_IMAGE = "qs_header_image";
 
         /**
+         * QS Header image styles
+         * @hide
+         */
+        public static final String QS_HEADER_IMAGE_STYLES = "qs_header_image_styles";
+
+        /**
+         * QS Header image blur radius
+         * @hide
+         */
+        public static final String QS_HEADER_IMAGE_BLUR_RADIUS = "qs_header_image_blur_radius";
+
+        /**
          * @hide
          */
         public static final String RECENTS_LOCKED_TASKS = "recents_locked_tasks";
