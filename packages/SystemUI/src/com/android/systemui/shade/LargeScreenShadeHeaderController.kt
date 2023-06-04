@@ -69,6 +69,7 @@ import com.android.systemui.statusbar.policy.Clock
 import com.android.systemui.statusbar.policy.ConfigurationController
 import com.android.systemui.statusbar.policy.VariableDateView
 import com.android.systemui.statusbar.policy.VariableDateViewController
+import com.android.systemui.spark.systeminfo.QsSystemInfoText
 import com.android.systemui.tuner.TunerService
 import com.android.systemui.tuner.TunerService.Tunable
 import com.android.systemui.util.ViewController
@@ -168,6 +169,7 @@ class LargeScreenShadeHeaderController @Inject constructor(
     private val clock: Clock = header.findViewById(R.id.clock)
     private val date: TextView = header.findViewById(R.id.date)
     private val systeminfo: LinearLayout = header.findViewById(R.id.system_info_layout)
+    private val systeminfotext: QsSystemInfoText = header.findViewById(R.id.system_info_text)
     private val iconContainer: StatusIconContainer = header.findViewById(R.id.statusIcons)
     private val qsCarrierGroup: QSCarrierGroup = header.findViewById(R.id.carrier_group)
 
@@ -382,6 +384,7 @@ class LargeScreenShadeHeaderController @Inject constructor(
             privacyIconsController.onParentVisible()
         }
         setSystemInfoVisible(false)
+        systeminfotext.updateSystemInfoText()
         clock.setQsHeader()
 
         clock.setOnClickListener {
@@ -524,6 +527,7 @@ class LargeScreenShadeHeaderController @Inject constructor(
     private fun updateVisibility() {
         updateBatteryStyle()
         updateQsClock()
+        systeminfotext.updateSystemInfoText()
         val visibility = if (!largeScreenActive && !combinedHeaders || qsDisabled) {
             View.GONE
         } else if (qsVisible && !customizing) {

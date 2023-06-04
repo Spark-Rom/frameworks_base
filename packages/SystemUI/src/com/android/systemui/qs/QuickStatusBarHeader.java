@@ -59,7 +59,7 @@ import com.android.systemui.statusbar.policy.Clock;
 import com.android.systemui.statusbar.policy.VariableDateView;
 import com.android.systemui.util.LargeScreenUtils;
 import com.android.systemui.tuner.TunerService;
-
+import com.android.systemui.spark.systeminfo.QsSystemInfoText;
 import lineageos.providers.LineageSettings;
 
 import java.util.List;
@@ -131,6 +131,7 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
 
     // Qs System Info
     private View mSystemInfoLayout;
+    private QsSystemInfoText mSystemInfoText;
 
     @Nullable
     private TintedIconManager mTintedIconManager;
@@ -201,6 +202,7 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         mQsHeaderImageView = findViewById(R.id.qs_header_image_view);
         mQsHeaderImageView.setClipToOutline(true);
         mSystemInfoLayout = findViewById(R.id.system_info_layout);
+        mSystemInfoText = findViewById(R.id.system_info_text);
         mBatteryIcon = findViewById(R.id.batteryIcon);
 
         Configuration config = mContext.getResources().getConfiguration();
@@ -212,7 +214,7 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                 .build();
 
         updateResources();
-
+        mSystemInfoText.updateSystemInfoText();
         Dependency.get(TunerService.class).addTunable(this,
                 SHOW_QS_CLOCK, QS_HEADER_IMAGE,
                 STATUS_BAR_BATTERY_STYLE,
@@ -491,6 +493,7 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         if (mExpanded == expanded) return;
         mExpanded = expanded;
         quickQSPanelController.setExpanded(expanded);
+        mSystemInfoText.updateSystemInfoText();
         updateEverything();
     }
 
@@ -524,6 +527,7 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         }
 
         mKeyguardExpansionFraction = keyguardExpansionFraction;
+        mSystemInfoText.updateSystemInfoText();
     }
 
     public void disable(int state1, int state2, boolean animate) {
