@@ -12100,6 +12100,11 @@ public final class Settings {
         /**
          * @hide
          */
+        public static final String KG_FONT_TYPE = "kg_font_type";
+
+        /**
+         * @hide
+         */
         public static final String BACK_GESTURE_HAPTIC_INTENSITY = "back_gesture_haptic_intensity";
 
         /**
