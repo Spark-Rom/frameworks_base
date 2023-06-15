@@ -60,6 +60,11 @@
     <dimen name="navigation_home_handle_width_short">72dp</dimen>
     <dimen name="navigation_home_handle_width_long">140dp</dimen>
 
+    <dimen name="status_bar_battery_icon_height_landscape_ios15">12.0dip</dimen>
+    <dimen name="status_bar_battery_icon_width_landscape_ios15">24.0dip</dimen>
+    <dimen name="status_bar_battery_icon_width_landscape_ios16">24.0dip</dimen>
+    <dimen name="status_bar_battery_icon_height_landscape_ios16">12.0dip</dimen>
+
     <!-- FPS Info tile -->
     <dimen name="fps_info_text_padding">4dp</dimen>
 
