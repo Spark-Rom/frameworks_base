@@ -64,6 +64,8 @@
     <dimen name="status_bar_battery_icon_width_landscape_ios15">24.0dip</dimen>
     <dimen name="status_bar_battery_icon_width_landscape_ios16">24.0dip</dimen>
     <dimen name="status_bar_battery_icon_height_landscape_ios16">12.0dip</dimen>
+    <dimen name="status_bar_battery_icon_width_landscape_origami">20.0dip</dimen>
+    <dimen name="status_bar_battery_icon_height_landscape_origami">12.0dip</dimen>
 
     <!-- FPS Info tile -->
     <dimen name="fps_info_text_padding">4dp</dimen>
