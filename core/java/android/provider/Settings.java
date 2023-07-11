@@ -12205,6 +12205,11 @@ public final class Settings {
         /**
          * @hide
          */
+        public static final String PREF_KG_USER_SWITCHER = "pref_kg_user_switcher";
+
+        /**
+         * @hide
+         */
 	public static final String ENABLE_COMBINED_QS_HEADERS = "enable_combined_qs_headers";
 
         /**
