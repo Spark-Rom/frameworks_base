@@ -95,7 +95,7 @@ public class FaceService extends SystemService {
             mAuthenticatorsRegisteredCallbacks;
 
     @GuardedBy("mLock")
-    @NonNull private final List<FaceSensorPropertiesInternal> mSensorProps;
+    @NonNull private List<FaceSensorPropertiesInternal> mSensorProps = null;
 
     @Nullable
     private ServiceProvider getProviderForSensor(int sensorId) {
@@ -135,7 +135,11 @@ public class FaceService extends SystemService {
     @NonNull
     private List<FaceSensorPropertiesInternal> getSensorProperties() {
         synchronized (mLock) {
-            return mSensorProps;
+            if (mSensorProps != null) {
+                return mSensorProps;
+            } else {
+                return new ArrayList<>();
+            }
         }
     }
 
@@ -633,10 +637,10 @@ public class FaceService extends SystemService {
             final List<IFaceAuthenticatorsRegisteredCallback> callbacks = new ArrayList<>();
             final List<FaceSensorPropertiesInternal> props;
             synchronized (mLock) {
-                if (!mSensorProps.isEmpty()) {
+                if (mSensorProps != null) {
                     props = new ArrayList<>(mSensorProps);
                 } else {
-                    Slog.e(TAG, "mSensorProps is empty");
+                    Slog.e(TAG, "mSensorProps is null");
                     return;
                 }
                 final int n = mAuthenticatorsRegisteredCallbacks.beginBroadcast();
@@ -728,6 +732,7 @@ public class FaceService extends SystemService {
                 }
 
                 synchronized (mLock) {
+                    mSensorProps = new ArrayList<>();
                     for (ServiceProvider provider : mServiceProviders) {
                         mSensorProps.addAll(provider.getSensorProperties());
                     }
@@ -750,7 +755,7 @@ public class FaceService extends SystemService {
             final boolean hasSensorProps;
             synchronized (mLock) {
                 registered = mAuthenticatorsRegisteredCallbacks.register(callback);
-                hasSensorProps = !mSensorProps.isEmpty();
+                hasSensorProps = mSensorProps != null;
             }
             if (registered && hasSensorProps) {
                 broadcastAllAuthenticatorsRegistered();
@@ -767,7 +772,6 @@ public class FaceService extends SystemService {
         mLockPatternUtils = new LockPatternUtils(context);
         mServiceProviders = new ArrayList<>();
         mAuthenticatorsRegisteredCallbacks = new RemoteCallbackList<>();
-        mSensorProps = new ArrayList<>();
     }
 
     @Override
