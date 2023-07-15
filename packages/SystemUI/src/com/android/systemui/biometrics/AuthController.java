@@ -47,6 +47,7 @@ import android.hardware.biometrics.IBiometricContextListener;
 import android.hardware.biometrics.IBiometricSysuiReceiver;
 import android.hardware.biometrics.PromptInfo;
 import android.hardware.display.DisplayManager;
+import android.hardware.face.IFaceAuthenticatorsRegisteredCallback;
 import android.hardware.face.FaceManager;
 import android.hardware.face.FaceSensorPropertiesInternal;
 import android.hardware.fingerprint.FingerprintManager;
@@ -148,7 +149,7 @@ public class AuthController implements CoreStartable,  CommandQueue.Callbacks,
     @Nullable private IBiometricContextListener mBiometricContextListener;
     @VisibleForTesting IBiometricSysuiReceiver mReceiver;
     @VisibleForTesting @NonNull final BiometricDisplayListener mOrientationListener;
-    @Nullable private final List<FaceSensorPropertiesInternal> mFaceProps;
+    @Nullable private List<FaceSensorPropertiesInternal> mFaceProps;
     @Nullable private List<FingerprintSensorPropertiesInternal> mFpProps;
     @Nullable private List<FingerprintSensorPropertiesInternal> mUdfpsProps;
     @Nullable private List<FingerprintSensorPropertiesInternal> mSidefpsProps;
@@ -192,6 +193,16 @@ public class AuthController implements CoreStartable,  CommandQueue.Callbacks,
                 public void onAllAuthenticatorsRegistered(
                         List<FingerprintSensorPropertiesInternal> sensors) {
                     mHandler.post(() -> handleAllFingerprintAuthenticatorsRegistered(sensors));
+                }
+            };
+
+    private final IFaceAuthenticatorsRegisteredCallback
+            mFaceAuthenticatorsRegisteredCallback =
+            new IFaceAuthenticatorsRegisteredCallback.Stub() {
+                @Override
+                public void onAllAuthenticatorsRegistered(
+                        List<FaceSensorPropertiesInternal> sensors) {
+                    mHandler.post(() -> handleAllFaceAuthenticatorsRegistered(sensors));
                 }
             };
 
@@ -328,6 +339,18 @@ public class AuthController implements CoreStartable,  CommandQueue.Callbacks,
         for (Callback cb : mCallbacks) {
             cb.onAllAuthenticatorsRegistered();
         }
+    }
+
+    private void handleAllFaceAuthenticatorsRegistered(
+            List<FaceSensorPropertiesInternal> sensors) {
+        mExecution.assertIsMainThread();
+        if (DEBUG) {
+            Log.d(TAG, "handleAllFaceAuthenticatorsRegistered | sensors: " + Arrays.toString(
+                    sensors.toArray()));
+        }
+        mFaceProps = sensors;
+
+        updateSensorLocations();
     }
 
     private void handleEnrollmentsChanged(int userId, int sensorId, boolean hasEnrollments) {
@@ -773,7 +796,6 @@ public class AuthController implements CoreStartable,  CommandQueue.Callbacks,
             }
         });
 
-        mFaceProps = mFaceManager != null ? mFaceManager.getSensorPropertiesInternal() : null;
         int[] faceAuthLocation = context.getResources().getIntArray(
                 com.android.systemui.R.array.config_face_auth_props);
         if (faceAuthLocation == null || faceAuthLocation.length < 2) {
@@ -835,6 +857,10 @@ public class AuthController implements CoreStartable,  CommandQueue.Callbacks,
         if (mFingerprintManager != null) {
             mFingerprintManager.addAuthenticatorsRegisteredCallback(
                     mFingerprintAuthenticatorsRegisteredCallback);
+        }
+        if (mFaceManager != null) {
+            mFaceManager.addAuthenticatorsRegisteredCallback(
+                    mFaceAuthenticatorsRegisteredCallback);
         }
 
         mActivityTaskManager.registerTaskStackListener(mTaskStackListener);
