@@ -70,7 +70,10 @@ public class GlobalActionsPowerDialog {
                 forceDark ? com.android.systemui.R.drawable.global_actions_background : com.android.systemui.R.drawable.global_actions_lite_background,
                 context.getTheme()));
         window.addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-        window.setDimAmount(blurUtils.supportsBlursOnWindows() ? 0.54f : 0.88f);
+        // Set dim only when blur is enabled.
+        if (blurUtils.supportsBlursOnWindows()) {
+             window.setDimAmount(0.54f);
+        }
 
         return dialog;
     }
