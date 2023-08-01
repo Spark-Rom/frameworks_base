@@ -12053,6 +12053,13 @@ public final class Settings {
         public static final String VOLUME_SLIDER_HAPTICS_INTENSITY = "volume_slider_haptics_intensity";
 
         /**
+         * QS panel tile haptics intensity
+         * @hide
+         */
+        @Readable
+        public static final String QS_PANEL_TILE_HAPTIC = "qs_panel_tile_haptic";
+
+        /**
          * Back gesture haptics intensity
          * @hide
          */
