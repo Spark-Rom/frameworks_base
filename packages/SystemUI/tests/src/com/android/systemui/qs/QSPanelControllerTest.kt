@@ -9,6 +9,7 @@ import com.android.internal.logging.UiEventLogger
 import com.android.systemui.R
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.dump.DumpManager
+import com.android.systemui.flags.FeatureFlags
 import com.android.systemui.media.controls.ui.MediaHost
 import com.android.systemui.media.controls.ui.MediaHostState
 import com.android.systemui.plugins.FalsingManager
@@ -56,6 +57,7 @@ class QSPanelControllerTest : SysuiTestCase() {
     @Mock private lateinit var tile: QSTile
     @Mock private lateinit var otherTile: QSTile
     @Mock private lateinit var statusBarKeyguardViewManager: StatusBarKeyguardViewManager
+    @Mock private lateinit var featureFlags: FeatureFlags
     @Mock private lateinit var configuration: Configuration
     @Mock private lateinit var pagedTileLayout: PagedTileLayout
 
@@ -91,7 +93,8 @@ class QSPanelControllerTest : SysuiTestCase() {
             brightnessControllerFactory,
             brightnessSliderFactory,
             falsingManager,
-            statusBarKeyguardViewManager
+            statusBarKeyguardViewManager,
+            featureFlags
         )
     }
 

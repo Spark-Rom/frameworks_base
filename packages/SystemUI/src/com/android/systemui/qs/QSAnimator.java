@@ -342,8 +342,12 @@ public class QSAnimator implements QSHost.Callback, PagedTileLayout.PageListener
 
                     // Offset the translation animation on the views
                     // (that goes from 0 to getOffsetTranslation)
-                    qqsTranslationYBuilder.addFloat(quickTileView, "translationY", 0, yOffset);
-                    translationYBuilder.addFloat(tileView, "translationY", -yOffset, 0);
+                    int offsetWithQSBHTranslation =
+                            yOffset - mQuickStatusBarHeader.getOffsetTranslation();
+                    qqsTranslationYBuilder.addFloat(quickTileView, "translationY", 0,
+                            offsetWithQSBHTranslation);
+                    translationYBuilder.addFloat(tileView, "translationY",
+                            -offsetWithQSBHTranslation, 0);
 
                     translationXBuilder.addFloat(quickTileView, "translationX", 0, xOffset);
                     translationXBuilder.addFloat(tileView, "translationX", -xOffset, 0);
@@ -630,7 +634,7 @@ public class QSAnimator implements QSHost.Callback, PagedTileLayout.PageListener
         View commonView = mQs.getView();
         getRelativePositionInt(qsPosition, view1, commonView);
         getRelativePositionInt(qqsPosition, view2, commonView);
-        return qsPosition[1] - qqsPosition[1];
+        return (qsPosition[1] - qqsPosition[1]) - mQuickStatusBarHeader.getOffsetTranslation();
     }
 
     private boolean isIconInAnimatedRow(int count) {

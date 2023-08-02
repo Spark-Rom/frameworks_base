@@ -59,6 +59,7 @@ import com.android.systemui.animation.Interpolators;
 import com.android.systemui.classifier.Classifier;
 import com.android.systemui.classifier.FalsingCollector;
 import com.android.systemui.flags.FeatureFlags;
+import com.android.systemui.flags.Flags;
 import com.android.systemui.fragments.FragmentHostManager;
 import com.android.systemui.media.controls.pipeline.MediaDataManager;
 import com.android.systemui.media.controls.ui.MediaHierarchyManager;
@@ -118,7 +119,7 @@ public class QuickSettingsController {
     private final NotificationStackScrollLayoutController mNotificationStackScrollLayoutController;
     private final LockscreenShadeTransitionController mLockscreenShadeTransitionController;
     private final NotificationShadeDepthController mDepthController;
-    private final ShadeHeaderController mShadeHeaderController;
+    private final LargeScreenShadeHeaderController mLargeScreenShadeHeaderController;
     private final StatusBarTouchableRegionManager mStatusBarTouchableRegionManager;
     private final KeyguardStateController mKeyguardStateController;
     private final KeyguardBypassController mKeyguardBypassController;
@@ -298,7 +299,7 @@ public class QuickSettingsController {
             NotificationStackScrollLayoutController notificationStackScrollLayoutController,
             LockscreenShadeTransitionController lockscreenShadeTransitionController,
             NotificationShadeDepthController notificationShadeDepthController,
-            ShadeHeaderController shadeHeaderController,
+            LargeScreenShadeHeaderController largeScreenShadeHeaderController,
             StatusBarTouchableRegionManager statusBarTouchableRegionManager,
             KeyguardStateController keyguardStateController,
             KeyguardBypassController keyguardBypassController,
@@ -338,7 +339,7 @@ public class QuickSettingsController {
         mNotificationStackScrollLayoutController = notificationStackScrollLayoutController;
         mLockscreenShadeTransitionController = lockscreenShadeTransitionController;
         mDepthController = notificationShadeDepthController;
-        mShadeHeaderController = shadeHeaderController;
+        mLargeScreenShadeHeaderController = largeScreenShadeHeaderController;
         mStatusBarTouchableRegionManager = statusBarTouchableRegionManager;
         mKeyguardStateController = keyguardStateController;
         mKeyguardBypassController = keyguardBypassController;
@@ -419,10 +420,18 @@ public class QuickSettingsController {
                 mResources.getDimensionPixelSize(R.dimen.large_screen_shade_header_height);
         int topMargin = mUseLargeScreenShadeHeader ? mLargeScreenShadeHeaderHeight :
                 mResources.getDimensionPixelSize(R.dimen.notification_panel_margin_top);
-        mShadeHeaderController.setLargeScreenActive(mUseLargeScreenShadeHeader);
+        mLargeScreenShadeHeaderController.setLargeScreenActive(mUseLargeScreenShadeHeader);
         mAmbientState.setStackTopMargin(topMargin);
 
-        mQuickQsHeaderHeight = mLargeScreenShadeHeaderHeight;
+        // TODO: When the flag is eventually removed, it means that we have a single view that is
+        // the same height in QQS and in Large Screen (large_screen_shade_header_height). Eventually
+        // the concept of largeScreenHeader or quickQsHeader will disappear outside of the class
+        // that controls the view as the offset needs to be the same regardless.
+        if (mUseLargeScreenShadeHeader || mFeatureFlags.isEnabled(Flags.COMBINED_QS_HEADERS)) {
+            mQuickQsHeaderHeight = mLargeScreenShadeHeaderHeight;
+        } else {
+            mQuickQsHeaderHeight = SystemBarUtils.getQuickQsOffsetHeight(mPanelView.getContext());
+        }
 
         mEnableClipping = mResources.getBoolean(R.bool.qs_enable_clipping);
     }
@@ -990,9 +999,9 @@ public class QuickSettingsController {
         float shadeExpandedFraction = mBarState == KEYGUARD
                 ? mPanelViewControllerLazy.get().getLockscreenShadeDragProgress()
                 : mShadeExpandedFraction;
-        mShadeHeaderController.setShadeExpandedFraction(shadeExpandedFraction);
-        mShadeHeaderController.setQsExpandedFraction(qsExpansionFraction);
-        mShadeHeaderController.setQsVisible(mVisible);
+        mLargeScreenShadeHeaderController.setShadeExpandedFraction(shadeExpandedFraction);
+        mLargeScreenShadeHeaderController.setQsExpandedFraction(qsExpansionFraction);
+        mLargeScreenShadeHeaderController.setQsVisible(mVisible);
     }
 
     /** */
@@ -1516,7 +1525,7 @@ public class QuickSettingsController {
     }
 
     private void onScroll(int scrollY) {
-        mShadeHeaderController.setQsScrollY(scrollY);
+        mLargeScreenShadeHeaderController.setQsScrollY(scrollY);
         if (scrollY > 0 && !mFullyExpanded) {
             // TODO (b/265193930): remove dependency on NPVC
             // If we are scrolling QS, we should be fully expanded.
