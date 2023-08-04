@@ -60,9 +60,9 @@ class PrivacyConfig @Inject constructor(
             micCameraAvailable = isMicCameraEnabled()
             locationAvailable = isLocationEnabled()
             mediaProjectionAvailable = isMediaProjectionEnabled()
-            callbacks.forEach { it.get()?.onFlagMicCameraChanged(micCameraAvailable) }
-            callbacks.forEach { it.get()?.onFlagLocationChanged(locationAvailable) }
-            callbacks.forEach { it.get()?.onFlagMediaProjectionChanged(mediaProjectionAvailable) }
+            callbacks.forEach { it.onFlagMicCameraChanged(micCameraAvailable) }
+            callbacks.forEach { it.onFlagLocationChanged(locationAvailable) }
+            callbacks.forEach { it.onFlagMediaProjectionChanged(mediaProjectionAvailable) }
         }
     }
 
