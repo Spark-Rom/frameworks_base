@@ -135,7 +135,7 @@ public class GlobalActionsDialog extends GlobalActionsDialogLite
     private final NotificationShadeWindowController mNotificationShadeWindowController;
     private GlobalActionsPanelPlugin mWalletPlugin;
     private Optional<ControlsUiController> mControlsUiControllerOptional;
-    private List<ControlsServiceInfo> mControlsServiceInfos = new ArrayList<>();
+    private List<? extends ControlsServiceInfo> mControlsServiceInfos = new ArrayList<>();
     private ControlsComponent mControlsComponent;
     private Optional<ControlsController> mControlsControllerOptional;
     private UserContextProvider mUserContextProvider;
@@ -653,7 +653,7 @@ public class GlobalActionsDialog extends GlobalActionsDialogLite
         public void dismiss() {
             dismissWallet();
             if (mControlsUiController != null) mControlsUiController.closeDialogs(false);
-            if (mControlsUiController != null) mControlsUiController.hide();
+            if (mControlsUiController != null) mControlsUiController.hide(mControlsView);
             mContainer.setTranslationX(0);
             ObjectAnimator alphaAnimator =
                     ObjectAnimator.ofFloat(mContainer, "alpha", 1f, 0f);
@@ -690,7 +690,7 @@ public class GlobalActionsDialog extends GlobalActionsDialogLite
         private void dismissForControlsActivity() {
             dismissWallet();
             if (mControlsUiController != null) mControlsUiController.closeDialogs(false);
-            if (mControlsUiController != null) mControlsUiController.hide();
+            if (mControlsUiController != null) mControlsUiController.hide(mControlsView);
             ViewGroup root = (ViewGroup) mGlobalActionsLayout.getParent();
             ControlsAnimations.exitAnimation(root, this::completeDismiss).start();
         }
@@ -716,7 +716,7 @@ public class GlobalActionsDialog extends GlobalActionsDialogLite
             // ensure dropdown menus are dismissed before re-initializing the dialog
             dismissWallet();
             if (mControlsUiController != null) {
-                mControlsUiController.hide();
+                mControlsUiController.hide(mControlsView);
             }
 
             super.refreshDialog();
