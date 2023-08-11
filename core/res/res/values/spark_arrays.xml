@@ -16,6 +16,9 @@
 -->
 <resources>
 
+   <string-array name="config_certifiedBuildProperties" translatable="false">
+   </string-array>
+
     <!-- Pocket Mode -->
     <dimen name="pocket_view_img_height">350dp</dimen>
     <dimen name="pocket_view_img_width">175dp</dimen>
