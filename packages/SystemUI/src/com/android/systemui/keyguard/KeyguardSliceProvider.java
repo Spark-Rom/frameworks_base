@@ -340,7 +340,7 @@ public class KeyguardSliceProvider extends SliceProvider implements
     }
 
     protected void addWeatherLocked(ListBuilder builder) {
-        if (!mShowWeatherSlice || mShowWeatherStyle == 0
+        if (!mShowWeatherSlice || mShowWeatherStyle > 0
                 || !mWeatherClient.isOmniJawsEnabled() || mWeatherData == null) {
             return;
         }
