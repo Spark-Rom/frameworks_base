@@ -215,7 +215,6 @@ public class KeyguardVisibilityHelper {
                     if (mAmbientText != null) {
                         mAmbientText.setAlpha(1f);
                     }
-                }
             }
         } else {
             log("Direct set Visibility to GONE");
