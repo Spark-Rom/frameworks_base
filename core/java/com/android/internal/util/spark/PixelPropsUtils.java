@@ -55,18 +55,12 @@ public class PixelPropsUtils {
     private static final String DEVICE = "ro.product.device";
     private static final boolean DEBUG = false;
 
-    private static final Map<String, Object> propsToChangeS23;
     private static final Map<String, Object> propsToChangeGeneric;
     private static final Map<String, Object> propsToChangePixel7Pro;
-    private static final Map<String, Object> propsToChangePixel5a;
+    private static final Map<String, Object> propsToChangePixel5;
+    private static final Map<String, Object> propsToChangePixel2;
     private static final Map<String, Object> propsToChangeMeizu;
     private static final Map<String, ArrayList<String>> propsToKeep;
-
-    // Packages to Spoof as Samsung Galaxy S23
-    private static final String[] packagesToChangeS23 = {
-            "com.google.android.youtube",
-            "com.google.android.apps.youtube.music",
-    };
 
     // Packages to Spoof as Pixel 7 Pro
     private static final String[] packagesToChangePixel7Pro = {
@@ -88,6 +82,11 @@ public class PixelPropsUtils {
             "in.startv.hotstar"
     };
 
+    // Packages to Spoof as Pixel 2
+    private static final String[] packagesToChangePixel2 = {
+            "com.snapchat.android"
+    };
+
     private static final String[] customGoogleCameraPackages = {
             "com.google.android.MTCL83",
             "com.google.android.UltraCVM",
@@ -97,6 +96,7 @@ public class PixelPropsUtils {
     // Packages to Keep with original device
     private static final String[] packagesToKeep = {
             PACKAGE_GPHOTOS,
+            "com.google.android.apps.motionsense.bridge",
             "com.google.android.apps.pixelmigrate",
             "com.google.android.apps.recorder",
             "com.google.android.apps.restore",
@@ -104,9 +104,14 @@ public class PixelPropsUtils {
             "com.google.android.apps.tycho",
             "com.google.android.apps.wearables.maestro.companion",
             "com.google.android.apps.youtube.kids",
+            "com.google.android.apps.youtube.music",
+            "com.google.android.as",
+            "com.google.android.dialer",
             "com.google.android.euicc",
             "com.google.android.setupwizard",
-            "com.google.ar.core"
+            "com.google.android.youtube",
+            "com.google.ar.core",
+            "com.google.oslo"
     };
 
     // Packages to Spoof as Meizu
@@ -165,15 +170,24 @@ public class PixelPropsUtils {
         propsToChangePixel7Pro.put("MODEL", "Pixel 7 Pro");
         propsToChangePixel7Pro.put("ID", "TQ3A.230805.001");
         propsToChangePixel7Pro.put("FINGERPRINT", "google/cheetah/cheetah:13/TQ3A.230805.001/10316531:user/release-keys");
-        propsToChangePixel5a = new HashMap<>();
-        propsToChangePixel5a.put("BRAND", "google");
-        propsToChangePixel5a.put("MANUFACTURER", "Google");
-        propsToChangePixel5a.put("DEVICE", "barbet");
-        propsToChangePixel5a.put("PRODUCT", "barbet");
-        propsToChangePixel5a.put("HARDWARE", "barbet");
-        propsToChangePixel5a.put("MODEL", "Pixel 5a");
-        propsToChangePixel5a.put("ID", "TQ3A.230805.001");
-        propsToChangePixel5a.put("FINGERPRINT", "google/barbet/barbet:13/TQ3A.230805.001/10316531:user/release-keys");
+        propsToChangePixel5 = new HashMap<>();
+        propsToChangePixel5.put("BRAND", "google");
+        propsToChangePixel5.put("MANUFACTURER", "Google");
+        propsToChangePixel5.put("DEVICE", "redfin");
+        propsToChangePixel5.put("PRODUCT", "redfin");
+        propsToChangePixel5.put("HARDWARE", "redfin");
+        propsToChangePixel5.put("MODEL", "Pixel 5");
+        propsToChangePixel5.put("ID", "TQ3A.230805.001");
+        propsToChangePixel5.put("FINGERPRINT", "google/redfin/redfin:13/TQ3A.230805.001/10316531:user/release-keys");
+        propsToChangePixel2 = new HashMap<>();
+        propsToChangePixel2.put("BRAND", "google");
+        propsToChangePixel2.put("MANUFACTURER", "Google");
+        propsToChangePixel2.put("DEVICE", "walleye");
+        propsToChangePixel2.put("PRODUCT", "walleye");
+        propsToChangePixel2.put("HARDWARE", "walleye");
+        propsToChangePixel2.put("MODEL", "Pixel 2");
+        propsToChangePixel2.put("ID", "OPM1.171019.011");
+        propsToChangePixel2.put("FINGERPRINT", "google/walleye/walleye:8.1.0/OPM1.171019.011/4448085:user/release-keys");
         propsToChangeMeizu = new HashMap<>();
         propsToChangeMeizu.put("BRAND", "meizu");
         propsToChangeMeizu.put("MANUFACTURER", "Meizu");
@@ -181,12 +195,6 @@ public class PixelPropsUtils {
         propsToChangeMeizu.put("DISPLAY", "Flyme");
         propsToChangeMeizu.put("PRODUCT", "meizu_16thPlus_CN");
         propsToChangeMeizu.put("MODEL", "meizu 16th Plus");
-        propsToChangeS23 = new HashMap<>();
-        propsToChangeS23.put("BRAND", "samsung");
-        propsToChangeS23.put("MANUFACTURER", "samsung");
-        propsToChangeS23.put("DEVICE", "dm1q");
-        propsToChangeS23.put("MODEL", "SM-S911B");
-        propsToChangeS23.put("FINGERPRINT", "samsung/dm1qxxx/dm1q:13/TP1A.220624.014/S911BXXS3AWF7:user/release-keys");
     }
 
     private static boolean isGoogleCameraPackage(String packageName){
@@ -259,17 +267,18 @@ public class PixelPropsUtils {
         Map<String, Object> propsToChange = new HashMap<>();
         if (packageName.startsWith("com.google.")
                 || packageName.startsWith(SAMSUNG)
+                || Arrays.asList(packagesToChangePixel2).contains(packageName)
                 || Arrays.asList(packagesToChangePixel7Pro).contains(packageName)) {
 
             boolean isPixelDevice = Arrays.asList(pixelCodenames).contains(SystemProperties.get(DEVICE));
             if (isPixelDevice) {
                 return;
+            } else if (Arrays.asList(packagesToChangePixel2).contains(packageName)) {
+                propsToChange.putAll(propsToChangePixel2);
             } else if (Arrays.asList(packagesToChangePixel7Pro).contains(packageName)) {
                 propsToChange.putAll(propsToChangePixel7Pro);
-            } else if (Arrays.asList(packagesToChangeS23).contains(packageName)) {
-                propsToChange.putAll(propsToChangeS23);
             } else {
-                propsToChange.putAll(propsToChangePixel5a);
+                propsToChange.putAll(propsToChangePixel5);
             }
         } else if ((SystemProperties.getBoolean(SPOOF_MUSIC_APPS, false)) &&
                 (Arrays.asList(packagesToChangeMeizu).contains(packageName))) {
