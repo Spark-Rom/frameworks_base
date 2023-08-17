@@ -2594,7 +2594,7 @@ public final class NotificationPanelViewController implements Dumpable {
         }
         float finalAlpha = alpha > 0.84f ? alpha : 0f;
         mNotificationStackScrollLayoutController.setAlpha(finalAlpha);
-        if (mBarState != StatusBarState.KEYGUARD && !isFullyCollapsed() && !isPanelVisibleBecauseOfHeadsUp() && !mIsAnimatingTicker) {
+        if (mBarState != StatusBarState.KEYGUARD && !isFullyCollapsed() && !isPanelVisibleBecauseOfHeadsUp()) {
             mCentralSurfaces.updateDismissAllVisibility(true);
         }
     }
@@ -5558,4 +5558,10 @@ public final class NotificationPanelViewController implements Dumpable {
             mainLocation[1] + mRetickerView.getHeight()
         ));
     };
+    
+    public void hideClearAllButton() {
+        if (getExpandedFraction() == 0) {
+            mCentralSurfaces.updateDismissAllVisibility(false);
+        }
+    }
 }
