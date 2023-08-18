@@ -5832,6 +5832,30 @@ public final class Settings {
                 "statusbar_battery_bar_blend_color_reverse";
 
         /**
+         * @hide
+         */
+        @Readable
+        public static final String EDGE_SCROLLING_HAPTICS_INTENSITY = "edge_scrolling_haptics_intensity";
+
+        /**
+         * @hide
+         */
+        @Readable
+        public static final String BRIGHTNESS_SLIDER_HAPTICS_INTENSITY = "brightness_slider_haptics_intensity";
+
+        /**
+         * @hide
+         */
+        @Readable
+        public static final String VOLUME_SLIDER_HAPTICS_INTENSITY = "volume_slider_haptics_intensity";
+
+        /**
+         * @hide
+         */
+        @Readable
+        public static final String QS_PANEL_TILE_HAPTIC = "qs_panel_tile_haptic";
+
+        /**
          * Whether to disable qs on secure lockscreen.
          * @hide
          */
@@ -12030,41 +12054,6 @@ public final class Settings {
          */
         public static final String BACK_GESTURE_ARROW = "back_gesture_arrow";
 
-
-        /**
-         * Edge scrolling haptics intensity
-         * @hide
-         */
-        @Readable
-        public static final String EDGE_SCROLLING_HAPTICS_INTENSITY = "edge_scrolling_haptics_intensity";
-
-        /**
-         * Brightness sliding haptics intensity
-         * @hide
-         */
-        @Readable
-        public static final String BRIGHTNESS_SLIDER_HAPTICS_INTENSITY = "brightness_slider_haptics_intensity";
-
-        /**
-         * Volume sliding haptics intensity
-         * @hide
-         */
-        @Readable
-        public static final String VOLUME_SLIDER_HAPTICS_INTENSITY = "volume_slider_haptics_intensity";
-
-        /**
-         * QS panel tile haptics intensity
-         * @hide
-         */
-        @Readable
-        public static final String QS_PANEL_TILE_HAPTIC = "qs_panel_tile_haptic";
-
-        /**
-         * Back gesture haptics intensity
-         * @hide
-         */
-        public static final String BACK_GESTURE_HAPTIC_INTENSITY = "back_gesture_haptic_intensity";
-
         /**
          * Control whether the process CPU info meter should be shown.
          * @hide
@@ -12082,6 +12071,11 @@ public final class Settings {
          * @hide
          */
         public static final String PULSE_ON_NEW_TRACKS = "pulse_on_new_tracks";
+
+        /**
+         * @hide
+         */
+        public static final String BACK_GESTURE_HAPTIC_INTENSITY = "back_gesture_haptic_intensity";
 
         /**
          * Pulse navbar music visualizer
