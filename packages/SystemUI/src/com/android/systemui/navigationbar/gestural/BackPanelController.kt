@@ -27,6 +27,7 @@ import android.os.VibrationEffect
 import android.util.Log
 import android.util.MathUtils
 import android.view.Gravity
+import android.view.View
 import android.view.MotionEvent
 import android.view.VelocityTracker
 import android.view.ViewConfiguration
@@ -156,7 +157,8 @@ class BackPanelController internal constructor(
         get() = SystemClock.uptimeMillis() - gestureEntryTime
         
     private var mEdgeHapticIntensity = 0
-    
+    private var mBackArrowVisibility = true    
+
     private var mIsLongSwipe = false
     private var mLongSwipeEnabled = false
     private var mLongSwipeThreshold = 0f
@@ -451,7 +453,11 @@ class BackPanelController internal constructor(
         }
 
         updateArrowStateOnMove(yTranslation, xTranslation)
-
+        if (mBackArrowVisibility) {
+           mView.setVisibility(View.VISIBLE) 
+        } else {
+           mView.setVisibility(View.INVISIBLE)
+        }
         val gestureProgress = when (currentState) {
             GestureState.ACTIVE -> fullScreenProgress(xTranslation)
             GestureState.ENTRY -> staticThresholdProgress(xTranslation)
@@ -954,6 +960,10 @@ class BackPanelController internal constructor(
 
     override fun setEdgeHapticIntensity(edgeHapticIntensity: Int) {
         mEdgeHapticIntensity = edgeHapticIntensity
+    }
+
+    override fun setBackArrowVisibility(backArrowVisibility : Boolean) {
+        mBackArrowVisibility = backArrowVisibility;
     }
 
     private fun triggerVibration() {
