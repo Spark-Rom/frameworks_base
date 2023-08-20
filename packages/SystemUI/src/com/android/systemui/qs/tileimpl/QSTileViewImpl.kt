@@ -31,6 +31,7 @@ import android.os.AsyncTask
 import android.os.Trace
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.view.MotionEvent
 import android.graphics.Color
 import android.os.UserHandle
 import android.provider.Settings
@@ -484,12 +485,17 @@ open class QSTileViewImpl @JvmOverloads constructor(
         click: OnClickListener?,
         longClick: OnLongClickListener?
     ) {
-        setOnClickListener {
-            triggerVibration()
-            click?.onClick(it)
-        }
+        setOnClickListener(click)
         onLongClickListener = longClick
     }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (event.getActionMasked() == MotionEvent.ACTION_DOWN || event.getActionMasked() == MotionEvent.ACTION_UP) {
+            triggerVibration()
+        }
+        return super.onTouchEvent(event)
+    }
+
 
     override fun onStateChanged(state: QSTile.State) {
         post {
