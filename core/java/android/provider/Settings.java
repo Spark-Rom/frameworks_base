@@ -12558,13 +12558,6 @@ public final class Settings {
         public static final String SYSTEM_MANAGER_AGGRESSIVE_IDLE_MODE_RINGER_MODE = "system_manager_aggressive_idle_mode_ringer_mode";
         
         /**
-         * Adaptive charging
-         * @hide
-         */
-        @Readable
-        public static final String SYS_ADAPTIVE_CHARGING_ENABLED = "sys_adaptive_charging_enabled";
-
-        /**
          * These entries are considered common between the personal and the managed profile,
          * since the managed profile doesn't get to change them.
          */

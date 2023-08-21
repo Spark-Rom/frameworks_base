@@ -34,13 +34,10 @@ import android.os.Handler
 import android.provider.Settings
 import android.os.PowerManager
 import android.os.PowerManagerInternal
-import com.android.internal.util.spark.SparkUtils.SystemManagerController
-import com.android.server.LocalServices
-
 import com.android.systemui.power.PowerNotificationWarnings
 
 import com.android.internal.os.BackgroundThread
-import com.android.internal.util.rising.systemUtils.SystemManagerController
+import com.android.internal.util.spark.SparkUtils.SystemManagerController
 import com.android.server.LocalServices
 
 import android.util.ArraySet
@@ -69,47 +66,7 @@ class SystemManagerUtils(private val context: Context) {
         usageStatsManager = context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
         startManagerInstance = Runnable { idleModeHandler(true) }
         stopManagerInstance = Runnable { cancelIdleService() }
-        val adaptiveChargingObserver = object : android.database.ContentObserver(handler) {
-            override fun onChange(selfChange: Boolean) {
-                super.onChange(selfChange)
-                val statusIntent = context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
-                val status = statusIntent?.getIntExtra(BatteryManager.EXTRA_STATUS, -1) ?: -1
-                val isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING
-               handleChargingUpdate(isCharging)
-            }
-        }
 
-        val chargingReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                if (intent?.action == Intent.ACTION_POWER_CONNECTED || intent?.action == Intent.ACTION_BATTERY_CHANGED || intent?.action == Intent.ACTION_POWER_DISCONNECTED) {
-                    val isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING
-                    if (isCharging != isCurrentlyCharging) {
-                        isCurrentlyCharging = isCharging
-                        handleChargingUpdate(isCurrentlyCharging)
-                    }
-                }
-            }
-        }
-
-        val filter = IntentFilter().apply {
-            addAction(Intent.ACTION_BATTERY_CHANGED)
-            addAction(Intent.ACTION_POWER_CONNECTED)
-            addAction(Intent.ACTION_POWER_DISCONNECTED)
-        }
-        val adaptiveChargingUri = Settings.Secure.getUriFor(Settings.Secure.SYS_ADAPTIVE_CHARGING_ENABLED)
-        context.contentResolver.registerContentObserver(adaptiveChargingUri, false, adaptiveChargingObserver)
-        context.registerReceiver(chargingReceiver, filter)
-    }
-
-    private fun handleChargingUpdate(isCharging: Boolean) {
-        val userId = ActivityManager.getCurrentUser()
-        val isAdaptiveChargingEnabled = Settings.Secure.getIntForUser(context.contentResolver, 
-                Settings.Secure.SYS_ADAPTIVE_CHARGING_ENABLED, 1, userId) == 1
-        enterPowerSaveMode(isCharging && isAdaptiveChargingEnabled)
-        val notificationManager = context.getSystemService(NotificationManager::class.java)
-        uiBgExecutor.execute {
-            PowerNotificationWarnings.showAdaptiveChargeNotification(context, notificationManager, isCharging && isAdaptiveChargingEnabled)
-        }
     }
 
     fun startIdleService() {

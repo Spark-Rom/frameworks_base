@@ -992,15 +992,6 @@ public class KeyguardIndicationController {
                     : R.string.keyguard_plugged_in;
         }
 
-	boolean isAdaptiveCharging = Settings.Secure.getIntForUser(mContext.getContentResolver(),
-            Settings.Secure.SYSTEM_MANAGER_AGGRESSIVE_IDLE_MODE, 0, UserHandle.USER_CURRENT) == 1;
-
-	if (isAdaptiveCharging) {
-            chargingId = hasChargingTime
-                            ? R.string.keyguard_indication_adaptive_charging_time
-                            : R.string.keyguard_plugged_in_adaptive_charging;
-	}
-
         String batteryInfo = "";
         boolean showbatteryInfo = Settings.System.getIntForUser(mContext.getContentResolver(),
             Settings.System.LOCKSCREEN_BATTERY_INFO, 1, UserHandle.USER_CURRENT) == 1;
