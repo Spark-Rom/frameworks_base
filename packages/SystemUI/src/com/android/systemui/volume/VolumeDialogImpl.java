@@ -73,6 +73,7 @@ import android.graphics.drawable.RotateDrawable;
 import android.media.AppVolume;
 import android.media.AudioManager;
 import android.media.AudioSystem;
+import android.media.MediaPlayer;
 import android.media.session.MediaController;
 import android.media.session.MediaSessionManager;
 import android.media.session.PlaybackState;
@@ -350,6 +351,8 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
     private int customVolumeStyles = 0;
     private ThemeUtils mThemeUtils;
     
+    private MediaPlayer mediaPlayer = null;
+    
     private boolean mShowMediaController = true;
 
     @VisibleForTesting
@@ -429,6 +432,8 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
         updateRingerModeIconSet();
         
         mThemeUtils = new ThemeUtils(mContext);
+        
+        initMediaPlayer();
     }
 
     /**
@@ -3025,6 +3030,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                 }
             }
             triggerVibration();
+            playSound();
         }
 
         @Override
@@ -3045,6 +3051,27 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                 mHandler.sendMessageDelayed(mHandler.obtainMessage(H.RECHECK, mRow),
                         USER_ATTEMPT_GRACE_PERIOD);
             }
+        }
+    }
+
+    private void initMediaPlayer() {
+        try {
+            mediaPlayer = MediaPlayer.create(mContext, R.raw.volume_control_sound);
+        } catch (Exception e) {
+            Log.d(TAG, "Error initializing media player");
+        }
+    }
+
+    private void playSound() {
+        AudioManager audioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        if (audioManager == null || audioManager.isMusicActive() || mediaPlayer == null) {
+            return;
+        }
+        try {
+            mediaPlayer.seekTo(0);
+            mediaPlayer.start();
+        } catch (Exception e) {
+            Log.d(TAG, "Error playing sound effect");
         }
     }
 
