@@ -297,4 +297,7 @@
     </string-array>
     <string-array name="device_configs_override" translatable="false">
     </string-array>
+
+    <!-- Whether devices suports in-display fingerprint when screen is off -->
+    <bool name="config_supportScreenOffUdfps">false</bool>
 </resources>
