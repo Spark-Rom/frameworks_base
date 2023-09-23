@@ -216,15 +216,6 @@ open class LandscapeBatteryDrawableOrigami(private val context: Context, frameCo
 
         fillPaint.color = levelColor
 
-        // Deal with unifiedPath clipping before it draws
-        if (charging) {
-            // Clip out the bolt shape
-            unifiedPath.op(scaledBolt, Path.Op.DIFFERENCE)
-            if (!invertFillIcon) {
-                c.drawPath(scaledBolt, fillPaint)
-            }
-        }
-
         if (dualTone) {
             // Dual tone means we draw the shape again, clipped to the charge level
             c.drawPath(unifiedPath, dualToneBackgroundFill)
@@ -239,7 +230,8 @@ open class LandscapeBatteryDrawableOrigami(private val context: Context, frameCo
             // Non dual-tone means we draw the perimeter (with the level fill), and potentially
             // draw the fill again with a critical color
             fillPaint.color = fillColor
-            c.drawPath(unifiedPath, fillPaint)
+            c.drawPath(unifiedPath, dualToneBackgroundFill)
+            c.drawPath(scaledPerimeter, fillPaint)
             fillPaint.color = levelColor
 
             // Show colorError below this level
@@ -252,12 +244,7 @@ open class LandscapeBatteryDrawableOrigami(private val context: Context, frameCo
         }
 
         if (charging) {
-            c.clipOutPath(scaledBolt)
-            if (invertFillIcon) {
-                c.drawPath(scaledBolt, fillColorStrokePaint)
-            } else {
-                c.drawPath(scaledBolt, fillColorStrokeProtection)
-            }
+            c.drawPath(scaledBolt, fillPaint)
         } else if (powerSaveEnabled) {
             // If power save is enabled draw the perimeter path with colorError
             c.drawPath(scaledErrorPerimeter, errorPaint)

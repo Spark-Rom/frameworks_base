@@ -151,7 +151,7 @@ open class LandscapeBatteryDrawableMiUIPill(private val context: Context, frameC
     // Only used if dualTone is set to true
     private val dualToneBackgroundFill = Paint(Paint.ANTI_ALIAS_FLAG).also { p ->
         p.color = frameColor
-        p.alpha = 85 // ~0.3 alpha by default
+        p.alpha = 255
         p.isDither = true
         p.strokeWidth = 0f
         p.style = Paint.Style.FILL_AND_STROKE
@@ -193,21 +193,19 @@ open class LandscapeBatteryDrawableMiUIPill(private val context: Context, frameC
         levelPath.reset()
         levelRect.set(fillRect)
         val fillFraction = batteryLevel / 100f
-        val fillTop = if (batteryLevel >= 95) fillRect.right
-        else fillRect.right - (fillRect.width() * (1 - fillFraction))
+        val fillTop = if (batteryLevel >= 95) fillRect.left
+        else fillRect.left + (fillRect.width() * (1 - fillFraction))
 
-        levelRect.right = Math.floor(fillTop.toDouble()).toFloat()
+        levelRect.left = Math.floor(fillTop.toDouble()).toFloat()
         //levelPath.addRect(levelRect, Path.Direction.CCW)
         levelPath.addRoundRect(
             levelRect, floatArrayOf(
-                4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f
+                12.0f, 12.0f, 12.0f, 12.0f, 12.0f, 12.0f, 12.0f, 12.0f
             ), Path.Direction.CCW
         )
 
         // The perimeter should never change
         unifiedPath.addPath(scaledPerimeter)
-        // If drawing dual tone, the level is used only to clip the whole drawable path
-        unifiedPath.op(levelPath, Path.Op.UNION)
 
         fillPaint.color = levelColor
 
@@ -221,11 +219,19 @@ open class LandscapeBatteryDrawableMiUIPill(private val context: Context, frameC
             }
         }
 
-        // Non dual-tone means we draw the perimeter (with the level fill), and potentially
-        // draw the fill again with a critical color
-        c.drawPath(unifiedPath, dualToneBackgroundFill)
+        // Dual tone means we draw the shape again, clipped to the charge level
+        fillPaint.color = boltColor
+        c.drawPath(unifiedPath, fillPaint)
         fillPaint.color = levelColor
-        c.drawPath(levelPath, fillPaint)
+        c.save()
+        c.clipRect(
+            bounds.left + (fillRect.width() * (1 - fillFraction + 0.15f)),
+            bounds.top.toFloat(),
+            bounds.left.toFloat() + bounds.width(),
+            bounds.bottom.toFloat()
+        )
+        c.drawPath(scaledFill, fillPaint)
+        c.restore()
 
         if (charging) {
             val xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OUT)
@@ -399,7 +405,7 @@ open class LandscapeBatteryDrawableMiUIPill(private val context: Context, frameC
                 com.android.internal.R.string.config_batterymeterLandPowersavePathiOS15)
         plusPath.set(PathParser.createPathFromPathData(plusPathString))
 
-        dualTone = false
+        dualTone = true
     }
 
     companion object {
