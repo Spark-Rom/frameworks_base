@@ -573,7 +573,7 @@
     <bool name="config_use_large_screen_shade_header">false</bool>
 
     <!-- Whether notification header should never show section headers. -->
-    <bool name="config_notification_never_show_section_headers">false</bool>
+    <bool name="config_notification_never_show_section_headers">true</bool>
 
     <!-- Default udfps icon. Same path as ic_fingerprint.xml -->
     <string name="config_udfpsIcon" translatable="false">
