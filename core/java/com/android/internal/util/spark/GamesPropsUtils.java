@@ -47,7 +47,6 @@ public class GamesPropsUtils {
 
     private static final Map<String, Object> propsToChangeK30U = createMap("M2006J10C", "Xiaomi");
     private static final String[] packagesToChangeK30U = { // spoof as Redmi K30 Ultra
-            "com.pubg.imobile"
     };
 
     private static final Map<String, Object> propsToChangeMI13P = createMap("2210132C", "Xiaomi");
@@ -61,6 +60,7 @@ public class GamesPropsUtils {
             "com.netease.lztgglobal",
             "com.pubg.krmobile",
             "com.rekoo.pubgm",
+	    "com.pubg.imobile",
             "com.riotgames.league.wildrift",
             "com.riotgames.league.wildrifttw",
             "com.riotgames.league.wildriftvn",

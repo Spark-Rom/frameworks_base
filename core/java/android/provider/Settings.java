@@ -6606,6 +6606,13 @@ public final class Settings {
         public static final String FORCE_MOUSE_AS_TOUCH = "force_mouse_as_touch";
 
         /**
+         * Whether to enable statusbar brightness control
+         * @hide
+         */
+        @Readable
+        public static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -6629,6 +6636,27 @@ public final class Settings {
          */
         public static final String SMART_5G = "smart_5g";
 
+        /**
+         * Whether to add left padding on statusbar
+         * @hide
+         */
+        public static final String STATUSBAR_LEFT_PADDING = "statusbar_left_padding";
+        /**
+         * Whether to add right padding on statusbar
+         * @hide
+         */
+        public static final String STATUSBAR_RIGHT_PADDING = "statusbar_right_padding";
+        /**
+         * Whether to add top padding on statusbar
+         * @hide
+         */
+        public static final String STATUSBAR_TOP_PADDING = "statusbar_top_padding";
+
+        /**
+         * Toggle between stock and custom QS brightness slider
+         * @hide
+         */
+        public static final String BATTERY_LEVEL_COLORS = "battery_level_colors";
        /**
          * These are all public system settings
          *
@@ -6747,6 +6775,10 @@ public final class Settings {
             PRIVATE_SETTINGS.add(AMBIENT_TEXT_TYPE_COLOR);
             PRIVATE_SETTINGS.add(PREVENT_POINTER_ACCELERATION);
             PRIVATE_SETTINGS.add(FORCE_MOUSE_AS_TOUCH);
+            PRIVATE_SETTINGS.add(STATUSBAR_LEFT_PADDING);
+            PRIVATE_SETTINGS.add(STATUSBAR_RIGHT_PADDING);
+            PRIVATE_SETTINGS.add(STATUSBAR_TOP_PADDING);
+            PRIVATE_SETTINGS.add(BATTERY_LEVEL_COLORS);
         }
 
         /**
@@ -12600,6 +12632,12 @@ public final class Settings {
         @Readable
         public static final String SYSTEM_MANAGER_AGGRESSIVE_IDLE_MODE_RINGER_MODE = "system_manager_aggressive_idle_mode_ringer_mode";
         
+        /**
+         * Whether to always show the time on media controls
+         * @hide
+         */
+        public static final String MEDIA_CONTROLS_ALWAYS_SHOW_TIME = "media_controls_always_show_time";
+
         /**
          * These entries are considered common between the personal and the managed profile,
          * since the managed profile doesn't get to change them.

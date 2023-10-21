@@ -227,5 +227,6 @@ public class SecureSettings {
         Settings.Secure.LOCK_SCREEN_WEATHER_ENABLED,
         Settings.Secure.ACCESSIBILITY_FONT_SCALING_HAS_BEEN_CHANGED,
         Settings.Secure.IGNORE_AUTH_CONFIRMATION,
+        Settings.Secure.MEDIA_CONTROLS_ALWAYS_SHOW_TIME,
     };
 }

@@ -46,4 +46,12 @@
     <color name="qr_focused_corner_line_color">#ff1a73e8</color>
     <color name="qr_background_color">#b3ffffff</color> <!-- 70% white transparency -->
     <!-- End of QR code scanner colors -->
+
+    <!-- Battery level colors -->
+    <color name="battery_full">#00C853</color>
+    <color name="battery_85">#64DD17</color>
+    <color name="battery_70">#AEEA00</color>
+    <color name="battery_55">#FFD600</color>
+    <color name="battery_40">#FFAB00</color>
+    <color name="battery_25">#FF6D00</color>
 </resources>

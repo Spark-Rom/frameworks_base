@@ -30,4 +30,13 @@
     <dimen name="pocket_view_cancel_margin_horizontal">24dp</dimen>
     <dimen name="pocket_view_top_tag_size">13sp</dimen>
     <dimen name="pocket_view_top_tag_margin_top">8dp</dimen>
+
+    <!-- the padding on the start of the statusbar -->
+    <dimen name="status_bar_padding_start">8dp</dimen>
+
+    <!-- the padding on the end of the statusbar -->
+    <dimen name="status_bar_padding_end">8dp</dimen>
+
+    <!-- the padding on the top of the statusbar (usually 0) -->
+    <dimen name="status_bar_padding_top">0dp</dimen>
 </resources>
