@@ -253,4 +253,7 @@
    <java-symbol type="dimen" name="status_bar_padding_end" />
    <java-symbol type="dimen" name="status_bar_padding_top" />
 
+   <!-- Whether to use Richtap vibration -->
+   <java-symbol type="bool" name="config_usesRichtapVibration" />
+   
 </resources>
