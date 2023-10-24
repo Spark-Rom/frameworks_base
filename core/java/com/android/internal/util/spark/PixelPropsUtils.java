@@ -206,7 +206,10 @@ public class PixelPropsUtils {
         if (packageName.equals("com.android.vending")) {
             sIsFinsky = true;
         }
-        if (packageName.equals("com.google.android.gms")) {
+        if (packageName.equals("com.google.android.gms")
+	        || packageName.toLowerCase().contains("androidx.test")
+                || packageName.equalsIgnoreCase("com.google.android.apps.restore")) {
+            setPropValue("TIME", System.currentTimeMillis());
             final String processName = Application.getProcessName();
             if (processName.toLowerCase().contains("unstable")
                     || processName.toLowerCase().contains("instrumentation")) {
