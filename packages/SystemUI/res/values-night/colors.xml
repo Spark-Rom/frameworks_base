@@ -115,4 +115,6 @@
     
     <color name="holo_blue_light">@android:color/system_accent1_500</color>
     <color name="holo_green_light">@android:color/system_accent3_200</color>
+
+    <color name="brightness_percent_text">#FFFFFFFF</color>
 </resources>

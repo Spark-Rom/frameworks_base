@@ -282,4 +282,6 @@
     <color name="neumorph_outline_end">#FFF0F0F0</color>
     <color name="holo_blue_light_chip">@android:color/system_accent1_600</color>
     <color name="holo_green_light_chip">@android:color/system_accent3_600</color>
+
+    <color name="brightness_percent_text">#FF000000</color>
 </resources>
