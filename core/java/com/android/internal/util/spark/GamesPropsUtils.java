@@ -69,6 +69,11 @@ public class GamesPropsUtils {
             "com.vng.pubgmobile"
     };
 
+    private static final Map<String, Object> propsToChangeOP9R = createMap("LE2101", "OnePlus");
+    private static final String[] packagesToChangeOP9R = { // spoof as OnePlus 9R
+	    "com.epicgames.fortnite"
+    };
+
     private static final Map<String, Object> propsToChangeOP9P = createMap("LE2101", "OnePlus");
     private static final String[] packagesToChangeOP9P = { // spoof as OnePlus 9 PRO
             "com.epicgames.fortnite",
@@ -134,7 +139,9 @@ public class GamesPropsUtils {
                 propsToChange = propsToChangeROG6;
             } else if (Arrays.asList(packagesToChangeXP5).contains(packageName)) {
                 propsToChange = propsToChangeXP5;
-            }
+            } else if (Arrays.asList(packagesToChangeOP9R).contains(packageName)){
+                propsToChange = propsToChangeOP9R;
+	    }
         }
         if (propsToChange != null) {
             dlog("Defining props for: " + packageName);
